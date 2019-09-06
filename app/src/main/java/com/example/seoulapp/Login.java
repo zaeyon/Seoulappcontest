@@ -1,5 +1,6 @@
 package com.example.seoulapp;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -10,6 +11,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -32,7 +34,19 @@ import java.net.URL;
 import static android.view.View.VISIBLE;
 
 
-public class Login extends AppCompatActivity {
+public class Login extends Activity {
+
+    static int shopNumber;
+    public static String[] shopName;
+    static String[] shopProfileImage;
+    static String[] shopBuilding;
+    static String[] shopFloor;
+    static String[] shopRocation;
+    static String[] shopStyle;
+    static String[] shopCategory;
+    static String[] shopRepresentation1;
+    static String[] shopRepresentation2;
+    static String[] shopRepresentation3;
 
     Button loginBtn;
     EditText userEmail;
@@ -45,6 +59,12 @@ public class Login extends AppCompatActivity {
     boolean passwordCheck = false;
     boolean PWrong = false;
     boolean EWrong = false;
+
+    public int getShopNumber() {
+        return shopNumber;
+    }
+
+
 
     TextWatcher emailTextWatcher = new TextWatcher() {
         @Override
@@ -122,7 +142,10 @@ public class Login extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
+        //requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_login);
 
         userEmail = findViewById(R.id.emailLogin);
@@ -143,7 +166,13 @@ public class Login extends AppCompatActivity {
             @Override
             public void onFocusChange(View view, boolean hasFocus) {
                 if(!hasFocus) {
-                   new JSONTask().execute("http://192.168.1.225:3000/emailCheck");
+                    // 동방 와이파이
+                     new JSONTask().execute("http://192.168.43.72:3000/emailCheck");
+                    // 할리스 와이파이
+                    // new JSONTask().execute("http://192.168.1.225:3000/emailCheck");
+                    // 부경대 PKNU-WLAN 와이파이
+                    //new JSONTask().execute("http://14.44.114.26:3000/emailCheck");
+                    // new JSONTask().execute("http://14.44.119.220:3000/emailCheck");
                 }
 
             }
@@ -152,7 +181,18 @@ public class Login extends AppCompatActivity {
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new JSONTask().execute("http://192.168.1.225:3000/login");
+                // 동방 와이파이
+                new JSONTask().execute("http://192.168.43.72:3000/login");
+                new JSONTask2().execute("http://192.168.43.72:3000/shopNumber");
+                // 할리스 와이파이
+                // new JSONTask().execute("http://192.168.1.225:3000/login");
+               // new JSONTask2().execute("http://192.168.1.225:3000/shopNumber");
+
+                // 부경대 PKNU-WLAN 와이파이
+                // new JSONTask().execute("http://14.44.114.26:3000/login");
+               // new JSONTask().execute("http://14.44.119.220:3000/login");
+               // new JSONTask().execute("http://14.44.119.220:3000/shopNumber");
+
             }
         });
 
@@ -160,6 +200,9 @@ public class Login extends AppCompatActivity {
         userPassword.addTextChangedListener(passwordTextWatcher);
 
     }
+
+
+
 
 
     public class JSONTask extends AsyncTask<String, String, String> {
@@ -240,17 +283,17 @@ public class Login extends AppCompatActivity {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
 
-            if(result.equals("emailWrong"))
+            if(result != null && result.equals("emailWrong"))
             {
                 emailWrong.setVisibility(VISIBLE);
                 loginBtn.setEnabled(false);
             }
-            else if(result.equals("emailCorrect"))
+            else if(result != null && result.equals("emailCorrect"))
             {
                 emailWrong.setVisibility(View.INVISIBLE);
             }
 
-            if(result.equals("passwordNotMatch")) {
+            if(result != null && result.equals("passwordNotMatch")) {
 
                 /* 로그인실패 팝업창
               AlertDialog.Builder passwordNot = new AlertDialog.Builder(Login.this);
@@ -270,7 +313,7 @@ public class Login extends AppCompatActivity {
                 PWrong = true;
             }
 
-            else if(result.equals("emailNotExist"))
+            else if(result != null && result.equals("emailNotExist"))
             {
                 /* 로그인실패 팝업창
                 AlertDialog.Builder emailNot = new AlertDialog.Builder(Login.this);
@@ -290,11 +333,195 @@ public class Login extends AppCompatActivity {
                 EWrong = true;
 
             }
-            else if(result.equals("loginSuccess"))
+            else if(result != null && result.equals("loginSuccess"))
             {
-                Intent homeIntent = new Intent(Login.this, Home.class);
-                startActivity(homeIntent);
+                Intent navigationIntent = new Intent(Login.this ,BottomNavigation.class);
+                startActivity(navigationIntent);
             }
         }
     }
+
+    public class JSONTask2 extends AsyncTask<String, String, String> {
+
+        @Override
+        protected String doInBackground(String... urls) {
+            try {
+                //JSONObject를 만들고 key value 형식으로 값을 저장해준다.
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.accumulate("userEmail", userEmail.getText());
+                jsonObject.accumulate("userPassword", userPassword.getText());
+
+                HttpURLConnection con = null;
+                BufferedReader reader = null;
+
+                try{
+                    //URL url = new URL("http://192.168.25.16:3000/users");
+                    URL url = new URL(urls[0]);
+                    //연결을 함
+                    con = (HttpURLConnection) url.openConnection();
+
+                    con.setRequestMethod("POST");//POST방식으로 보냄
+                    con.setRequestProperty("Cache-Control", "no-cache");//캐시 설정
+                    con.setRequestProperty("Content-Type", "application/json");//application JSON 형식으로 전송
+
+
+                    con.setRequestProperty("Accept", "text/html");//서버에 response 데이터를 html로 받음
+                    con.setDoOutput(true);//Outstream으로 post 데이터를 넘겨주겠다는 의미
+                    con.setDoInput(true);//Inputstream으로 서버로부터 응답을 받겠다는 의미
+                    con.connect();
+
+                    //서버로 보내기위해서 스트림 만듬
+                    OutputStream outStream = con.getOutputStream();
+                    //버퍼를 생성하고 넣음
+                    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outStream));
+                    writer.write(jsonObject.toString());
+                    writer.flush();
+                    writer.close();//버퍼를 받아줌
+
+                    //서버로 부터 데이터를 받음
+                    InputStream stream = con.getInputStream();
+
+                    reader = new BufferedReader(new InputStreamReader(stream));
+
+                    StringBuffer buffer = new StringBuffer();
+
+                    String line = "";
+                    while((line = reader.readLine()) != null){
+                        buffer.append(line);
+                    }
+
+                    return buffer.toString();//서버로 부터 받은 값을 리턴해줌 아마 OK!!가 들어올것임
+
+                } catch (MalformedURLException e){
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+                    if(con != null){
+                        con.disconnect();
+                    }
+                    try {
+                        if(reader != null){
+                            reader.close();//버퍼를 닫아줌
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+
+            shopNumber = Integer.parseInt(result);
+            shopName = new String[shopNumber];
+            shopProfileImage = new String[shopNumber];
+            shopBuilding = new String[shopNumber];
+            shopFloor = new String[shopNumber];
+            shopRocation = new String[shopNumber];
+            shopStyle = new String[shopNumber];
+            shopCategory = new String[shopNumber];
+            shopRepresentation1 = new String[shopNumber];
+            shopRepresentation2 = new String[shopNumber];
+            shopRepresentation3 = new String[shopNumber];
+
+            // 동방 와이파이
+             new JSONTask().execute("http://192.168.43.72:3000/getShopName");
+            // 할리스 와이파이
+            // new JSONTask().execute("http://192.168.1.225:3000/getShopName");
+            // 부경대 PKNU-WLAN 와이파이
+            // new JSONTask().execute("http://14.44.114.26:3000/getShopName");
+           // new JSONTask().execute("http://14.44.119.220:3000/getShopName");
+
+        }
+    }
+
+    public class JSONTask3 extends AsyncTask<String, String, String> {
+
+        @Override
+        protected String doInBackground(String... urls) {
+            try {
+                //JSONObject를 만들고 key value 형식으로 값을 저장해준다.
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.accumulate("shopNumber", shopNumber);
+
+                HttpURLConnection con = null;
+                BufferedReader reader = null;
+
+                try{
+                    //URL url = new URL("http://192.168.25.16:3000/users");
+                    URL url = new URL(urls[0]);
+                    //연결을 함
+                    con = (HttpURLConnection) url.openConnection();
+
+                    con.setRequestMethod("POST");//POST방식으로 보냄
+                    con.setRequestProperty("Cache-Control", "no-cache");//캐시 설정
+                    con.setRequestProperty("Content-Type", "application/json");//application JSON 형식으로 전송
+
+
+                    con.setRequestProperty("Accept", "text/html");//서버에 response 데이터를 html로 받음
+                    con.setDoOutput(true);//Outstream으로 post 데이터를 넘겨주겠다는 의미
+                    con.setDoInput(true);//Inputstream으로 서버로부터 응답을 받겠다는 의미
+                    con.connect();
+
+                    //서버로 보내기위해서 스트림 만듬
+                    OutputStream outStream = con.getOutputStream();
+                    //버퍼를 생성하고 넣음
+                    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outStream));
+                    writer.write(jsonObject.toString());
+                    writer.flush();
+                    writer.close();//버퍼를 받아줌
+
+                    //서버로 부터 데이터를 받음
+                    InputStream stream = con.getInputStream();
+
+                    reader = new BufferedReader(new InputStreamReader(stream));
+
+                    StringBuffer buffer = new StringBuffer();
+
+                    String line = "";
+                    while((line = reader.readLine()) != null){
+                        buffer.append(line);
+                    }
+
+                    return buffer.toString();//서버로 부터 받은 값을 리턴해줌 아마 OK!!가 들어올것임
+
+                } catch (MalformedURLException e){
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+                    if(con != null){
+                        con.disconnect();
+                    }
+                    try {
+                        if(reader != null){
+                            reader.close();//버퍼를 닫아줌
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+
+            shopName = result.split("/");
+            Log.d("shop",shopName[0]);
+        }
+    }
+
 }

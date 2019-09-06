@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_weight="1">
+
+    <ImageVIew
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:src="@drawable/icon_picture"
+        />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+    />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        />
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:text="입력"
+    />
+</LinearLayout>

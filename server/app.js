@@ -32,6 +32,7 @@ app.post('/emailCheck', (req, res) => {
       }
     else
     {
+      console.log("올바른 이메일 형식");
       res.write("emailCorrect");
       res.end();
     }
@@ -55,7 +56,8 @@ app.post('/login', (req, res) => {
        console.log("error ocurred", error);
        res.end();
      }
-     else {
+     else 
+     {
        if(results.length > 0) {
          if(results[0].password == inputData.userPassword) {
            console.log("로그인 성공");
@@ -187,8 +189,8 @@ app.post('/post', (req, res) => {
        } else {
          console.log("회원가입 완료")
          console.log(" ");
+         res.end();
        }
-       res.end();
      })
 
                 
@@ -197,6 +199,56 @@ app.post('/post', (req, res) => {
 //   res.write("OK!");
 //   res.end();
 });
+
+var shopNumberCount;
+
+// 등록된 매장수 확인
+app.post('/shopNumber', (req,res) => {
+
+  console.log("등록된 매장개수 확인중");
+  connection.query("SELECT COUNT(*) as cnt from shop", function(error, result, cnt) {
+    
+    console.log("등록된 매장수 : " + result[0].cnt);
+    shopNumberCount = result[0].cnt;
+    res.write(String(result[0].cnt));
+    res.end();
+
+  });
+})
+
+
+// 매장이름
+app.post('/getShopName', (req,res) => {
+  
+  var allShopName = "";
+
+  console.log("매장이름 얻기");
+  connection.query("SELECT * FROM shop", function(error, results) {
+    if(error)
+    {
+      console.log("에러");
+    }
+    else{
+    for(var j = 0; j < shopNumberCount; j++)
+    {
+      if(j == 0)
+      {
+        allShopName = results[0].shopName;
+      }
+      else
+      {
+        allShopName = allShopName + "/" + results[j].shopName;
+      }
+    };
+    };
+
+    console.log("allShopName : " + allShopName);
+    res.write(String(allShopName));
+    res.end();
+  });
+
+});
+
 
 app.listen(3000, () => {
   console.log('Example app listening on port 3000!');

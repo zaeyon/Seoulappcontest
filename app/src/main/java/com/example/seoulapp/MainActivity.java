@@ -1,15 +1,23 @@
 package com.example.seoulapp;
 
+import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.Window;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
+
+    RecyclerView recyclerView;
+    RecyclerView.Adapter adapter;
+    RecyclerView.LayoutManager layoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
@@ -22,7 +30,13 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClickLogin(View view)
     {
-        Intent intent = new Intent(this, Login.class);
+       Intent intent = new Intent(this, Login.class);
+       startActivity(intent);
+    }
+
+    public void onClickTest(View view)
+    {
+        Intent intent = new Intent(this, ShopDetaildInfo.class);
         startActivity(intent);
     }
 }
