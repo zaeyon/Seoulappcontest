@@ -11,35 +11,40 @@
         android:id="@+id/shopProfileImage"
         android:layout_width="match_parent"
         android:layout_height="115dp"
+        android:layout_marginTop="30dp"
         tools:srcCompat="@tools:sample/avatars" />
 
-    <com.google.android.material.textfield.TextInputLayout
+    <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/shopName">
+        android:layout_height="wrap_content">
 
-        <com.google.android.material.textfield.TextInputEditText
+        <android.support.design.widget.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="상점 이름" />
-    </com.google.android.material.textfield.TextInputLayout>
+    </android.support.design.widget.TextInputLayout>
 
     <TextView
         android:id="@+id/textView6"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:text="취급 품목" />
+        android:layout_height="50dp"
+        android:text="취급 품목"
+        android:textSize="20dp"
+        android:padding="10dp"/>
 
     <TextView
         android:id="@+id/textView7"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:text="컨셉" />
+        android:layout_height="50dp"
+        android:text="컨셉"
+        android:textSize="20dp"
+        android:padding="10dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="10dp">
 
         <TextView
             android:id="@+id/textView8"
@@ -47,22 +52,35 @@
             android:layout_height="wrap_content"
             android:text="위치" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/location"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="50dp"
+            android:orientation="horizontal">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="상세 위치" />
-        </com.google.android.material.textfield.TextInputLayout>
+            <Spinner
+                android:id="@+id/spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:layout_weight="2">
+
+                <android.support.design.widget.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="상세 위치" />
+            </android.support.design.widget.TextInputLayout>
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="10dp">
 
         <TextView
             android:id="@+id/textView9"
@@ -79,49 +97,59 @@
             android:inputType="textMultiLine" />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/textView10"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="매장 이미지" />
+        android:orientation="vertical"
+        android:padding="10dp">
 
-    <HorizontalScrollView
-        android:layout_width="match_parent"
-        android:layout_height="116dp">
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="매장 이미지" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:srcCompat="@android:drawable/sym_def_app_icon" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:srcCompat="@android:drawable/sym_def_app_icon" />
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="10dp"
+                    app:srcCompat="@android:drawable/sym_def_app_icon" />
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:srcCompat="@android:drawable/sym_def_app_icon" />
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="10dp"
+                    app:srcCompat="@android:drawable/sym_def_app_icon" />
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:srcCompat="@android:drawable/sym_def_app_icon" />
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="10dp"
+                    app:srcCompat="@android:drawable/sym_def_app_icon" />
 
-
-        </LinearLayout>
-    </HorizontalScrollView>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="10dp"
+                    app:srcCompat="@android:drawable/sym_def_app_icon" />
+            </LinearLayout>
+        </HorizontalScrollView>
+    </LinearLayout>
 
     <Button
         android:id="@+id/button"
         android:layout_width="match_parent"
-        android:layout_height="109dp"
-        android:text="완료" />
+        android:layout_height="wrap_content"
+        android:text="완료"
+        android:layout_marginTop="20dp"/>
 
 </LinearLayout>
