@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/mainBC"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
@@ -14,6 +15,7 @@
         android:layout_gravity="center"
         android:onClick="onClickLogin"
         android:layout_marginTop="520dp"
+        android:textColor="#000000"
         android:text="로그인 하기" />
 
     <TextView
@@ -22,8 +24,23 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:onClick="onClickSignup"
+        android:textColor="#000000"
         android:text="땡땡땡이 처음이세요?"
         android:layout_gravity="center"
          />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:onClick="onClickTest"
+        android:textColor="#000000"
+        android:text="TEST"
+        android:layout_gravity="center"
+        />
+
+
+
 
 </LinearLayout>

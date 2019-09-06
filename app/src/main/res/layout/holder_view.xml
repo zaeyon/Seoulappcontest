@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="91dp"
+    android:orientation="horizontal"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="10dp"
+    android:background="#f3f3f3"
+    >
+
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="0.7dp"
+            android:background="#cccccc" />
+
+        <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="85dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="85dp"
+            android:layout_height="85dp"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <com.example.seoulapp.CircularImageView
+                android:id="@+id/profilePic"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="bottom|center_horizontal"
+                android:src="@drawable/blank_profile"/>
+
+            <TextView
+                android:layout_width="wrap_content"      android:layout_height="wrap_content"
+                android:textSize="14dp"
+                android:layout_gravity="center"
+                android:id="@+id/shop_name"
+                android:text="매장이름"/>
+
+            <TextView
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+                android:id="@+id/shop_rocation"
+                android:text="위치"
+                android:textSize="10sp" />
+
+
+        </LinearLayout>
+
+            <View
+                android:layout_width="0.7dp"
+                android:layout_height="wrap_content"
+                android:background="#cccccc" />
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/thumbnail1"
+                android:layout_width="85dp"
+                android:layout_height="85dp"
+                android:scaleType="fitXY"
+            android:src="@drawable/oo3"/>
+            <ImageView
+                android:id="@+id/thumbnail2"
+                android:layout_width="85dp"
+                android:layout_height="85dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/oo"/>
+            <ImageView
+                android:id="@+id/thumbnail3"
+                android:layout_width="85dp"
+                android:layout_height="85dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/oo4"/>
+            <ImageView
+                android:id="@+id/thumbnail4"
+                android:layout_width="85dp"
+                android:layout_height="85dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/oo3"/>
+        </LinearLayout>
+
+
+
+
+    </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#f3f3f3">
+
+            <View
+            android:layout_width="wrap_content"
+            android:layout_height="0.7dp"
+            android:background="#cccccc" />
+
+        <View
+            android:layout_marginTop="3dp"
+            android:layout_width="wrap_content"
+            android:layout_height="0.7dp"
+            android:background="#cccccc" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

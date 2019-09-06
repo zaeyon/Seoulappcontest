@@ -1,0 +1,19 @@
+회원가입 & 로그인 테스트 서버 설정
+
+1. 사용하는 wifi에 맞게 ip주소 설정
+app/src/main/java/com/example/seoulapp안의 Signup.java, Login.java 파일의
+모든 new JSONTask().execute( ... )부분을 아래와 같이 수정
+new JSONTask().execute("http://(IPv4 주소):3000/...");
+IPv4 주소는 cmd창에서 ipconfig 입력하면 구할수있음
+(동방에서 wap wifi 사용시 -> http://192.168.43.72:3000/... 로 수정하면됌)
+
+2. 데이터베이스 설정
+ server\config\database.js 파일안의
+module.exports = {
+  host : 'localhost',
+  user : 'root',
+  password : '00000',
+  port : 3306,
+  database : 'test'
+}; 
+부분을 자신의 데이터베이스 환경에 맞게 설정하면됌
