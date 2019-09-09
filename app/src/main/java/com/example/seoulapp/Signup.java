@@ -43,6 +43,11 @@ public class Signup extends Activity {
     TextView passwordPo;
     TextView passwordIm;
 
+    static String nicknameData1;
+    static String emailData1;
+    static String passwordData1;
+    static String passwordConfirmData1;
+
 
     int inputCount = 0;
     boolean nicknameCheck = false;
@@ -51,19 +56,26 @@ public class Signup extends Activity {
     boolean passwordConfirmCheck = false;
     boolean emailWrongCheck = false;
     boolean nicknameWrongCheck = false;
+
+
     boolean passwordWrongCheck = false;
 
     TextWatcher nicknameTextWatcher = new TextWatcher() {
         @Override
         public void afterTextChanged(Editable edit) {
 
+            nicknameData1 = nicknameData.getText().toString();
+            emailData1 = emailData.getText().toString();
+            passwordData1 = passwordData.getText().toString();
+            passwordConfirmData1 = passwordConfirmData.getText().toString();
+
             String s = edit.toString();
             signupBtn = findViewById(R.id.signupFinish);
             nicknameCheck = true;
-            //if(s.length() > 0)
-            //{
-            //      new JSONTask().execute("http://192.168.1.225:3000/nickname");
-            //}
+//if(s.length() > 0)
+//{
+// new JSONTask().execute("http://192.168.1.225:3000/nickname");
+//}
             if (!passwordWrongCheck && !nicknameWrongCheck && !emailWrongCheck && s.length() > 0 && nicknameCheck && emailCheck && passwordCheck && passwordConfirmCheck ) {
                 signupBtn.setEnabled(true);
             }
@@ -277,13 +289,14 @@ public class Signup extends Activity {
             @Override
             public void onFocusChange(View view, boolean hasFocus) {
                 if(!hasFocus) {
-                    // 동방 와이파이
-                     new JSONTask().execute("http://192.168.43.72:3000/nickname");
-                    // 할리스 와이파이
-                    // new JSONTask().execute("http://192.168.1.225:3000/nickname");
-                    // 부경대 PKNU-WLAN 와이파이
-                   //  new JSONTask().execute("http://14.44.114.26:3000/nickname");
-                   // new JSONTask().execute("http://14.44.119.220:3000/nickname");
+// 동방 와이파이
+ new JSONTask().execute("http://192.168.43.72:3000/nickname");
+                    //new JSONTask().execute("http://192,168.43.141:3000/nickname");
+// 할리스 와이파이
+// new JSONTask().execute("http://192.168.1.225:3000/nickname");
+// 부경대 PKNU-WLAN 와이파이
+// new JSONTask().execute("http://14.44.114.26:3000/nickname");
+// new JSONTask().execute("http://14.44.119.220:3000/nickname");
                 }
             }
         });
@@ -292,13 +305,14 @@ public class Signup extends Activity {
             @Override
             public void onFocusChange(View view, boolean hasFocus) {
                 if(!hasFocus){
-                    // 동방 와이파이
-                     new JSONTask().execute("http://192.168.43.72:3000/email");
-                    // 할리스 와이파이
-                    // new JSONTask().execute("http://192.168.1.225:3000/email");
-                    // 부경대 PKNU-WLAN 와이파이
-                    // new JSONTask().execute("http://14.44.114.26:3000/email");
-                    // new JSONTask().execute("http://14.44.119.220:3000/email");
+// 동방 와이파이
+    new JSONTask().execute("http://192.168.43.72:3000/email");
+                   // new JSONTask().execute("http://192.168.43.141:3000/email");
+// 할리스 와이파이
+// new JSONTask().execute("http://192.168.1.225:3000/email");
+// 부경대 PKNU-WLAN 와이파이
+// new JSONTask().execute("http://14.44.114.26:3000/email");
+// new JSONTask().execute("http://14.44.119.220:3000/email");
                 }
             }
         });
@@ -312,9 +326,11 @@ public class Signup extends Activity {
                         passwordPo.setVisibility(View.VISIBLE);
                         passwordIm.setVisibility(View.INVISIBLE);
                         passwordWrongCheck = false;
-                        if (!passwordWrongCheck && !nicknameWrongCheck && !emailWrongCheck &&  nicknameCheck && emailCheck && passwordCheck && passwordConfirmCheck ) {
+                        if (!passwordWrongCheck && !nicknameWrongCheck && !emailWrongCheck && nicknameCheck && emailCheck && passwordCheck && passwordConfirmCheck ) {
                             signupBtn.setEnabled(true);
                         }
+
+
 
                     } else {
                         passwordPo.setVisibility(View.INVISIBLE);
@@ -361,17 +377,18 @@ public class Signup extends Activity {
         });
 
 
-        //버튼이 클릭되면 여기 리스너로 옴
+//버튼이 클릭되면 여기 리스너로 옴
         signupBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // 동방 와이파이
-                 new JSONTask().execute("http://192.168.43.72:3000/post");
-                // 할리스 와이파이
-                // new JSONTask().execute("http://192.168.1.225:3000/post");
-                // 부경대 PKNU-WLAN 와이파이
-                // new JSONTask().execute("http://14.44.114.26:3000/post");
-                // new JSONTask().execute("http://14.44.119.220:3000/post");
+// 동방 와이파이
+// new JSONTask().execute("http://192.168.43.72:3000/post");
+                new JSONTask().execute("http://192.168.43.141:3000/post");
+// 할리스 와이파이
+// new JSONTask().execute("http://192.168.1.225:3000/post");
+// 부경대 PKNU-WLAN 와이파이
+// new JSONTask().execute("http://14.44.114.26:3000/post");
+// new JSONTask().execute("http://14.44.119.220:3000/post");
 
                 Intent navigationIntent = new Intent(Signup.this ,BottomNavigation.class);
                 startActivity(navigationIntent);
@@ -384,20 +401,20 @@ public class Signup extends Activity {
         @Override
         protected String doInBackground(String... urls) {
             try {
-                //JSONObject를 만들고 key value 형식으로 값을 저장해준다.
+//JSONObject를 만들고 key value 형식으로 값을 저장해준다.
                 JSONObject jsonObject = new JSONObject();
-                jsonObject.accumulate("nickname", nicknameData.getText());
-                jsonObject.accumulate("email", emailData.getText());
-                jsonObject.accumulate("password", passwordData.getText());
-                jsonObject.accumulate("passwordConfirm", passwordConfirmData.getText());
+                jsonObject.accumulate("nickname", nicknameData1);
+                jsonObject.accumulate("email", emailData1);
+                jsonObject.accumulate("password", passwordData1);
+                jsonObject.accumulate("passwordConfirm", passwordConfirmData1);
 
                 HttpURLConnection con = null;
                 BufferedReader reader = null;
 
                 try{
-                    //URL url = new URL("http://192.168.25.16:3000/users");
+//URL url = new URL("http://192.168.25.16:3000/users");
                     URL url = new URL(urls[0]);
-                    //연결을 함
+//연결을 함
                     con = (HttpURLConnection) url.openConnection();
 
                     con.setRequestMethod("POST");//POST방식으로 보냄
@@ -410,15 +427,15 @@ public class Signup extends Activity {
                     con.setDoInput(true);//Inputstream으로 서버로부터 응답을 받겠다는 의미
                     con.connect();
 
-                    //서버로 보내기위해서 스트림 만듬
+//서버로 보내기위해서 스트림 만듬
                     OutputStream outStream = con.getOutputStream();
-                    //버퍼를 생성하고 넣음
+//버퍼를 생성하고 넣음
                     BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outStream));
                     writer.write(jsonObject.toString());
                     writer.flush();
                     writer.close();//버퍼를 받아줌
 
-                    //서버로 부터 데이터를 받음
+//서버로 부터 데이터를 받음
                     InputStream stream = con.getInputStream();
 
                     reader = new BufferedReader(new InputStreamReader(stream));
@@ -465,7 +482,7 @@ public class Signup extends Activity {
                 nicknamePo.setVisibility(View.VISIBLE);
                 nicknameIm.setVisibility(View.INVISIBLE);
                 nicknameWrongCheck = false;
-                if (!passwordWrongCheck && !nicknameWrongCheck && !emailWrongCheck &&  nicknameCheck && emailCheck && passwordCheck && passwordConfirmCheck ) {
+                if (!passwordWrongCheck && !nicknameWrongCheck && !emailWrongCheck && nicknameCheck && emailCheck && passwordCheck && passwordConfirmCheck ) {
                     signupBtn.setEnabled(true);
                 }
             }

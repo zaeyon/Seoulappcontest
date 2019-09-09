@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="91dp"
+    android:layout_height="90dp"
     android:orientation="horizontal"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="10dp"
@@ -17,26 +17,28 @@
 
         <View
             android:layout_width="wrap_content"
-            android:layout_height="0.7dp"
+            android:layout_height="0.3dp"
             android:background="#cccccc" />
 
         <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="85dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+            android:background="#ffffff">
 
         <LinearLayout
             android:layout_width="85dp"
             android:layout_height="85dp"
             android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            android:background="#ffffff">
 
-            <com.example.seoulapp.CircularImageView
-                android:id="@+id/profilePic"
+            <ImageView
+                android:id="@+id/shop_profileImage"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_gravity="bottom|center_horizontal"
-                android:src="@drawable/blank_profile"/>
+                android:src="@drawable/profileimage_1"/>
 
             <TextView
                 android:layout_width="wrap_content"      android:layout_height="wrap_content"
@@ -45,14 +47,26 @@
                 android:id="@+id/shop_name"
                 android:text="매장이름"/>
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/shop_building"
+                android:text="건물"
+                android:textSize="10sp"/>
+
             <TextView
             android:gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
                 android:id="@+id/shop_rocation"
                 android:text="위치"
                 android:textSize="10sp" />
-
+        </LinearLayout>
 
         </LinearLayout>
 
@@ -68,29 +82,24 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/thumbnail1"
-                android:layout_width="85dp"
-                android:layout_height="85dp"
+                android:id="@+id/shop_representation1"
+                android:layout_width="91dp"
+                android:layout_height="90dp"
                 android:scaleType="fitXY"
-            android:src="@drawable/oo3"/>
+            android:src="@drawable/representation_1_1"/>
             <ImageView
-                android:id="@+id/thumbnail2"
-                android:layout_width="85dp"
-                android:layout_height="85dp"
+                android:id="@+id/shop_representation2"
+                android:layout_width="91dp"
+                android:layout_height="90dp"
                 android:scaleType="fitXY"
-                android:src="@drawable/oo"/>
+                android:src="@drawable/representation_1_2"/>
             <ImageView
-                android:id="@+id/thumbnail3"
-                android:layout_width="85dp"
-                android:layout_height="85dp"
+                android:id="@+id/shop_representation3"
+                android:layout_width="91dp"
+                android:layout_height="90dp"
                 android:scaleType="fitXY"
-                android:src="@drawable/oo4"/>
-            <ImageView
-                android:id="@+id/thumbnail4"
-                android:layout_width="85dp"
-                android:layout_height="85dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/oo3"/>
+                android:src="@drawable/representation_1_3"/>
+
         </LinearLayout>
 
 
@@ -108,11 +117,6 @@
             android:layout_height="0.7dp"
             android:background="#cccccc" />
 
-        <View
-            android:layout_marginTop="3dp"
-            android:layout_width="wrap_content"
-            android:layout_height="0.7dp"
-            android:background="#cccccc" />
 
         </LinearLayout>
 

@@ -35,7 +35,7 @@
             android:layout_width="90dp"
             android:layout_height="90dp"
             android:layout_marginTop="20dp"
-            android:src="@drawable/blank_profile"/>
+            android:src="@drawable/profileimage_1"/>
 
             </RelativeLayout>
 
