@@ -78,22 +78,22 @@ public class ShopDetaildInfo extends Activity implements OnClickListener {
 
     @Override
     public void onClick(View arg0){
-    // TODO Auto-generated method stub
+        // TODO Auto-generated method stub
 
-    // 버튼이 클릭 됐을 때 이벤트 처리
-    switch(arg0.getId()) {
+        // 버튼이 클릭 됐을 때 이벤트 처리
+        switch(arg0.getId()) {
 
-        case R.id.button1_non:
-            //버튼 1이 눌렸을 때 1개의 해당 레이아웃을 보이게 나머지는 숨기게
-            feedPage.setVisibility(View.VISIBLE);
-            QAPage.setVisibility(View.INVISIBLE);
-            break;
+            case R.id.button1_non:
+                //버튼 1이 눌렸을 때 1개의 해당 레이아웃을 보이게 나머지는 숨기게
+                feedPage.setVisibility(View.VISIBLE);
+                QAPage.setVisibility(View.INVISIBLE);
+                break;
 
-        case R.id.button2_non:
+            case R.id.button2_non:
 
-            feedPage.setVisibility(View.GONE);
-            QAPage.setVisibility(View.VISIBLE);
-            break;
-               }
+                feedPage.setVisibility(View.GONE);
+                QAPage.setVisibility(View.VISIBLE);
+                break;
+        }
     }
 }

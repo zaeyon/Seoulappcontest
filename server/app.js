@@ -249,6 +249,189 @@ app.post('/getShopName', (req,res) => {
 
 });
 
+app.post('/getShopProfile', (req,res) => {
+  
+  var allShopProfile = "";
+
+  console.log("매장프로필사진 얻기");
+  connection.query("SELECT * FROM shop", function(error, results) {
+    if(error)
+    {
+      console.log("에러");
+    }
+    else{
+    for(var j = 0; j < shopNumberCount; j++)
+    {
+      if(j == 0)
+      {
+        allShopProfile =results[0].shopProfileImage;
+      }
+      else
+      {
+        allShopProfile = allShopProfile + "/" + results[j].shopProfileImage;
+      }
+    };
+    };
+
+    console.log("allShopProfile : " + allShopProfile);
+    res.write(String(allShopProfile));
+    res.end();
+  });
+
+});
+
+app.post('/getShopReq1', (req,res) => {
+  
+  var allShopInfo = "";
+
+  console.log("매장대표사진 얻기");
+  connection.query("SELECT * FROM shop", function(error, results) {
+    if(error)
+    {
+      console.log("에러");
+    }
+    else{
+    for(var j = 0; j < shopNumberCount; j++)
+    {
+      if(j == 0)
+      {
+        allShopInfo =results[0].shopRepresentation1;
+      }
+      else
+      {
+        allShopInfo = allShopInfo + "/" + results[j].shopRepresentation1;
+      }
+    };
+    };
+
+    console.log("allShopInfo : " + allShopInfo);
+    res.write(String(allShopInfo));
+    res.end();
+  });
+
+});
+
+app.post('/getShopReq2', (req,res) => {
+  
+  var allShopInfo = "";
+
+  console.log("매장대표사진 얻기");
+  connection.query("SELECT * FROM shop", function(error, results) {
+    if(error)
+    {
+      console.log("에러");
+    }
+    else{
+    for(var j = 0; j < shopNumberCount; j++)
+    {
+      if(j == 0)
+      {
+        allShopInfo =results[0].shopRepresentation2;
+      }
+      else
+      {
+        allShopInfo = allShopInfo + "/" + results[j].shopRepresentation2;
+      }
+    };
+    };
+
+    console.log("allShopInfo : " + allShopInfo);
+    res.write(String(allShopInfo));
+    res.end();
+  });
+
+});
+
+app.post('/getShopReq3', (req,res) => {
+  
+  var allShopInfo = "";
+
+  console.log("매장대표사진 얻기");
+  connection.query("SELECT * FROM shop", function(error, results) {
+    if(error)
+    {
+      console.log("에러");
+    }
+    else{
+    for(var j = 0; j < shopNumberCount; j++)
+    {
+      if(j == 0)
+      {
+        allShopInfo =results[0].shopRepresentation3;
+      }
+      else
+      {
+        allShopInfo = allShopInfo + "/" + results[j].shopRepresentation3;
+      }
+    };
+    };
+
+    console.log("allShopInfo : " + allShopInfo);
+    res.write(String(allShopInfo));
+    res.end();
+  });
+
+});
+app.post('/getShopRocation', (req,res) => {
+  
+  var allShopInfo = "";
+
+  console.log("매장대표사진 얻기");
+  connection.query("SELECT * FROM shop", function(error, results) {
+    if(error)
+    {
+      console.log("에러");
+    }
+    else{
+    for(var j = 0; j < shopNumberCount; j++)
+    {
+      if(j == 0)
+      {
+        allShopInfo =results[0].shopRocation;
+      }
+      else
+      {
+        allShopInfo = allShopInfo + "/" + results[j].shopRocation;
+      }
+    };
+    };
+
+    console.log("allShopInfo : " + allShopInfo);
+    res.write(String(allShopInfo));
+    res.end();
+  });
+});
+app.post('/getShopBuilding', (req,res) => {
+  
+  var allShopInfo = "";
+
+  console.log("매장건물이름 얻기");
+  connection.query("SELECT * FROM shop", function(error, results) {
+    if(error)
+    {
+      console.log("에러");
+    }
+    else{
+    for(var j = 0; j < shopNumberCount; j++)
+    {
+      if(j == 0)
+      {
+        allShopInfo =results[0].shopBuilding;
+      }
+      else
+      {
+        allShopInfo = allShopInfo + "/" + results[j].shopBuilding;
+      }
+    };
+    };
+
+    console.log("allShopInfo : " + allShopInfo);
+    res.write(String(allShopInfo));
+    res.end();
+  });
+});
+
+
 
 app.listen(3000, () => {
   console.log('Example app listening on port 3000!');
