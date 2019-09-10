@@ -16,6 +16,9 @@
         <activity android:name=".Login" />
         <activity android:name=".ShopDetaildInfo"/>
         <activity android:name=".Signup" />
+        <activity android:name=".ui.notifications.NewsActivity" />
+        <activity android:name=".ui.notifications.SettingsActivity" />
+        <activity android:name=".ui.notifications.EditProfileActivity" />
         <activity
             android:name=".MainActivity"
             android:theme="@style/Theme.AppCompat">
