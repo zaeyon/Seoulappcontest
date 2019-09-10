@@ -1,11 +1,8 @@
 package com.example.seoulapp;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -15,8 +12,6 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
-import com.example.seoulapp.Signup;
 
 import org.json.JSONObject;
 
@@ -166,15 +161,8 @@ public class Login extends Activity {
             @Override
             public void onFocusChange(View view, boolean hasFocus) {
                 if(!hasFocus) {
-                    // 동방 와이파이
-                     new JSONTask().execute("http://192.168.43.72:3000/emailCheck");
-                    // 할리스 와이파이
-                    // new JSONTask().execute("http://192.168.1.225:3000/emailCheck");
-                    // 부경대 PKNU-WLAN 와이파이
-                    // new JSONTask().execute("http://14.44.114.26:3000/emailCheck");
-                   // new JSONTask().execute("http://14.44.114.12:3000/emailCheck");
-                    // new JSONTask().execute("http://14.44.119.220:3000/emailCheck");
-                    // new JSONTask().execute("http:///14.44.112.144:3000/emailCheck");
+                    // 와이파이 새로 접속할 때마다 변경
+                     new JSONTask().execute("http://192.168.43.102:3000/emailCheck");
                 }
 
             }
@@ -183,21 +171,9 @@ public class Login extends Activity {
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // 동방 와이파이
-                 new JSONTask().execute("http://192.168.43.72:3000/login");
-                // new JSONTask2().execute("http://192.168.43.72:3000/shopNumber");
-                // 할리스 와이파이
-                // new JSONTask().execute("http://192.168.1.225:3000/login");
-               // new JSONTask2().execute("http://192.168.1.225:3000/shopNumber");
-
-                // 부경대 PKNU-WLAN 와이파이
-                // new JSONTask().execute("http://14.44.114.26:3000/login");
-               // new JSONTask().execute("http://14.44.119.220:3000/login");
-               // new JSONTask().execute("http://14.44.119.220:3000/shopNumber");
-                // WLAN A15
-                //new JSONTask().execute("http://14.44.114.12:3000/login");
-                // WLAN A12
-                // new JSONTask().execute("http://14.44.112.144:3000/login");
+                // 와이파이 새로 접속할 때마다 변경
+                 new JSONTask().execute("http://192.168.43.102:3000/login");
+                 new JSONTask().execute("http://192.168.43.102:3000/shopNumber");
             }
         });
 
@@ -343,16 +319,6 @@ public class Login extends Activity {
                 Intent navigationIntent = new Intent(Login.this ,BottomNavigation.class);
                 startActivity(navigationIntent);
             }
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-
-            shopName = result.split("/");
-            Log.d("shop",shopName[0]);
         }
     }
 
@@ -446,13 +412,8 @@ public class Login extends Activity {
             shopRepresentation2 = new String[shopNumber];
             shopRepresentation3 = new String[shopNumber];
 
-            // 동방 와이파이
-             new JSONTask().execute("http://192.168.43.72:3000/getShopName");
-            // 할리스 와이파이
-            // new JSONTask().execute("http://192.168.1.225:3000/getShopName");
-            // 부경대 PKNU-WLAN 와이파이
-            // new JSONTask().execute("http://14.44.114.26:3000/getShopName");
-           // new JSONTask().execute("http://14.44.119.220:3000/getShopName");
+            // 와이파이 새로 접속할 때마다 변경
+             new JSONTask().execute("http://192.168.43.102/getShopName");
 
         }
     }

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+    <LinearLayout android:layout_height="80dp" android:layout_width="match_parent" android:orientation="vertical" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <LinearLayout android:layout_height="match_parent" android:layout_width="match_parent" android:orientation="horizontal" android:padding="20dp">
+
+    <ImageView android:layout_height="match_parent" android:layout_width="50dp" app:srcCompat="@android:drawable/sym_def_app_icon" android:gravity="center_vertical" android:id="@+id/imageShopLogo"/>
+
+    <TextView android:layout_height="match_parent" android:layout_width="match_parent" android:gravity="center_vertical" android:id="@+id/textShopName" android:textStyle="bold" android:text="상점 이름"/>
+
+</LinearLayout>
+
+</LinearLayout>
