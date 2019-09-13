@@ -1,18 +1,17 @@
 package com.example.seoulapp.ui.home;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-<<<<<<< HEAD
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-=======
 import android.support.v4.app.ListFragment;
->>>>>>> 4e71ec9e7d4782511cde317f497f6877d9345542
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +22,7 @@ import android.widget.ListView;
 import com.example.seoulapp.ListViewAdapter;
 import com.example.seoulapp.ListViewItem;
 import com.example.seoulapp.R;
+import com.example.seoulapp.ShopDetaildInfo;
 
 import org.json.JSONObject;
 
@@ -65,28 +65,11 @@ public class HomeFragment extends ListFragment {
         View view = inflater.inflate(R.layout.listview_item, container, false);
         profileImage = view.findViewById(R.id.shop_profileImage);
 
-<<<<<<< HEAD
 
-
-        // 동방
+        // 와이파이 새로 접속할때마다 변경
          new JSONTask2().execute("http://192.168.43.72:3000/shopNumber");
-        // WLAN A15
-        //new JSONTask2().execute("http://14.44.114.12:3000/shopNumber");
-        // new JSONTask2().execute("http://14.44.118.177:3000/shopNumber");
-        // new JSONTask2().execute("http://14.44.118.177:3000/shopNumber");
-        // WLAN A12
-        // new JSONTask2().execute("http://14.44.112.144:3000/shopNumber");
-        // 리마크빌
-        // new JSONTask2().execute("http://172.30.1.10:3000/shopNumber");
-        // 망고
-        //new JSONTask2().execute("http://192.168.0.26:3000/shopNumber");
-        //new JSONTask2().execute("http://04a17171.ngrok.io/shopNumber");
-        // new JSONTask2().execute("http://192.168.43.29:3000/shopNumber");
 
-=======
-        // 와이파이 새로 접속할 때마다 변경
-        new JSONTask2().execute("http://192.168.43.102:3000/shopNumber");
->>>>>>> 4e71ec9e7d4782511cde317f497f6877d9345542
+
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
@@ -195,8 +178,7 @@ public class HomeFragment extends ListFragment {
 
             shopNumber = Integer.parseInt(result);
 
-<<<<<<< HEAD
-            // 동방
+            // 와이파이 새로 접속할때마다 변경
             new JSONTaskName().execute("http://192.168.43.72:3000/getShopName");
             new JSONTaskProfile().execute("http://192.168.43.72:3000/getShopProfile");
             new JSONTaskRocation().execute("http://192.168.43.72:3000/getShopRocation");
@@ -209,86 +191,6 @@ public class HomeFragment extends ListFragment {
             new JSONTaskReq2().execute("http://192.168.43.72:3000/getShopReq2");
             new JSONTaskReq3().execute("http://192.168.43.72:3000/getShopReq3");
 
-            // PKNU-WLAN A15
-            /*
-            new JSONTaskName().execute("http://14.44.114.12:3000/getShopName");
-            new JSONTaskProfile().execute("http://14.44.114.12:3000/getShopProfile");
-            new JSONTaskRocation().execute("http://14.44.114.12:3000/getShopRocation");
-            new JSONTaskBuilding().execute("http://14.44.114.12:3000/getShopBuilding");
-            new JSONTaskReq1().execute("http://14.44.114.12:3000/getShopReq1");
-            new JSONTaskReq2().execute("http://14.44.114.12:3000/getShopReq2");
-            new JSONTaskReq3().execute("http://14.44.114.12:3000/getShopReq3");
-            */
-
-            /*
-            new JSONTaskName().execute("http://14.44.118.177:3000/getShopName");
-            new JSONTaskProfile().execute("http://14.44.118.177:3000/getShopProfile");
-            new JSONTaskRocation().execute("http://14.44.118.177:3000/getShopRocation");
-            new JSONTaskBuilding().execute("http://14.44.118.177:3000/getShopBuilding");
-            new JSONTaskReq1().execute("http://14.44.118.177:3000/getShopReq1");
-            new JSONTaskReq2().execute("http://14.44.118.177:3000/getShopReq2");
-            new JSONTaskReq3().execute("http://14.44.118.177:3000/getShopReq3");
-            */
-
-            // PKNU-WRAP A12
-            /*
-            new JSONTaskName().execute("http://14.44.112.144:3000/getShopName");
-            new JSONTaskProfile().execute("http://14.44.112.144:3000/getShopProfile");
-            new JSONTaskRocation().execute("http://14.44.112.144:3000/getShopRocation");
-            new JSONTaskBuilding().execute("http://14.44.112.144:3000/getShopBuilding");
-            new JSONTaskReq1().execute("http://14.44.112.144:3000/getShopReq1");
-            new JSONTaskReq2().execute("http://14.44.112.144:3000/getShopReq2");
-            new JSONTaskReq3().execute("http://14.44.112.144:3000/getShopReq3");
-            */
-            // 리마크빌
-            /*
-            new JSONTaskName().execute("http://172.30.1.10:3000/getShopName");
-            new JSONTaskProfile().execute("http://172.30.1.10:3000/getShopProfile");
-            new JSONTaskRocation().execute("http://172.30.1.10:3000/getShopRocation");
-            new JSONTaskBuilding().execute("http://172.30.1.10:3000/getShopBuilding");
-            new JSONTaskReq1().execute("http://172.30.1.10:3000/getShopReq1");
-            new JSONTaskReq2().execute("http://172.30.1.10:3000/getShopReq2");
-            new JSONTaskReq3().execute("http://172.30.1.10:3000/getShopReq3");
-       */
-            // 망고
-            /*
-            new JSONTaskName().execute("http://192.168.0.26:3000/getShopName");
-            new JSONTaskProfile().execute("http://192.168.0.26:3000/getShopProfile");
-            new JSONTaskRocation().execute("http://192.168.0.26:3000/getShopRocation");
-            new JSONTaskFloor().execute("http://192.168.0.26:3000/getShopFloor");
-            new JSONTaskBuilding().execute("http://192.168.0.26:3000/getShopBuilding");
-            new JSONTaskCategory().execute("http://192.168.0.26:3000/getShopCategory");
-            new JSONTaskStyle().execute("http://192.168.0.26:3000/getShopStyle");
-            new JSONTaskIntro().execute("http://192.168.0.26:3000/getShopIntro");
-            new JSONTaskReq1().execute("http://192.168.0.26:3000/getShopReq1");
-            new JSONTaskReq2().execute("http://192.168.0.26:3000/getShopReq2");
-            new JSONTaskReq3().execute("http://192.168.0.26:3000/getShopReq3");
-           */
-            /*
-            new JSONTaskName().execute("http://04a17171.ngrok.io/getShopName");
-            new JSONTaskProfile().execute("http://04a17171.ngrok.io/getShopProfile");
-            new JSONTaskRocation().execute("http://04a17171.ngrok.io/getShopRocation");
-            new JSONTaskFloor().execute("http://04a17171.ngrok.io/getShopFloor");
-            new JSONTaskBuilding().execute("http://04a17171.ngrok.io/getShopBuilding");
-            new JSONTaskCategory().execute("http://04a17171.ngrok.io/getShopCategory");
-            new JSONTaskStyle().execute("http://04a17171.ngrok.io/getShopStyle");
-            new JSONTaskIntro().execute("http://04a17171.ngrok.io/getShopIntro");
-            new JSONTaskReq1().execute("http://04a17171.ngrok.io/getShopReq1");
-            new JSONTaskReq2().execute("http://04a17171.ngrok.io/getShopReq2");
-            new JSONTaskReq3().execute("http://04a17171.ngrok.io/getShopReq3");
-          */
-
-=======
-            // 와이파이 새로 접속할 때마다 변경
-
-            new JSONTaskName().execute("http://192.168.43.102:3000/getShopName");
-            new JSONTaskProfile().execute("http://192.168.43.102:3000/getShopProfile");
-            new JSONTaskRocation().execute("http://192.168.43.102:3000/getShopRocation");
-            new JSONTaskBuilding().execute("http://192.168.43.102:3000/getShopBuilding");
-            new JSONTaskReq1().execute("http://192.168.43.102:3000/getShopReq1");
-            new JSONTaskReq2().execute("http://192.168.43.102:3000/getShopReq2");
-            new JSONTaskReq3().execute("http://192.168.43.102:3000/getShopReq3");
->>>>>>> 4e71ec9e7d4782511cde317f497f6877d9345542
         }
     }
     public class JSONTaskIntro extends AsyncTask<String, String, String> {

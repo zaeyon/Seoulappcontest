@@ -161,27 +161,10 @@ public class Login extends Activity {
             @Override
             public void onFocusChange(View view, boolean hasFocus) {
                 if(!hasFocus) {
-<<<<<<< HEAD
-                    // 동방 와이파이
-                    new JSONTask().execute("http://192.168.43.72:3000/emailCheck");
-                    // 할리스 와이파이
-                    // new JSONTask().execute("http://192.168.1.225:3000/emailCheck");
-                    // 부경대 PKNU-WLAN 와이파이
-                    // new JSONTask().execute("http://14.44.114.26:3000/emailCheck");
-                    // new JSONTask().execute("http://14.44.114.12:3000/emailCheck");
-                    // new JSONTask().execute("http://14.44.119.220:3000/emailCheck");
-                    // new JSONTask().execute("http://14.44.112.144:3000/emailCheck");
-                   //  new JSONTask().execute("http://14.44.118.177:3000/emailCheck");
-                  // 리마크빌
-                    //   new JSONTask().execute("http://172.30.1.10:3000/emailCheck");
-                  // 망고
-                  //  new JSONTask().execute("http://192.168.0.26:3000/emailCheck");
-                  //  new JSONTask().execute("http://04a17171.ngrok.io/emailCheck");
-                 // new JSONTask().execute("http://192.168.43.29:3000/emailCheck");
-=======
+
                     // 와이파이 새로 접속할 때마다 변경
-                     new JSONTask().execute("http://192.168.43.102:3000/emailCheck");
->>>>>>> 4e71ec9e7d4782511cde317f497f6877d9345542
+                    new JSONTask().execute("http://192.168.43.72:3000/emailCheck");
+
                 }
 
             }
@@ -190,40 +173,11 @@ public class Login extends Activity {
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-<<<<<<< HEAD
-                // 동방 와이파이
-               new JSONTask().execute("http://192.168.43.72:3000/login");
-                new JSONTask2().execute("http://192.168.43.72:3000/shopNumber");
-                // 할리스 와이파이
-                // new JSONTask().execute("http://192.168.1.225:3000/login");
-                // new JSONTask2().execute("http://192.168.1.225:3000/shopNumber");
 
-                // 부경대 PKNU-WLAN 와이파이
-                // new JSONTask().execute("http://14.44.114.26:3000/login");
-                // new JSONTask().execute("http://14.44.119.220:3000/login");
-                // new JSONTask().execute("http://14.44.119.220:3000/shopNumber");
-                // WLAN A15
-                //new JSONTask().execute("http://14.44.114.12:3000/login");
-                // WLAN A12
-                // new JSONTask().execute("http://14.44.112.144:3000/login");
-                // new JSONTask().execute("http://14.44.118.177:3000/login");
-                // 리마크빌
-                // new JSONTask().execute("http://172.30.1.10:3000/login");
-                // new JSONTask2().execute("http://172.30.1.10:3000/shopNumber");
-                // 망고
-                //new JSONTask().execute("http://192.168.0.26:3000/login");
-                //new JSONTask2().execute("http://192.168.0.26:3000/shopNumber");
-                // new JSONTask().execute("http://04a17171.ngrok.io/login");
-                // new JSONTask().execute("http://04a17171.ngrok.io/shopNumber");
-                // new JSONTask().execute("http://192.168.43.29:3000/login");
-               // new JSONTask().execute("http://192.168.43.29:3000/shopNumber");
-
-
-=======
                 // 와이파이 새로 접속할 때마다 변경
-                 new JSONTask().execute("http://192.168.43.102:3000/login");
-                 new JSONTask().execute("http://192.168.43.102:3000/shopNumber");
->>>>>>> 4e71ec9e7d4782511cde317f497f6877d9345542
+                new JSONTask().execute("http://192.168.43.72:3000/login");
+                new JSONTask2().execute("http://192.168.43.72:3000/shopNumber");
+
             }
         });
 
@@ -437,12 +391,6 @@ public class Login extends Activity {
             shopRepresentation2 = new String[shopNumber];
             shopRepresentation3 = new String[shopNumber];
 
-<<<<<<< HEAD
-=======
-            // 와이파이 새로 접속할 때마다 변경
-             new JSONTask().execute("http://192.168.43.102/getShopName");
-
->>>>>>> 4e71ec9e7d4782511cde317f497f6877d9345542
         }
     }
 

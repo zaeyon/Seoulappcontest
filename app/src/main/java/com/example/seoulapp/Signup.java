@@ -65,10 +65,7 @@ public class Signup extends Activity {
             String s = edit.toString();
             signupBtn = findViewById(R.id.signupFinish);
             nicknameCheck = true;
-//if(s.length() > 0)
-//{
-// new JSONTask().execute("http://192.168.1.225:3000/nickname");
-//}
+
             if (!passwordWrongCheck && !nicknameWrongCheck && !emailWrongCheck && s.length() > 0 && nicknameCheck && emailCheck && passwordCheck && passwordConfirmCheck ) {
                 signupBtn.setEnabled(true);
             }
