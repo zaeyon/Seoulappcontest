@@ -54,6 +54,28 @@ public class ListAdapter extends BaseAdapter {
     oTextShopName.setText(m_oData.get(position).strShopName);
     // oImageShopLogo
 
+<<<<<<< HEAD
     return convertView;
   }
 }
+=======
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        if(convertView == null) {
+            final Context context = parent.getContext();
+            if(inflater == null) {
+                inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            }
+            convertView = inflater.inflate(R.layout.listview_favorite_shop, parent, false);
+        }
+
+        TextView oTextShopName = (TextView) convertView.findViewById(R.id.textShopName);
+        // ImageView oImageShopLogo = (ImageView) convertView.findViewById(R.id.imageShopLogo);
+
+        oTextShopName.setText(m_oData.get(position).strShopName);
+        // oImageShopLogo
+
+        return convertView;
+    }
+}
+>>>>>>> 4e71ec9e7d4782511cde317f497f6877d9345542

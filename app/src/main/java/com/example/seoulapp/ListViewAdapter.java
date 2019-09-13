@@ -52,6 +52,10 @@ public class ListViewAdapter extends BaseAdapter {
         ImageView shopRepImageView1 = convertView.findViewById(R.id.shop_representation1);
         ImageView shopRepImageView2 = convertView.findViewById(R.id.shop_representation2);
         ImageView shopRepImageView3 = convertView.findViewById(R.id.shop_representation3);
+<<<<<<< HEAD
+=======
+
+>>>>>>> 4e71ec9e7d4782511cde317f497f6877d9345542
 
         TextView shopBuildingView = convertView.findViewById(R.id.shop_building);
         TextView shopFloorView = convertView.findViewById(R.id.shop_floor);

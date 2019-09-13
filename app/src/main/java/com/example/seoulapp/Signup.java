@@ -3,7 +3,6 @@ package com.example.seoulapp;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -25,7 +24,6 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.Socket;
 import java.net.URL;
 
 public class Signup extends Activity {
@@ -63,11 +61,6 @@ public class Signup extends Activity {
     TextWatcher nicknameTextWatcher = new TextWatcher() {
         @Override
         public void afterTextChanged(Editable edit) {
-
-            nicknameData1 = nicknameData.getText().toString();
-            emailData1 = emailData.getText().toString();
-            passwordData1 = passwordData.getText().toString();
-            passwordConfirmData1 = passwordConfirmData.getText().toString();
 
             String s = edit.toString();
             signupBtn = findViewById(R.id.signupFinish);
@@ -289,14 +282,8 @@ public class Signup extends Activity {
             @Override
             public void onFocusChange(View view, boolean hasFocus) {
                 if(!hasFocus) {
-// 동방 와이파이
- new JSONTask().execute("http://192.168.43.72:3000/nickname");
-                    //new JSONTask().execute("http://192,168.43.141:3000/nickname");
-// 할리스 와이파이
-// new JSONTask().execute("http://192.168.1.225:3000/nickname");
-// 부경대 PKNU-WLAN 와이파이
-// new JSONTask().execute("http://14.44.114.26:3000/nickname");
-// new JSONTask().execute("http://14.44.119.220:3000/nickname");
+                    // 와이파이 새로 접속할 때마다 변경
+                    new JSONTask().execute("http://192.168.43.102:3000/nickname");
                 }
             }
         });
@@ -305,14 +292,8 @@ public class Signup extends Activity {
             @Override
             public void onFocusChange(View view, boolean hasFocus) {
                 if(!hasFocus){
-// 동방 와이파이
-    new JSONTask().execute("http://192.168.43.72:3000/email");
-                   // new JSONTask().execute("http://192.168.43.141:3000/email");
-// 할리스 와이파이
-// new JSONTask().execute("http://192.168.1.225:3000/email");
-// 부경대 PKNU-WLAN 와이파이
-// new JSONTask().execute("http://14.44.114.26:3000/email");
-// new JSONTask().execute("http://14.44.119.220:3000/email");
+                    // 와이파이 새로 접속할 때마다 변경
+                    new JSONTask().execute("http://192.168.43.102:3000/email");
                 }
             }
         });
@@ -381,14 +362,8 @@ public class Signup extends Activity {
         signupBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-// 동방 와이파이
-// new JSONTask().execute("http://192.168.43.72:3000/post");
-                new JSONTask().execute("http://192.168.43.141:3000/post");
-// 할리스 와이파이
-// new JSONTask().execute("http://192.168.1.225:3000/post");
-// 부경대 PKNU-WLAN 와이파이
-// new JSONTask().execute("http://14.44.114.26:3000/post");
-// new JSONTask().execute("http://14.44.119.220:3000/post");
+                // 와이파이 새로 접속할 때마다 변경
+                new JSONTask().execute("http://192.168.43.102:3000/post");
 
                 Intent navigationIntent = new Intent(Signup.this ,BottomNavigation.class);
                 startActivity(navigationIntent);
@@ -403,10 +378,10 @@ public class Signup extends Activity {
             try {
 //JSONObject를 만들고 key value 형식으로 값을 저장해준다.
                 JSONObject jsonObject = new JSONObject();
-                jsonObject.accumulate("nickname", nicknameData1);
-                jsonObject.accumulate("email", emailData1);
-                jsonObject.accumulate("password", passwordData1);
-                jsonObject.accumulate("passwordConfirm", passwordConfirmData1);
+                jsonObject.accumulate("nickname", nicknameData.getText());
+                jsonObject.accumulate("email", emailData.getText());
+                jsonObject.accumulate("password", passwordData.getText());
+                jsonObject.accumulate("passwordConfirm", passwordConfirmData.getText());
 
                 HttpURLConnection con = null;
                 BufferedReader reader = null;

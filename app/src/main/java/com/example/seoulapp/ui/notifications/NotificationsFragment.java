@@ -75,8 +75,8 @@ public class NotificationsFragment extends Fragment {
     class goNews implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-            Intent intetNews = new Intent(getActivity(), NewsActivity.class);
-            startActivity(intetNews);
+            Intent intentNews = new Intent(getActivity(), NewsActivity.class);
+            startActivity(intentNews);
         }
     }
 }
