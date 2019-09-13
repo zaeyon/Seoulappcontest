@@ -24,6 +24,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ImageActivity"
+            android:label="Selected Image">
+        </activity>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

@@ -28,5 +28,10 @@
         android:layout_height="20dp"
         android:src="@drawable/icon_heart"
         />
+    <TextView
+        android:layout_width="50dp"
+        android:layout_height="20dp"
+        android:text="댓글 달기"
+        />
 
 </LinearLayout>

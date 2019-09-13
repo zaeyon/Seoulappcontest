@@ -4,11 +4,11 @@
     xmlns:stroke="http://schemas.android.com/apk/res-auto"
     android:shape="rectangle"
     android:padding="10dp">
-    <solid android:color="#dcdcdc"/>
+  <solid android:color="#dcdcdc"/>
 
-    <corners
-        android:bottomRightRadius="15dp"
-        android:bottomLeftRadius="15dp"
-        android:topLeftRadius="15dp"
-        android:topRightRadius="15dp"/>
+  <corners
+      android:bottomRightRadius="15dp"
+      android:bottomLeftRadius="15dp"
+      android:topLeftRadius="15dp"
+      android:topRightRadius="15dp"/>
 </shape>

@@ -5,8 +5,7 @@
     android:orientation="horizontal"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="10dp"
-    android:background="#f3f3f3"
-    >
+  >
 
 
 
@@ -41,13 +40,17 @@
                 android:src="@drawable/profileimage_1"/>
 
             <TextView
+                android:layout_marginTop="4dp"
                 android:layout_width="wrap_content"      android:layout_height="wrap_content"
-                android:textSize="14dp"
+                android:textSize="13dp"
                 android:layout_gravity="center"
                 android:id="@+id/shop_name"
-                android:text="매장이름"/>
+                android:text="매장이름"
+                android:textColor="#000000"
+                android:fontFamily="@font/nanumsquare_acr"/>
 
             <LinearLayout
+                android:layout_marginTop="2dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -56,16 +59,28 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/shop_building"
                 android:text="건물"
-                android:textSize="10sp"/>
+                android:textSize="9sp"
+                android:fontFamily="@font/nanumsquare_acl"/>
 
-            <TextView
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/shop_floor"
+                    android:text="층"
+                    android:layout_marginLeft="2dp"
+                    android:textSize="9sp"
+                    android:fontFamily="@font/nanumsquare_acl"/>
+
+
+                <TextView
             android:gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
+                android:layout_marginLeft="2dp"
                 android:id="@+id/shop_rocation"
                 android:text="위치"
-                android:textSize="10sp" />
+                android:textSize="9sp"
+                android:fontFamily="@font/nanumsquare_acl"/>
         </LinearLayout>
 
         </LinearLayout>

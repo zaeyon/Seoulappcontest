@@ -50,23 +50,22 @@ public class ListViewAdapter extends BaseAdapter {
             shopProfileImageView.setClipToOutline(true);
         }
         ImageView shopRepImageView1 = convertView.findViewById(R.id.shop_representation1);
-
         ImageView shopRepImageView2 = convertView.findViewById(R.id.shop_representation2);
-
         ImageView shopRepImageView3 = convertView.findViewById(R.id.shop_representation3);
-        shopRepImageView3.setBackground(new ShapeDrawable(new OvalShape()));
 
-
-        TextView shopBuilding = convertView.findViewById(R.id.shop_building);
+        TextView shopBuildingView = convertView.findViewById(R.id.shop_building);
+        TextView shopFloorView = convertView.findViewById(R.id.shop_floor);
         TextView shopNameView = convertView.findViewById(R.id.shop_name);
         TextView shopRocationView = convertView.findViewById(R.id.shop_rocation);
 
         // Data Set(listViewItemList)에서 position에 위치한 데이터 참조 획득
         ListViewItem listViewItem = listViewItemList.get(position);
 
-        shopBuilding.setText(listViewItem.getShopName());
+        shopBuildingView.setText(listViewItem.getShopBuilding());
+        shopFloorView.setText(listViewItem.getShopFloor());
         shopNameView.setText(listViewItem.getShopName());
         shopRocationView.setText(listViewItem.getShopRocation());
+
         Glide.with(context).load(listViewItem.getProfileImage()).into(shopProfileImageView);
         Glide.with(context).load(listViewItem.getShopRepresentation1()).into(shopRepImageView1);
         Glide.with(context).load(listViewItem.getShopRepresentation2()).into(shopRepImageView2);
@@ -89,14 +88,17 @@ public class ListViewAdapter extends BaseAdapter {
 
     // 아이템 데이터 추가를 위한 함수. 개발자가 원하는대로 작성
 
-    public void addItem(String profileImage, String name,String build, String rocation, String req1, String req2, String req3) {
+    public void addItem(String profileImage, String name,String build,String floor, String rocation,String category, String style, String intro, String req1, String req2, String req3) {
         ListViewItem item = new ListViewItem();
-
 
         item.setProfileImage(profileImage);
         item.setShopName(name);
         item.setShopBuilding(build);
+        item.setShopFloor(floor);
         item.setShopRocation(rocation);
+        item.setShopCategory(category);
+        item.setShopStyle(style);
+        item.setShopIntro(intro);
         item.setShopRepresentation1(req1);
         item.setShopRepresentation2(req2);
         item.setShopRepresentation3(req3);
