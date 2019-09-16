@@ -162,7 +162,7 @@ public class Login extends Activity {
             public void onFocusChange(View view, boolean hasFocus) {
                 if(!hasFocus) {
                     // 와이파이 새로 접속할 때마다 변경
-                     new JSONTask().execute("http://192.168.43.102:3000/emailCheck");
+                     new JSONTask().execute("http://192.168.43.141:3000/emailCheck");
                 }
 
             }
@@ -172,8 +172,8 @@ public class Login extends Activity {
             @Override
             public void onClick(View view) {
                 // 와이파이 새로 접속할 때마다 변경
-                 new JSONTask().execute("http://192.168.43.102:3000/login");
-                 new JSONTask().execute("http://192.168.43.102:3000/shopNumber");
+                 new JSONTask().execute("http://192.168.35.203:3000/login");
+                 new JSONTask().execute("http://192.168.35.203:3000/shopNumber");
             }
         });
 
@@ -181,10 +181,6 @@ public class Login extends Activity {
         userPassword.addTextChangedListener(passwordTextWatcher);
 
     }
-
-
-
-
 
     public class JSONTask extends AsyncTask<String, String, String> {
 
@@ -413,7 +409,7 @@ public class Login extends Activity {
             shopRepresentation3 = new String[shopNumber];
 
             // 와이파이 새로 접속할 때마다 변경
-             new JSONTask().execute("http://192.168.43.102/getShopName");
+             new JSONTask().execute("http://192.168.35.203/getShopName");
 
         }
     }

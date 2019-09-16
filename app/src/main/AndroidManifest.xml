@@ -23,13 +23,19 @@
             android:name=".MainActivity"
             android:theme="@style/Theme.AppCompat">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                 <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-    </application>
-
+        <activity android:name=".ui.dashboard.CreateReviewAct"/>
+        <activity android:name=".ui.dashboard.ToolbarAct">
+            <intent-filter>
+            <action android:name="android.intent.action.ReviewToolbar" />
+            </intent-filter>
+        </activity>
+            />
+      </application>
     <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

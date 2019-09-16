@@ -8,7 +8,10 @@
         <item name="colorAccent">@color/colorAccent</item>
         <!-- No Title Bar -->
 
-
     </style>
+    <style name="Toolbar" parent="AppTheme">
+    <!-- Toolbar Title Color -->
+    <item name="android:textColorPrimary">@android:color/holo_blue_light</item>
+</style>
 
-</resources>
+    </resources>

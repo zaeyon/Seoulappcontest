@@ -52,7 +52,7 @@ public class HomeFragment extends ListFragment {
         profileImage = view.findViewById(R.id.shop_profileImage);
 
         // 와이파이 새로 접속할 때마다 변경
-        new JSONTask2().execute("http://192.168.43.102:3000/shopNumber");
+        new JSONTask2().execute("http://192.168.35.203:3000/shopNumber");
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
@@ -158,13 +158,13 @@ public class HomeFragment extends ListFragment {
 
             // 와이파이 새로 접속할 때마다 변경
 
-            new JSONTaskName().execute("http://192.168.43.102:3000/getShopName");
-            new JSONTaskProfile().execute("http://192.168.43.102:3000/getShopProfile");
-            new JSONTaskRocation().execute("http://192.168.43.102:3000/getShopRocation");
-            new JSONTaskBuilding().execute("http://192.168.43.102:3000/getShopBuilding");
-            new JSONTaskReq1().execute("http://192.168.43.102:3000/getShopReq1");
-            new JSONTaskReq2().execute("http://192.168.43.102:3000/getShopReq2");
-            new JSONTaskReq3().execute("http://192.168.43.102:3000/getShopReq3");
+            new JSONTaskName().execute("http://192.168.35.203:3000/getShopName");
+            new JSONTaskProfile().execute("http://192.168.35.203:3000/getShopProfile");
+            new JSONTaskRocation().execute("http://192.168.35.203:3000/getShopRocation");
+            new JSONTaskBuilding().execute("http://192.168.35.203:3000/getShopBuilding");
+            new JSONTaskReq1().execute("http://192.168.35.203:3000/getShopReq1");
+            new JSONTaskReq2().execute("http://192.168.35.203:3000/getShopReq2");
+            new JSONTaskReq3().execute("http://192.168.35.203:3000/getShopReq3");
         }
     }
 
