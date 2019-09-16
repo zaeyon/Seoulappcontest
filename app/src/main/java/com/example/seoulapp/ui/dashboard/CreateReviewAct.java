@@ -103,5 +103,4 @@ public class CreateReviewAct extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
 }

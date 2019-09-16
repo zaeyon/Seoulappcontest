@@ -8,43 +8,43 @@
     tools:context=".Signup">
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical">
+
+    <com.example.seoulapp.ClearEditText
+        android:id="@+id/nicknameInput"
+        android:layout_gravity="center"
+        android:layout_width="247dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="160dp"
+        android:layout_marginBottom="8dp"
+        android:hint="닉네임"
+        android:textSize="13sp" />
+    <TextView
+        android:id="@+id/nicknameText"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <com.example.seoulapp.ClearEditText
-            android:id="@+id/nicknameInput"
-            android:layout_gravity="center"
-            android:layout_width="247dp"
-            android:layout_height="44dp"
-            android:layout_marginTop="160dp"
-            android:layout_marginBottom="8dp"
-            android:hint="닉네임"
-            android:textSize="13sp" />
-        <TextView
-            android:id="@+id/nicknameText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="59dp"
-            android:layout_marginTop="-15dp"
-            android:textColor="#000000"
-            android:text="사용 가능한 닉네임입니다."
-            android:textSize="11sp">
-        </TextView>
-        <TextView
-            android:id="@+id/nicknameText2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="59dp"
-            android:layout_marginTop="-14.5dp"
-            android:textColor="#ff0000"
-            android:text="이미 존재하는 닉네임입니다."
-            android:textSize="11sp">
-        </TextView>
+        android:layout_marginStart="59dp"
+        android:layout_marginTop="-15dp"
+        android:textColor="#000000"
+        android:text="사용 가능한 닉네임입니다."
+        android:textSize="11sp">
+    </TextView>
+    <TextView
+        android:id="@+id/nicknameText2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="59dp"
+        android:layout_marginTop="-14.5dp"
+        android:textColor="#ff0000"
+        android:text="이미 존재하는 닉네임입니다."
+        android:textSize="11sp">
+    </TextView>
 
 
-        <com.example.seoulapp.ClearEditText
+    <com.example.seoulapp.ClearEditText
         android:id="@+id/emailInput"
         android:layout_width="247dp"
         android:layout_height="44dp"
@@ -55,36 +55,36 @@
         android:textSize="13sp"
         />
 
-        <TextView
-            android:id="@+id/emailText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="59dp"
-            android:layout_marginTop="-15dp"
-            android:textColor="#000000"
-            android:text="사용 가능한 이메일입니다."
-            android:textSize="11sp">
-        </TextView>
-        <TextView
-            android:id="@+id/emailText2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="59dp"
-            android:layout_marginTop="-14.5dp"
-            android:textColor="#ff0000"
-            android:text="이미 존재하는 이메일입니다."
-            android:textSize="11sp">
-        </TextView>
-        <TextView
-            android:id="@+id/emailText3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="59dp"
-            android:layout_marginTop="-14.5dp"
-            android:textColor="#ff0000"
-            android:text="잘못된 이메일 형식입니다."
-            android:textSize="11sp">
-        </TextView>
+    <TextView
+        android:id="@+id/emailText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="59dp"
+        android:layout_marginTop="-15dp"
+        android:textColor="#000000"
+        android:text="사용 가능한 이메일입니다."
+        android:textSize="11sp">
+    </TextView>
+    <TextView
+        android:id="@+id/emailText2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="59dp"
+        android:layout_marginTop="-14.5dp"
+        android:textColor="#ff0000"
+        android:text="이미 존재하는 이메일입니다."
+        android:textSize="11sp">
+    </TextView>
+    <TextView
+        android:id="@+id/emailText3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="59dp"
+        android:layout_marginTop="-14.5dp"
+        android:textColor="#ff0000"
+        android:text="잘못된 이메일 형식입니다."
+        android:textSize="11sp">
+    </TextView>
 
 
     <com.example.seoulapp.ClearEditText
@@ -108,38 +108,38 @@
         android:hint="비밀번호 확인"
         android:inputType="textPassword"
         android:textSize="13sp"
-         />
-        <TextView android:id="@+id/passwordConfirmText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="59dp"
-            android:layout_marginTop="-14.5dp"
-            android:textColor="#000000"
-            android:text="비밀번호가 일치합니다."
-            android:textSize="11sp">
-        </TextView>
-        <TextView android:id="@+id/passwordConfirmText2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="59dp"
-            android:layout_marginTop="-14.5dp"
-            android:textColor="#ff0000"
-            android:text="비밀번호가 일치하지 않습니다."
-            android:textSize="11sp">
-        </TextView>
+        />
+    <TextView android:id="@+id/passwordConfirmText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="59dp"
+        android:layout_marginTop="-14.5dp"
+        android:textColor="#000000"
+        android:text="비밀번호가 일치합니다."
+        android:textSize="11sp">
+    </TextView>
+    <TextView android:id="@+id/passwordConfirmText2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="59dp"
+        android:layout_marginTop="-14.5dp"
+        android:textColor="#ff0000"
+        android:text="비밀번호가 일치하지 않습니다."
+        android:textSize="11sp">
+    </TextView>
 
 
-        <Button
-            android:id="@+id/signupFinish"
-            android:layout_width="247dp"
-            android:layout_height="44dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:text="회원가입"
-             />
-    </LinearLayout>
+    <Button
+        android:id="@+id/signupFinish"
+        android:layout_width="247dp"
+        android:layout_height="44dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="회원가입"
+        />
+  </LinearLayout>
 
 
 
-    </ScrollView>
+</ScrollView>

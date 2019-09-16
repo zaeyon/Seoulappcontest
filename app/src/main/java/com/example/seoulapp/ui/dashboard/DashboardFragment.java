@@ -28,6 +28,7 @@ import android.widget.TextView;
 import android.support.annotation.Nullable;
 import android.support.annotation.NonNull;
 
+import com.example.seoulapp.MainActivity;
 import com.example.seoulapp.R;
 
 
@@ -99,10 +100,4 @@ public class DashboardFragment extends ListFragment {
         return super.onOptionsItemSelected(item);
     }
 
-
-
 }
-
-
-
-

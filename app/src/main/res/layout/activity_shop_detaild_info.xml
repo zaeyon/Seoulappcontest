@@ -11,7 +11,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="3.5"
+        android:layout_weight="2.6"
         android:orientation="vertical"
         android:gravity="center"
         android:background="#ffffff">
@@ -24,20 +24,22 @@
             android:orientation="horizontal">
 
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:gravity="center"
                 android:layout_weight="2.5">
 
-        <com.example.seoulapp.CircularImageView
-            android:layout_centerInParent="true"
-            android:id="@+id/profilePic"
-            android:layout_width="90dp"
-            android:layout_height="90dp"
-            android:layout_marginTop="20dp"
-            android:src="@drawable/profileimage_1"/>
+                <ImageView
+                    android:layout_gravity="center"
+                    android:id="@+id/shop_profile"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:layout_centerInParent="true"
+                    android:layout_marginTop="8dp"
+                    android:src="@drawable/profileimage_1" />
 
-            </RelativeLayout>
+            </LinearLayout>
 
             <LinearLayout
                 android:gravity="center_vertical"
@@ -60,27 +62,58 @@
             android:text="꽃순이네"
             android:textSize="21dp"
             android:textStyle="bold"
+            android:fontFamily="@font/nanumsquare_acr"
             android:layout_marginTop="10dp"
             android:gravity="center"
             android:textColor="#000000">
         </TextView>
-        <TextView
-            android:id="@+id/shop_rocation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="두산타워 2층 A12구역"
-            android:textSize="13dp"
-            android:layout_marginTop="5dp"
-            android:gravity="center">
-        </TextView>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="건물"
+                            android:textSize="13dp"
+                            android:layout_marginTop="5dp"
+                            android:fontFamily="@font/nanumsquare_acl"
+                            android:id="@+id/shop_building"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="층"
+                            android:textSize="13dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginLeft="5dp"
+                            android:fontFamily="@font/nanumsquare_acl"
+                            android:id="@+id/shop_floor"/>
+
+                        <TextView
+                            android:id="@+id/shop_rocation"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="A12구역"
+                            android:textSize="13dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginLeft="5dp"
+                            android:fontFamily="@font/nanumsquare_acl"
+                            android:gravity="center">
+                        </TextView>
+
+                    </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
         <TextView
-            android:id="@+id/shop_item"
+            android:id="@+id/shop_category"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/nanumsquare_acl"
             android:text="남성복"
             android:textSize="13dp"
             android:layout_marginTop="5dp"
@@ -92,28 +125,34 @@
             android:layout_height="wrap_content"
             android:text=" 깔끔한 스타일"
             android:textSize="13dp"
+            android:fontFamily="@font/nanumsquare_acl"
             android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp"
             android:gravity="center">
         </TextView>
                 </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1.0">
+            android:layout_weight="1.0"
+            android:gravity="center">
 
             <TextView
+                android:id="@+id/shop_intro"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:fontFamily="@font/nanumsquare_acl"
                 android:text="매장 소개"
                 android:layout_centerInParent="true">
 
             </TextView>
 
 
-        </RelativeLayout>
+        </LinearLayout>
 
 
     </LinearLayout>
@@ -128,92 +167,18 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="vertical"
-        android:layout_marginTop="13dp"
+        android:layout_marginTop="4dp"
         android:layout_weight="6.5">
 
+        <View
+            android:layout_marginTop="0dp"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#cccccc" />
+
+
+
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="44dp"
-            android:orientation="horizontal"
-            android:weightSum="2">
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <TextView
-                    android:id="@+id/button1_non"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="상품"
-                    android:gravity="center"
-                    android:textSize="14sp"
-                    android:textColor="#3a94e8"
-                    android:background="@drawable/non_select_border"
-                    />
-
-            <TextView
-                android:id="@+id/button1"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="상품"
-                android:gravity="center"
-                android:textSize="14sp"
-                android:textColor="#3a94e8"
-                android:background="@drawable/select_border"
-                />
-            </FrameLayout>
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <TextView
-                    android:id="@+id/button2"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="문의"
-                    android:gravity="center"
-                    android:textSize="14sp"
-                    android:textColor="#3a94e8"
-                    android:background="@drawable/select_border"
-                    />
-
-                <TextView
-                    android:id="@+id/button2_non"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="문의"
-                    android:gravity="center"
-                    android:textSize="14sp"
-                    android:textColor="#3a94e8"
-                    android:background="@drawable/non_select_border"
-                    />
-            </FrameLayout>
-        </LinearLayout>
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <LinearLayout
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:id="@+id/QAPage"
-                android:layout_width="match_parent"
-                android:background="#ffffff">
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="QA"/>
-
-            </LinearLayout>
-
-
-                <LinearLayout
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:id="@+id/feedPage"
@@ -221,27 +186,24 @@
             android:background="#ffffff"
             >
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Feed"/>
+                <GridView
+                    android:id="@+id/gridViewImages"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:numColumns="3"
+                    android:horizontalSpacing="3dp"
+                    android:verticalSpacing="3dp"
+                    android:paddingTop="0dp"
+                    android:paddingBottom="5dp"
+                    android:overScrollMode="never">
+                </GridView>
+
+
+
         </LinearLayout>
 
-        </FrameLayout>
     </LinearLayout>
 
 
-    <android.support.design.widget.BottomNavigationView
-        android:id="@+id/nav_view"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginStart="0dp"
-        android:layout_marginEnd="0dp"
-        android:layout_weight="1"
-        android:background="?android:attr/windowBackground"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:menu="@menu/bottom_nav_menu" />
 
 </LinearLayout>

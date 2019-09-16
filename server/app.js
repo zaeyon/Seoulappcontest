@@ -3,6 +3,27 @@ const app = express();
 var mysql = require('mysql');
 var dbconfig = require('./config/database.js');
 var connection = mysql.createConnection(dbconfig);
+var cookieParser = require('cookie-parser');
+const session = require('express-session');
+const MySQLStore = require('express-mysql-session')(session);
+var bodyParser = require('body-parser');
+
+app.use(cookieParser());
+
+app.use(session({
+  secret : 'A',
+  resave : false,
+  saveUninitialized : true,
+  store : new MySQLStore({
+      host : 'localhost',
+      user : 'root',
+      password : '00000',
+      port : 3306,
+      database : 'test'
+  })
+}));
+
+var accessing_user_email = "";
 
 // 이메일 유효성 체크 함수
 function email_check( email ) {
@@ -41,6 +62,7 @@ app.post('/emailCheck', (req, res) => {
 
 app.post('/login', (req, res) => {
   var inputData;
+  accessing_user_email = "";
   
   req.on('data', (data) => {
     inputData = JSON.parse(data);
@@ -61,6 +83,9 @@ app.post('/login', (req, res) => {
        if(results.length > 0) {
          if(results[0].password == inputData.userPassword) {
            console.log("로그인 성공");
+           req.session.email = inputData.userEmail;
+           console.log("req.session.email : " + req.session.email);
+           accessing_user_email = req.session.email;
            res.write("loginSuccess");
            res.end();
          } 
@@ -220,6 +245,7 @@ app.post('/shopNumber', (req,res) => {
 // 매장이름
 app.post('/getShopName', (req,res) => {
   
+  console.log("accessing_user_email : " + accessing_user_email);
   var allShopName = "";
 
   console.log("매장이름 얻기");
@@ -372,6 +398,38 @@ app.post('/getShopReq3', (req,res) => {
   });
 
 });
+
+app.post('/getShopFloor', (req,res) => {
+  
+  var allShopFloor = "";
+
+  console.log("매장 층 얻기");
+  connection.query("SELECT * FROM shop", function(error, results) {
+    if(error)
+    {
+      console.log("에러");
+    }
+    else{
+    for(var j = 0; j < shopNumberCount; j++)
+    {
+      if(j == 0)
+      {
+        allShopFloor =results[0].shopFloor;
+      }
+      else
+      {
+        allShopFloor = allShopFloor + "/" + results[j].shopFloor;
+      }
+    };
+    };
+
+    console.log("allShopFloor : " + allShopFloor);
+    
+    res.write(String(allShopFloor));
+    res.end();
+  });
+});
+
 app.post('/getShopRocation', (req,res) => {
   
   var allShopInfo = "";
@@ -431,9 +489,225 @@ app.post('/getShopBuilding', (req,res) => {
   });
 });
 
+app.post('/getShopCategory', (req,res) => {
+  
+  var allShopCategory = "";
 
+  console.log("매장 품목 얻기");
+  connection.query("SELECT * FROM shop", function(error, results) {
+    if(error)
+    {
+      console.log("에러");
+    }
+    else{
+    for(var j = 0; j < shopNumberCount; j++)
+    {
+      if(j == 0)
+      {
+        allShopCategory =results[0].shopCategory;
+      }
+      else
+      {
+        allShopCategory = allShopCategory + "/" + results[j].shopCategory;
+      }
+    };
+    };
+
+    console.log("allShopCategory : " + allShopCategory);
+    
+    res.write(String(allShopCategory));
+    res.end();
+  });
+});
+
+app.post('/getShopStyle', (req,res) => {
+  
+  var allShopStyle = "";
+
+  console.log("매장 스타일 얻기");
+  connection.query("SELECT * FROM shop", function(error, results) {
+    if(error)
+    {
+      console.log("에러");
+    }
+    else{
+    for(var j = 0; j < shopNumberCount; j++)
+    {
+      if(j == 0)
+      {
+        allShopStyle =results[0].shopStyle;
+      }
+      else
+      {
+        allShopStyle = allShopStyle + "/" + results[j].shopStyle;
+      }
+    };
+    };
+
+    console.log("allShopStyle : " + allShopStyle);
+    
+    res.write(String(allShopStyle));
+    res.end();
+  });
+});
+
+app.post('/getShopIntro', (req,res) => {
+  
+  var allShopIntro = "";
+
+  console.log("매장 소개 얻기");
+  connection.query("SELECT * FROM shop", function(error, results) {
+    if(error)
+    {
+      console.log("에러");
+    }
+    else{
+    for(var j = 0; j < shopNumberCount; j++)
+    {
+      if(j == 0)
+      {
+        allShopIntro =results[0].shopIntro;
+      }
+      else
+      {
+        allShopIntro = allShopIntro + "/" + results[j].shopIntro;
+      }
+    };
+    };
+
+    console.log("allShopIntro : " + allShopIntro);
+    res.write(String(allShopIntro));
+    res.end();
+  });
+});
+
+
+app.post('/getShopProduction', (req, res) => {
+  var inputData;
+  var shopProduction = "";
+
+  req.on('data', (data) => {
+    inputData = JSON.parse(data);
+  });
+
+  req.on('end', () => {
+    console.log("매장이름 : " + 
+    inputData.shopName);
+
+    connection.query("select shopProduction from shop where shopName = ?", inputData.shopName, function(error, results) {
+      
+      if(error)
+      {
+        console.log("error 발생");
+        console.log(error);
+        res.end();
+      }
+      else if(results[0].shopProduction == null)
+      {
+        console.log("등록된 상품없음");
+        res.end();
+      }
+      else
+      {
+        shopProduction = results[0].shopProduction;
+        console.log("등록된 상품 목록 : " + shopProduction);
+        res.write(String(shopProduction));
+        res.end();
+      }
+    });
+  
+});
+});
+
+app.post('/getProductionInfo', (req, res) => {
+  var inputData;
+  var productionInfo = "";
+
+  req.on('data', (data) => {
+    inputData = JSON.parse(data);
+  });
+
+  req.on('end', () => {
+
+    connection.query("select productionName from production where productionURL = ?", inputData.productionURL, function(error, results) {
+      
+      if(error)
+      {
+        console.log("error 발생");
+        console.log(error);
+        res.end();
+      }
+      else if(results[0].productionName == null)
+      {
+        console.log("등록된 상품없음");
+        res.end();
+      }
+      else
+      {
+        productionInfo = results[0] .productionName + "|";
+      }
+    });
+
+      connection.query("select productionSize from production where productionURL = ?",inputData.productionURL, function(error, results) {
+        if(error)
+        {
+          console.log("error 발생");
+          console.log(error);
+          res.end();
+        }
+        else if(results[0].productionSize == null)
+        {
+          console.log("등록된 상품없음");
+          res.end();
+        }
+        else{
+          productionInfo =productionInfo + results[0].productionSize + "|";
+        }
+      });
+
+      connection.query("select productionPrice from production where productionURL = ?",inputData.productionURL, function(error, results) {
+        if(error)
+        {
+          console.log("error 발생");
+          console.log(error);
+          res.end();
+        }
+        else if(results[0].productionPrice == null)
+        {
+          console.log("등록된 상품없음");
+          res.end();
+        }
+        else{
+          productionInfo = productionInfo + results[0].productionPrice + "|";
+        }
+      });
+
+      connection.query("select productionIntro from production where productionURL = ?", inputData.productionURL, function(error, results) {
+        if(error)
+        {
+          console.log("error 발생");
+          console.log(error);
+          res.end();
+        }
+        else if(results[0].productionIntro == null)
+        {
+          console.log("등록된 상품없음");
+          res.end();
+        }
+        else 
+        {
+          productionInfo = productionInfo + results[0].productionIntro;
+        }
+
+        console.log(productionInfo);
+        res.write(String(productionInfo));
+        res.end();
+    });
+    
+  
+});
+});
 
 app.listen(3000, () => {
   console.log('Example app listening on port 3000!');
 });
-
