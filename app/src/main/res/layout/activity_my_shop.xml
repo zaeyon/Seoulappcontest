@@ -7,149 +7,158 @@
     tools:context=".ui.notifications.MyShopActivity"
     android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/shopProfileImage"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="115dp"
-        android:layout_marginTop="30dp"
-        tools:srcCompat="@tools:sample/avatars" />
-
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <android.support.design.widget.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="상점 이름" />
-    </android.support.design.widget.TextInputLayout>
-
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="취급 품목"
-        android:textSize="20dp"
-        android:padding="10dp"/>
-
-    <TextView
-        android:id="@+id/textView7"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="컨셉"
-        android:textSize="20dp"
-        android:padding="10dp"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="10dp">
-
-        <TextView
-            android:id="@+id/textView8"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="위치" />
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:orientation="horizontal">
-
-            <Spinner
-                android:id="@+id/spinner"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="wrap_content"
-                android:layout_height="45dp"
-                android:layout_weight="2">
-
-                <android.support.design.widget.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:hint="상세 위치" />
-            </android.support.design.widget.TextInputLayout>
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="10dp">
-
-        <TextView
-            android:id="@+id/textView9"
-            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="매장 소개" />
+            android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/editText2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:gravity="start|top"
-            android:inputType="textMultiLine" />
-    </LinearLayout>
+            <ImageView
+                android:id="@+id/ivShopProfile"
+                android:layout_width="match_parent"
+                android:layout_height="115dp"
+                android:layout_marginTop="30dp"
+                tools:srcCompat="@drawable/blank_profile" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="10dp">
-
-        <TextView
-            android:id="@+id/textView10"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="매장 이미지" />
-
-        <HorizontalScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            <com.example.seoulapp.ClearEditText
+                android:id="@+id/cetShopName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="현재 매장 이름" />
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="vertical"
+                android:padding="10dp">
 
-                <ImageView
+                <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="10dp"
-                    app:srcCompat="@android:drawable/sym_def_app_icon" />
+                    android:layout_height="wrap_content"
+                    android:text="판매 품목" />
 
-                <ImageView
+                <Spinner
+                    android:id="@+id/sSalesItem"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="10dp"
-                    app:srcCompat="@android:drawable/sym_def_app_icon" />
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="10dp"
-                    app:srcCompat="@android:drawable/sym_def_app_icon" />
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="10dp"
-                    app:srcCompat="@android:drawable/sym_def_app_icon" />
+                    android:layout_height="wrap_content" />
             </LinearLayout>
-        </HorizontalScrollView>
-    </LinearLayout>
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="완료"
-        android:layout_marginTop="20dp"/>
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="컨셉"
+                android:textSize="20dp"
+                android:layout_margin="10dp"/>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <TextView
+                    android:id="@+id/textView8"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="위치" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Spinner
+                        android:id="@+id/sBuilding"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
+                    <com.example.seoulapp.ClearEditText
+                        android:id="@+id/cetLocation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:text="상세 위치" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <TextView
+                    android:id="@+id/tvIntro"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="매장 소개" />
+
+                <com.example.seoulapp.ClearEditText
+                    android:id="@+id/clearEditText3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="매장 소개" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <TextView
+                    android:id="@+id/textView10"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="매장 이미지" />
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="10dp"
+                            android:layout_weight="1"
+                            app:srcCompat="@android:drawable/sym_def_app_icon" />
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="10dp"
+                            android:layout_weight="1"
+                            app:srcCompat="@android:drawable/sym_def_app_icon" />
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="10dp"
+                            android:layout_weight="1"
+                            app:srcCompat="@android:drawable/sym_def_app_icon" />
+
+                    </LinearLayout>
+                </HorizontalScrollView>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="완료"
+                android:layout_marginTop="20dp"/>
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

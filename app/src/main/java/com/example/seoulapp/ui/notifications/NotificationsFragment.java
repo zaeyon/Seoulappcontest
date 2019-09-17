@@ -2,6 +2,9 @@ package com.example.seoulapp.ui.notifications;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.OvalShape;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -10,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.seoulapp.R;
 
@@ -19,8 +23,10 @@ public class NotificationsFragment extends Fragment {
 
     private NotificationsViewModel notificationsViewModel;
 
+    ImageView ivProfile;
     ImageView ivSettings;
     ImageView ivNews;
+    ImageView ivShop;
 
     private ListView m_oListView = null;
 
@@ -39,37 +45,46 @@ public class NotificationsFragment extends Fragment {
 
         View v = inflater.inflate(R.layout.fragment_notifications, container, false);
 
-        ivSettings = (ImageView) v.findViewById(R.id.ivSettings);
-        ivSettings.setOnClickListener(new goSettings());
+        ivProfile = (ImageView)v.findViewById(R.id.ivProfile);
+        ivProfile.setBackground(new ShapeDrawable(new OvalShape()));
+        if (Build.VERSION.SDK_INT >= 21) {
+            ivProfile.setClipToOutline(true);
+        }
+
+        // ivProfile에 현재 사용자 프로필 이미지
+        // tvNickname에 현재 사용자 닉네임
+        TextView tvNickname = (TextView)v.findViewById(R.id.tvNickname);
+        // tvEmail에 현재 사용자 e-mail
+        TextView tvEmail = (TextView)v.findViewById(R.id.tvEmail);
+        // DB에서 현재 사용자의 id값과 일치하는 nickname과 email 추출
+        // String(strNickname, strEmail)에 저장
+        tvNickname.setText("닉네임"); // strNickname
+        tvEmail.setText("email@naver.com"); // strEmail
+
         ivNews = (ImageView) v.findViewById(R.id.ivNews);
         ivNews.setOnClickListener(new goNews());
+        ivShop = (ImageView) v.findViewById(R.id.ivShop);
+        ivShop.setOnClickListener(new goShop());
+        ivSettings = (ImageView) v.findViewById(R.id.ivSettings);
+        ivSettings.setOnClickListener(new goSettings());
 
-        String[] strNumber = {"1", "2", "3"};
-        int nNumCnt = 0;
+        // 즐겨찾기 리스트
+        String[] strBookmark =  {"들락날락", "다래락", "라일락", "라운지오", "워커하우스"};
         ArrayList<ItemData> oData = new ArrayList<>();
-        for (int i = 0; i < 10; ++i) {
+        for (int i = 0; i < strBookmark.length; i++) {
             ItemData oItem = new ItemData();
-            oItem.strShopName = "데이터" + (i+1);
-            nNumCnt++;
+            oItem.strShopName = strBookmark[i];
             oData.add(oItem);
-            if(nNumCnt >= strNumber.length) nNumCnt = 0;
         }
 
         m_oListView = (ListView) v.findViewById(R.id.listView);
         ListAdapter oAdapter = new ListAdapter(oData);
         m_oListView.setAdapter(oAdapter);
 
+        // listview 클릭 시 각 매장 페이지로 이동(매장 id를 ShopDetaildInfo에 전달)
+
         // return root;
         return v;
-    }
-
-    class goSettings implements View.OnClickListener {
-        @Override
-        public void onClick(View v) {
-            // final Intent intent1 = new Intent(getActivity(), SettingsActivity.class);
-            Intent intentSettings = new Intent(getActivity(), SettingsActivity.class);
-            startActivity(intentSettings);
-        }
     }
 
     class goNews implements View.OnClickListener {
@@ -77,6 +92,22 @@ public class NotificationsFragment extends Fragment {
         public void onClick(View v) {
             Intent intentNews = new Intent(getActivity(), NewsActivity.class);
             startActivity(intentNews);
+        }
+    }
+
+    class goShop implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            Intent intentShop = new Intent(getActivity(), MyShopActivity.class);
+            startActivity(intentShop);
+        }
+    }
+
+    class goSettings implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            Intent intentSettings = new Intent(getActivity(), SettingsActivity.class);
+            startActivity(intentSettings);
         }
     }
 }
