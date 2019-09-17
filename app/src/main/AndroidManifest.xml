@@ -20,13 +20,20 @@
         <activity android:name=".ui.notifications.NewsActivity" />
         <activity android:name=".ui.notifications.SettingsActivity" />
         <activity android:name=".ui.notifications.EditProfileActivity" />
+        <activity android:name=".ImageActivity"/>
         <activity
             android:name=".MainActivity"
             android:theme="@style/Theme.AppCompat">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                 <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ui.dashboard.CreateReviewAct"/>
+        <activity android:name=".ui.dashboard.ToolbarAct">
+            <intent-filter>
+                <action android:name="android.intent.action.ReviewToolbar" />
             </intent-filter>
         </activity>
 
@@ -40,3 +47,4 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
 </manifest>
+

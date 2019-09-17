@@ -161,8 +161,10 @@ public class Login extends Activity {
             @Override
             public void onFocusChange(View view, boolean hasFocus) {
                 if(!hasFocus) {
+
                     // 와이파이 새로 접속할 때마다 변경
-                     new JSONTask().execute("http://192.168.43.102:3000/emailCheck");
+                    new JSONTask().execute("http://192.168.43.72:3000/emailCheck");
+
                 }
 
             }
@@ -171,9 +173,11 @@ public class Login extends Activity {
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 // 와이파이 새로 접속할 때마다 변경
-                 new JSONTask().execute("http://192.168.43.102:3000/login");
-                 new JSONTask().execute("http://192.168.43.102:3000/shopNumber");
+                new JSONTask().execute("http://192.168.43.72:3000/login");
+                new JSONTask2().execute("http://192.168.43.72:3000/shopNumber");
+
             }
         });
 
@@ -181,10 +185,6 @@ public class Login extends Activity {
         userPassword.addTextChangedListener(passwordTextWatcher);
 
     }
-
-
-
-
 
     public class JSONTask extends AsyncTask<String, String, String> {
 
@@ -276,18 +276,6 @@ public class Login extends Activity {
 
             if(result != null && result.equals("passwordNotMatch")) {
 
-                /* 로그인실패 팝업창
-              AlertDialog.Builder passwordNot = new AlertDialog.Builder(Login.this);
-              passwordNot.setTitle("로그인 실패").setMessage("비밀번호가 일치하지 않습니다.");
-
-              passwordNot.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                  @Override
-                  public void onClick(DialogInterface dialog, int which) {
-                  }
-              });
-              AlertDialog alertDialog = passwordNot.create();
-              alertDialog.show();
-            */
                 wrongPassword.setVisibility(View.VISIBLE);
                 notExistEmail.setVisibility(View.INVISIBLE);
                 loginBtn.setEnabled(false);
@@ -296,23 +284,10 @@ public class Login extends Activity {
 
             else if(result != null && result.equals("emailNotExist"))
             {
-                /* 로그인실패 팝업창
-                AlertDialog.Builder emailNot = new AlertDialog.Builder(Login.this);
-                emailNot.setTitle("로그인 실패").setMessage("등록되지 않은 이메일입니다.");
-
-                emailNot.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                    }
-                });
-                AlertDialog alertDialog2 = emailNot.create();
-                alertDialog2.show();
-                */
                 wrongPassword.setVisibility(View.INVISIBLE);
                 notExistEmail.setVisibility(View.VISIBLE);
                 loginBtn.setEnabled(false);
                 EWrong = true;
-
             }
             else if(result != null && result.equals("loginSuccess"))
             {
@@ -411,9 +386,6 @@ public class Login extends Activity {
             shopRepresentation1 = new String[shopNumber];
             shopRepresentation2 = new String[shopNumber];
             shopRepresentation3 = new String[shopNumber];
-
-            // 와이파이 새로 접속할 때마다 변경
-             new JSONTask().execute("http://192.168.43.102/getShopName");
 
         }
     }

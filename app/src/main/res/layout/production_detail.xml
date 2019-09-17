@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#ffffff">
+
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/representation_1_3"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#000000" />
+
+    <RelativeLayout
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/likeButton"
+            android:layout_width="75dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="7dp"
+            android:layout_marginRight="5dp"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/production_like" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/production_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="체크 무늬 셔츠"
+                android:textSize="22dp"
+                android:textColor="#000000"
+                android:fontFamily="@font/nanumsquare_acr"
+                />
+
+            <TextView
+
+                android:layout_marginLeft="10dp"
+                android:id="@+id/production_a"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="("
+                android:textSize="22dp"
+                android:textColor="#000000"
+                android:fontFamily="@font/nanumsquare_acr"
+                />
+        <TextView
+            android:id="@+id/production_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="XL"
+            android:textSize="22dp"
+            android:textColor="#000000"
+            android:fontFamily="@font/nanumsquare_acr"
+            />
+            <TextView
+                android:id="@+id/production_b"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=")"
+                android:textSize="22dp"
+                android:textColor="#000000"
+                android:fontFamily="@font/nanumsquare_acr"
+                />
+
+        </LinearLayout>
+            <TextView
+                android:layout_marginTop="40dp"
+                android:id="@+id/production_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="25,000원"
+                android:textSize="19dp"
+                android:textColor="#000000"
+                android:fontFamily="@font/nanumsquare_acl"
+                />
+    </RelativeLayout>
+
+        <View
+            android:layout_marginTop="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#000000" />
+
+        <LinearLayout
+            android:layout_width='wrap_content'
+            android:layout_height="match_parent"
+            android:weightSum="2"
+            android:gravity="center_horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.9">
+
+            <TextView
+                android:layout_marginTop="10dp"
+                android:id="@+id/production_intro"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="가을에 데일리로 입기 좋은 체크 무늬 셔츠입니다! 아이보리, 그레이, 네이비 등등 여러가지 컬러있으니깐 직접와서 구경하세요!"
+                android:textSize="19dp"
+                android:textColor="#000000"
+                android:fontFamily="@font/nanumsquare_acl"
+                />
+
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+

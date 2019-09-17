@@ -13,10 +13,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginTop="300dp"
         android:onClick="onClickLogin"
-        android:layout_marginTop="520dp"
-        android:textColor="#000000"
-        android:text="로그인 하기" />
+        android:text="로그인 하기"
+        android:textColor="#000000" />
 
     <TextView
         android:id="@+id/textView2"
@@ -39,7 +39,6 @@
         android:text="TEST"
         android:layout_gravity="center"
         />
-
 
 
 
