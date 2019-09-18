@@ -3,25 +3,8 @@ const app = express();
 var mysql = require('mysql');
 var dbconfig = require('./config/database.js');
 var connection = mysql.createConnection(dbconfig);
-var cookieParser = require('cookie-parser');
-const session = require('express-session');
-const MySQLStore = require('express-mysql-session')(session);
 var bodyParser = require('body-parser');
 
-app.use(cookieParser());
-
-app.use(session({
-  secret : 'A',
-  resave : false,
-  saveUninitialized : true,
-  store : new MySQLStore({
-      host : 'localhost',
-      user : 'root',
-      password : '00000',
-      port : 3306,
-      database : 'test'
-  })
-}));
 
 var accessing_user_email = "";
 
@@ -83,9 +66,7 @@ app.post('/login', (req, res) => {
        if(results.length > 0) {
          if(results[0].password == inputData.userPassword) {
            console.log("로그인 성공");
-           req.session.email = inputData.userEmail;
-           console.log("req.session.email : " + req.session.email);
-           accessing_user_email = req.session.email;
+
            res.write("loginSuccess");
            res.end();
          } 

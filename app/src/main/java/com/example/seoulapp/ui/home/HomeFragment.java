@@ -67,7 +67,7 @@ public class HomeFragment extends ListFragment {
 
 
         // 와이파이 새로 접속할때마다 변경
-         new JSONTask2().execute("http://192.168.43.72:3000/shopNumber");
+         new JSONTask2().execute("http://192.168.43.102:3000/shopNumber");
 
 
         return super.onCreateView(inflater, container, savedInstanceState);
@@ -179,17 +179,17 @@ public class HomeFragment extends ListFragment {
             shopNumber = Integer.parseInt(result);
 
             // 와이파이 새로 접속할때마다 변경
-            new JSONTaskName().execute("http://192.168.43.72:3000/getShopName");
-            new JSONTaskProfile().execute("http://192.168.43.72:3000/getShopProfile");
-            new JSONTaskRocation().execute("http://192.168.43.72:3000/getShopRocation");
-            new JSONTaskFloor().execute("http://192.168.43.72:3000/getShopFloor");
-            new JSONTaskBuilding().execute("http://192.168.43.72:3000/getShopBuilding");
-            new JSONTaskCategory().execute("http://192.168.43.72:3000/getShopCategory");
-            new JSONTaskStyle().execute("http://192.168.43.72:3000/getShopStyle");
-            new JSONTaskIntro().execute("http://192.168.43.72:3000/getShopIntro");
-            new JSONTaskReq1().execute("http://192.168.43.72:3000/getShopReq1");
-            new JSONTaskReq2().execute("http://192.168.43.72:3000/getShopReq2");
-            new JSONTaskReq3().execute("http://192.168.43.72:3000/getShopReq3");
+            new JSONTaskName().execute("http://192.168.43.102:3000/getShopName");
+            new JSONTaskProfile().execute("http://192.168.43.102:3000/getShopProfile");
+            new JSONTaskRocation().execute("http://192.168.43.102:3000/getShopRocation");
+            new JSONTaskFloor().execute("http://192.168.43.102:3000/getShopFloor");
+            new JSONTaskBuilding().execute("http://192.168.43.102:3000/getShopBuilding");
+            new JSONTaskCategory().execute("http://192.168.43.102:3000/getShopCategory");
+            new JSONTaskStyle().execute("http://192.168.43.102:3000/getShopStyle");
+            new JSONTaskIntro().execute("http://192.168.43.102:3000/getShopIntro");
+            new JSONTaskReq1().execute("http://192.168.43.102:3000/getShopReq1");
+            new JSONTaskReq2().execute("http://192.168.43.102:3000/getShopReq2");
+            new JSONTaskReq3().execute("http://192.168.43.102:3000/getShopReq3");
 
         }
     }
