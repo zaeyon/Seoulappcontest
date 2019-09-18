@@ -1,3 +1,4 @@
+
 package com.example.seoulapp.ui.notifications;
 
 import android.content.Intent;

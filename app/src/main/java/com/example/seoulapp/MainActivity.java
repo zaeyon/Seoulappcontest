@@ -134,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-       requestWindowFeature(Window.FEATURE_NO_TITLE);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -150,14 +150,12 @@ public class MainActivity extends AppCompatActivity {
         notExistEmail.setVisibility(View.INVISIBLE);
         wrongPassword.setVisibility(View.INVISIBLE);
 
-
         SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
 
         loginId = auto.getString("inputId", null);
         loginPwd = auto.getString("inputPwd", null);
 
         if(loginId != null && loginPwd != null){
-
             Intent intent = new Intent(MainActivity.this, BottomNavigation.class);
             startActivity(intent);
             finish();

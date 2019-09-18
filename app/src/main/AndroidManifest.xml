@@ -10,18 +10,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-<<<<<<< HEAD
         <activity android:name=".SearchActivity"></activity>
         <activity
             android:name=".BottomNavigation"
             android:label="@string/title_activity_bottom_navigation" />
-=======
         <activity android:name=".ui.notifications.MyShopActivity"></activity>
-        <activity
-            android:name=".BottomNavigation"
-            android:label="@string/title_activity_bottom_navigation" />
-        <activity android:name=".Login" />
->>>>>>> 043379f469e5e7c722fb04424b9c50fc3269a745
         <activity android:name=".ShopDetaildInfo" />
         <activity android:name=".Signup" />
         <activity android:name=".ui.notifications.NewsActivity" />
@@ -36,13 +29,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.dashboard.CreateReviewAct"/>
-        <activity android:name=".ui.dashboard.ToolbarAct">
-            <intent-filter>
-                <action android:name="android.intent.action.ReviewToolbar" />
-            </intent-filter>
-        </activity>
-
-        <service android:name="com.amazonaws.mobileconnectors.s3.transferutility.TransferService"
+                    <service android:name="com.amazonaws.mobileconnectors.s3.transferutility.TransferService"
             android:enabled="true" />
     </application>
 

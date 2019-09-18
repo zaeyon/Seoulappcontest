@@ -737,6 +737,40 @@ app.post('/aa', (req,res) => {
   });
 });
 
+app.post('/getUserProfile', (req,res) => {
+  
+  var allUserProfileImage = "";
+
+  console.log("프로필 사진 얻기");
+  connection.query("SELECT * FROM review", function(error, results) {
+    if(error)
+    {
+      console.log("에러");
+    }
+    else{
+    for(var j = 0; j < results.length; j++)
+    {
+      if(j == 0)
+      {
+        allUserProfileImage =results[0].User_profile_img;
+        
+        console.log("allImage : " + allUserProfileImage);
+      }
+      else
+      {
+        console.log("allImage : " + allUserProfileImage);
+        allUserProfileImage = allUserProfileImage + "|" + results[j].User_profile_img;
+      }
+    };
+    };
+
+    console.log("allImage : " + allUserProfileImage);
+    res.write(String(allUserProfileImage));
+    res.end();
+  });
+
+});
+
 /*
    connection.query("select shopName from shop where shopName like concat ('%', ?, '%')",
    inputData.searchShopName, function(error, results) {

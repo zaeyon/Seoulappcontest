@@ -45,11 +45,10 @@ public class NotificationsFragment extends Fragment {
 
         View v = inflater.inflate(R.layout.fragment_notifications, container, false);
 
-<<<<<<< HEAD
 
         ivSettings = (ImageView) v.findViewById(R.id.ivSettings);
         ivSettings.setOnClickListener(new goSettings());
-=======
+
         ivProfile = (ImageView)v.findViewById(R.id.ivProfile);
         ivProfile.setBackground(new ShapeDrawable(new OvalShape()));
         if (Build.VERSION.SDK_INT >= 21) {
@@ -66,11 +65,10 @@ public class NotificationsFragment extends Fragment {
         tvNickname.setText("닉네임"); // strNickname
         tvEmail.setText("email@naver.com"); // strEmail
 
->>>>>>> 043379f469e5e7c722fb04424b9c50fc3269a745
         ivNews = (ImageView) v.findViewById(R.id.ivNews);
         ivNews.setOnClickListener(new goNews());
         ivShop = (ImageView) v.findViewById(R.id.ivShop);
-        ivShop.setOnClickListener(new goShop());
+        //ivShop.setOnClickListener(new goShop());
         ivSettings = (ImageView) v.findViewById(R.id.ivSettings);
         ivSettings.setOnClickListener(new goSettings());
 
@@ -101,6 +99,7 @@ public class NotificationsFragment extends Fragment {
         }
     }
 
+    /*
     class goShop implements View.OnClickListener {
         @Override
         public void onClick(View v) {
@@ -109,6 +108,7 @@ public class NotificationsFragment extends Fragment {
         }
     }
 
+     */
     class goSettings implements View.OnClickListener {
         @Override
         public void onClick(View v) {
