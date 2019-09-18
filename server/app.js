@@ -737,39 +737,6 @@ app.post('/aa', (req,res) => {
   });
 });
 
-app.post('/getUserProfile', (req,res) => {
-  
-  var allUserProfileImage = "";
-
-  console.log("프로필 사진 얻기");
-  connection.query("SELECT * FROM review", function(error, results) {
-    if(error)
-    {
-      console.log("에러");
-    }
-    else{
-    for(var j = 0; j < results.length; j++)
-    {
-      if(j == 0)
-      {
-        allUserProfileImage =results[0].User_profile_img;
-        
-        console.log("allImage : " + allUserProfileImage);
-      }
-      else
-      {
-        console.log("allImage : " + allUserProfileImage);
-        allUserProfileImage = allUserProfileImage + "|" + results[j].User_profile_img;
-      }
-    };
-    };
-
-    console.log("allImage : " + allUserProfileImage);
-    res.write(String(allUserProfileImage));
-    res.end();
-  });
-
-});
 
 /*
    connection.query("select shopName from shop where shopName like concat ('%', ?, '%')",
@@ -793,6 +760,64 @@ app.post('/getUserProfile', (req,res) => {
   });
 });
 */
+
+app.post('/getUserProfile', (req,res) => {
+  
+  var allUserProfileImage = "";
+  var UserContent="";
+  var UserId ="";
+  var UserImage="";
+  var ReviewStoreName="";
+  var DistinguishContent="";
+  var Like="";
+  var allview="";
+
+  console.log("프로필 사진 얻기");
+  connection.query("SELECT * FROM review", function(error, results) {
+    if(error)
+    {
+      console.log("에러");
+    }
+    else{
+      console.log('results.length : ' + results.length);
+    for(var j = 0; j < results.length; j++)
+    {
+      if(j == 0)
+      {
+        console.log("allImage : " + allUserProfileImage);
+        allUserProfileImage =results[0].User_Profile_Img;
+        UserImage = results[0].User_Image;
+        UserId = results[0].User_Id;
+        UserContent = results[0].User_Content;
+        ReviewStoreName = results[0].Review_StoreName;
+        DistinguishContent = results[0].Distinguish_Content;
+        Like = results[0].Like;
+
+        allview = allUserProfileImage + "/" + UserImage + "/" + UserId + "/" + UserContent+ "/"+ReviewStoreName+"/"+DistinguishContent + "/" + Like;
+      }
+      else
+      {
+        console.log("allImage : " + allUserProfileImage);
+        allUserProfileImage = allUserProfileImage + "|" + results[j].User_Profile_Img;
+        UserImage = UserImage+"|"+results[j].User_Image;
+        UserId = UserId+"|"+results[j].User_Id;
+        UserContent = UserContent+"|"+results[j].User_Content;
+        ReviewStoreName = ReviewStoreName+ "|" + results[j].Review_StoreName;
+        DistinguishContent = DistinguishContent +"|"+results[j].Distinguish_Content;
+        Like = Like+"|"+results[j].Like;
+        
+        allview = allUserProfileImage + "/" + UserImage + "/" + UserId + "/" + UserContent+ "/"+ReviewStoreName+"/"+DistinguishContent + "/" + Like;
+        }
+      };
+    };
+
+    console.log("allImage : " + allUserProfileImage);
+    console.log("allview : " + allview);
+    res.write(String(allview)); 
+    res.end();
+  });
+});
+
 app.listen(3000, () => {
   console.log('Example app listening on port 3000!');
 });

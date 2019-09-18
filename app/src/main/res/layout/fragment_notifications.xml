@@ -123,11 +123,42 @@
                         android:textSize="12dp" />
                 </LinearLayout>
 
-                <LinearLayout
+                <FrameLayout
+                    android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:layout_width="40dp"
+                    android:layout_weight="1">
+
+                    <LinearLayout
+                        android:id="@+id/yesShopPage"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:orientation="vertical"
+                        >
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:padding="0dp"
+                            android:src="@drawable/shop"
+                            android:id="@+id/ivShopSetting" />
+
+                        <TextView
+                            android:id="@+id/shopYES"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="매장 관리"
+                            android:textAlignment="center"
+                            android:paddingTop="3dp"
+                            android:textSize="12dp" />
+
+                    </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/noShopPage"
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
                     android:orientation="vertical"
-                    android:layout_weight="1" >
+                    >
 
                     <ImageView
                         android:layout_width="match_parent"
@@ -136,14 +167,18 @@
                         android:src="@drawable/shop"
                         android:id="@+id/ivShop" />
 
-                    <TextView
+                        <TextView
+                        android:id="@+id/shopNo"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="내 상점"
+                        android:text="매장 개설"
                         android:textAlignment="center"
                         android:paddingTop="3dp"
                         android:textSize="12dp" />
+
                 </LinearLayout>
+
+                </FrameLayout>
 
 
                 <LinearLayout
