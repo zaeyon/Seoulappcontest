@@ -5,6 +5,8 @@ var dbconfig = require('./config/database.js');
 var connection = mysql.createConnection(dbconfig);
 var bodyParser = require('body-parser');
 
+let jwt = require("jsonwebtoken");
+let secretObj = require("./config/jwt.js");
 
 var accessing_user_email = "";
 
@@ -16,6 +18,7 @@ function email_check( email ) {
   return (regex.test(email));
 
 }
+
 
 app.post('/emailCheck', (req, res) => {
   var inputData;
@@ -44,14 +47,25 @@ app.post('/emailCheck', (req, res) => {
 });
 
 app.post('/login', (req, res) => {
+
+  let token;
+
   var inputData;
-  accessing_user_email = "";
   
   req.on('data', (data) => {
     inputData = JSON.parse(data);
   });
 
   req.on('end', () => {
+
+    token = jwt.sign({
+      email : inputData.userEmail  // 토큰의 내용
+    },
+    secretObj.secret,   // 비밀 키
+    {
+      expiresIn : '5m'  // 유효 시간은 5분
+    });
+
    // 로그인
    console.log("로그인시도 이메일 : " + inputData.userEmail);
    console.log("로그인시도 비밀번호 : " + inputData.userPassword);
@@ -66,7 +80,6 @@ app.post('/login', (req, res) => {
        if(results.length > 0) {
          if(results[0].password == inputData.userPassword) {
            console.log("로그인 성공");
-
            res.write("loginSuccess");
            res.end();
          } 
@@ -225,8 +238,6 @@ app.post('/shopNumber', (req,res) => {
 
 // 매장이름
 app.post('/getShopName', (req,res) => {
-  
-  console.log("accessing_user_email : " + accessing_user_email);
   var allShopName = "";
 
   console.log("매장이름 얻기");
@@ -684,8 +695,121 @@ app.post('/getProductionInfo', (req, res) => {
         res.write(String(productionInfo));
         res.end();
     });
-    
+});
+});
+
+app.post('/aa', (req,res) => {
+
+  var inputData;
+  var searchInfo = "";
+
+  req.on('data', (data) => {
+    inputData = JSON.parse(data);
+  });
+
+  req.on('end', () => {
+   
+  console.log("매장 검색중");
+    connection.query("select shopName, shopProfileImage  from shop where shopName like concat ('%', ?, '%')", inputData.searchShopName, function(error, results) {
+      if(error){
+        console.log("error 발생 : " + error);
+      }
+      else {
+      for(var i = 0; i < results.length; i++)
+      {
+        if(i == 0 )
+        {
+          searchInfo = results[0].shopName + "|" + results[0].shopProfileImage;
+        }
+        else {
+        searchInfo = searchInfo + "|" + results[i].shopName + "|" + results[i].shopProfileImage;
+        }
+      } 
+    }
+    console.log("searchInfo : " + searchInfo);
+ 
+    res.write(String(searchInfo));
+    res.end();
+   });
+  });
+});
+
+app.post('/getUserProfile', (req,res) => {
   
+  var allUserProfileImage = "";
+
+  console.log("프로필 사진 얻기");
+  connection.query("SELECT * FROM review", function(error, results) {
+    if(error)
+    {
+      console.log("에러");
+    }
+    else{
+    for(var j = 0; j < results.length; j++)
+    {
+      if(j == 0)
+      {
+        allUserProfileImage =results[0].User_profile_img;
+        
+        console.log("allImage : " + allUserProfileImage);
+      }
+      else
+      {
+        console.log("allImage : " + allUserProfileImage);
+        allUserProfileImage = allUserProfileImage + "|" + results[j].User_profile_img;
+      }
+    };
+    };
+
+    console.log("allImage : " + allUserProfileImage);
+    res.write(String(allUserProfileImage));
+    res.end();
+  });
+
+});
+
+/*
+   connection.query("select shopName from shop where shopName like concat ('%', ?, '%')",
+   inputData.searchShopName, function(error, results) {
+     if(error){
+       console.log("error 발생 : " + error);
+     }
+     else if(results[0])
+     {
+       searchInfo = searchInfo + results[0].shopName;
+       console.log("searchInfo : " + searchInfo);
+       res.write(String(searchInfo));
+      }
+     else if(!results[0])
+     {
+      console.log("검색된 매장이름 존재X");
+      res.write("noResult");
+    }
+     res.end();
+   });
+  });
+});
+*/
+
+app.post('/myNickname', (req, res) => {
+    console.log("post /myNickname");
+    var inputData;
+
+    req.on('data', (data) => {
+        inputData = JSON.parse(data);
+        console.log("request from myPage");
+    });
+
+   req.on('end', () => {
+    connection.query("SELECT nickname FROM user where email = ?", inputData.email, function(error, result) {
+        if (error) {
+            console.log("에러");
+        } else {
+            console.log(result[0].nickname);
+            res.write(result[0].nickname);
+            res.end();
+        }
+    });
 });
 });
 

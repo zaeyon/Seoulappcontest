@@ -10,20 +10,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.notifications.MyShopActivity"></activity>
+        <activity android:name=".SearchActivity"></activity>
         <activity
             android:name=".BottomNavigation"
             android:label="@string/title_activity_bottom_navigation" />
-        <activity android:name=".Login" />
+        <activity android:name=".ui.notifications.MyShopActivity"></activity>
         <activity android:name=".ShopDetaildInfo" />
         <activity android:name=".Signup" />
         <activity android:name=".ui.notifications.NewsActivity" />
         <activity android:name=".ui.notifications.SettingsActivity" />
         <activity android:name=".ui.notifications.EditProfileActivity" />
-        <activity android:name=".ImageActivity"/>
-        <activity
-            android:name=".MainActivity"
-            android:theme="@style/Theme.AppCompat">
+        <activity android:name=".ImageActivity" />
+        <activity android:name=".MainActivity">
             <intent-filter>
                  <action android:name="android.intent.action.MAIN" />
 
@@ -31,13 +29,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.dashboard.CreateReviewAct"/>
-        <activity android:name=".ui.dashboard.ToolbarAct">
-            <intent-filter>
-                <action android:name="android.intent.action.ReviewToolbar" />
-            </intent-filter>
-        </activity>
-
-        <service android:name="com.amazonaws.mobileconnectors.s3.transferutility.TransferService"
+                    <service android:name="com.amazonaws.mobileconnectors.s3.transferutility.TransferService"
             android:enabled="true" />
     </application>
 
@@ -47,4 +39,3 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
 </manifest>
-

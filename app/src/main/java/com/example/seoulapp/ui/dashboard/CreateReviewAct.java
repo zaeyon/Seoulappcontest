@@ -18,7 +18,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.example.seoulapp.MainActivity;
 import com.example.seoulapp.R;
 
 public class CreateReviewAct extends AppCompatActivity {

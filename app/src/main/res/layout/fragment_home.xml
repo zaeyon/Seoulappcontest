@@ -4,15 +4,43 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:weightSum="1">
 
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/home_tool_bar"
+        app:theme="@style/CustomActionBar"
+       />
+
+    <View
+        android:layout_marginTop="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#cccccc" />
+
+    <View
+        android:layout_height="0.5dp"
+        android:layout_width="match_parent"
+        android:background="@drawable/drop_shadow"
+        android:layout_alignParentBottom="true" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.82"
+        android:fillViewport="true"
+        >
 
     <fragment
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/customlistfragment"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home"
+        android:textFilterEnabled="true"
+        android:overScrollMode="never"
+        android:name="com.example.seoulapp.ui.home.CustomListFragment"/>
 
-
+    </ScrollView>
 
 </LinearLayout>

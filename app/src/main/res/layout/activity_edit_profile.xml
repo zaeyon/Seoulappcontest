@@ -8,17 +8,17 @@
 
 
   <ImageView
-      android:id="@+id/ivProfile"
+      android:id="@+id/ivMyProfile"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_marginTop="150dp"
       tools:srcCompat="@tools:sample/avatars" />
 
     <com.example.seoulapp.ClearEditText
-        android:id="@+id/clearEditText"
+        android:id="@+id/cetNickname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="com.example.seoulapp.ClearEditText" />
+        android:text="현재 닉네임" />
 
     <Button
         android:id="@+id/button3"
