@@ -9,7 +9,6 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.example.seoulapp.MainActivity;
 import com.example.seoulapp.R;
 
 public class CreateReviewAct extends AppCompatActivity {

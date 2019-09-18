@@ -1,0 +1,12 @@
+<menu  xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:icon="@drawable/ic_search_magnifier_interface_symbol"
+        android:id="@+id/search_btn"
+        android:src="@drawable/ic_search_magnifier_interface_symbol"
+        android:title="검색"
+        app:showAsAction="always"
+        />
+
+</menu>

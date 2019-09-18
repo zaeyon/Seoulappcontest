@@ -39,6 +39,7 @@ public class NotificationsFragment extends Fragment {
 
         View v = inflater.inflate(R.layout.fragment_notifications, container, false);
 
+
         ivSettings = (ImageView) v.findViewById(R.id.ivSettings);
         ivSettings.setOnClickListener(new goSettings());
         ivNews = (ImageView) v.findViewById(R.id.ivNews);

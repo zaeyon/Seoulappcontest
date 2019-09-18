@@ -16,7 +16,6 @@ import android.support.v4.app.Fragment;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 
-import com.example.seoulapp.MainActivity;
 import com.example.seoulapp.R;
 
 public class DashboardFragment extends Fragment {

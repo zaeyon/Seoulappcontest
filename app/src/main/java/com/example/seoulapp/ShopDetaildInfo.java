@@ -50,6 +50,7 @@ public class ShopDetaildInfo extends Activity implements OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shop_detaild_info);
 
+        // 와이파이 새로 접속할때마다 변경
         new JSONTask2().execute("http://192.168.43.72:3000/shopNumber");
         new JSONTaskProduction().execute("http://192.168.43.72:3000/getShopProduction");
         // 선언한 변수에 생성한 레이아웃 설정
