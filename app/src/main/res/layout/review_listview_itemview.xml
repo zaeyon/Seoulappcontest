@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_weight="0.1">
+    <LinearLayout
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/User_profilePicture"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="5dp"
+        android:src="@drawable/camera_icon2" />
+
+    <TextView
+        android:id="@+id/User_id"
+        android:text="First"
+        android:layout_width="110dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="5dp"
+        android:textSize="20dp"
+        />
+    </LinearLayout>
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/User_img"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:clickable="true"
+        android:scaleType="fitXY"
+        />
+
+    <ImageView
+        android:id="@+id/love_filed"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_gravity="center"
+        android:src="@drawable/icon_heart"
+        android:clickable="false"
+        />
+</FrameLayout>
+        <ImageView
+            android:id="@+id/love_emtpy"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="3dp"
+            android:src="@drawable/heart" />
+
+    <TextView
+        android:id="@+id/like"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="3dp"
+        android:text="좋아요 0회"
+        android:textSize="15dp"
+        android:gravity = "center_vertical|left|start"/>
+
+    <TextView
+        android:id="@+id/User_Description"
+        android:layout_width="match_parent"
+        android:layout_height="69dp"
+        android:textAlignment="center"
+        android:textSize="60dp" />
+    <TextView
+        android:id="@+id/User_Store"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="3dp"
+            android:src="@drawable/profileimage_1"
+            />
+
+        <EditText
+            android:id="@+id/comment"
+            android:layout_width="273dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="3dp"
+            android:layout_marginBottom="3dp"
+            android:gravity="center_vertical|left|start"
+            android:hint="댓글 달기"
+            android:textSize="15dp"
+
+            />
+    </LinearLayout>
+
+</LinearLayout>
