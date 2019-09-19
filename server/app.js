@@ -3,9 +3,6 @@ const app = express();
 var mysql = require('mysql');
 var dbconfig = require('./config/database.js');
 var connection = mysql.createConnection(dbconfig);
-var cookieParser = require('cookie-parser');
-const session = require('express-session');
-const MySQLStore = require('express-mysql-session')(session);
 var bodyParser = require('body-parser');
 
 let jwt = require("jsonwebtoken");
@@ -761,8 +758,9 @@ app.post('/aa', (req,res) => {
 });
 */
 
+
 app.post('/getUserProfile', (req,res) => {
-  
+
   var allUserProfileImage = "";
   var UserContent="";
   var UserId ="";
@@ -770,16 +768,17 @@ app.post('/getUserProfile', (req,res) => {
   var ReviewStoreName="";
   var DistinguishContent="";
   var Like="";
-  var allview="";
+  var Comment="";
+  var CommentUser_Id=""
+  var allView="";
 
   console.log("프로필 사진 얻기");
-  connection.query("SELECT * FROM review", function(error, results) {
+  connection.query("SELECT * FROM review", function(error, results) { //all pulled.
     if(error)
     {
       console.log("에러");
     }
     else{
-      console.log('results.length : ' + results.length);
     for(var j = 0; j < results.length; j++)
     {
       if(j == 0)
@@ -792,8 +791,9 @@ app.post('/getUserProfile', (req,res) => {
         ReviewStoreName = results[0].Review_StoreName;
         DistinguishContent = results[0].Distinguish_Content;
         Like = results[0].Like;
-
-        allview = allUserProfileImage + "/" + UserImage + "/" + UserId + "/" + UserContent+ "/"+ReviewStoreName+"/"+DistinguishContent + "/" + Like;
+        Comment=results[0].Comment;
+        CommentUser_Id = results[0].Comment_User_Id;
+        allView = allUserProfileImage + "/" + UserImage + "/" + UserId + "/" + UserContent+ "/"+ReviewStoreName+"/"+DistinguishContent+"/"+Like+"/"+Comment+"/"+CommentUser_Id;
       }
       else
       {
@@ -802,20 +802,74 @@ app.post('/getUserProfile', (req,res) => {
         UserImage = UserImage+"|"+results[j].User_Image;
         UserId = UserId+"|"+results[j].User_Id;
         UserContent = UserContent+"|"+results[j].User_Content;
-        ReviewStoreName = ReviewStoreName+ "|" + results[j].Review_StoreName;
-        DistinguishContent = DistinguishContent +"|"+results[j].Distinguish_Content;
+        ReviewStoreName = ReviewStoreName+"|"+results[j].Review_StoreName;
+        DistinguishContent = DistinguishContent + "|" + results[j].Distinguish_Content;
         Like = Like+"|"+results[j].Like;
-        
-        allview = allUserProfileImage + "/" + UserImage + "/" + UserId + "/" + UserContent+ "/"+ReviewStoreName+"/"+DistinguishContent + "/" + Like;
+        Comment=Comment + "|" + results[j].Comment;
+
+        CommentUser_Id = CommentUser_Id + "|" + results[j].Comment_User_Id;
+
+        console.log("CommentUser_id : " + CommentUser_Id + results[0].Comment_User_Id);
+
+        allView = allUserProfileImage + "/" + UserImage + "/" + UserId + "/" + UserContent + "/" +ReviewStoreName+ "/" +DistinguishContent+"/"+Like+"/"+Comment+"/"+CommentUser_Id;
         }
       };
     };
-
     console.log("allImage : " + allUserProfileImage);
-    console.log("allview : " + allview);
-    res.write(String(allview)); 
+    console.log("allView : " + allView);
+    res.write(allView); //그냥 모든 걸 더해서 하나로 보낸 후에 나누면 안 됨?
     res.end();
   });
+});
+
+
+/*
+   connection.query("select shopName from shop where shopName like concat ('%', ?, '%')",
+  //  inputData.searchShopName, function(error, results) {
+     if(error){
+       console.log("error 발생 : " + error);
+     }
+     else if(results[0])
+     {
+       searchInfo = searchInfo + results[0].shopName;
+       console.log("searchInfo : " + searchInfo);
+       res.write(String(searchInfo));
+      }
+     else if(!results[0])
+     {
+      console.log("검색된 매장이름 존재X");
+      res.write("noResult");
+    }
+     res.end();
+   });
+  });
+});
+*/
+
+
+app.post('/getUserInfo', (req, res) => {
+    console.log("post /myNickname");
+    var inputData;
+    var userProfile = "";
+
+    req.on('data', (data) => {
+        inputData = JSON.parse(data);
+        console.log("request from myPage");
+    });
+
+   req.on('end', () => {
+    connection.query("SELECT * FROM user where email = ?", inputData.email, function(error, result) {
+        if (error) {
+            console.log("에러" + error);
+        } else if(result[0]){
+          userProfile = result[0].nickname + "|" + result[0].profileImage + "|" + result[0].shop_being;
+        }
+
+        console.log("userProfile : " + userProfile);
+        res.write(String(userProfile));
+        res.end();
+    });
+});
 });
 
 app.listen(3000, () => {

@@ -5,21 +5,15 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
-import android.app.FragmentManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.example.seoulapp.ui.home.HomeFragment;
 
 import org.json.JSONObject;
 
@@ -45,8 +39,9 @@ public class MainActivity extends AppCompatActivity {
     TextView emailWrong;
     TextView notExistEmail;
     TextView wrongPassword;
+    public static final String name = "auto";
 
-    String loginId, loginPwd;
+    public String loginId, loginPwd;
 
     boolean emailCheck = false;
     boolean passwordCheck = false;
@@ -157,6 +152,7 @@ public class MainActivity extends AppCompatActivity {
 
         if(loginId != null && loginPwd != null){
             Intent intent = new Intent(MainActivity.this, BottomNavigation.class);
+            Log.d("MainActivity", "현재 사용자:" + loginId);
             startActivity(intent);
             finish();
         }
@@ -305,9 +301,11 @@ public class MainActivity extends AppCompatActivity {
 
                     autoLogin.commit();
                 }
+
                 Intent navigationIntent = new Intent(MainActivity.this ,BottomNavigation.class);
                 startActivity(navigationIntent);
             }
         }
     }
+
 }

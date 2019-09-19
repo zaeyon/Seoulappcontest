@@ -1,35 +1,20 @@
 package com.example.seoulapp.ui.home;
 
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.example.seoulapp.ListViewAdapter;
 import com.example.seoulapp.ListViewItem;
-import com.example.seoulapp.MainActivity;
-import com.example.seoulapp.R;
 import com.example.seoulapp.ShopDetaildInfo;
 
 import org.json.JSONObject;
