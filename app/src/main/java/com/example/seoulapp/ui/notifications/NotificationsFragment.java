@@ -41,6 +41,7 @@ public class NotificationsFragment extends Fragment {
     private NotificationsViewModel notificationsViewModel;
 
     TextView tvNickname;
+    String strNickname;
 
     ImageView ivProfile;
     ImageView ivSettings;
@@ -65,6 +66,7 @@ public class NotificationsFragment extends Fragment {
 
         View v = inflater.inflate(R.layout.fragment_notifications, container, false);
 
+        // 와이파이 새로 접속할 때마다 변경
         new JSONTask().execute("http://192.168.43.102:3000/myNickname");
 
         ivProfile = (ImageView)v.findViewById(R.id.ivProfile);
@@ -182,6 +184,7 @@ public class NotificationsFragment extends Fragment {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
             tvNickname.setText(result);
+            strNickname = result;
         }
     }
 
