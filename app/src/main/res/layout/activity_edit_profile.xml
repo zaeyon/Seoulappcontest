@@ -9,10 +9,11 @@
 
   <ImageView
       android:id="@+id/ivMyProfile"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_width="150dp"
+      android:layout_height="150dp"
       android:layout_marginTop="150dp"
-      tools:srcCompat="@tools:sample/avatars" />
+      android:layout_gravity="center"
+      tools:srcCompat="@drawable/blank_profile" />
 
     <com.example.seoulapp.ClearEditText
         android:id="@+id/cetNickname"
@@ -21,7 +22,7 @@
         android:text="현재 닉네임" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/bMyProfileComplete"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="수정 완료" />

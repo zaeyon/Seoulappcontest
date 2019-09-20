@@ -48,6 +48,7 @@ public class NotificationsFragment extends Fragment {
     private NotificationsViewModel notificationsViewModel;
 
     TextView tvNickname;
+    String strNickname;
 
     ImageView ivProfile;
     ImageView ivSettings;
@@ -82,6 +83,9 @@ public class NotificationsFragment extends Fragment {
 
         NoShopPage = v.findViewById(R.id.noShopPage);
         YesShopPage = v.findViewById(R.id.yesShopPage);
+
+        // 와이파이 새로 접속할 때마다 변경
+        new JSONTask().execute("http://192.168.43.72:3000/getUserInfo");
 
         ivProfile = (ImageView)v.findViewById(R.id.ivProfile);
         ivProfile.setBackground(new ShapeDrawable(new OvalShape()));
@@ -199,7 +203,6 @@ public class NotificationsFragment extends Fragment {
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-
             String[] userInfo;
             userInfo = result.split("\\|");
 
@@ -224,6 +227,7 @@ public class NotificationsFragment extends Fragment {
         public void onClick(View v) {
             Intent intentAddShop = new Intent(getActivity(), AddShop.class);
             startActivity(intentAddShop);
+
         }
     }
 

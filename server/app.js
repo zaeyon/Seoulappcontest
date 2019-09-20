@@ -201,10 +201,10 @@ app.post('/post', (req, res) => {
        if(error) {
          console.log("error ocurred", error);
          res.send({
-           "code":400,
+           "code":400, 
            "failed":"error ocurred"
          })
-         res.end();
+         res.end(); v
        } else {
          console.log("회원가입 완료")
          console.log(" ");

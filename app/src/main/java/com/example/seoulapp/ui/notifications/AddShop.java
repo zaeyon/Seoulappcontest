@@ -83,16 +83,16 @@ public class AddShop extends AppCompatActivity {
         newShopProfileImage.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_PICK);
-                intent.setDataAndType(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+                intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
                 startActivityForResult(intent, GET_GALLERY_IMAGE);
             }
         });
 
         // amazons3에 이미지 저장하기
-        credentialsProvider = new CognitoCachingCredentialsProvider(
+        CognitoCachingCredentialsProvider credentialsProvider = new CognitoCachingCredentialsProvider(
                 getApplicationContext(),
-                "ap-northeast-2:cc1b25cd-c9e7-430f-9666-474b1d523655", // Identity Pool ID
-                Regions.AP_NORTHEAST_2
+                "ap-northeast-2:cc1b25cd-c9e7-430f-9666-474b1d523655", // 자격 증명 풀 ID
+                Regions.AP_NORTHEAST_2 // 리전
         );
 
         s3 = new AmazonS3Client(credentialsProvider);

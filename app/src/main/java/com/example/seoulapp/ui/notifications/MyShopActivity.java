@@ -79,11 +79,12 @@ public class MyShopActivity extends AppCompatActivity {
         });
 
         // amazons3에 이미지 저장하기
-        credentialsProvider = new CognitoCachingCredentialsProvider(
+        CognitoCachingCredentialsProvider credentialsProvider = new CognitoCachingCredentialsProvider(
                 getApplicationContext(),
-                "ap-northeast-2:cc1b25cd-c9e7-430f-9666-474b1d523655", // Identity Pool ID
-                Regions.AP_NORTHEAST_2
+                "ap-northeast-2:89a1896a-9913-47fd-9fed-fb648fe746fa", // 자격 증명 풀 ID
+                Regions.AP_NORTHEAST_2 // 리전
         );
+
         s3 = new AmazonS3Client(credentialsProvider);
         s3.setRegion(Region.getRegion(Regions.AP_NORTHEAST_2));
         s3.setEndpoint("s3.ap-northeast-2.amazonaws.com");
