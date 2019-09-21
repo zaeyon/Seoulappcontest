@@ -3,25 +3,11 @@ const app = express();
 var mysql = require('mysql');
 var dbconfig = require('./config/database.js');
 var connection = mysql.createConnection(dbconfig);
-var cookieParser = require('cookie-parser');
-const session = require('express-session');
-const MySQLStore = require('express-mysql-session')(session);
 var bodyParser = require('body-parser');
 
-app.use(cookieParser());
 
-app.use(session({
-  secret : 'A',
-  resave : false,
-  saveUninitialized : true,
-  store : new MySQLStore({
-      host : 'localhost',
-      user : 'root',
-      password : '1234',
-      port : 3306,
-      database : 'test'
-  })
-}));
+let jwt = require("jsonwebtoken");
+let secretObj = require("./config/jwt.js");
 
 var accessing_user_email = "";
 
@@ -33,6 +19,7 @@ function email_check( email ) {
   return (regex.test(email));
 
 }
+
 
 app.post('/emailCheck', (req, res) => {
   var inputData;
@@ -61,14 +48,25 @@ app.post('/emailCheck', (req, res) => {
 });
 
 app.post('/login', (req, res) => {
+
+  let token;
+
   var inputData;
-  accessing_user_email = "";
   
   req.on('data', (data) => {
     inputData = JSON.parse(data);
   });
 
   req.on('end', () => {
+
+    token = jwt.sign({
+      email : inputData.userEmail  // 토큰의 내용
+    },
+    secretObj.secret,   // 비밀 키
+    {
+      expiresIn : '5m'  // 유효 시간은 5분
+    });
+
    // 로그인
    console.log("로그인시도 이메일 : " + inputData.userEmail);
    console.log("로그인시도 비밀번호 : " + inputData.userPassword);
@@ -83,9 +81,6 @@ app.post('/login', (req, res) => {
        if(results.length > 0) {
          if(results[0].password == inputData.userPassword) {
            console.log("로그인 성공");
-           req.session.email = inputData.userEmail;
-           console.log("req.session.email : " + req.session.email);
-           accessing_user_email = req.session.email;
            res.write("loginSuccess");
            res.end();
          } 
@@ -207,10 +202,10 @@ app.post('/post', (req, res) => {
        if(error) {
          console.log("error ocurred", error);
          res.send({
-           "code":400,
+           "code":400, 
            "failed":"error ocurred"
          })
-         res.end();
+         res.end(); v
        } else {
          console.log("회원가입 완료")
          console.log(" ");
@@ -244,8 +239,6 @@ app.post('/shopNumber', (req,res) => {
 
 // 매장이름
 app.post('/getShopName', (req,res) => {
-  
-  console.log("accessing_user_email : " + accessing_user_email);
   var allShopName = "";
 
   console.log("매장이름 얻기");
@@ -703,13 +696,71 @@ app.post('/getProductionInfo', (req, res) => {
         res.write(String(productionInfo));
         res.end();
     });
-    
-  
 });
 });
 
+app.post('/aa', (req,res) => {
+
+  var inputData;
+  var searchInfo = "";
+
+  req.on('data', (data) => {
+    inputData = JSON.parse(data);
+  });
+
+  req.on('end', () => {
+   
+  console.log("매장 검색중");
+    connection.query("select shopName, shopProfileImage  from shop where shopName like concat ('%', ?, '%')", inputData.searchShopName, function(error, results) {
+      if(error){
+        console.log("error 발생 : " + error);
+      }
+      else {
+      for(var i = 0; i < results.length; i++)
+      {
+        if(i == 0 )
+        {
+          searchInfo = results[0].shopName + "|" + results[0].shopProfileImage;
+        }
+        else {
+        searchInfo = searchInfo + "|" + results[i].shopName + "|" + results[i].shopProfileImage;
+        }
+      } 
+    }
+    console.log("searchInfo : " + searchInfo);
+ 
+    res.write(String(searchInfo));
+    res.end();
+   });
+  });
+});
+
+
+/*
+   connection.query("select shopName from shop where shopName like concat ('%', ?, '%')",
+   inputData.searchShopName, function(error, results) {
+     if(error){
+       console.log("error 발생 : " + error);
+     }
+     else if(results[0])
+     {
+       searchInfo = searchInfo + results[0].shopName;
+       console.log("searchInfo : " + searchInfo);
+       res.write(String(searchInfo));
+      }
+     else if(!results[0])
+     {
+      console.log("검색된 매장이름 존재X");
+      res.write("noResult");
+    }
+     res.end();
+   });
+  });
+});
+*/
+
+
 app.post('/getUserProfile', (req,res) => {
-  
   var allUserProfileImage = "";
   var UserContent="";
   var UserId ="";
@@ -732,7 +783,8 @@ app.post('/getUserProfile', (req,res) => {
     {
       if(j == 0)
       {
-        console.log("allImage : " + allUserProfileImg);
+
+        console.log("allImage : " + allUserProfileImage);
         allUserProfileImage =results[0].User_Profile_Img;
         UserImage = results[0].User_Image;
         UserId = results[0].User_Id;
@@ -741,7 +793,7 @@ app.post('/getUserProfile', (req,res) => {
         DistinguishContent = results[0].Distinguish_Content;
         Like = results[0].Like;
         Comment=results[0].Comment;
-        CommentUser_Id = results[0].CommentUser_Id;
+        CommentUser_Id = results[0].Comment_User_Id;
         allView = allUserProfileImage + "/" + UserImage + "/" + UserId + "/" + UserContent+ "/"+ReviewStoreName+"/"+DistinguishContent+"/"+Like+"/"+Comment+"/"+CommentUser_Id;
       }
       else
@@ -755,12 +807,18 @@ app.post('/getUserProfile', (req,res) => {
         DistinguishContent = DistinguishContent + "|" + results[j].Distinguish_Content;
         Like = Like+"|"+results[j].Like;
         Comment=Comment + "|" + results[j].Comment;
-        CommentUser_Id = CommentUser_Id + "|" + results[j].CommentUser_Id;
+
+        CommentUser_Id = CommentUser_Id + "|" + results[j].Comment_User_Id;
+
+        console.log("CommentUser_id : " + CommentUser_Id + results[0].Comment_User_Id);
+
         allView = allUserProfileImage + "/" + UserImage + "/" + UserId + "/" + UserContent + "/" +ReviewStoreName+ "/" +DistinguishContent+"/"+Like+"/"+Comment+"/"+CommentUser_Id;
         }
       };
     };
     console.log("allImage : " + allUserProfileImage);
+    console.log("allView : " + allView);
+
     res.write(allView); //그냥 모든 걸 더해서 하나로 보낸 후에 나누면 안 됨?
     res.end();
   });
@@ -805,6 +863,105 @@ app.post('/getCommentInfo',(req,res)=>{
 });
 
 //app.post()
+
+
+/*
+   connection.query("select shopName from shop where shopName like concat ('%', ?, '%')",
+  //  inputData.searchShopName, function(error, results) {
+     if(error){
+       console.log("error 발생 : " + error);
+     }
+     else if(results[0])
+     {
+       searchInfo = searchInfo + results[0].shopName;
+       console.log("searchInfo : " + searchInfo);
+       res.write(String(searchInfo));
+      }
+     else if(!results[0])
+     {
+      console.log("검색된 매장이름 존재X");
+      res.write("noResult");
+    }
+     res.end();
+   });
+  });
+});
+*/
+
+
+app.post('/getUserInfo', (req, res) => {
+  console.log("post /myNickname");
+  var inputData;
+  var userProfile = "";
+
+  req.on('data', (data) => {
+      inputData = JSON.parse(data);
+      console.log("request from myPage");
+  });
+
+  req.on('end', () => {
+    connection.query("SELECT * FROM user where email = ?", inputData.email, function(error, result) {
+      if (error) {
+          console.log("에러" + error);
+      } else if(result[0]){
+        console.log("닉네임 : " + result[0].nickname + ", 이미지 : " + result[0].profile_image + ", 매장 여부 : " + result[0].shop_being);
+        userProfile = result[0].nickname + "|" + result[0].profile_image + "|" + result[0].shop_being;
+      }
+
+      console.log("userProfile : " + userProfile);
+      res.write(String(userProfile));
+      res.end();
+    }); 
+  });
+});
+
+app.post('/myProfile', (req, res) => {
+    console.log("post /myProfile");
+    var inputData;
+
+    req.on('data', (data) => {
+        inputData = JSON.parse(data);
+        console.log("request from myProfile");
+    });
+
+    req.on('end', () => {
+        connection.query("SELECT nickname FROM user WHERE email = ?", inputData.email, function(error, result) {
+            if (error) {
+                console.log("현재 닉네임 불러오기 에러");
+            } else {
+                res.write(result[0].nickname);
+                res.end();
+            }
+        });
+    });
+});
+
+app.post('/setMyProfile', (req, res) => {
+    console.log("post /setMyProfile");
+    var inputData;
+    var params;
+
+    req.on('data', (data) => {
+        inputData = JSON.parse(data);
+        params = [inputData.fileName, inputData.email];
+        console.log("request from myProfile");
+    });
+
+    req.on('end', () => {
+        connection.query("UPDATE user SET profile_image = ? WHERE email = ?", params, function(error, result) {
+            if (error) {
+                console.log("파일 이름 저장 에러");
+            } else {
+                console.log("파일 이름 저장 완료")
+            }
+            console.log("파일 저장");
+
+            res.write("file upload finish");
+            res.end();
+        });
+    });
+});
+
 app.listen(3000, () => {
   console.log('Example app listening on port 3000!');
 });

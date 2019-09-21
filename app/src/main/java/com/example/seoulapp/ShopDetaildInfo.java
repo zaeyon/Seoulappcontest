@@ -1,25 +1,21 @@
 package com.example.seoulapp;
 
-import android.content.Context;
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.os.AsyncTask;
 import android.os.Build;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.app.Activity;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.seoulapp.ui.home.HomeFragment;
 
 import org.json.JSONObject;
 
@@ -50,8 +46,9 @@ public class ShopDetaildInfo extends Activity implements OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shop_detaild_info);
 
-        new JSONTask2().execute("http://172.30.1.18:3000/shopNumber");
-        new JSONTaskProduction().execute("http://172.30.1.18:3000/getShopProduction");
+        // 와이파이 새로 접속할때마다 변경
+        new JSONTask2().execute("http://172.30.1.14:3000/shopNumber");
+        new JSONTaskProduction().execute("http://172.30.1.14:3000/getShopProduction");
         // 선언한 변수에 생성한 레이아웃 설정
 
 
