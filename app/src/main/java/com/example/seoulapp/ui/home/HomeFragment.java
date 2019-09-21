@@ -22,8 +22,6 @@ public class HomeFragment extends Fragment {
 
     private View root;
     private ListViewAdapter adapter;
-
-
     private HomeViewModel homeViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -59,14 +57,10 @@ public class HomeFragment extends Fragment {
             }
         });
 
+
         actionBar.setCustomView(viewToolbar, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.LEFT));
 
         return root;
     }
-
-
-
-
-
-
 }
+

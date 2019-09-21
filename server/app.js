@@ -5,6 +5,7 @@ var dbconfig = require('./config/database.js');
 var connection = mysql.createConnection(dbconfig);
 var bodyParser = require('body-parser');
 
+
 let jwt = require("jsonwebtoken");
 let secretObj = require("./config/jwt.js");
 
@@ -760,7 +761,6 @@ app.post('/aa', (req,res) => {
 
 
 app.post('/getUserProfile', (req,res) => {
-
   var allUserProfileImage = "";
   var UserContent="";
   var UserId ="";
@@ -783,6 +783,7 @@ app.post('/getUserProfile', (req,res) => {
     {
       if(j == 0)
       {
+
         console.log("allImage : " + allUserProfileImage);
         allUserProfileImage =results[0].User_Profile_Img;
         UserImage = results[0].User_Image;
@@ -817,35 +818,49 @@ app.post('/getUserProfile', (req,res) => {
     };
     console.log("allImage : " + allUserProfileImage);
     console.log("allView : " + allView);
+
     res.write(allView); //그냥 모든 걸 더해서 하나로 보낸 후에 나누면 안 됨?
     res.end();
   });
 });
 
+app.post('/getCommentInfo',(req,res)=>{
+  var allUserProfileImage = "";
 
-/*
-   connection.query("select shopName from shop where shopName like concat ('%', ?, '%')",
-  //  inputData.searchShopName, function(error, results) {
-     if(error){
-       console.log("error 발생 : " + error);
-     }
-     else if(results[0])
-     {
-       searchInfo = searchInfo + results[0].shopName;
-       console.log("searchInfo : " + searchInfo);
-       res.write(String(searchInfo));
-      }
-     else if(!results[0])
-     {
-      console.log("검색된 매장이름 존재X");
-      res.write("noResult");
+  var Comment="";
+  var CommentUser_Id=""
+  var allView="";
+
+  console.log("프로필 사진 얻기");
+  connection.query("SELECT * FROM review", function(error, results) { //all pulled.
+    console.log(results);
+    if(error)
+    {
+      console.log("에러");
     }
-     res.end();
-   });
-  });
+    else{
+    for(var j = 0; j < results.length; j++)
+    {
+      if(j == 0)
+      {
+        console.log("allImage : " + allUserProfileImg);
+        Comment=results[0].Comment;
+        CommentUser_Id = results[0].CommentUser_Id;
+        allView = Comment+"/"+CommentUser_Id;
+      }
+      else
+      {
+        console.log("allImage : " + allUserProfileImage);
+        Comment=Comment + "|" + results[j].Comment;
+        CommentUser_Id = CommentUser_Id + "|" + results[j].CommentUser_Id;
+        allView = Comment+"/"+CommentUser_Id;
+        }
+      };
+    };
+    console.log("allImage : " + allUserProfileImage);
+    res.write(allView); //그냥 모든 걸 더해서 하나로 보낸 후에 나누면 안 됨?
+    res.end();
 });
-*/
-
 
 app.post('/getUserInfo', (req, res) => {
   console.log("post /getUserInfo");
@@ -938,3 +953,4 @@ app.post('/setMyProfile', (req, res) => {
 app.listen(3000, () => {
   console.log('Example app listening on port 3000!');
 });
+

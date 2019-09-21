@@ -31,7 +31,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.dashboard.CreateReviewAct" />
+        <activity android:name=".ui.dashboard.CreateReviewAct">
+            <intent-filter>
+                <action android:name="android.intent.action.ReviewToolbar" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ui.dashboard.CommentMoreAct"></activity>
         <service
             android:name="com.amazonaws.mobileconnectors.s3.transferutility.TransferService"
             android:enabled="true" />
