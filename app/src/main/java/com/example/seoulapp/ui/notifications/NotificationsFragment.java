@@ -67,7 +67,7 @@ public class NotificationsFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_notifications, container, false);
 
         // 와이파이 새로 접속할 때마다 변경
-        new JSONTask().execute("http://192.168.43.102:3000/myNickname");
+        new JSONTask().execute("http://172.30.1.14:3000/myNickname");
 
         ivProfile = (ImageView)v.findViewById(R.id.ivProfile);
         ivProfile.setBackground(new ShapeDrawable(new OvalShape()));
@@ -145,6 +145,7 @@ public class NotificationsFragment extends Fragment {
                     writer.write(jsonObject.toString());
                     writer.flush();
                     writer.close();//버퍼를 받아줌
+
 
                     InputStream stream = con.getInputStream();
 
