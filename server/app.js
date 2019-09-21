@@ -848,7 +848,7 @@ app.post('/getUserProfile', (req,res) => {
 
 
 app.post('/getUserInfo', (req, res) => {
-  console.log("post /myNickname");
+  console.log("post /getUserInfo");
   var inputData;
   var userProfile = "";
 
@@ -876,6 +876,7 @@ app.post('/getUserInfo', (req, res) => {
 app.post('/myProfile', (req, res) => {
     console.log("post /myProfile");
     var inputData;
+    var userData = "";
 
     req.on('data', (data) => {
         inputData = JSON.parse(data);
@@ -883,13 +884,17 @@ app.post('/myProfile', (req, res) => {
     });
 
     req.on('end', () => {
-        connection.query("SELECT nickname FROM user WHERE email = ?", inputData.email, function(error, result) {
+        connection.query("SELECT * FROM user WHERE email = ?", inputData.email, function(error, result) {
             if (error) {
                 console.log("현재 닉네임 불러오기 에러");
-            } else {
-                res.write(result[0].nickname);
-                res.end();
+            } else if (result[0]) {
+                console.log("기존 프로필\n닉네임 : " + result[0].nickname + ", 이미지 : " + result[0].profile_image);
+                userData = result[0].ID + "|" + result[0].nickname + "|" + result[0].profile_image;
+
             }
+            console.log("userData : " + userData);
+            res.write(String(userData));
+            res.end();
         });
     });
 });
@@ -897,26 +902,36 @@ app.post('/myProfile', (req, res) => {
 app.post('/setMyProfile', (req, res) => {
     console.log("post /setMyProfile");
     var inputData;
-    var params;
+    var params1;
+    var params2;
 
     req.on('data', (data) => {
         inputData = JSON.parse(data);
-        params = [inputData.fileName, inputData.email];
+        params1 = [inputData.fileName, inputData.email];
+        params2 = [inputData.newNickname, inputData.email];
         console.log("request from myProfile");
     });
 
     req.on('end', () => {
-        connection.query("UPDATE user SET profile_image = ? WHERE email = ?", params, function(error, result) {
+        connection.query("UPDATE user SET profile_image = ? WHERE email = ?", params1, function(error, result) {
             if (error) {
                 console.log("파일 이름 저장 에러");
             } else {
                 console.log("파일 이름 저장 완료")
             }
-            console.log("파일 저장");
 
             res.write("file upload finish");
             res.end();
         });
+
+        connection.query("UPDATE user SET nickname = ? WHERE email = ?", params2, function(error, result) {
+            if (error) {
+                console.log("닉네임 변경 에러");
+            } else {
+                console.log("닉네임 변경 완료");
+            }
+            res.end();
+        })
     });
 });
 
