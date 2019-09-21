@@ -125,7 +125,6 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -162,7 +161,9 @@ public class MainActivity extends AppCompatActivity {
             public void onFocusChange(View view, boolean hasFocus) {
                 if(!hasFocus) {
                     // 와이파이 새로 접속할 때마다 변경
+
                     new JSONTask().execute("http://172.30.1.18:3000/emailCheck");
+
                 }
             }
         });
@@ -170,14 +171,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // 와이파이 새로 접속할 때마다 변경
+
                 new JSONTask().execute("http://172.30.1.18:3000/login");
+
             }
         });
 
         userEmail.addTextChangedListener(emailTextWatcher);
         userPassword.addTextChangedListener(passwordTextWatcher);
-
-
 
     }
 
@@ -307,5 +308,4 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-
 }

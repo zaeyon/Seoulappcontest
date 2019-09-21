@@ -11,7 +11,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,12 +47,10 @@ public class NotificationsFragment extends Fragment {
     private NotificationsViewModel notificationsViewModel;
 
     TextView tvNickname;
-    String strNickname;
 
     ImageView ivProfile;
     ImageView ivSettings;
     ImageView ivNews;
-    ImageView ivShop;
     ImageView ivShopAdd;
     ImageView ivShopSetting;
 
@@ -84,9 +81,6 @@ public class NotificationsFragment extends Fragment {
         NoShopPage = v.findViewById(R.id.noShopPage);
         YesShopPage = v.findViewById(R.id.yesShopPage);
 
-        // 와이파이 새로 접속할 때마다 변경
-        new JSONTask().execute("http://172.30.1.18:3000/getUserInfo");
-
         ivProfile = (ImageView)v.findViewById(R.id.ivProfile);
         ivProfile.setBackground(new ShapeDrawable(new OvalShape()));
         if (Build.VERSION.SDK_INT >= 21) {
@@ -107,14 +101,12 @@ public class NotificationsFragment extends Fragment {
 
         ivNews = (ImageView) v.findViewById(R.id.ivNews);
         ivNews.setOnClickListener(new goNews());
-        //ivShop = (ImageView) v.findViewById(R.id.ivShop);
-        //ivShop.setOnClickListener(new goShop());
         ivSettings = (ImageView) v.findViewById(R.id.ivSettings);
         ivSettings.setOnClickListener(new goSettings());
         ivShopAdd = (ImageView)v.findViewById(R.id.ivAddShop);
         ivShopAdd.setOnClickListener(new goAddShop());
         ivShopSetting = (ImageView)v.findViewById(R.id.ivShopSetting);
-        ivShopSetting.setOnClickListener(new goSetingShop());
+        ivShopSetting.setOnClickListener(new goSettingShop());
 
         // 즐겨찾기 리스트
         String[] strBookmark =  {"들락날락", "다래락", "라일락", "라운지오", "워커하우스"};
@@ -128,6 +120,8 @@ public class NotificationsFragment extends Fragment {
         m_oListView = (ListView) v.findViewById(R.id.listView);
         ListAdapter oAdapter = new ListAdapter(oData);
         m_oListView.setAdapter(oAdapter);
+
+        // 와이파이 새로 접속할 때마다 변경
         new JSONTask().execute("http://172.30.1.18:3000/getUserInfo");
 
         // listview 클릭 시 각 매장 페이지로 이동(매장 id를 ShopDetaildInfo에 전달)
@@ -165,6 +159,7 @@ public class NotificationsFragment extends Fragment {
                     writer.write(jsonObject.toString());
                     writer.flush();
                     writer.close();//버퍼를 받아줌
+
 
                     InputStream stream = con.getInputStream();
 
@@ -231,7 +226,7 @@ public class NotificationsFragment extends Fragment {
         }
     }
 
-    class goSetingShop implements View.OnClickListener {
+    class goSettingShop implements View.OnClickListener {
         @Override
         public void onClick(View v) {
             Intent intentSettingShop = new Intent(getActivity(), SettingShop.class);
@@ -239,21 +234,11 @@ public class NotificationsFragment extends Fragment {
         }
     }
 
-
-
     class goNews implements View.OnClickListener {
         @Override
         public void onClick(View v) {
             Intent intentNews = new Intent(getActivity(), NewsActivity.class);
             startActivity(intentNews);
-        }
-    }
-
-    class goShop implements View.OnClickListener {
-        @Override
-        public void onClick(View v) {
-            Intent intentShop = new Intent(getActivity(), MyShopActivity.class);
-            startActivity(intentShop);
         }
     }
 

@@ -57,7 +57,9 @@ public class CustomListFragment extends ListFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         // 와이파이 새로 접속할때마다 변경
+
         new JSONTask2().execute("http://172.30.1.18:3000/shopNumber");
+
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 

@@ -1,19 +1,22 @@
 package com.example.seoulapp.ui.dashboard;
 
-import android.graphics.drawable.Drawable;
-import android.widget.ImageView;
-
 public class ReviewItem {
 
-    private Drawable UserImage;
-    private Drawable UserProfileimg;
+    private String UserImage;
+    private String UserProfileimg;
     private String UserId;
     private String UserDes;
+    private String StoreName;
+    private int Like;
+    private String Cmt_Id;
+    private String Cmt;
 
-    public void setUserImage(Drawable userImage) {
+    public void setUserImage(String userImage) {
         UserImage = userImage;
     }
-    public void setUserProfileimg(Drawable userProfileimg) {
+
+    public void setUserProfileimg(String userProfileimg) {
+
         UserProfileimg = userProfileimg;
     }
     public void setUserId(String userId) {
@@ -22,17 +25,37 @@ public class ReviewItem {
     public void setUserDes(String userDes) {
         UserDes = userDes;
     }
+
+    public void setStoreName(String storeName) {
+        StoreName = storeName;
+    }
+
+    public void setLike(int like) {
+        Like = like;
+    }
     public String getUserId(){
         return UserId;
     }
     public String getUserDes(){
         return UserDes;
     }
-    public Drawable getUserimg(){
+
+
+    public String getUserimg(){
         return UserImage;
     }
-    public Drawable getUserProfileimg() {
+
+    public String getUserProfileimg() {
         return UserProfileimg;
     }
+
+    public String getStoreName() {
+        return StoreName;
+    }
+
+    public int getLike() {
+        return Like;
+    }
+
 }
 

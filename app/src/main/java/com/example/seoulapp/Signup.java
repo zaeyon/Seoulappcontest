@@ -66,33 +66,26 @@ public class Signup extends Activity {
             signupBtn = findViewById(R.id.signupFinish);
             nicknameCheck = true;
 
-            if (!passwordWrongCheck && !nicknameWrongCheck && !emailWrongCheck && s.length() > 0 && nicknameCheck && emailCheck && passwordCheck && passwordConfirmCheck ) {
+            if (!passwordWrongCheck && !nicknameWrongCheck && !emailWrongCheck && s.length() > 0 && nicknameCheck && emailCheck && passwordCheck && passwordConfirmCheck) {
                 signupBtn.setEnabled(true);
-            }
-            else if (s.length() <= 0) {
+            } else if (s.length() <= 0) {
                 nicknameCheck = false;
                 signupBtn.setEnabled(false);
-            }
-            else if(!nicknameCheck)
-            {
+            } else if (!nicknameCheck) {
                 signupBtn.setEnabled(false);
-            }
-            else if(!emailCheck)
-            {
+            } else if (!emailCheck) {
                 signupBtn.setEnabled(false);
-            }
-            else if(!passwordCheck)
-            {
+            } else if (!passwordCheck) {
                 signupBtn.setEnabled(false);
-            }
-            else if(!passwordConfirmCheck)
-            {
+            } else if (!passwordConfirmCheck) {
                 signupBtn.setEnabled(false);
             }
         }
+
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
         }
+
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
 
@@ -108,33 +101,26 @@ public class Signup extends Activity {
             String s = edit.toString();
             signupBtn = findViewById(R.id.signupFinish);
             emailCheck = true;
-            if (!passwordWrongCheck && !nicknameWrongCheck && !emailWrongCheck && s.length() > 0 && nicknameCheck && emailCheck && passwordCheck && passwordConfirmCheck ) {
+            if (!passwordWrongCheck && !nicknameWrongCheck && !emailWrongCheck && s.length() > 0 && nicknameCheck && emailCheck && passwordCheck && passwordConfirmCheck) {
                 signupBtn.setEnabled(true);
-            }
-            else if (s.length() <= 0) {
+            } else if (s.length() <= 0) {
                 emailCheck = false;
                 signupBtn.setEnabled(false);
-            }
-            else if(!nicknameCheck)
-            {
+            } else if (!nicknameCheck) {
                 signupBtn.setEnabled(false);
-            }
-            else if(!emailCheck)
-            {
+            } else if (!emailCheck) {
                 signupBtn.setEnabled(false);
-            }
-            else if(!passwordCheck)
-            {
+            } else if (!passwordCheck) {
                 signupBtn.setEnabled(false);
-            }
-            else if(!passwordConfirmCheck)
-            {
+            } else if (!passwordConfirmCheck) {
                 signupBtn.setEnabled(false);
             }
         }
+
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
         }
+
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             emailPo.setVisibility(View.INVISIBLE);
@@ -149,33 +135,26 @@ public class Signup extends Activity {
             String s = edit.toString();
             signupBtn = findViewById(R.id.signupFinish);
             passwordCheck = true;
-            if (!passwordWrongCheck && !nicknameWrongCheck && !emailWrongCheck && s.length() > 0 && nicknameCheck && emailCheck && passwordCheck && passwordConfirmCheck ) {
+            if (!passwordWrongCheck && !nicknameWrongCheck && !emailWrongCheck && s.length() > 0 && nicknameCheck && emailCheck && passwordCheck && passwordConfirmCheck) {
                 signupBtn.setEnabled(true);
-            }
-            else if (s.length() <= 0) {
+            } else if (s.length() <= 0) {
                 passwordCheck = false;
                 signupBtn.setEnabled(false);
-            }
-            else if(!nicknameCheck)
-            {
+            } else if (!nicknameCheck) {
                 signupBtn.setEnabled(false);
-            }
-            else if(!emailCheck)
-            {
+            } else if (!emailCheck) {
                 signupBtn.setEnabled(false);
-            }
-            else if(!passwordCheck)
-            {
+            } else if (!passwordCheck) {
                 signupBtn.setEnabled(false);
-            }
-            else if(!passwordConfirmCheck)
-            {
+            } else if (!passwordConfirmCheck) {
                 signupBtn.setEnabled(false);
             }
         }
+
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
         }
+
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
 
@@ -190,48 +169,38 @@ public class Signup extends Activity {
             String s = edit.toString();
             signupBtn = findViewById(R.id.signupFinish);
             passwordConfirmCheck = true;
-            if (!passwordWrongCheck && !nicknameWrongCheck && !emailWrongCheck && s.length() > 0 && nicknameCheck && emailCheck && passwordCheck && passwordConfirmCheck ) {
+            if (!passwordWrongCheck && !nicknameWrongCheck && !emailWrongCheck && s.length() > 0 && nicknameCheck && emailCheck && passwordCheck && passwordConfirmCheck) {
                 signupBtn.setEnabled(true);
-            }
-            else if (s.length() <= 0) {
+            } else if (s.length() <= 0) {
                 passwordConfirmCheck = false;
                 signupBtn.setEnabled(false);
-            }
-            else if(!nicknameCheck)
-            {
+            } else if (!nicknameCheck) {
                 signupBtn.setEnabled(false);
-            }
-            else if(!emailCheck)
-            {
+            } else if (!emailCheck) {
                 signupBtn.setEnabled(false);
-            }
-            else if(!passwordCheck)
-            {
+            } else if (!passwordCheck) {
                 signupBtn.setEnabled(false);
-            }
-            else if(!passwordConfirmCheck)
-            {
+            } else if (!passwordConfirmCheck) {
                 signupBtn.setEnabled(false);
             }
         }
+
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
         }
+
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
 
             passwordIm.setVisibility(View.INVISIBLE);
-            if(passwordConfirmData.getText().toString().equals(passwordData.getText().toString()))
-            {
+            if (passwordConfirmData.getText().toString().equals(passwordData.getText().toString())) {
                 passwordPo.setVisibility(View.VISIBLE);
                 passwordIm.setVisibility(View.INVISIBLE);
                 passwordWrongCheck = false;
-                if (!nicknameWrongCheck && !emailWrongCheck && nicknameCheck && emailCheck && passwordCheck && passwordConfirmCheck ) {
+                if (!nicknameWrongCheck && !emailWrongCheck && nicknameCheck && emailCheck && passwordCheck && passwordConfirmCheck) {
                     signupBtn.setEnabled(true);
                 }
-            }
-            else
-            {
+            } else {
                 passwordPo.setVisibility(View.INVISIBLE);
                 signupBtn.setEnabled(false);
             }
@@ -278,8 +247,9 @@ public class Signup extends Activity {
         nicknameData.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean hasFocus) {
-                if(!hasFocus) {
+                if (!hasFocus) {
                     // 와이파이 새로 접속할 때마다 변경
+
                     new JSONTask().execute("http://172.30.1.18:3000/nickname");
                 }
             }
@@ -288,8 +258,9 @@ public class Signup extends Activity {
         emailData.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean hasFocus) {
-                if(!hasFocus){
+                if (!hasFocus) {
                     // 와이파이 새로 접속할 때마다 변경
+
                     new JSONTask().execute("http://172.30.1.18:3000/email");
                 }
             }
@@ -298,13 +269,12 @@ public class Signup extends Activity {
         passwordData.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean hasFocus) {
-                if(!hasFocus){
-                    if(!passwordConfirmData.getText().toString().equals("") && !passwordData.getText().toString().equals("") && (passwordConfirmData.getText().toString().equals(passwordData.getText().toString())) )
-                    {
+                if (!hasFocus) {
+                    if (!passwordConfirmData.getText().toString().equals("") && !passwordData.getText().toString().equals("") && (passwordConfirmData.getText().toString().equals(passwordData.getText().toString()))) {
                         passwordPo.setVisibility(View.VISIBLE);
                         passwordIm.setVisibility(View.INVISIBLE);
                         passwordWrongCheck = false;
-                        if (!passwordWrongCheck && !nicknameWrongCheck && !emailWrongCheck && nicknameCheck && emailCheck && passwordCheck && passwordConfirmCheck ) {
+                        if (!passwordWrongCheck && !nicknameWrongCheck && !emailWrongCheck && nicknameCheck && emailCheck && passwordCheck && passwordConfirmCheck) {
                             signupBtn.setEnabled(true);
                         }
 
@@ -322,13 +292,12 @@ public class Signup extends Activity {
         passwordConfirmData.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean hasFocus) {
-                if(!hasFocus){
-                    if(!passwordConfirmData.getText().toString().equals("") && !passwordData.getText().toString().equals("") && passwordConfirmData.getText().toString().equals(passwordData.getText().toString()))
-                    {
+                if (!hasFocus) {
+                    if (!passwordConfirmData.getText().toString().equals("") && !passwordData.getText().toString().equals("") && passwordConfirmData.getText().toString().equals(passwordData.getText().toString())) {
                         passwordPo.setVisibility(View.VISIBLE);
                         passwordIm.setVisibility(View.INVISIBLE);
                         passwordWrongCheck = false;
-                        if (!passwordWrongCheck && !nicknameWrongCheck && !emailWrongCheck && nicknameCheck && emailCheck && passwordCheck && passwordConfirmCheck ) {
+                        if (!passwordWrongCheck && !nicknameWrongCheck && !emailWrongCheck && nicknameCheck && emailCheck && passwordCheck && passwordConfirmCheck) {
                             signupBtn.setEnabled(true);
                         }
                     } else {
@@ -339,12 +308,11 @@ public class Signup extends Activity {
 
                     }
                 } else {
-                    if(passwordConfirmData.getText().toString().equals(passwordData.getText().toString()))
-                    {
+                    if (passwordConfirmData.getText().toString().equals(passwordData.getText().toString())) {
                         passwordPo.setVisibility(View.VISIBLE);
                         passwordIm.setVisibility(View.INVISIBLE);
                         passwordWrongCheck = false;
-                        if (!passwordWrongCheck && !nicknameWrongCheck && !emailWrongCheck && nicknameCheck && emailCheck && passwordCheck && passwordConfirmCheck ) {
+                        if (!passwordWrongCheck && !nicknameWrongCheck && !emailWrongCheck && nicknameCheck && emailCheck && passwordCheck && passwordConfirmCheck) {
                             signupBtn.setEnabled(true);
                         }
                     }
@@ -366,7 +334,7 @@ public class Signup extends Activity {
         });
     }
 
-    public class JSONTask extends AsyncTask<String, String, String>{
+    public class JSONTask extends AsyncTask<String, String, String> {
 
         @Override
         protected String doInBackground(String... urls) {
@@ -381,7 +349,7 @@ public class Signup extends Activity {
                 HttpURLConnection con = null;
                 BufferedReader reader = null;
 
-                try{
+                try {
 //URL url = new URL("http://192.168.25.16:3000/users");
                     URL url = new URL(urls[0]);
 //연결을 함
@@ -413,22 +381,22 @@ public class Signup extends Activity {
                     StringBuffer buffer = new StringBuffer();
 
                     String line = "";
-                    while((line = reader.readLine()) != null){
+                    while ((line = reader.readLine()) != null) {
                         buffer.append(line);
                     }
 
                     return buffer.toString();//서버로 부터 받은 값을 리턴해줌 아마 OK!!가 들어올것임
 
-                } catch (MalformedURLException e){
+                } catch (MalformedURLException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
                     e.printStackTrace();
                 } finally {
-                    if(con != null){
+                    if (con != null) {
                         con.disconnect();
                     }
                     try {
-                        if(reader != null){
+                        if (reader != null) {
                             reader.close();//버퍼를 닫아줌
                         }
                     } catch (IOException e) {
@@ -445,7 +413,7 @@ public class Signup extends Activity {
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-
+/*
             if(result.equals("nicknameSuccess"))
             {
                 Log.d("dd", "nicknameSuccess");
@@ -502,6 +470,7 @@ public class Signup extends Activity {
                 signupBtn.setEnabled(false);
                 emailWrongCheck = true;
             }
+        }*/
         }
     }
 }

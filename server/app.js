@@ -5,6 +5,7 @@ var dbconfig = require('./config/database.js');
 var connection = mysql.createConnection(dbconfig);
 var bodyParser = require('body-parser');
 
+
 let jwt = require("jsonwebtoken");
 let secretObj = require("./config/jwt.js");
 
@@ -760,7 +761,6 @@ app.post('/aa', (req,res) => {
 
 
 app.post('/getUserProfile', (req,res) => {
-
   var allUserProfileImage = "";
   var UserContent="";
   var UserId ="";
@@ -783,6 +783,7 @@ app.post('/getUserProfile', (req,res) => {
     {
       if(j == 0)
       {
+
         console.log("allImage : " + allUserProfileImage);
         allUserProfileImage =results[0].User_Profile_Img;
         UserImage = results[0].User_Image;
@@ -817,12 +818,14 @@ app.post('/getUserProfile', (req,res) => {
     };
     console.log("allImage : " + allUserProfileImage);
     console.log("allView : " + allView);
+
     res.write(allView); //그냥 모든 걸 더해서 하나로 보낸 후에 나누면 안 됨?
     res.end();
   });
 });
 
 app.post('/getCommentInfo',(req,res)=>{
+<<<<<<< HEAD
   var allUserProfileImage = "";
 
   var Comment="";
@@ -860,41 +863,83 @@ app.post('/getCommentInfo',(req,res)=>{
     res.end();
 });
 });
+=======
+    var allUserProfileImage = "";
+>>>>>>> 27040669021825bded1cdcf6ef53478a0ed2ddae
 
-/*
-   connection.query("select shopName from shop where shopName like concat ('%', ?, '%')",
-  //  inputData.searchShopName, function(error, results) {
-     if(error){
-       console.log("error 발생 : " + error);
-     }
-     else if(results[0])
-     {
-       searchInfo = searchInfo + results[0].shopName;
-       console.log("searchInfo : " + searchInfo);
-       res.write(String(searchInfo));
-      }
-     else if(!results[0])
-     {
-      console.log("검색된 매장이름 존재X");
-      res.write("noResult");
+    var Comment="";
+    var CommentUser_Id=""
+    var allView="";
+
+    console.log("프로필 사진 얻기");
+    connection.query("SELECT * FROM review", function(error, results) { //all pulled.
+    console.log(results);
+    if(error)
+    {
+      console.log("에러");
     }
-     res.end();
-   });
-  });
+    else{
+        for(var j = 0; j < results.length; j++)
+        {
+            if(j == 0)
+            {
+                console.log("allImage : " + allUserProfileImg);
+                Comment=results[0].Comment;
+                CommentUser_Id = results[0].CommentUser_Id;
+                allView = Comment+"/"+CommentUser_Id;
+            }
+            else
+            {
+                console.log("allImage : " + allUserProfileImage);
+                Comment=Comment + "|" + results[j].Comment;
+                CommentUser_Id = CommentUser_Id + "|" + results[j].CommentUser_Id;
+                allView = Comment+"/"+CommentUser_Id;
+            }
+        };
+    };
+    console.log("allImage : " + allUserProfileImage);
+    res.write(allView); //그냥 모든 걸 더해서 하나로 보낸 후에 나누면 안 됨?
+    res.end();
+    });
 });
-*/
-
 
 app.post('/getUserInfo', (req, res) => {
-    console.log("post /myNickname");
+  console.log("post /getUserInfo");
+  var inputData;
+  var userProfile = "";
+
+  req.on('data', (data) => {
+      inputData = JSON.parse(data);
+      console.log("request from myPage");
+  });
+
+  req.on('end', () => {
+    connection.query("SELECT * FROM user where email = ?", inputData.email, function(error, result) {
+      if (error) {
+          console.log("에러" + error);
+      } else if(result[0]){
+        console.log("닉네임 : " + result[0].nickname + ", 이미지 : " + result[0].profile_image + ", 매장 여부 : " + result[0].shop_being);
+        userProfile = result[0].nickname + "|" + result[0].profile_image + "|" + result[0].shop_being;
+      }
+
+      console.log("userProfile : " + userProfile);
+      res.write(String(userProfile));
+      res.end();
+    }); 
+  });
+});
+
+app.post('/myProfile', (req, res) => {
+    console.log("post /myProfile");
     var inputData;
-    var userProfile = "";
+    var userData = "";
 
     req.on('data', (data) => {
         inputData = JSON.parse(data);
-        console.log("request from myPage");
+        console.log("request from myProfile");
     });
 
+<<<<<<< HEAD
    req.on('end', () => {
     connection.query("SELECT * FROM user where email = ?", inputData.email, function(error, result) {
         if (error) {
@@ -906,8 +951,58 @@ app.post('/getUserInfo', (req, res) => {
         console.log("userProfile : " + userProfile);
         res.write(String(userProfile));
         res.end();
+=======
+    req.on('end', () => {
+        connection.query("SELECT * FROM user WHERE email = ?", inputData.email, function(error, result) {
+            if (error) {
+                console.log("현재 닉네임 불러오기 에러");
+            } else if (result[0]) {
+                console.log("기존 프로필\n닉네임 : " + result[0].nickname + ", 이미지 : " + result[0].profile_image);
+                userData = result[0].ID + "|" + result[0].nickname + "|" + result[0].profile_image;
+
+            }
+            console.log("userData : " + userData);
+            res.write(String(userData));
+            res.end();
+        });
+>>>>>>> 27040669021825bded1cdcf6ef53478a0ed2ddae
     });
 });
+
+app.post('/setMyProfile', (req, res) => {
+    console.log("post /setMyProfile");
+    var inputData;
+    var params1;
+    var params2;
+
+    req.on('data', (data) => {
+        inputData = JSON.parse(data);
+        params1 = [inputData.fileName, inputData.email];
+        params2 = [inputData.newNickname, inputData.email];
+        console.log("request from myProfile");
+    });
+
+    req.on('end', () => {
+        connection.query("UPDATE user SET profile_image = ? WHERE email = ?", params1, function(error, result) {
+            if (error) {
+                console.log("파일 이름 저장 에러");
+            } else {
+                console.log("파일 이름 저장 완료")
+            }
+
+            res.write("file upload finish");
+            res.end();
+        });
+
+        connection.query("UPDATE user SET nickname = ? WHERE email = ?", params2, function(error, result) {
+            if (error) {
+                console.log("닉네임 변경 에러");
+            } else {
+                console.log("닉네임 변경 완료");
+            }
+            res.end();
+        })
+    });
 });
 
 app.listen(3000, () => {
