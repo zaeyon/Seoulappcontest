@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:weightSum="10"
+    android:gravity="center">
+
+
+    <LinearLayout
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="10"
+        android:orientation="vertical">
+
+        <TextView
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="매장리스트에서 보여지는\n 대표 상품 사진을 3개 등록해주세요. "
+        android:textSize="19sp"
+        android:fontFamily="@font/nanumsquare_acr"
+            />
+
+        <LinearLayout
+            android:gravity="center"
+            android:layout_marginTop="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+
+        <ImageView
+            android:gravity="center"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:layout_marginRight="5dp"
+            android:src="@drawable/blank_production"/>
+
+            <ImageView
+                android:gravity="center"
+                android:layout_width="110dp"
+                android:layout_height="110dp"
+                android:src="@drawable/blank_production"/>
+
+            <ImageView
+                android:gravity="center"
+                android:layout_width="110dp"
+                android:layout_height="110dp"
+                android:layout_marginLeft="5dp"
+                android:src="@drawable/blank_production"/>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/signUpNextButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="매장 등록"
+            android:layout_marginTop="15dp"/>
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -3,7 +3,10 @@ package com.example.seoulapp.ui.notifications;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.OvalShape;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
@@ -50,6 +53,10 @@ public class MyShopActivity extends AppCompatActivity {
         setContentView(R.layout.activity_my_shop);
 
         ivShopProfile = (ImageView)findViewById(R.id.ivShopProfile);
+        ivShopProfile.setBackground(new ShapeDrawable(new OvalShape()));
+        if (Build.VERSION.SDK_INT >= 21) {
+            ivShopProfile.setClipToOutline(true);
+        }
         ivShopProfile.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
@@ -72,11 +79,12 @@ public class MyShopActivity extends AppCompatActivity {
         });
 
         // amazons3에 이미지 저장하기
-        credentialsProvider = new CognitoCachingCredentialsProvider(
+        CognitoCachingCredentialsProvider credentialsProvider = new CognitoCachingCredentialsProvider(
                 getApplicationContext(),
-                "ap-northeast-2:cc1b25cd-c9e7-430f-9666-474b1d523655", // Identity Pool ID
-                Regions.AP_NORTHEAST_2
+                "ap-northeast-2:89a1896a-9913-47fd-9fed-fb648fe746fa", // 자격 증명 풀 ID
+                Regions.AP_NORTHEAST_2 // 리전
         );
+
         s3 = new AmazonS3Client(credentialsProvider);
         s3.setRegion(Region.getRegion(Regions.AP_NORTHEAST_2));
         s3.setEndpoint("s3.ap-northeast-2.amazonaws.com");
@@ -98,11 +106,11 @@ public class MyShopActivity extends AppCompatActivity {
         arrayList1.add("액세서리");
 
         arrayList2 = new ArrayList<>();
-        arrayList2.add("동대문종합시장");
-        arrayList2.add("청평화시장");
+        arrayList2.add("동대문 종합시장");
+        arrayList2.add("청평화 시장");
         arrayList2.add("벨포스트");
-        arrayList2.add("광희시장");
-        arrayList2.add("두산타워");
+        arrayList2.add("광희 시장");
+        arrayList2.add("두산 타워");
 
         arrayAdapter1 = new ArrayAdapter<>(getApplicationContext(),
                 android.R.layout.simple_spinner_dropdown_item,
@@ -183,7 +191,6 @@ public class MyShopActivity extends AppCompatActivity {
 //        BitmapFactory.Options options = new BitmapFactory.Options();
 //        Bitmap originalBm = BitmapFactory.decodeFile(tempFile.getAbsolutePath(), options);
 //        ivShopProfile.setImageBitmap(originalBm);
-
 
         // amazons3에 이미지 저장, 수정완료버튼을 눌렀을때 실행되도록 변경하기!
         TransferObserver obsever = transferUtility.upload(

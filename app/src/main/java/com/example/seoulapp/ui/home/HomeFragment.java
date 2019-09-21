@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,6 +22,7 @@ import android.view.ViewGroup;
 import android.os.AsyncTask;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.example.seoulapp.ListViewAdapter;
@@ -70,50 +72,26 @@ public class HomeFragment extends Fragment {
         actionBar.setHomeAsUpIndicator(R.drawable.ic_filter);
 
         View viewToolbar = getActivity().getLayoutInflater().inflate(R.layout.home_tool_bar, null);
-        ImageButton searchButton = viewToolbar.findViewById(R.id.search_btn);
+        // ImageButton searchButton = viewToolbar.findViewById(R.id.search_btn);
+        ImageView searchButton = viewToolbar.findViewById(R.id.search_shop);
 
-        setHasOptionsMenu(true);
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), SearchActivity.class);
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.stay, R.anim.stay);
+            }
+        });
 
-        ListViewAdapter adapter;
-
-        // Adapter 생성
-        adapter = new ListViewAdapter();
-
-        FragmentManager fragmentManager = getFragmentManager();
-        // 리스트뷰 참조 및 Adapter 닫기
-
-
-
-        final CustomListFragment searchList = new CustomListFragment();
-        final ListFragment searchShopList = new ListFragment();
-
-
-
-
-
+        actionBar.setCustomView(viewToolbar, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.LEFT));
 
         return root;
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.home_action_bar, menu);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.search_btn:
-                Intent intent = new Intent(getActivity(), SearchActivity.class);
-                startActivity(intent);
-                getActivity().overridePendingTransition(R.anim.stay, R.anim.stay);
 
-            default:
-                return super.onOptionsItemSelected(item);
 
-        }
-    }
 
 
 }

@@ -11,16 +11,20 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.seoulapp.MainActivity;
 import com.example.seoulapp.R;
+import com.example.seoulapp.SettingShop;
 
 import org.json.JSONObject;
 
@@ -36,6 +40,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
+import static android.view.View.INVISIBLE;
+import static android.view.View.VISIBLE;
+
 public class NotificationsFragment extends Fragment {
 
     private NotificationsViewModel notificationsViewModel;
@@ -47,6 +54,10 @@ public class NotificationsFragment extends Fragment {
     ImageView ivSettings;
     ImageView ivNews;
     ImageView ivShop;
+    ImageView ivShopAdd;
+    ImageView ivShopSetting;
+
+    LinearLayout NoShopPage, YesShopPage;
 
     static String strEmail;
     private ListView m_oListView = null;
@@ -66,6 +77,13 @@ public class NotificationsFragment extends Fragment {
 
         View v = inflater.inflate(R.layout.fragment_notifications, container, false);
 
+        SharedPreferences auto = this.getActivity().getSharedPreferences(MainActivity.name, Context.MODE_PRIVATE);
+        strEmail = auto.getString("inputId", "null");
+
+
+        NoShopPage = v.findViewById(R.id.noShopPage);
+        YesShopPage = v.findViewById(R.id.yesShopPage);
+
         // 와이파이 새로 접속할 때마다 변경
         new JSONTask().execute("http://172.30.1.14:3000/myNickname");
 
@@ -74,9 +92,6 @@ public class NotificationsFragment extends Fragment {
         if (Build.VERSION.SDK_INT >= 21) {
             ivProfile.setClipToOutline(true);
         }
-
-        SharedPreferences auto = this.getActivity().getSharedPreferences(MainActivity.name, Context.MODE_PRIVATE);
-        strEmail = auto.getString("inputId", "null");
 
         // ivProfile에 현재 사용자 프로필 이미지
         // tvNickname에 현재 사용자 닉네임
@@ -92,10 +107,14 @@ public class NotificationsFragment extends Fragment {
 
         ivNews = (ImageView) v.findViewById(R.id.ivNews);
         ivNews.setOnClickListener(new goNews());
-        ivShop = (ImageView) v.findViewById(R.id.ivShop);
-        ivShop.setOnClickListener(new goShop());
+        //ivShop = (ImageView) v.findViewById(R.id.ivShop);
+        //ivShop.setOnClickListener(new goShop());
         ivSettings = (ImageView) v.findViewById(R.id.ivSettings);
         ivSettings.setOnClickListener(new goSettings());
+        ivShopAdd = (ImageView)v.findViewById(R.id.ivAddShop);
+        ivShopAdd.setOnClickListener(new goAddShop());
+        ivShopSetting = (ImageView)v.findViewById(R.id.ivShopSetting);
+        ivShopSetting.setOnClickListener(new goSetingShop());
 
         // 즐겨찾기 리스트
         String[] strBookmark =  {"들락날락", "다래락", "라일락", "라운지오", "워커하우스"};
@@ -109,6 +128,7 @@ public class NotificationsFragment extends Fragment {
         m_oListView = (ListView) v.findViewById(R.id.listView);
         ListAdapter oAdapter = new ListAdapter(oData);
         m_oListView.setAdapter(oAdapter);
+        new JSONTask().execute("http://192.168.43.72:3000/getUserInfo");
 
         // listview 클릭 시 각 매장 페이지로 이동(매장 id를 ShopDetaildInfo에 전달)
 
@@ -184,10 +204,43 @@ public class NotificationsFragment extends Fragment {
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-            tvNickname.setText(result);
-            strNickname = result;
+            String[] userInfo;
+            userInfo = result.split("\\|");
+
+            tvNickname.setText(userInfo[0]);
+            String userProfileURL = "https://s3.ap-northeast-2.amazonaws.com/com.example.seoulapp/userProfileImage/" + userInfo[1];
+            Glide.with(getContext()).load(userProfileURL).into(ivProfile);
+
+            if(userInfo[2].equals("0"))
+            {
+                YesShopPage.setVisibility(INVISIBLE);
+                NoShopPage.setVisibility(VISIBLE);
+            }
+            else{
+                YesShopPage.setVisibility(VISIBLE);
+                NoShopPage.setVisibility(INVISIBLE);
+            }
+            }
+    }
+
+    class goAddShop implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            Intent intentAddShop = new Intent(getActivity(), AddShop.class);
+            startActivity(intentAddShop);
+
         }
     }
+
+    class goSetingShop implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            Intent intentSettingShop = new Intent(getActivity(), SettingShop.class);
+            startActivity(intentSettingShop);
+        }
+    }
+
+
 
     class goNews implements View.OnClickListener {
         @Override

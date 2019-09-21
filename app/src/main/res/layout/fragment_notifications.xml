@@ -37,20 +37,23 @@
                 <ImageView
                     android:id="@+id/ivProfile"
                     android:layout_width="80dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="80dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
+                    android:scaleType="fitXY"
                     android:textAlignment="center"
                     android:textSize="20sp"
-                    app:srcCompat="@android:drawable/sym_def_app_icon" />
+                    android:src="@drawable/blank_profile"/>
 
                 <LinearLayout
+                    android:layout_marginTop="5dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
                     <TextView
+                        android:layout_gravity="center"
                         android:id="@+id/tvNickname"
                         android:layout_width="200dp"
                         android:layout_height="wrap_content"
@@ -58,9 +61,12 @@
                         android:layout_marginTop="16dp"
                         android:layout_marginEnd="8dp"
                         android:text="profile"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/nanumsquare_acr"
                         android:textAlignment="center" />
 
                     <TextView
+                        android:layout_gravity="center"
                         android:id="@+id/tvEmail"
                         android:layout_width="200dp"
                         android:layout_height="wrap_content"
@@ -68,6 +74,8 @@
                         android:layout_marginTop="7dp"
                         android:layout_marginEnd="8dp"
                         android:text="e-mail"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/nanumsquare_acr"
                         android:textAlignment="center" />
                 </LinearLayout>
 
@@ -123,27 +131,62 @@
                         android:textSize="12dp" />
                 </LinearLayout>
 
-                <LinearLayout
+                <FrameLayout
+                    android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:layout_width="40dp"
+                    android:layout_weight="1">
+
+                    <LinearLayout
+                        android:id="@+id/yesShopPage"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:orientation="vertical"
+                        >
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:padding="0dp"
+                            android:src="@drawable/shopsetting"
+                            android:id="@+id/ivShopSetting" />
+
+                        <TextView
+                            android:id="@+id/shopYES"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="매장 관리"
+                            android:textAlignment="center"
+                            android:paddingTop="3dp"
+                            android:textSize="12dp" />
+
+                    </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/noShopPage"
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
                     android:orientation="vertical"
-                    android:layout_weight="1" >
+                    >
 
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
                         android:padding="0dp"
-                        android:src="@drawable/shop"
-                        android:id="@+id/ivShop" />
+                        android:src="@drawable/addshop"
+                        android:id="@+id/ivAddShop" />
 
-                    <TextView
+                        <TextView
+                        android:id="@+id/shopNo"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="내 상점"
+                        android:text="매장 개설"
                         android:textAlignment="center"
                         android:paddingTop="3dp"
                         android:textSize="12dp" />
+
                 </LinearLayout>
+
+                </FrameLayout>
 
 
                 <LinearLayout
