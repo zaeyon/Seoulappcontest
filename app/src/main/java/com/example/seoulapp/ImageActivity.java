@@ -58,7 +58,7 @@ public class ImageActivity extends Activity {
         productionURL = (String)receivedIntent.getExtras().get("production");
         Glide.with(getApplicationContext()).load(productionURL).into(imageView);
 
-        new JSONTaskProductionInfo().execute("http://192.168.43.72:3000/getProductionInfo");
+        new JSONTaskProductionInfo().execute("http://172.30.1.18:3000/getProductionInfo");
 
 
     }

@@ -29,6 +29,6 @@ public class ToolbarAct extends AppCompatActivity {
         getSupportActionBar().setTitle("Writing");
         //mToolbar.setTitleTextColor(Color.rgb(30,135,188));
 
-
     }
-}*/
+}
+*/

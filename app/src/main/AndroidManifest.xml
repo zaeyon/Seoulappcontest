@@ -25,17 +25,15 @@
             android:theme="@style/Theme.AppCompat">
             <intent-filter>
                  <action android:name="android.intent.action.MAIN" />
-
                  <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.dashboard.CreateReviewAct"/>
-        <activity android:name=".ui.dashboard.ToolbarAct">
+        <activity android:name=".ui.dashboard.CreateReviewAct">
             <intent-filter>
             <action android:name="android.intent.action.ReviewToolbar" />
             </intent-filter>
         </activity>
-            />
+        <activity android:name=".ui.dashboard.CommentMoreAct"></activity>
       </application>
     <uses-permission android:name="android.permission.INTERNET" />
 

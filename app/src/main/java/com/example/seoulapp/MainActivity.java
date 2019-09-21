@@ -6,12 +6,11 @@ import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.Window;
-import android.app.FragmentManager;
-import com.example.seoulapp.ui.home.HomeFragment;
 
 
 public class MainActivity extends Activity {
 
+    Activity activity;
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter;
     RecyclerView.LayoutManager layoutManager;
@@ -22,6 +21,7 @@ public class MainActivity extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
     }
 

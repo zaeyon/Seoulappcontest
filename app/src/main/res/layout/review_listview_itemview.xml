@@ -3,53 +3,61 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_weight="1"
     android:orientation="vertical"
-    android:layout_weight="0.1">
+    >
+
     <LinearLayout
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="50dp"
+        android:background="#A0A0FF">
 
-    <ImageView
-        android:id="@+id/User_profilePicture"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="5dp"
-        android:src="@drawable/camera_icon2" />
+        <ImageView
+            android:id="@+id/User_profilePicture"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="5dp"
+            android:src="@drawable/camera_icon2" />
 
-    <TextView
-        android:id="@+id/User_id"
-        android:text="First"
-        android:layout_width="110dp"
-        android:layout_height="30dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="5dp"
-        android:textSize="20dp"
-        />
+        <TextView
+            android:id="@+id/User_id"
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="5dp"
+            android:text="First"
+            android:textSize="20sp" />
     </LinearLayout>
-<FrameLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/User_img"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:clickable="true"
-        android:scaleType="fitXY"
-        />
+        android:layout_height="200dp"
+        android:background="#A0A0FF">
 
-    <ImageView
-        android:id="@+id/love_filed"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_gravity="center"
-        android:src="@drawable/icon_heart"
-        android:clickable="false"
-        />
-</FrameLayout>
+        <ImageView
+            android:id="@+id/User_img"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:clickable="true"
+            android:scaleType="fitXY" />
+
+        <ImageView
+            android:id="@+id/love_filed"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center"
+            android:clickable="false"
+            android:src="@drawable/icon_heart" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#A0A0FF"
+        android:orientation="vertical">
+
         <ImageView
             android:id="@+id/love_emtpy"
             android:layout_width="25dp"
@@ -58,49 +66,74 @@
             android:layout_marginTop="3dp"
             android:src="@drawable/heart" />
 
-    <TextView
-        android:id="@+id/like"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="3dp"
-        android:text="좋아요 0회"
-        android:textSize="15dp"
-        android:gravity = "center_vertical|left|start"/>
+        <TextView
+            android:id="@+id/like"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:gravity="center_vertical|left|start"
+            android:text="좋아요 0회"
+            android:textSize="15sp" />
+    </LinearLayout>
 
-    <TextView
-        android:id="@+id/User_Description"
-        android:layout_width="match_parent"
-        android:layout_height="69dp"
-        android:textAlignment="center"
-        android:textSize="60dp" />
-    <TextView
-        android:id="@+id/User_Store"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        />
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:background="#A0A0FF"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/User_Description"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:textAlignment="center"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/User_Store"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:layout_weight="0.03"
+            />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/watching_comment"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="3dp"
+        android:background="#A0A0FF"
+        android:text="댓글 보기"
+        android:layout_marginBottom="3dp"
+        android:textSize="20sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#A0A0FF"
         android:orientation="horizontal">
+
         <ImageView
             android:layout_width="30dp"
-            android:layout_height="50dp"
+            android:layout_height="30dp"
             android:layout_marginLeft="3dp"
-            android:src="@drawable/profileimage_1"
-            />
+            android:src="@drawable/profileimage_1" />
 
         <EditText
             android:id="@+id/comment"
             android:layout_width="273dp"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="3dp"
             android:layout_marginBottom="3dp"
             android:gravity="center_vertical|left|start"
             android:hint="댓글 달기"
-            android:textSize="15dp"
-
+            android:textSize="15sp" />
+        <TextView
+            android:id="@+id/Input_hint"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:hint="입력"
             />
     </LinearLayout>
-
 </LinearLayout>

@@ -17,7 +17,7 @@ app.use(session({
   store : new MySQLStore({
       host : 'localhost',
       user : 'root',
-      password : '00000',
+      password : '1234',
       port : 3306,
       database : 'test'
   })
@@ -708,6 +708,104 @@ app.post('/getProductionInfo', (req, res) => {
 });
 });
 
+app.post('/getUserProfile', (req,res) => {
+  
+  var allUserProfileImage = "";
+  var UserContent="";
+  var UserId ="";
+  var UserImage="";
+  var ReviewStoreName="";
+  var DistinguishContent="";
+  var Like="";
+  var Comment="";
+  var CommentUser_Id=""
+  var allView="";
+
+  console.log("프로필 사진 얻기");
+  connection.query("SELECT * FROM review", function(error, results) { //all pulled.
+    if(error)
+    {
+      console.log("에러");
+    }
+    else{
+    for(var j = 0; j < results.length; j++)
+    {
+      if(j == 0)
+      {
+        console.log("allImage : " + allUserProfileImg);
+        allUserProfileImage =results[0].User_Profile_Img;
+        UserImage = results[0].User_Image;
+        UserId = results[0].User_Id;
+        UserContent = results[0].User_Content;
+        ReviewStoreName = results[0].Review_StoreName;
+        DistinguishContent = results[0].Distinguish_Content;
+        Like = results[0].Like;
+        Comment=results[0].Comment;
+        CommentUser_Id = results[0].CommentUser_Id;
+        allView = allUserProfileImage + "/" + UserImage + "/" + UserId + "/" + UserContent+ "/"+ReviewStoreName+"/"+DistinguishContent+"/"+Like+"/"+Comment+"/"+CommentUser_Id;
+      }
+      else
+      {
+        console.log("allImage : " + allUserProfileImage);
+        allUserProfileImage = allUserProfileImage + "|" + results[j].User_Profile_Img;
+        UserImage = UserImage+"|"+results[j].User_Image;
+        UserId = UserId+"|"+results[j].User_Id;
+        UserContent = UserContent+"|"+results[j].User_Content;
+        ReviewStoreName = ReviewStoreName+"|"+results[j].Review_StoreName;
+        DistinguishContent = DistinguishContent + "|" + results[j].Distinguish_Content;
+        Like = Like+"|"+results[j].Like;
+        Comment=Comment + "|" + results[j].Comment;
+        CommentUser_Id = CommentUser_Id + "|" + results[j].CommentUser_Id;
+        allView = allUserProfileImage + "/" + UserImage + "/" + UserId + "/" + UserContent + "/" +ReviewStoreName+ "/" +DistinguishContent+"/"+Like+"/"+Comment+"/"+CommentUser_Id;
+        }
+      };
+    };
+    console.log("allImage : " + allUserProfileImage);
+    res.write(allView); //그냥 모든 걸 더해서 하나로 보낸 후에 나누면 안 됨?
+    res.end();
+  });
+});
+
+app.post('/getCommentInfo',(req,res)=>{
+  var allUserProfileImage = "";
+
+  var Comment="";
+  var CommentUser_Id=""
+  var allView="";
+
+  console.log("프로필 사진 얻기");
+  connection.query("SELECT * FROM review", function(error, results) { //all pulled.
+    console.log(results);
+    if(error)
+    {
+      console.log("에러");
+    }
+    else{
+    for(var j = 0; j < results.length; j++)
+    {
+      if(j == 0)
+      {
+        console.log("allImage : " + allUserProfileImg);
+        Comment=results[0].Comment;
+        CommentUser_Id = results[0].CommentUser_Id;
+        allView = Comment+"/"+CommentUser_Id;
+      }
+      else
+      {
+        console.log("allImage : " + allUserProfileImage);
+        Comment=Comment + "|" + results[j].Comment;
+        CommentUser_Id = CommentUser_Id + "|" + results[j].CommentUser_Id;
+        allView = Comment+"/"+CommentUser_Id;
+        }
+      };
+    };
+    console.log("allImage : " + allUserProfileImage);
+    res.write(allView); //그냥 모든 걸 더해서 하나로 보낸 후에 나누면 안 됨?
+    res.end();
+});
+
+//app.post()
 app.listen(3000, () => {
   console.log('Example app listening on port 3000!');
 });
+

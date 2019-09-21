@@ -1,16 +1,11 @@
 package com.example.seoulapp.ui.dashboard;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -18,7 +13,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.example.seoulapp.MainActivity;
 import com.example.seoulapp.R;
 
 public class CreateReviewAct extends AppCompatActivity {
@@ -84,23 +78,5 @@ public class CreateReviewAct extends AppCompatActivity {
         Imm.hideSoftInputFromWindow(et2.getWindowToken(), 0);
     } //공백을 넣어줘야겠당...
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu){
-        super.onCreateOptionsMenu(menu);
-        getMenuInflater().inflate(R.menu.backbutton_, menu);
-        return true;
-    }
-
-    @Override //버튼 눌렀을 시의 응답
-    public boolean onOptionsItemSelected(MenuItem item){
-        // Handle action bar item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.action_button) { //fragment로 돌아가야함!
-            finish(); //이미지랑 댓글 상가 저장하고 가야함.
-            //process your onClick here
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
 }
