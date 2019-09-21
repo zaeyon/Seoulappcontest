@@ -30,7 +30,8 @@
                 android:id="@+id/ShopProfileImage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="매장 프로필 사진" />
+                android:text="매장 프로필 사진"
+                android:fontFamily="@font/nanumsquare_acr"/>
 
             <ImageView
                 android:id="@+id/newShopProfileImage"
@@ -51,7 +52,8 @@
                     android:id="@+id/tvShopName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="매장 이름" />
+                    android:text="매장 이름"
+                    android:fontFamily="@font/nanumsquare_acr"/>
 
                 <com.example.seoulapp.ClearEditText
                     android:id="@+id/newShopName"
@@ -82,7 +84,8 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="판매 품목" />
+                            android:text="판매 품목"
+                            android:fontFamily="@font/nanumsquare_acr"/>
 
                         <Spinner
                             android:id="@+id/newShopSalesItem"
@@ -97,6 +100,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
                         <TextView
+                            android:fontFamily="@font/nanumsquare_acr"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="스타일" />
@@ -123,7 +127,8 @@
                     android:id="@+id/textView8"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="위치" />
+                    android:text="위치"
+                    android:fontFamily="@font/nanumsquare_acr"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -134,7 +139,7 @@
                         android:id="@+id/newShopBuilding"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_weight="0.88" />
+                        android:layout_weight="0.6" />
 
                     <com.example.seoulapp.ClearEditText
                         android:id="@+id/newShopFloor"
@@ -149,7 +154,8 @@
                         android:layout_height="match_parent"
                         android:layout_weight="0.3"
                         android:text="층"
-                        android:textSize="19sp"
+                        android:fontFamily="@font/nanumsquare_acr"
+                        android:textSize="15sp"
                         android:gravity="center"
                         />
 
@@ -165,8 +171,9 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="0.3"
+                        android:fontFamily="@font/nanumsquare_acr"
                         android:text="구역"
-                        android:textSize="19sp"
+                        android:textSize="15sp"
                         android:gravity="center"
                         />
 
@@ -183,6 +190,7 @@
                     android:id="@+id/tvIntro"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/nanumsquare_acr"
                     android:text="매장 소개" />
 
                 <com.example.seoulapp.ClearEditText
@@ -193,13 +201,57 @@
 
             </LinearLayout>
 
+            <TextView
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="         매장리스트에서 보여지는\n 대표 상품 사진을 3개 등록해주세요. "
+                android:textSize="15sp"
+                android:fontFamily="@font/nanumsquare_acr"
+                />
+
+            <LinearLayout
+                android:gravity="center"
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+
+
+                <ImageView
+                    android:id="@+id/newShopRep1"
+                    android:gravity="center"
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:layout_marginRight="5dp"
+                    android:src="@drawable/blank_production"
+                    android:scaleType="fitXY"/>
+
+                <ImageView
+                    android:id="@+id/newShopRep2"
+                    android:gravity="center"
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:src="@drawable/blank_production"
+                    android:scaleType="fitXY"/>
+
+                <ImageView
+                    android:id="@+id/newShopRep3"
+                    android:gravity="center"
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:layout_marginLeft="5dp"
+                    android:src="@drawable/blank_production"
+                    android:scaleType="fitXY"/>
+            </LinearLayout>
+
 
             <Button
                 android:id="@+id/signUpNextButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="다음"
-                android:layout_marginTop="0dp"/>
+                android:text="매장 등록"
+                android:layout_marginTop="15dp"/>
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

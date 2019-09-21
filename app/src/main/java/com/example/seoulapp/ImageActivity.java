@@ -59,7 +59,7 @@ public class ImageActivity extends Activity {
         Glide.with(getApplicationContext()).load(productionURL).into(imageView);
 
         // 와이파이 접속할때마다 변경
-        new JSONTaskProductionInfo().execute("http://192.168.43.72:3000/getProductionInfo");
+        new JSONTaskProductionInfo().execute("http://172.30.1.18:3000/getProductionInfo");
 
 
     }

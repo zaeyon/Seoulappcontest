@@ -85,7 +85,7 @@ public class NotificationsFragment extends Fragment {
         YesShopPage = v.findViewById(R.id.yesShopPage);
 
         // 와이파이 새로 접속할 때마다 변경
-        new JSONTask().execute("http://192.168.43.72:3000/getUserInfo");
+        new JSONTask().execute("http://172.30.1.18:3000/getUserInfo");
 
         ivProfile = (ImageView)v.findViewById(R.id.ivProfile);
         ivProfile.setBackground(new ShapeDrawable(new OvalShape()));
@@ -128,7 +128,7 @@ public class NotificationsFragment extends Fragment {
         m_oListView = (ListView) v.findViewById(R.id.listView);
         ListAdapter oAdapter = new ListAdapter(oData);
         m_oListView.setAdapter(oAdapter);
-        new JSONTask().execute("http://192.168.43.72:3000/getUserInfo");
+        new JSONTask().execute("http://172.30.1.18:3000/getUserInfo");
 
         // listview 클릭 시 각 매장 페이지로 이동(매장 id를 ShopDetaildInfo에 전달)
 

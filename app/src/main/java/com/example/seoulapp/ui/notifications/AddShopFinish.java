@@ -5,12 +5,13 @@ import android.os.Bundle;
 
 import com.example.seoulapp.R;
 
-public class AddShop2 extends AppCompatActivity {
+public class AddShopFinish extends AppCompatActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.add_shop2);
+        setContentView(R.layout.add_shop_finish);
 
 
     }

@@ -822,6 +822,44 @@ app.post('/getUserProfile', (req,res) => {
   });
 });
 
+app.post('/getCommentInfo',(req,res)=>{
+  var allUserProfileImage = "";
+
+  var Comment="";
+  var CommentUser_Id=""
+  var allView="";
+
+  console.log("프로필 사진 얻기");
+  connection.query("SELECT * FROM review", function(error, results) { //all pulled.
+    console.log(results);
+    if(error)
+    {
+      console.log("에러");
+    }
+    else{
+    for(var j = 0; j < results.length; j++)
+    {
+      if(j == 0)
+      {
+        console.log("allImage : " + allUserProfileImg);
+        Comment=results[0].Comment;
+        CommentUser_Id = results[0].CommentUser_Id;
+        allView = Comment+"/"+CommentUser_Id;
+      }
+      else
+      {
+        console.log("allImage : " + allUserProfileImage);
+        Comment=Comment + "|" + results[j].Comment;
+        CommentUser_Id = CommentUser_Id + "|" + results[j].CommentUser_Id;
+        allView = Comment+"/"+CommentUser_Id;
+        }
+      };
+    };
+    console.log("allImage : " + allUserProfileImage);
+    res.write(allView); //그냥 모든 걸 더해서 하나로 보낸 후에 나누면 안 됨?
+    res.end();
+});
+});
 
 /*
    connection.query("select shopName from shop where shopName like concat ('%', ?, '%')",
@@ -864,7 +902,7 @@ app.post('/getUserInfo', (req, res) => {
         } else if(result[0]){
           userProfile = result[0].nickname + "|" + result[0].profileImage + "|" + result[0].shop_being;
         }
-
+        
         console.log("userProfile : " + userProfile);
         res.write(String(userProfile));
         res.end();
