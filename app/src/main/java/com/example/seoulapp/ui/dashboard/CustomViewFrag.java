@@ -64,7 +64,7 @@ public class CustomViewFrag extends ListFragment {
         Commentmore = getItemId.findViewById(R.id.watching_comment);
 
 
-        new JSONTaskUserProfile().execute("http://172.30.1.18:3000/getUserProfile");
+        new JSONTaskUserProfile().execute("http://c0289aff.ngrok.io/getUserProfile");
        /* dashboardViewModel =
                 ViewModelProviders.of(this).get(DashboardViewModel.class);*/
 
@@ -88,8 +88,8 @@ public class CustomViewFrag extends ListFragment {
         });
     }
 
-            public void addItem(String profile_img, String Img, String Id, String Content, String ShopName, int Like) {
-                adapter.addItem(profile_img, Img, Id, Content, ShopName, Like);
+            public void addItem(String Img, String Id, String Content, String ShopName, int Like) {
+                adapter.addItem(Img, Id, Content, ShopName, Like);
             }
 
     public class JSONTaskUserProfile extends AsyncTask<String, String, String> {
@@ -173,15 +173,13 @@ public class CustomViewFrag extends ListFragment {
                 Log.d("allView", allView[i]);
             }*/
 
-            User_profile_img = allView[0].split("\\|"); //유효 |
-            User_Image = allView[1].split("\\|");
-            User_Id = allView[2].split("\\|");
-            User_Content = allView[3].split("\\|");
-            Review_StoreName = allView[4].split("\\|");
-            Distinguish_Content = allView[5].split("\\|");
-            like = allView[6].split("\\|");
-            CommentUser_id = allView[7].split("\\|");
-            Comment = allView[8].split("\\|");
+            User_Image = allView[0].split("\\|"); //유효 |
+            User_Id = allView[1].split("\\|");
+            User_Content = allView[2].split("\\|");
+            Review_StoreName = allView[3].split("\\|");
+            like = allView[4].split("\\|");
+            CommentUser_id= allView[5].split("\\|");
+            Comment = allView[6].split("\\|");
 
 
             ReviewAdapter adapter = new ReviewAdapter();
@@ -189,7 +187,6 @@ public class CustomViewFrag extends ListFragment {
 
 
             for (int i = 0; i < 2; i++) { //개수를 어케 세죠?
-                String UserprofileImageUrl = "https://s3.ap-northeast-2.amazonaws.com/com.example.seoulapp/" + User_profile_img[i];
                 String UserImg = "https://s3.ap-northeast-2.amazonaws.com/com.example.seoulapp/" + User_Image[i];
                 String UserId = User_Id[i];
                 String UserContent = User_Content[i];
@@ -199,7 +196,7 @@ public class CustomViewFrag extends ListFragment {
                 String _Comment = Comment[i];
 
                 int likeNumber = Integer.parseInt(Like);
-                adapter.addItem(UserprofileImageUrl, UserImg, UserId, UserContent, StoreName, likeNumber);
+                adapter.addItem(UserImg, UserId, UserContent, StoreName, likeNumber);
             }
             //comment_Id랑 comment를 commentAct로 넘겨야합니당..
         }

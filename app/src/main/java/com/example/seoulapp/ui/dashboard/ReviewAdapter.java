@@ -92,8 +92,7 @@ public class ReviewAdapter extends BaseAdapter {
 
         ReviewItem Ri = list.get(position); //위젯에 대한 참조 기능 획득
 
-        Glide.with(c).load(Ri.getUserProfileimg()).into(iv_User_pro_picture);
-        Glide.with(c).load(Ri.getUserimg()).into(iv);
+        //Glide.with(c).load(Ri.getUserimg()).into(iv);
         tv_id.setText(Ri.getUserId());
         User_description.setText(Ri.getUserDes());
         User_store.setText(Ri.getStoreName());
@@ -153,11 +152,11 @@ public class ReviewAdapter extends BaseAdapter {
     }
 
     //item 추가
-    public void addItem(String img1, String img2, String str3, String str4, String str5, int like){
+    public void addItem(String img2, String str3, String str4, String str5, int like){
         //프로필 이미지, 메인이미지 ,id, 스토리, 상점, 좋아요, 댓글 아이디, 댓글
         ReviewItem ri = new ReviewItem();
 
-        ri.setUserProfileimg(img1); //db에서 불러온 값들을 저장해준다.
+         //db에서 불러온 값들을 저장해준다.
         ri.setUserImage(img2);
         ri.setUserId(str3);
         ri.setUserDes(str4);

@@ -78,7 +78,7 @@ public class EditProfileActivity extends AppCompatActivity {
     setContentView(R.layout.activity_edit_profile);
 
     // 와이파이 새로 접속할 때마다 변경
-    new JSONTask1().execute("http://172.30.1.18:3000/myProfile");
+    new JSONTask1().execute("http://c0289aff.ngrok.io/myProfile");
 
     SharedPreferences auto = getApplicationContext().getSharedPreferences(MainActivity.name, Context.MODE_PRIVATE);
     strEmail = auto.getString("inputId", "null");
@@ -128,7 +128,7 @@ public class EditProfileActivity extends AppCompatActivity {
         }
 
         // 와이파이 새로 접속할 때마다 변경
-        new JSONTask2().execute("http://172.30.1.18:3000/setMyProfile");
+        new JSONTask2().execute("http://c0289aff.ngrok.io/setMyProfile");
         Log.d("EditProfileActivity", "JSONTask2 실행");
         
         Intent iSettings = new Intent(EditProfileActivity.this, SettingsActivity.class);
@@ -168,14 +168,14 @@ public class EditProfileActivity extends AppCompatActivity {
         bMyProfileComplete.setEnabled(false);
       }
 
-      new JSONTask3().execute("http://172.30.1.18:3000/nickname");
+      new JSONTask3().execute("http://c0289aff.ngrok.io/nickname");
     }
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
     }
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-      new JSONTask3().execute("http://172.30.1.18:3000/nickname");
+      new JSONTask3().execute("http://c0289aff.ngrok.io/nickname");
     }
   };
 

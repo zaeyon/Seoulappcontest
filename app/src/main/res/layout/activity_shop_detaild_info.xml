@@ -11,7 +11,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="2.6"
+        android:layout_weight="3.0"
         android:orientation="vertical"
         android:gravity="center"
         android:background="#ffffff">
@@ -134,10 +134,10 @@
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1.0"
+            android:layout_height="0dp"
+            android:layout_weight="1.5"
             android:gravity="center">
 
             <TextView
@@ -151,8 +151,49 @@
 
             </TextView>
 
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-        </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/production_btn"
+                        android:layout_width="82dp"
+                        android:layout_height="28dp"
+                        android:src="@drawable/onqna_btn"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="7dp"
+                        android:scaleType="fitXY"
+                        android:layout_marginBottom="7dp"
+                        />
+
+                </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/QA_btn"
+                android:layout_width="82dp"
+                android:layout_height="28dp"
+                android:src="@drawable/onproduction_btn"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="7dp"
+                android:layout_marginBottom="7dp"
+                android:scaleType="fitXY"
+                />
+
+            </RelativeLayout>
+
+            </FrameLayout>
+        </RelativeLayout>
 
 
     </LinearLayout>
@@ -177,12 +218,30 @@
             android:background="#cccccc" />
 
 
+        <FrameLayout
+            android:layout_height="match_parent"
+            android:layout_width="match_parent">
+
+            <LinearLayout
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:id="@+id/QAPage"
+                android:layout_width="match_parent"
+                android:background="#ffffff">
+
+                <ListView
+                    android:id="@+id/QAList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+
+            </LinearLayout>
 
         <LinearLayout
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:id="@+id/feedPage"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:background="#ffffff"
             >
 
@@ -197,10 +256,9 @@
                     android:paddingBottom="5dp"
                     android:overScrollMode="never">
                 </GridView>
-
-
-
         </LinearLayout>
+
+        </FrameLayout>
 
     </LinearLayout>
 

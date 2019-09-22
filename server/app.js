@@ -766,7 +766,6 @@ app.post('/getUserProfile', (req,res) => {
   var UserId ="";
   var UserImage="";
   var ReviewStoreName="";
-  var DistinguishContent="";
   var Like="";
   var Comment="";
   var CommentUser_Id=""
@@ -785,26 +784,23 @@ app.post('/getUserProfile', (req,res) => {
       {
 
         console.log("allImage : " + allUserProfileImage);
-        allUserProfileImage =results[0].User_Profile_Img;
         UserImage = results[0].User_Image;
         UserId = results[0].User_Id;
-        UserContent = results[0].User_Content;
+        UserContent = results[0].User_Content; 
         ReviewStoreName = results[0].Review_StoreName;
-        DistinguishContent = results[0].Distinguish_Content;
         Like = results[0].Like;
         Comment=results[0].Comment;
         CommentUser_Id = results[0].Comment_User_Id;
-        allView = allUserProfileImage + "/" + UserImage + "/" + UserId + "/" + UserContent+ "/"+ReviewStoreName+"/"+DistinguishContent+"/"+Like+"/"+Comment+"/"+CommentUser_Id;
+        allView =UserImage + "/" + UserId + "/" + UserContent+ "/"+ReviewStoreName+"/"+Like+"/"+Comment+"/"+CommentUser_Id;
       }
       else
       {
         console.log("allImage : " + allUserProfileImage);
-        allUserProfileImage = allUserProfileImage + "|" + results[j].User_Profile_Img;
+
         UserImage = UserImage+"|"+results[j].User_Image;
         UserId = UserId+"|"+results[j].User_Id;
         UserContent = UserContent+"|"+results[j].User_Content;
         ReviewStoreName = ReviewStoreName+"|"+results[j].Review_StoreName;
-        DistinguishContent = DistinguishContent + "|" + results[j].Distinguish_Content;
         Like = Like+"|"+results[j].Like;
         Comment=Comment + "|" + results[j].Comment;
 
@@ -812,11 +808,10 @@ app.post('/getUserProfile', (req,res) => {
 
         console.log("CommentUser_id : " + CommentUser_Id + results[0].Comment_User_Id);
 
-        allView = allUserProfileImage + "/" + UserImage + "/" + UserId + "/" + UserContent + "/" +ReviewStoreName+ "/" +DistinguishContent+"/"+Like+"/"+Comment+"/"+CommentUser_Id;
+        allView = UserImage + "/" + UserId + "/" + UserContent + "/" +ReviewStoreName+"/"+Like+"/"+Comment+"/"+CommentUser_Id;
         }
       };
     };
-    console.log("allImage : " + allUserProfileImage);
     console.log("allView : " + allView);
 
     res.write(allView); //그냥 모든 걸 더해서 하나로 보낸 후에 나누면 안 됨?
@@ -825,48 +820,7 @@ app.post('/getUserProfile', (req,res) => {
 });
 
 app.post('/getCommentInfo',(req,res)=>{
-<<<<<<< HEAD
-  var allUserProfileImage = "";
-
-  var Comment="";
-  var CommentUser_Id=""
-  var allView="";
-
-  console.log("프로필 사진 얻기");
-  connection.query("SELECT * FROM review", function(error, results) { //all pulled.
-    console.log(results);
-    if(error)
-    {
-      console.log("에러");
-    }
-    else{
-    for(var j = 0; j < results.length; j++)
-    {
-      if(j == 0)
-      {
-        console.log("allImage : " + allUserProfileImg);
-        Comment=results[0].Comment;
-        CommentUser_Id = results[0].CommentUser_Id;
-        allView = Comment+"/"+CommentUser_Id;
-      }
-      else
-      {
-        console.log("allImage : " + allUserProfileImage);
-        Comment=Comment + "|" + results[j].Comment;
-        CommentUser_Id = CommentUser_Id + "|" + results[j].CommentUser_Id;
-        allView = Comment+"/"+CommentUser_Id;
-        }
-      };
-    };
-    console.log("allImage : " + allUserProfileImage);
-    res.write(allView); //그냥 모든 걸 더해서 하나로 보낸 후에 나누면 안 됨?
-    res.end();
-});
-});
-=======
     var allUserProfileImage = "";
->>>>>>> 27040669021825bded1cdcf6ef53478a0ed2ddae
-
     var Comment="";
     var CommentUser_Id=""
     var allView="";
@@ -939,19 +893,6 @@ app.post('/myProfile', (req, res) => {
         console.log("request from myProfile");
     });
 
-<<<<<<< HEAD
-   req.on('end', () => {
-    connection.query("SELECT * FROM user where email = ?", inputData.email, function(error, result) {
-        if (error) {
-            console.log("에러" + error);
-        } else if(result[0]){
-          userProfile = result[0].nickname + "|" + result[0].profileImage + "|" + result[0].shop_being;
-        }
-        
-        console.log("userProfile : " + userProfile);
-        res.write(String(userProfile));
-        res.end();
-=======
     req.on('end', () => {
         connection.query("SELECT * FROM user WHERE email = ?", inputData.email, function(error, result) {
             if (error) {
@@ -965,7 +906,6 @@ app.post('/myProfile', (req, res) => {
             res.write(String(userData));
             res.end();
         });
->>>>>>> 27040669021825bded1cdcf6ef53478a0ed2ddae
     });
 });
 
@@ -1004,6 +944,114 @@ app.post('/setMyProfile', (req, res) => {
         })
     });
 });
+
+app.post('/setUploadImg',(req,res)=>{ //review Img 업로드
+  console.log("post /setUploadImg");
+  var inputData; //JSONTask에서 준 데이터
+  var params;
+
+  req.on('data', (data) => {
+      inputData = JSON.parse(data);
+      params = [inputData.UserImg, inputData.email,inputData.UserContent, inputData.StoreName];
+      console.log("request from setUploadImg");
+  });
+
+  req.on('end', () => {
+      connection.query("INSERT INTO review SET User_Img = ?, User_Id=? ,User_Content =?, Review_StoreName =? WHERE email = ?", params, function(error, result) {
+          if (error) {
+              console.log("리뷰 파일 이름 저장 에러");
+          } else {
+              console.log("리뷰 파일 이름 저장 완료")
+          }
+          console.log("리뷰 파일 저장");
+          res.write("Review file upload finish");
+          res.end();
+      });
+  });
+});
+
+app.post('/getReviewCount', (req, res)=>{
+  console.log("access getReviewCount");
+  var UserId;
+  var number;
+
+  connection.query("SELECT * FROM review", (err,data1)=>{
+                     UserId = data1[0].User_Id;
+                      connection.query("SELECT * FROM review WHERE User_Id =?", [UserId], (err,data2)=>{
+                          number = data2[0].Review_Number;
+                          res.write(number);
+                          res.end();
+              });
+          })
+});
+
+app.post('/getQnAInfo', (req, res) => {
+  console.log("/post getQnAInfo");
+  var inputData;
+  var QnAInfo = "";
+  var QnACount;
+
+  req.on('data', (data) => {
+    inputData = JSON.parse(data);
+  });
+
+  req.on('end', () => {
+
+    // QnA 불러옴
+
+    console.log("QnA불러오는 매장이름 : " + inputData.shopName);
+
+    connection.query("SELECT COUNT(*) as cnt from qna where shopName = ?",inputData.shopName, function(error, results, fields) {
+      if(error)
+      {
+        console.log("error : " + error);
+      }
+      else {
+        console.log("매장에 등록된 리뷰 개수 : " + results[0].cnt);
+      //QnAInfo = results[0].cnt;
+      QnACount = results[0].cnt;
+      }
+    });
+    connection.query('SELECT * from qna where shopName = ?', inputData.shopName, function(error, results, fields) {
+      if(error) {
+        console.log("error ocurred", error);
+        res.send({
+          "code":400, 
+          "failed":"error ocurred"
+        })
+        res.end();
+      } else if(results.length == 0)
+      {
+        console.log("해당 매장의 QnA 존재하지 않음");
+      }
+      else
+      {
+        console.log("해장 매장의 QnA 존재함"); 
+        for(var i = 0; i < QnACount; i++)
+        {
+          if(i == QnACount-1)
+        {
+        QnAInfo = QnAInfo + results[i].hostNickname + "|" + results[i].shopName +"|" + results[i].size +"|"+ results[i].title + "|" + results[i].production + "|" + results[i].userNickname + "|" + results[i].question + "|" + results[i].answerExis;
+        }
+        else if(i == 0) 
+        {
+        QnAInfo = results[i].hostNickname + "|" + results[i].shopName +"|" + results[i].size +"|"+ results[i].title + "|" + results[i].production + "|" + results[i].userNickname + "|" + results[i].question + "|" + results[i].answerExis + "&&&";
+      } else
+      {
+        QnAInfo = QnAInfo + results[i].hostNickname + "|" + results[i].shopName +"|" + results[i].size +"|"+ results[i].title + "|" + results[i].production + "|" + results[i].userNickname + "|" + results[i].question + "|" + results[i].answerExis + "&&&";
+
+      }
+    }
+    }
+      
+      console.log("QnAInfo : " + QnAInfo);
+      res.write(String(QnAInfo));
+      res.end();
+    }); 
+  });
+
+});
+
 
 app.listen(3000, () => {
   console.log('Example app listening on port 3000!');

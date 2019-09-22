@@ -15,10 +15,7 @@ public class ReviewItem {
         UserImage = userImage;
     }
 
-    public void setUserProfileimg(String userProfileimg) {
 
-        UserProfileimg = userProfileimg;
-    }
     public void setUserId(String userId) {
         UserId = userId;
     }
@@ -45,9 +42,6 @@ public class ReviewItem {
         return UserImage;
     }
 
-    public String getUserProfileimg() {
-        return UserProfileimg;
-    }
 
     public String getStoreName() {
         return StoreName;

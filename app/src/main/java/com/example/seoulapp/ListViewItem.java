@@ -68,4 +68,5 @@ public class ListViewItem {
     return this.shopBuilding;
   }
   public String getShopFloor() { return this.shopFloor; }
+
 }
