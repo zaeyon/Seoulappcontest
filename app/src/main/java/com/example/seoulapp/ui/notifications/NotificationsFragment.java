@@ -122,7 +122,7 @@ public class NotificationsFragment extends Fragment {
         m_oListView.setAdapter(oAdapter);
 
         // 와이파이 새로 접속할 때마다 변경
-        new JSONTask().execute("http://172.30.1.18:3000/getUserInfo");
+        new JSONTask().execute("http://172.30.1.14:3000/getUserInfo");
 
         // listview 클릭 시 각 매장 페이지로 이동(매장 id를 ShopDetaildInfo에 전달)
 

@@ -766,7 +766,6 @@ app.post('/getUserProfile', (req,res) => {
   var UserId ="";
   var UserImage="";
   var ReviewStoreName="";
-  var DistinguishContent="";
   var Like="";
   var Comment="";
   var CommentUser_Id=""
@@ -785,34 +784,34 @@ app.post('/getUserProfile', (req,res) => {
       {
 
         console.log("allImage : " + allUserProfileImage);
-        allUserProfileImage =results[0].User_Profile_Img;
+    
         UserImage = results[0].User_Image;
         UserId = results[0].User_Id;
         UserContent = results[0].User_Content;
         ReviewStoreName = results[0].Review_StoreName;
-        DistinguishContent = results[0].Distinguish_Content;
+      
         Like = results[0].Like;
         Comment=results[0].Comment;
         CommentUser_Id = results[0].Comment_User_Id;
-        allView = allUserProfileImage + "/" + UserImage + "/" + UserId + "/" + UserContent+ "/"+ReviewStoreName+"/"+DistinguishContent+"/"+Like+"/"+Comment+"/"+CommentUser_Id;
+        allView =  UserImage + "/" + UserId + "/" + UserContent+ "/"+ReviewStoreName+"/"+Like+"/"+Comment+"/"+CommentUser_Id;
       }
       else
       {
         console.log("allImage : " + allUserProfileImage);
-        allUserProfileImage = allUserProfileImage + "|" + results[j].User_Profile_Img;
+      
         UserImage = UserImage+"|"+results[j].User_Image;
         UserId = UserId+"|"+results[j].User_Id;
         UserContent = UserContent+"|"+results[j].User_Content;
         ReviewStoreName = ReviewStoreName+"|"+results[j].Review_StoreName;
-        DistinguishContent = DistinguishContent + "|" + results[j].Distinguish_Content;
+      
         Like = Like+"|"+results[j].Like;
         Comment=Comment + "|" + results[j].Comment;
 
-        CommentUser_Id = CommentUser_Id + "|" + results[j].Comment_User_Id;
+        CommentUser_Id = CommentUser_Id + "|" + results[j].CommentUser_Id;
 
         console.log("CommentUser_id : " + CommentUser_Id + results[0].Comment_User_Id);
 
-        allView = allUserProfileImage + "/" + UserImage + "/" + UserId + "/" + UserContent + "/" +ReviewStoreName+ "/" +DistinguishContent+"/"+Like+"/"+Comment+"/"+CommentUser_Id;
+        allView = UserImage + "/" + UserId + "/" + UserContent + "/" +ReviewStoreName+ "/" +Like+"/"+Comment+"/"+CommentUser_Id;
         }
       };
     };
@@ -825,48 +824,7 @@ app.post('/getUserProfile', (req,res) => {
 });
 
 app.post('/getCommentInfo',(req,res)=>{
-<<<<<<< HEAD
-  var allUserProfileImage = "";
-
-  var Comment="";
-  var CommentUser_Id=""
-  var allView="";
-
-  console.log("프로필 사진 얻기");
-  connection.query("SELECT * FROM review", function(error, results) { //all pulled.
-    console.log(results);
-    if(error)
-    {
-      console.log("에러");
-    }
-    else{
-    for(var j = 0; j < results.length; j++)
-    {
-      if(j == 0)
-      {
-        console.log("allImage : " + allUserProfileImg);
-        Comment=results[0].Comment;
-        CommentUser_Id = results[0].CommentUser_Id;
-        allView = Comment+"/"+CommentUser_Id;
-      }
-      else
-      {
-        console.log("allImage : " + allUserProfileImage);
-        Comment=Comment + "|" + results[j].Comment;
-        CommentUser_Id = CommentUser_Id + "|" + results[j].CommentUser_Id;
-        allView = Comment+"/"+CommentUser_Id;
-        }
-      };
-    };
-    console.log("allImage : " + allUserProfileImage);
-    res.write(allView); //그냥 모든 걸 더해서 하나로 보낸 후에 나누면 안 됨?
-    res.end();
-});
-});
-=======
     var allUserProfileImage = "";
->>>>>>> 27040669021825bded1cdcf6ef53478a0ed2ddae
-
     var Comment="";
     var CommentUser_Id=""
     var allView="";
@@ -902,6 +860,74 @@ app.post('/getCommentInfo',(req,res)=>{
     res.end();
     });
 });
+
+app.post('/newShopData1', (req, res) => {
+    console.log("post /newShopData1");
+    var inputData;
+    var params;
+
+    req.on('data', (data) => {
+        inputData = JSON.parse(data);
+        params = [inputData.email, inputData.name, inputData.building, inputData.floor, inputData.location, inputData.style, inputData.category, inputData.introduction];
+    });
+
+    req.on('end', () => {
+        connection.query("INSERT INTO shop (userEmail, shopName, shopBuilding, shopFloor, shopRocation, shopStyle, shopCategory, shopIntro) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", params, function(error, result) {
+            if (error) {
+                console.log("newShopData1 " + error);
+            } else {
+                console.log("매장 정보\n이메일 : " + inputData.email + "\n매장 이름 : " + inputData.name + "\n" + inputData.building + " " + inputData.floor + "층 " + inputData.location + "\n" + inputData.style + " " + inputData.category + "\n" + inputData.introduction);
+            }
+
+            res.end();
+        })
+
+        connection.query("UPDATE user SET shop_being = 1 WHERE email = ?", inputData.email, function(error, result) {
+            if (error) {
+                console.log("newShopData1 " + error);
+            }
+
+            res.end();
+        })
+    })
+})
+
+app.post('/newShopData2', (req, res) => {
+    console.log("post /newShopData2");
+    var inputData;
+    var params;
+
+    req.on('data', (data) => {
+    });
+
+    req.on('end', () => {
+        console.log("상점 수 : " + shopNumberCount);
+        res.end(String(shopNumberCount));
+    })
+})
+
+app.post('/newShopData3', (req, res) => {
+    console.log("post /newShopData3");
+    var inputData;
+    var params;
+
+    req.on('data', (data) => {
+        inputData = JSON.parse(data);
+        params = [inputData.profileImage, inputData.rep1, inputData.rep2, inputData.rep3, inputData.shopID];
+    });
+
+    req.on('end', () => {
+        connection.query("UPDATE shop SET shopProfileImage = ?, shopRepresentation1 = ?, shopRepresentation2 = ?, shopRepresentation3 = ? WHERE ID = ?", params, function(error, result) {
+            if (error) {
+                console.log("newShopData3 " + error);
+            } else {
+                console.log("매장 ID : " + inputData.shopID + "\n매장 이미지 : " + inputData.profileImage + "\nReq1 : " + inputData.rep1 + "\nReq2 : " + inputData.rep2 + "\nReq3 : " + inputData.rep3);
+            }
+
+            res.end();
+        })
+    })
+})
 
 app.post('/getUserInfo', (req, res) => {
   console.log("post /getUserInfo");
@@ -939,19 +965,6 @@ app.post('/myProfile', (req, res) => {
         console.log("request from myProfile");
     });
 
-<<<<<<< HEAD
-   req.on('end', () => {
-    connection.query("SELECT * FROM user where email = ?", inputData.email, function(error, result) {
-        if (error) {
-            console.log("에러" + error);
-        } else if(result[0]){
-          userProfile = result[0].nickname + "|" + result[0].profileImage + "|" + result[0].shop_being;
-        }
-        
-        console.log("userProfile : " + userProfile);
-        res.write(String(userProfile));
-        res.end();
-=======
     req.on('end', () => {
         connection.query("SELECT * FROM user WHERE email = ?", inputData.email, function(error, result) {
             if (error) {
@@ -959,13 +972,11 @@ app.post('/myProfile', (req, res) => {
             } else if (result[0]) {
                 console.log("기존 프로필\n닉네임 : " + result[0].nickname + ", 이미지 : " + result[0].profile_image);
                 userData = result[0].ID + "|" + result[0].nickname + "|" + result[0].profile_image;
-
             }
             console.log("userData : " + userData);
             res.write(String(userData));
             res.end();
         });
->>>>>>> 27040669021825bded1cdcf6ef53478a0ed2ddae
     });
 });
 

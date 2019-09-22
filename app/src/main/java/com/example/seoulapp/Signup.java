@@ -250,7 +250,7 @@ public class Signup extends Activity {
                 if (!hasFocus) {
                     // 와이파이 새로 접속할 때마다 변경
 
-                    new JSONTask().execute("http://172.30.1.18:3000/nickname");
+                    new JSONTask().execute("http://172.30.1.14:3000/nickname");
                 }
             }
         });
@@ -261,7 +261,7 @@ public class Signup extends Activity {
                 if (!hasFocus) {
                     // 와이파이 새로 접속할 때마다 변경
 
-                    new JSONTask().execute("http://172.30.1.18:3000/email");
+                    new JSONTask().execute("http://172.30.1.14:3000/email");
                 }
             }
         });
@@ -326,7 +326,7 @@ public class Signup extends Activity {
             @Override
             public void onClick(View view) {
                 // 와이파이 새로 접속할 때마다 변경
-                new JSONTask().execute("http://172.30.1.18:3000/post");
+                new JSONTask().execute("http://172.30.1.14:3000/post");
 
                 Intent navigationIntent = new Intent(Signup.this ,BottomNavigation.class);
                 startActivity(navigationIntent);

@@ -1,10 +1,9 @@
 package com.example.seoulapp.ui.notifications;
 
-import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -13,13 +12,15 @@ import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.media.ExifInterface;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
-import android.support.v4.content.FileProvider;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
@@ -37,21 +38,25 @@ import com.amazonaws.regions.Region;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
+import com.bumptech.glide.Glide;
 import com.example.seoulapp.ClearEditText;
+import com.example.seoulapp.MainActivity;
 import com.example.seoulapp.R;
-import com.gun0912.tedpermission.PermissionListener;
-import com.gun0912.tedpermission.TedPermission;
-import com.squareup.picasso.Picasso;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
-import java.text.SimpleDateFormat;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
-import java.util.Date;
-
-import static android.provider.MediaStore.Video.Thumbnails.DATA;
-import static java.security.AccessController.getContext;
 
 public class AddShop extends AppCompatActivity {
 
@@ -98,7 +103,15 @@ public class AddShop extends AppCompatActivity {
     AmazonS3 s3;
     TransferUtility transferUtility;
 
-    File f;
+    File f, f1, f2, f3;
+    String fileName, fileName1, fileName2, fileName3;
+    String shopID;
+    String rep1;
+    String rep2;
+    String rep3;
+    int FOR_RESULT_CODE;
+
+    static String userEmail;
 
     ArrayList<String> salesItemList;
     ArrayList<String> buildingList;
@@ -109,7 +122,6 @@ public class AddShop extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_shop);
-
 
         signUpNext = findViewById(R.id.signUpNextButton);
         newShopProfileImage = findViewById(R.id.newShopProfileImage);
@@ -124,26 +136,28 @@ public class AddShop extends AppCompatActivity {
         newShopRep2 = findViewById(R.id.newShopRep2);
         newShopRep3 = findViewById(R.id.newShopRep3);
 
-
         newShopProfileImage.setBackground(new ShapeDrawable(new OvalShape()));
         if (Build.VERSION.SDK_INT >= 21) {
             newShopProfileImage.setClipToOutline(true);
         }
         newShopProfileImage.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                FOR_RESULT_CODE = 0;
                 Intent intent = new Intent(Intent.ACTION_PICK);
-                intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+                intent.setDataAndType(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
                 startActivityForResult(intent, GET_GALLERY_IMAGE);
             }
         });
 
+        SharedPreferences user = getApplicationContext().getSharedPreferences(MainActivity.name, Context.MODE_PRIVATE);
+        userEmail = user.getString("inputId", "null");
+
         // amazons3에 이미지 저장하기
-        CognitoCachingCredentialsProvider credentialsProvider = new CognitoCachingCredentialsProvider(
+        credentialsProvider = new CognitoCachingCredentialsProvider(
                 getApplicationContext(),
                 "ap-northeast-2:cc1b25cd-c9e7-430f-9666-474b1d523655", // 자격 증명 풀 ID
                 Regions.AP_NORTHEAST_2 // 리전
         );
-
         s3 = new AmazonS3Client(credentialsProvider);
         s3.setRegion(Region.getRegion(Regions.AP_NORTHEAST_2));
         s3.setEndpoint("s3.ap-northeast-2.amazonaws.com");
@@ -197,53 +211,73 @@ public class AddShop extends AppCompatActivity {
             }
         });
 
-        signUpNext.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-
-                Intent addShopFinishIntent = new Intent(AddShop.this, NotificationsFragment.class);
-                startActivity(addShopFinishIntent);
-            }
-
-            ;
-        });
-
         newShopRep1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
+                FOR_RESULT_CODE = 1;
                 Intent intent = new Intent(Intent.ACTION_PICK);
-                intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-                startActivityForResult(intent, REQ_CODE_SELECT_IMAGE);
-
+                intent.setDataAndType(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+                startActivityForResult(intent, GET_GALLERY_IMAGE);
             }
         });
 
         newShopRep2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                FOR_RESULT_CODE = 2;
                 Intent intent = new Intent(Intent.ACTION_PICK);
-                intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
-                startActivityForResult(intent, GET_REP2);
+                intent.setDataAndType(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+                startActivityForResult(intent, GET_GALLERY_IMAGE);
             }
         });
 
         newShopRep3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                FOR_RESULT_CODE = 3;
                 Intent intent = new Intent(Intent.ACTION_PICK);
-                intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
-                startActivityForResult(intent, GET_REP3);
+                intent.setDataAndType(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+                startActivityForResult(intent, GET_GALLERY_IMAGE);
+            }
+        });
+
+        signUpNext.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                new JSONTask1().execute("http://172.30.1.14:3000/newShopData1");
+
+                if (f != null && f1 != null && f2 != null && f3 != null) {
+                    TransferObserver obsever = transferUtility.upload(
+                            "com.example.seoulapp/ShopProfileImage",
+                            fileName,
+                            f
+                    );
+                    TransferObserver obsever1 = transferUtility.upload(
+                            "com.example.seoulapp/ShopRepresentaionImage",
+                            fileName1,
+                            f1
+                    );
+                    TransferObserver obsever2 = transferUtility.upload(
+                            "com.example.seoulapp/ShopRepresentaionImage",
+                            fileName2,
+                            f2
+                    );
+                    TransferObserver obsever3 = transferUtility.upload(
+                            "com.example.seoulapp/ShopRepresentaionImage",
+                            fileName3,
+                            f3
+                    );
+                    Log.d("AddShop", "저장 성공, 파일 이름 : " + fileName + ", " + fileName1 + ", " + fileName2 + ", " + fileName3);
+                } else {
+                    Log.d("AddShop", "저장 실패, 파일 이름 : " + fileName + ", " + fileName1 + ", " + fileName2 + ", " + fileName3);
+                }
+
+                finish();
             }
         });
 
         DisplayMetrics displaymetrics;
         displaymetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-        int screenWidth = displaymetrics.widthPixels;
-        int screenHeight = displaymetrics.heightPixels;
-
     }
 
 
@@ -251,201 +285,301 @@ public class AddShop extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
+        if (requestCode == GET_GALLERY_IMAGE && resultCode == RESULT_OK && data != null && data.getData() != null) {
 
-        if (requestCode == REQ_CODE_SELECT_IMAGE) {
-            if (resultCode == Activity.RESULT_OK) {
+            newShopProfileImage = (ImageView)findViewById(R.id.newShopProfileImage);
+            newShopRep1 = findViewById(R.id.newShopRep1);
+            newShopRep2 = findViewById(R.id.newShopRep2);
+            newShopRep3 = findViewById(R.id.newShopRep3);
 
-                try {
-                    Uri imageContent = data.getData();
-                    String imagePath = getRealPathFromURI(imageContent);
-                    Bitmap image = BitmapFactory.decodeFile(imagePath);
+            Uri selectedImageUri = data.getData();
 
-                    ExifInterface exif = new ExifInterface(imagePath);
-                    int exifOrientation = exif.getAttributeInt(
-                            ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
-                    int exifDegree = exifOrientationToDegrees(exifOrientation);
-                    image = rotate(image, exifDegree);
+            switch (FOR_RESULT_CODE) {
+                case 1:
+                    newShopRep1.setImageURI(selectedImageUri);
+                    Log.d("AddShop", "Rep1 이미지 띄우기");
+                    break;
 
-                    // 변환된 이미지 사용
-                    newShopRep1.setImageBitmap(image);
+                case 2:
+                    newShopRep2.setImageURI(selectedImageUri);
+                    Log.d("AddShop", "Rep2 프로필 이미지 띄우기");
+                    break;
+
+                case 3:
+                    newShopRep3.setImageURI(selectedImageUri);
+                    Log.d("AddShop", "Rep3 프로필 이미지 띄우기");
+                    break;
+
+                default:
+                    newShopProfileImage.setImageURI(selectedImageUri);
+                    Log.d("AddShop", "매장 프로필 이미지 띄우기");
+                    break;
+            }
+
+            Cursor cursor = null;
+
+            try {
+                String[] proj = {MediaStore.Images.Media.DATA};
+
+                assert selectedImageUri != null;
+                cursor = getContentResolver().query(selectedImageUri, proj, null, null, null);
+
+                assert cursor != null;
+                int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+
+                cursor.moveToFirst();
+
+                switch (FOR_RESULT_CODE) {
+                    case 1:
+                        f1 = new File(cursor.getString(column_index));
+                        break;
+                    case 2:
+                        f2 = new File(cursor.getString(column_index));
+                        break;
+                    case 3:
+                        f3 = new File(cursor.getString(column_index));
+                        break;
+                    default:
+                        f = new File(cursor.getString(column_index));
                 }
-                catch(Exception e)
-                {
-                    Toast.makeText(this, "오류발생: " + e.getLocalizedMessage(),
-                        Toast.LENGTH_LONG).show();
+            } finally {
+                if(cursor != null) {
+                    cursor.close();
                 }
             }
         }
     }
 
-        /*
-        Uri selectedImageUri = data.getData();
+    /* userEmail, shopName, shopBuilding, shopFloor, shopLocation, shopStyle, shopCategory, shopIntro를 DB에 저장 */
+    public class JSONTask1 extends AsyncTask<String, String, String> {
 
-        if (requestCode == REQ_CODE_SELECT_IMAGE) {
-            if (resultCode == Activity.RESULT_OK) {
+        @Override
+        protected String doInBackground(String... urls) {
+            try {
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.accumulate("email", userEmail);
+                jsonObject.accumulate("name", newShopName.getText());
+                jsonObject.accumulate("building", newShopBuilding.getSelectedItem());
+                jsonObject.accumulate("floor", newShopFloor.getText());
+                jsonObject.accumulate("location", newShopLocation.getText());
+                jsonObject.accumulate("style", newShopStyle.getText());
+                jsonObject.accumulate("category", newShopSalesItem.getSelectedItem());
+                jsonObject.accumulate("introduction", newShopIntro.getText());
+
+                HttpURLConnection con = null;
+                BufferedReader reader = null;
+
                 try {
-                    String imagePath = imageUri.getPath();
-                    Bitmap Rep1_image = BitmapFactory.decodeFile(imagePath);
+                    URL url = new URL(urls[0]);
+                    con = (HttpURLConnection) url.openConnection();
+                    con.setRequestMethod("POST");//POST방식으로 보냄
+                    con.setRequestProperty("Cache-Control", "no-cache");//캐시 설정
+                    con.setRequestProperty("Content-Type", "application/json");//application JSON 형식으로 전송
+                    con.setRequestProperty("Accept", "text/html");//서버에 response 데이터를 html로 받음
+                    con.setDoOutput(true);//Outstream으로 post 데이터를 넘겨주겠다는 의미
+                    con.setDoInput(true);//Inputstream으로 서버로부터 응답을 받겠다는 의미
+                    con.connect();
 
-                    // 이미지를 상황에 맞게 회전시킨다
-                    ExifInterface exif = new ExifInterface(imagePath);
-                    int exifOrientation = exif.getAttributeInt(
-                            ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
-                    int exifDegree = exifOrientationToDegrees(exifOrientation);
-                    Rep1_image = rotate(Rep1_image, exifDegree);
+                    //서버로 보내기위해서 스트림 만듬
+                    OutputStream outStream = con.getOutputStream();
+                    //버퍼를 생성하고 넣음
+                    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outStream));
+                    writer.write(jsonObject.toString());
+                    writer.flush();
+                    writer.close();//버퍼를 받아줌
 
-                    // 변환된 이미지 사용
-                    newShopRep1.setImageBitmap(Rep1_image);
-                }
-                catch(Exception e)
-                {
-                    Toast.makeText(this, "오류발생:"+e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
-                }
-            }
-        }
+                    InputStream stream = con.getInputStream();
 
+                    reader = new BufferedReader(new InputStreamReader(stream));
 
-                    //
+                    StringBuffer buffer = new StringBuffer();
 
-         */
-                    /*
-                    //이미지 데이터를 비트맵으로 받아온다.
-                  // Bitmap image_bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), data.getData());
-                    ImageView image = (ImageView) findViewById(R.id.newShopRep1);
-                    String imagePath = getPath1(selectedImageUri);
-                    Bitmap image_bitmap = BitmapFactory.decodeFile(imagePath);
-                    ExifInterface exif = new ExifInterface(imagePath);
-                    int exifOrientation = exif.getAttributeInt(
-                            ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
-                    int exifDegree = exifOrientationToDegrees(exifOrientation);
-                    image_bitmap = rotate(image_bitmap, exifDegree);
+                    String line = "";
+                    while ((line = reader.readLine()) != null) {
+                        buffer.append(line);
+                    }
 
-                    image.setImageBitmap(image_bitmap);
-                    //Toast.makeText(getBaseContext(), "name_Str : "+name_Str , Toast.LENGTH_SHORT).show()
+                    return buffer.toString();
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
                 } catch (IOException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
-                } catch (Exception e) {
+                } finally {
+                    if (con != null) {
+                        con.disconnect();
+                    }
+                    try {
+                        if (reader != null) {
+                            reader.close();
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+
+            new JSONTask2().execute("http://172.30.1.14:3000/newShopData2");
+        }
+    }
+
+    public class JSONTask2 extends AsyncTask<String, String, String> {
+
+        @Override
+        protected String doInBackground(String... urls) {
+            try {
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.accumulate("email", userEmail);
+
+                HttpURLConnection con = null;
+                BufferedReader reader = null;
+
+                try {
+                    URL url = new URL(urls[0]);
+                    con = (HttpURLConnection) url.openConnection();
+                    con.setRequestMethod("POST");//POST방식으로 보냄
+                    con.setRequestProperty("Cache-Control", "no-cache");//캐시 설정
+                    con.setRequestProperty("Content-Type", "application/json");//application JSON 형식으로 전송
+                    con.setRequestProperty("Accept", "text/html");//서버에 response 데이터를 html로 받음
+                    con.setDoOutput(true);//Outstream으로 post 데이터를 넘겨주겠다는 의미
+                    con.setDoInput(true);//Inputstream으로 서버로부터 응답을 받겠다는 의미
+                    con.connect();
+
+                    //서버로 보내기위해서 스트림 만듬
+                    OutputStream outStream = con.getOutputStream();
+                    //버퍼를 생성하고 넣음
+                    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outStream));
+                    writer.write(jsonObject.toString());
+                    writer.flush();
+                    writer.close();//버퍼를 받아줌
+
+                    InputStream stream = con.getInputStream();
+
+                    reader = new BufferedReader(new InputStreamReader(stream));
+
+                    StringBuffer buffer = new StringBuffer();
+
+                    String line = "";
+                    while ((line = reader.readLine()) != null) {
+                        buffer.append(line);
+                    }
+
+                    return buffer.toString();
+                } catch (MalformedURLException e) {
                     e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+                    if (con != null) {
+                        con.disconnect();
+                    }
+                    try {
+                        if (reader != null) {
+                            reader.close();
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
+            return null;
         }
 
-                     */
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
 
-    private String getRealPathFromURI(Uri contentUri)
-    {
-        if (contentUri.getPath().startsWith("/storage"))
-          {
-              return contentUri.getPath();
-          }
-        String id = DocumentsContract.getDocumentId(contentUri).split(":")[1];
-        String[] columns = { MediaStore.Files.FileColumns.DATA };
-        String selection = MediaStore.Files.FileColumns._ID + " = " + id;
-        Cursor cursor = getContentResolver().query(MediaStore.Files.getContentUri("external"), columns, selection, null, null);
-        try {
-            int columnIndex = cursor.getColumnIndex(columns[0]);
-            if (cursor.moveToFirst()) {
-                return cursor.getString(columnIndex);
-            }
-        } finally { cursor.close(); } return null;
+            shopID = result;
+            Log.d("AddShop", "매장 ID : " + shopID);
+            fileName = shopID + "_" + f.getName();
+            fileName1 = shopID + "_rep1_" + f1.getName();
+            fileName2 = shopID + "_rep2_" + f2.getName();
+            fileName3 = shopID + "_rep3_" + f3.getName();
+
+            new JSONTask3().execute("http://172.30.1.14:3000/newShopData3");
+        }
     }
 
+    public class JSONTask3 extends AsyncTask<String, String, String> {
 
-    public int exifOrientationToDegrees(int exifOrientation)
-    {
-        if(exifOrientation == ExifInterface.ORIENTATION_ROTATE_90)
-        {
-            return 90;
-        }
-        else if(exifOrientation == ExifInterface.ORIENTATION_ROTATE_180)
-        {
-            return 180;
-        }
-        else if(exifOrientation == ExifInterface.ORIENTATION_ROTATE_270)
-        {
-            return 270;
-        }
-        return 0;
-    }
+        @Override
+        protected String doInBackground(String... urls) {
+            try {
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.accumulate("shopID", shopID);
+                jsonObject.accumulate("profileImage", fileName);
+                jsonObject.accumulate("rep1", fileName1);
+                jsonObject.accumulate("rep2", fileName2);
+                jsonObject.accumulate("rep3", fileName3);
 
-    public Bitmap rotate(Bitmap bitmap, int degrees)
-    {
-        if(degrees != 0 && bitmap != null)
-        {
-            Matrix m = new Matrix();
-            m.setRotate(degrees, (float) bitmap.getWidth() / 2,
-                    (float) bitmap.getHeight() / 2);
-            try
-            {
-                Bitmap converted = Bitmap.createBitmap(bitmap, 0, 0,
-                        bitmap.getWidth(), bitmap.getHeight(), m, true);
-                if(bitmap != converted)
-                {
-                    bitmap.recycle();
-                    bitmap = converted;
+                HttpURLConnection con = null;
+                BufferedReader reader = null;
+
+                try {
+                    URL url = new URL(urls[0]);
+                    con = (HttpURLConnection) url.openConnection();
+                    con.setRequestMethod("POST");//POST방식으로 보냄
+                    con.setRequestProperty("Cache-Control", "no-cache");//캐시 설정
+                    con.setRequestProperty("Content-Type", "application/json");//application JSON 형식으로 전송
+                    con.setRequestProperty("Accept", "text/html");//서버에 response 데이터를 html로 받음
+                    con.setDoOutput(true);//Outstream으로 post 데이터를 넘겨주겠다는 의미
+                    con.setDoInput(true);//Inputstream으로 서버로부터 응답을 받겠다는 의미
+                    con.connect();
+
+                    //서버로 보내기위해서 스트림 만듬
+                    OutputStream outStream = con.getOutputStream();
+                    //버퍼를 생성하고 넣음
+                    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outStream));
+                    writer.write(jsonObject.toString());
+                    writer.flush();
+                    writer.close();//버퍼를 받아줌
+
+                    InputStream stream = con.getInputStream();
+
+                    reader = new BufferedReader(new InputStreamReader(stream));
+
+                    StringBuffer buffer = new StringBuffer();
+
+                    String line = "";
+                    while ((line = reader.readLine()) != null) {
+                        buffer.append(line);
+                    }
+
+                    return buffer.toString();
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+                    if (con != null) {
+                        con.disconnect();
+                    }
+                    try {
+                        if (reader != null) {
+                            reader.close();
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            catch(OutOfMemoryError ex)
-            {
-                // 메모리가 부족하여 회전을 시키지 못할 경우 그냥 원본을 반환합니다.
-            }
+            return null;
         }
-        return bitmap;
-    }
 
-    public String getPath1(Uri uri) {
-        String[] projection = {MediaStore.Images.Media.DATA};
-        Cursor cursor = managedQuery(uri, projection, null, null, null);
-        startManagingCursor(cursor);
-        int columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-        cursor.moveToFirst();
-        return cursor.getString(columnIndex);
-    }
-
-    public static Bitmap loadBitmap(String path, int orientation, final int targetWidth, final int targetHeight) {
-        Bitmap bitmap = null;
-        try {
-            final BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inJustDecodeBounds = true;
-            BitmapFactory.decodeFile(path, options);
-            int sourceWidth, sourceHeight;
-            if (orientation == 90 || orientation == 270) {
-                sourceWidth = options.outHeight;
-                sourceHeight = options.outWidth;
-            } else {
-                sourceWidth = options.outWidth;
-                sourceHeight = options.outHeight;
-            }
-            if (sourceWidth > targetWidth || sourceHeight > targetHeight) {
-                float widthRatio = (float)sourceWidth / (float)targetWidth;
-                float heightRatio = (float)sourceHeight / (float)targetHeight;
-                float maxRatio = Math.max(widthRatio, heightRatio);
-                options.inJustDecodeBounds = false;
-                options.inSampleSize = (int)maxRatio;
-                bitmap = BitmapFactory.decodeFile(path, options);
-            } else {
-                bitmap = BitmapFactory.decodeFile(path);
-            }
-            if (orientation > 0) {
-                Matrix matrix = new Matrix();
-                matrix.postRotate(orientation);
-                bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-            }
-            sourceWidth = bitmap.getWidth();
-            sourceHeight = bitmap.getHeight();
-            if (sourceWidth != targetWidth || sourceHeight != targetHeight) {
-                float widthRatio = (float)sourceWidth / (float)targetWidth;
-                float heightRatio = (float)sourceHeight / (float)targetHeight;
-                float maxRatio = Math.max(widthRatio, heightRatio);
-                sourceWidth = (int)((float)sourceWidth / maxRatio);
-                sourceHeight = (int)((float)sourceHeight / maxRatio);
-                bitmap = Bitmap.createScaledBitmap(bitmap, sourceWidth, sourceHeight, true);
-            }
-        } catch (Exception e) {
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
         }
-        return bitmap;
     }
-
-
 }
