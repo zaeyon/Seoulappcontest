@@ -2,6 +2,7 @@ package com.example.seoulapp;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
@@ -250,7 +251,7 @@ public class Signup extends Activity {
                 if (!hasFocus) {
                     // 와이파이 새로 접속할 때마다 변경
 
-                    new JSONTask().execute("http://172.30.1.14:3000/nickname");
+                    new JSONTask().execute("http://172.30.1.28:3000/nickname");
                 }
             }
         });
@@ -261,7 +262,7 @@ public class Signup extends Activity {
                 if (!hasFocus) {
                     // 와이파이 새로 접속할 때마다 변경
 
-                    new JSONTask().execute("http://172.30.1.14:3000/email");
+                    new JSONTask().execute("http://172.30.1.28:3000/email");
                 }
             }
         });
@@ -325,8 +326,13 @@ public class Signup extends Activity {
         signupBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
+                SharedPreferences.Editor autoLogin = auto.edit();
+                autoLogin.putString("inputId", emailData.getText().toString());
+                autoLogin.commit();
+
                 // 와이파이 새로 접속할 때마다 변경
-                new JSONTask().execute("http://172.30.1.14:3000/post");
+                new JSONTask().execute("http://172.30.1.28:3000/post");
 
                 Intent navigationIntent = new Intent(Signup.this ,BottomNavigation.class);
                 startActivity(navigationIntent);

@@ -861,6 +861,30 @@ app.post('/getCommentInfo',(req,res)=>{
     });
 });
 
+app.post('/newShopData0', (req, res) => {
+    console.log("post /newShopData0");
+    var inputData;
+
+    req.on('data', (data) => {
+        inputData = JSON.parse(data);
+
+    });
+
+    req.on('end', () => {
+        console.log("newShopData0의 email : " + String(inputData.email));
+        connection.query("SELECT ID FROM user WHERE email = ?", inputData.email, function(error, result) {
+            if (error) {
+                console.log("newShopData0 " + error);
+            } else {
+                console.log("shopID : " + result[0].ID);
+            }
+
+            res.write(String(result[0].ID));
+            res.end();
+        })
+    })
+})
+
 app.post('/newShopData1', (req, res) => {
     console.log("post /newShopData1");
     var inputData;
@@ -868,64 +892,26 @@ app.post('/newShopData1', (req, res) => {
 
     req.on('data', (data) => {
         inputData = JSON.parse(data);
-        params = [inputData.email, inputData.name, inputData.building, inputData.floor, inputData.location, inputData.style, inputData.category, inputData.introduction];
+        params = [inputData.email, inputData.name, inputData.building, inputData.floor, inputData.location, inputData.style, inputData.category, inputData.introduction, inputData.profileImg, inputData.repImg1, inputData.repImg2, inputData.repImg3];
     });
 
     req.on('end', () => {
-        connection.query("INSERT INTO shop (userEmail, shopName, shopBuilding, shopFloor, shopRocation, shopStyle, shopCategory, shopIntro) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", params, function(error, result) {
+        connection.query("INSERT INTO shop (userEmail, shopName, shopBuilding, shopFloor, shopRocation, shopStyle, shopCategory, shopIntro, shopProfileImage, shopRepresentation1, shopRepresentation2, shopRepresentation3) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", params, function(error, result) {
             if (error) {
                 console.log("newShopData1 " + error);
             } else {
                 console.log("매장 정보\n이메일 : " + inputData.email + "\n매장 이름 : " + inputData.name + "\n" + inputData.building + " " + inputData.floor + "층 " + inputData.location + "\n" + inputData.style + " " + inputData.category + "\n" + inputData.introduction);
+                console.log("매장 프로필 이미지 : " + inputData.profileImg + ", 이미지1 : " + inputData.repImg1 + ", 이미지2 : " + inputData.repImg2 + ", 이미지3 : " + inputData.repImg3);
             }
-
-            res.end();
         })
 
         connection.query("UPDATE user SET shop_being = 1 WHERE email = ?", inputData.email, function(error, result) {
             if (error) {
                 console.log("newShopData1 " + error);
             }
-
-            res.end();
         })
-    })
-})
 
-app.post('/newShopData2', (req, res) => {
-    console.log("post /newShopData2");
-    var inputData;
-    var params;
-
-    req.on('data', (data) => {
-    });
-
-    req.on('end', () => {
-        console.log("상점 수 : " + shopNumberCount);
-        res.end(String(shopNumberCount));
-    })
-})
-
-app.post('/newShopData3', (req, res) => {
-    console.log("post /newShopData3");
-    var inputData;
-    var params;
-
-    req.on('data', (data) => {
-        inputData = JSON.parse(data);
-        params = [inputData.profileImage, inputData.rep1, inputData.rep2, inputData.rep3, inputData.shopID];
-    });
-
-    req.on('end', () => {
-        connection.query("UPDATE shop SET shopProfileImage = ?, shopRepresentation1 = ?, shopRepresentation2 = ?, shopRepresentation3 = ? WHERE ID = ?", params, function(error, result) {
-            if (error) {
-                console.log("newShopData3 " + error);
-            } else {
-                console.log("매장 ID : " + inputData.shopID + "\n매장 이미지 : " + inputData.profileImage + "\nReq1 : " + inputData.rep1 + "\nReq2 : " + inputData.rep2 + "\nReq3 : " + inputData.rep3);
-            }
-
-            res.end();
-        })
+        res.end();
     })
 })
 

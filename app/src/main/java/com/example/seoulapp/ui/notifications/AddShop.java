@@ -71,33 +71,10 @@ public class AddShop extends AppCompatActivity {
     private ImageView newShopRep1;
     private ImageView newShopRep2;
     private ImageView newShopRep3;
-    Context context;
 
-
-    private File tempFile;
     Button signUpNext;
 
-    private static final int REQUEST_CODE = 0;
-
     private final int GET_GALLERY_IMAGE = 200;
-    final int REQ_CODE_SELECT_IMAGE = 100;
-    private final int GET_REP1 = 300;
-    private final int GET_REP2 = 400;
-    private final int GET_REP3 = 500;
-    private static final int PICK_FROM_ALBUM = 1;
-    private final int PICK_FROM_FILE = 0;
-
-    File photo = new File(Environment.getExternalStorageDirectory(),
-            ".camera.jpg");
-    Uri imageUri = Uri.fromFile(photo);
-
-    private static final int PICK_IMAGE = 1000;
-    private final int CAMERA_CODE = 1111;
-    private final int GALLERY_CODE = 1112;
-    private Uri photoUri;
-    private String currentPhotoPath;//실제 사진 파일 경로
-    String mImageCaptureName;//이미지 이름
-
 
     CognitoCachingCredentialsProvider credentialsProvider;
     AmazonS3 s3;
@@ -106,12 +83,9 @@ public class AddShop extends AppCompatActivity {
     File f, f1, f2, f3;
     String fileName, fileName1, fileName2, fileName3;
     String shopID;
-    String rep1;
-    String rep2;
-    String rep3;
     int FOR_RESULT_CODE;
 
-    static String userEmail;
+    String userEmail;
 
     ArrayList<String> salesItemList;
     ArrayList<String> buildingList;
@@ -136,6 +110,8 @@ public class AddShop extends AppCompatActivity {
         newShopRep2 = findViewById(R.id.newShopRep2);
         newShopRep3 = findViewById(R.id.newShopRep3);
 
+        //new JSONTask0().execute("http://172.30.1.28:3000/newShopData0");
+
         newShopProfileImage.setBackground(new ShapeDrawable(new OvalShape()));
         if (Build.VERSION.SDK_INT >= 21) {
             newShopProfileImage.setClipToOutline(true);
@@ -149,8 +125,11 @@ public class AddShop extends AppCompatActivity {
             }
         });
 
-        SharedPreferences user = getApplicationContext().getSharedPreferences(MainActivity.name, Context.MODE_PRIVATE);
+        SharedPreferences user = getSharedPreferences(MainActivity.name, Context.MODE_PRIVATE);
         userEmail = user.getString("inputId", "null");
+        Log.d("AddShop", "사용자 : " + userEmail);
+
+        new JSONTask0().execute("http://172.30.1.28:3000/newShopData0");
 
         // amazons3에 이미지 저장하기
         credentialsProvider = new CognitoCachingCredentialsProvider(
@@ -243,7 +222,7 @@ public class AddShop extends AppCompatActivity {
 
         signUpNext.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                new JSONTask1().execute("http://172.30.1.14:3000/newShopData1");
+                new JSONTask1().execute("http://172.30.1.28:3000/newShopData1");
 
                 if (f != null && f1 != null && f2 != null && f3 != null) {
                     TransferObserver obsever = transferUtility.upload(
@@ -332,15 +311,20 @@ public class AddShop extends AppCompatActivity {
                 switch (FOR_RESULT_CODE) {
                     case 1:
                         f1 = new File(cursor.getString(column_index));
+                        fileName1 = shopID + "_rep1_" + f1.getName();
                         break;
                     case 2:
                         f2 = new File(cursor.getString(column_index));
+                        fileName2 = shopID + "_rep2_" + f2.getName();
                         break;
                     case 3:
                         f3 = new File(cursor.getString(column_index));
+                        fileName3 = shopID + "_rep3_" + f3.getName();
                         break;
                     default:
                         f = new File(cursor.getString(column_index));
+                        fileName = shopID + "_" + f.getName();
+                        Log.d("AddShop", "파일 객체 초기화");
                 }
             } finally {
                 if(cursor != null) {
@@ -350,87 +334,7 @@ public class AddShop extends AppCompatActivity {
         }
     }
 
-    /* userEmail, shopName, shopBuilding, shopFloor, shopLocation, shopStyle, shopCategory, shopIntro를 DB에 저장 */
-    public class JSONTask1 extends AsyncTask<String, String, String> {
-
-        @Override
-        protected String doInBackground(String... urls) {
-            try {
-                JSONObject jsonObject = new JSONObject();
-                jsonObject.accumulate("email", userEmail);
-                jsonObject.accumulate("name", newShopName.getText());
-                jsonObject.accumulate("building", newShopBuilding.getSelectedItem());
-                jsonObject.accumulate("floor", newShopFloor.getText());
-                jsonObject.accumulate("location", newShopLocation.getText());
-                jsonObject.accumulate("style", newShopStyle.getText());
-                jsonObject.accumulate("category", newShopSalesItem.getSelectedItem());
-                jsonObject.accumulate("introduction", newShopIntro.getText());
-
-                HttpURLConnection con = null;
-                BufferedReader reader = null;
-
-                try {
-                    URL url = new URL(urls[0]);
-                    con = (HttpURLConnection) url.openConnection();
-                    con.setRequestMethod("POST");//POST방식으로 보냄
-                    con.setRequestProperty("Cache-Control", "no-cache");//캐시 설정
-                    con.setRequestProperty("Content-Type", "application/json");//application JSON 형식으로 전송
-                    con.setRequestProperty("Accept", "text/html");//서버에 response 데이터를 html로 받음
-                    con.setDoOutput(true);//Outstream으로 post 데이터를 넘겨주겠다는 의미
-                    con.setDoInput(true);//Inputstream으로 서버로부터 응답을 받겠다는 의미
-                    con.connect();
-
-                    //서버로 보내기위해서 스트림 만듬
-                    OutputStream outStream = con.getOutputStream();
-                    //버퍼를 생성하고 넣음
-                    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outStream));
-                    writer.write(jsonObject.toString());
-                    writer.flush();
-                    writer.close();//버퍼를 받아줌
-
-                    InputStream stream = con.getInputStream();
-
-                    reader = new BufferedReader(new InputStreamReader(stream));
-
-                    StringBuffer buffer = new StringBuffer();
-
-                    String line = "";
-                    while ((line = reader.readLine()) != null) {
-                        buffer.append(line);
-                    }
-
-                    return buffer.toString();
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } finally {
-                    if (con != null) {
-                        con.disconnect();
-                    }
-                    try {
-                        if (reader != null) {
-                            reader.close();
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-
-            new JSONTask2().execute("http://172.30.1.14:3000/newShopData2");
-        }
-    }
-
-    public class JSONTask2 extends AsyncTask<String, String, String> {
+    public class JSONTask0 extends AsyncTask<String, String, String> {
 
         @Override
         protected String doInBackground(String... urls) {
@@ -499,27 +403,28 @@ public class AddShop extends AppCompatActivity {
             super.onPostExecute(result);
 
             shopID = result;
-            Log.d("AddShop", "매장 ID : " + shopID);
-            fileName = shopID + "_" + f.getName();
-            fileName1 = shopID + "_rep1_" + f1.getName();
-            fileName2 = shopID + "_rep2_" + f2.getName();
-            fileName3 = shopID + "_rep3_" + f3.getName();
-
-            new JSONTask3().execute("http://172.30.1.14:3000/newShopData3");
         }
     }
 
-    public class JSONTask3 extends AsyncTask<String, String, String> {
+    /* userEmail, shopName, shopBuilding, shopFloor, shopLocation, shopStyle, shopCategory, shopIntro를 DB에 저장 */
+    public class JSONTask1 extends AsyncTask<String, String, String> {
 
         @Override
         protected String doInBackground(String... urls) {
             try {
                 JSONObject jsonObject = new JSONObject();
-                jsonObject.accumulate("shopID", shopID);
-                jsonObject.accumulate("profileImage", fileName);
-                jsonObject.accumulate("rep1", fileName1);
-                jsonObject.accumulate("rep2", fileName2);
-                jsonObject.accumulate("rep3", fileName3);
+                jsonObject.accumulate("email", userEmail);
+                jsonObject.accumulate("name", newShopName.getText());
+                jsonObject.accumulate("building", newShopBuilding.getSelectedItem());
+                jsonObject.accumulate("floor", newShopFloor.getText());
+                jsonObject.accumulate("location", newShopLocation.getText());
+                jsonObject.accumulate("style", newShopStyle.getText());
+                jsonObject.accumulate("category", newShopSalesItem.getSelectedItem());
+                jsonObject.accumulate("introduction", newShopIntro.getText());
+                jsonObject.accumulate("profileImg", fileName);
+                jsonObject.accumulate("repImg1", fileName1);
+                jsonObject.accumulate("repImg2", fileName2);
+                jsonObject.accumulate("repImg3", fileName3);
 
                 HttpURLConnection con = null;
                 BufferedReader reader = null;

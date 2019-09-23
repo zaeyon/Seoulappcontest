@@ -49,10 +49,11 @@ public class NotificationsFragment extends Fragment {
     TextView tvNickname;
 
     ImageView ivProfile;
-    ImageView ivSettings;
+    ImageView ivMyItem;
     ImageView ivNews;
     ImageView ivShopAdd;
     ImageView ivShopSetting;
+    ImageView ivSettings;
 
     LinearLayout NoShopPage, YesShopPage;
 
@@ -98,7 +99,8 @@ public class NotificationsFragment extends Fragment {
         // String(strNickname, strEmail)에 저장
 
 
-
+        ivMyItem = (ImageView) v.findViewById(R.id.ivMyItem);
+        ivMyItem.setOnClickListener(new goMyItem());
         ivNews = (ImageView) v.findViewById(R.id.ivNews);
         ivNews.setOnClickListener(new goNews());
         ivSettings = (ImageView) v.findViewById(R.id.ivSettings);
@@ -122,7 +124,7 @@ public class NotificationsFragment extends Fragment {
         m_oListView.setAdapter(oAdapter);
 
         // 와이파이 새로 접속할 때마다 변경
-        new JSONTask().execute("http://172.30.1.14:3000/getUserInfo");
+        new JSONTask().execute("http://172.30.1.28:3000/getUserInfo");
 
         // listview 클릭 시 각 매장 페이지로 이동(매장 id를 ShopDetaildInfo에 전달)
 
@@ -214,7 +216,23 @@ public class NotificationsFragment extends Fragment {
                 YesShopPage.setVisibility(VISIBLE);
                 NoShopPage.setVisibility(INVISIBLE);
             }
-            }
+        }
+    }
+
+    class goMyItem implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            Intent intentMyItem = new Intent(getActivity(), MyItem.class);
+            startActivity(intentMyItem);
+         }
+    }
+
+    class goNews implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            Intent intentNews = new Intent(getActivity(), NewsActivity.class);
+            startActivity(intentNews);
+        }
     }
 
     class goAddShop implements View.OnClickListener {
@@ -222,7 +240,6 @@ public class NotificationsFragment extends Fragment {
         public void onClick(View v) {
             Intent intentAddShop = new Intent(getActivity(), AddShop.class);
             startActivity(intentAddShop);
-
         }
     }
 
@@ -231,14 +248,6 @@ public class NotificationsFragment extends Fragment {
         public void onClick(View v) {
             Intent intentSettingShop = new Intent(getActivity(), SettingShop.class);
             startActivity(intentSettingShop);
-        }
-    }
-
-    class goNews implements View.OnClickListener {
-        @Override
-        public void onClick(View v) {
-            Intent intentNews = new Intent(getActivity(), NewsActivity.class);
-            startActivity(intentNews);
         }
     }
 
