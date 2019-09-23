@@ -58,7 +58,9 @@ public class CustomListFragment extends ListFragment {
 
         // 와이파이 새로 접속할때마다 변경
 
-        new JSONTask2().execute("http://c0289aff.ngrok.io/shopNumber");
+
+        new JSONTask2().execute("http://172.30.1.10:3000/shopNumber");
+
 
         return super.onCreateView(inflater, container, savedInstanceState);
     }
@@ -85,7 +87,6 @@ public class CustomListFragment extends ListFragment {
 
         startActivity(intent);
     }
-
     public void addItem(String profileimage, String name, String building, String floor, String rocation,String category, String style, String intro, String req1, String req2, String req3) {
         adapter.addItem(profileimage, name, building, floor, rocation, category, style, intro, req1, req2, req3);
     }
@@ -167,17 +168,18 @@ public class CustomListFragment extends ListFragment {
             shopNumber = Integer.parseInt(result);
 
             // 와이파이 새로 접속할때마다 변경
-            new JSONTaskName().execute("http://c0289aff.ngrok.io/getShopName");
-            new JSONTaskProfile().execute("http://c0289aff.ngrok.io/getShopProfile");
-            new JSONTaskRocation().execute("http://c0289aff.ngrok.io/getShopRocation");
-            new JSONTaskFloor().execute("http://c0289aff.ngrok.io/getShopFloor");
-            new JSONTaskBuilding().execute("http://c0289aff.ngrok.io/getShopBuilding");
-            new JSONTaskCategory().execute("http://c0289aff.ngrok.io/getShopCategory");
-            new JSONTaskStyle().execute("http://c0289aff.ngrok.io/getShopStyle");
-            new JSONTaskIntro().execute("http://c0289aff.ngrok.io/getShopIntro");
-            new JSONTaskReq1().execute("http://c0289aff.ngrok.io/getShopReq1");
-            new JSONTaskReq2().execute("http://c0289aff.ngrok.io/getShopReq2");
-            new JSONTaskReq3().execute("http://c0289aff.ngrok.io/getShopReq3");
+            new JSONTaskName().execute("http://172.30.1.10:3000/getShopName");
+            new JSONTaskProfile().execute("http://172.30.1.10:3000/getShopProfile");
+            new JSONTaskRocation().execute("http://172.30.1.10:3000/getShopRocation");
+            new JSONTaskFloor().execute("http://172.30.1.10:3000/getShopFloor");
+            new JSONTaskBuilding().execute("http://172.30.1.10:3000/getShopBuilding");
+            new JSONTaskCategory().execute("http://172.30.1.10:3000/getShopCategory");
+            new JSONTaskStyle().execute("http://172.30.1.10:3000/getShopStyle");
+            new JSONTaskIntro().execute("http://172.30.1.10:3000/getShopIntro");
+            new JSONTaskReq1().execute("http://172.30.1.10:3000/getShopReq1");
+            new JSONTaskReq2().execute("http://172.30.1.10:3000/getShopReq2");
+            new JSONTaskReq3().execute("http://172.30.1.10:3000/getShopReq3");
+
         }
     }
     public class JSONTaskIntro extends AsyncTask<String, String, String> {
@@ -1074,6 +1076,9 @@ public class CustomListFragment extends ListFragment {
             // Adapter 생성 및 Adapter 지정
             adapter = new ListViewAdapter();
             setListAdapter(adapter);
+
+
+            Log.i("shopNumber : ", String.valueOf(shopNumber));
 
             for(int i = 0; i < shopNumber; i++)
             {

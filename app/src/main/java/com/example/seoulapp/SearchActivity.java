@@ -65,7 +65,9 @@ public class SearchActivity extends AppCompatActivity {
                 }
                 else {
 
-                    new JSONTaskReq3().execute("http://c0289aff.ngrok.io/aa");
+
+                    new JSONTaskReq3().execute("http://172.30.1.10:3000/aa");
+
 
                 }
             }

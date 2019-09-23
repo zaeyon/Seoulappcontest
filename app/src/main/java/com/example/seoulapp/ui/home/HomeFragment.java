@@ -40,9 +40,9 @@ public class HomeFragment extends Fragment {
         actionBar.setDisplayShowCustomEnabled(true);
         // 툴바에 타이틀 비활성화
         actionBar.setDisplayShowTitleEnabled(false);
-        // 툴바에 뒤로가기 버튼 활성화
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeAsUpIndicator(R.drawable.ic_filter);
+        // 툴바에 필터 버튼 활성화
+        // actionBar.setDisplayHomeAsUpEnabled(true);
+        // actionBar.setHomeAsUpIndicator(R.drawable.ic_filter);
 
         View viewToolbar = getActivity().getLayoutInflater().inflate(R.layout.home_tool_bar, null);
         // ImageButton searchButton = viewToolbar.findViewById(R.id.search_btn);

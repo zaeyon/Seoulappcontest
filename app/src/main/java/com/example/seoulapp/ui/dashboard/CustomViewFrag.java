@@ -63,8 +63,8 @@ public class CustomViewFrag extends ListFragment {
         profile_img = getItemId.findViewById(R.id.User_profilePicture);
         Commentmore = getItemId.findViewById(R.id.watching_comment);
 
+        new JSONTaskUserProfile().execute("http://172.30.1.10:3000/getUserProfile");
 
-        new JSONTaskUserProfile().execute("http://c0289aff.ngrok.io/getUserProfile");
        /* dashboardViewModel =
                 ViewModelProviders.of(this).get(DashboardViewModel.class);*/
 

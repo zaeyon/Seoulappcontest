@@ -58,13 +58,16 @@ public class QnAListViewAdapter extends BaseAdapter {
     public Object getItem(int position) { return QnAListViewItemList.get(position); }
 
     // 아이템 추가를 위한 함수
-    public void addItem(String title, String production, String nickname) {
+    public void addItem(String title, String production, String nickname, String content, String answer, String shopName ) {
 
         QnAListViewItem item = new QnAListViewItem();
 
         item.setQnATitle(title);
         item.setQnAProduction(production);
         item.setQnAUserNickname(nickname);
+        item.setQnAContent(content);
+        item.setQnAShopName(shopName);
+        item.setQnAAnswer(answer);
 
         QnAListViewItemList.add(item);
     }
