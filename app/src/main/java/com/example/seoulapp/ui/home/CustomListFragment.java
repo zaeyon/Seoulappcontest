@@ -179,7 +179,6 @@ public class CustomListFragment extends ListFragment {
             new JSONTaskReq1().execute("http://172.30.1.10:3000/getShopReq1");
             new JSONTaskReq2().execute("http://172.30.1.10:3000/getShopReq2");
             new JSONTaskReq3().execute("http://172.30.1.10:3000/getShopReq3");
-
         }
     }
     public class JSONTaskIntro extends AsyncTask<String, String, String> {

@@ -1,0 +1,21 @@
+
+ȸ������ & �α��� �׽�Ʈ ���� ����
+
+1. ����ϴ� wifi�� �°� ip�ּ� ����
+app/src/main/java/com/example/seoulapp���� Signup.java, Login.java ������
+��� new JSONTask().execute( ... )�κ��� �Ʒ��� ���� ����
+new JSONTask().execute("http://(IPv4 �ּ�):3000/...");
+IPv4 �ּҴ� cmdâ���� ipconfig �Է��ϸ� ���Ҽ�����
+(���濡�� wap wifi ���� -> http://172.30.1.10:3000/... �� �����ϸ��)
+
+2. �����ͺ��̽� ����
+ server\config\database.js ���Ͼ���
+module.exports = {
+  host : 'localhost',
+  user : 'root',
+  password : '00000',
+  port : 3306,
+  database : 'test'
+}; 
+
+�κ��� �ڽ��� �����ͺ��̽� ȯ�濡 �°� �����ϸ��
