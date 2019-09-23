@@ -243,7 +243,7 @@ public class AddShop extends AppCompatActivity {
 
         signUpNext.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                new JSONTask1().execute("http://172.30.1.14:3000/newShopData1");
+                new JSONTask1().execute("http://172.30.1.10:3000/newShopData1");
 
                 if (f != null && f1 != null && f2 != null && f3 != null) {
                     TransferObserver obsever = transferUtility.upload(
@@ -426,7 +426,7 @@ public class AddShop extends AppCompatActivity {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
 
-            new JSONTask2().execute("http://172.30.1.14:3000/newShopData2");
+            new JSONTask2().execute("http://172.30.1.10:3000/newShopData2");
         }
     }
 
@@ -505,7 +505,7 @@ public class AddShop extends AppCompatActivity {
             fileName2 = shopID + "_rep2_" + f2.getName();
             fileName3 = shopID + "_rep3_" + f3.getName();
 
-            new JSONTask3().execute("http://172.30.1.14:3000/newShopData3");
+            new JSONTask3().execute("http://172.30.1.10:3000/newShopData3");
         }
     }
 

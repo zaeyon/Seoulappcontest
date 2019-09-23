@@ -783,13 +783,12 @@ app.post('/getUserProfile', (req,res) => {
       if(j == 0)
       {
 
-        console.log("allImage : " + allUserProfileImage);
+
     
         UserImage = results[0].User_Image;
         UserId = results[0].User_Id;
         UserContent = results[0].User_Content;
         ReviewStoreName = results[0].Review_StoreName;
-      
         Like = results[0].Like;
         Comment=results[0].Comment;
         CommentUser_Id = results[0].Comment_User_Id;
@@ -815,7 +814,6 @@ app.post('/getUserProfile', (req,res) => {
         }
       };
     };
-    console.log("allImage : " + allUserProfileImage);
     console.log("allView : " + allView);
 
     res.write(allView); //그냥 모든 걸 더해서 하나로 보낸 후에 나누면 안 됨?

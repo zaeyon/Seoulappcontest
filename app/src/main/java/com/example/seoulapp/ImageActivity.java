@@ -60,7 +60,7 @@ public class ImageActivity extends Activity {
 
         // 와이파이 접속할때마다 변경
 
-        new JSONTaskProductionInfo().execute("http://172.30.1.14:3000/getProductionInfo");
+        new JSONTaskProductionInfo().execute("http://172.30.1.10:3000/getProductionInfo");
 
 
 

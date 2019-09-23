@@ -1,12 +1,19 @@
 package com.example.seoulapp.ui.dashboard;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
@@ -19,23 +26,33 @@ import com.example.seoulapp.R;
 public class DashboardFragment extends Fragment{
     TextView tv_commentmore;
     private DashboardViewModel dashboardViewModel;
+    private View Commentmore;
+    private Fragment CommentFrag;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                 ViewGroup container, Bundle savedInstanceState) {
 
         //추상화된 view를 실제적으로
+        setHasOptionsMenu(true);
         View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
-        View v = inflater.inflate(R.layout.review_listview_itemview, container, false);
+
+        Commentmore = inflater.inflate(R.layout.review_listview_itemview, container, false).findViewById(R.id.watching_comment);
 
         Toolbar toolbar = (Toolbar)root.findViewById(R.id.ReviewToolbar);
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         ActionBar actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
-
         actionBar.setDisplayShowCustomEnabled(true);
         actionBar.setDisplayShowTitleEnabled(false);
 
+        Commentmore.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event){
+       //         Intent intent = new Intent(getContext(), commentFrag.class);
+                return false;
+            }
+        });
 
-        new CommentMoreAct().MoreComment(v);
+
 
        /* dashboardViewModel =
                 ViewModelProviders.of(this).get(DashboardViewModel.class);*/
@@ -75,6 +92,30 @@ public class DashboardFragment extends Fragment{
         listView.requestLayout();
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater Inflater) {
+        Inflater.inflate(R.menu._action_bar, menu);
+        super.onCreateOptionsMenu(menu, Inflater);
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_button:
+                Intent intent = new Intent(getActivity(), CreateReviewAct.class);
+                startActivity(intent);
+                return true;
+            default:
+                return false;
+        }
+    }
 
+    /*class cmtMore extends View.OnClickListenr {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(getActivity(), CommentMoreAct.class);
+            startActivity(intent);
+        }
+    }*/
 }
+

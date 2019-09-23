@@ -3,25 +3,22 @@ package com.example.seoulapp.ui.dashboard;
 public class ReviewItem {
 
     private String UserImage;
-    private String UserProfileimg;
     private String UserId;
     private String UserDes;
     private String StoreName;
     private int Like;
     private String Cmt_Id;
     private String Cmt;
+    int count;
 
     public void setUserImage(String userImage) {
         UserImage = userImage;
     }
 
-    public void setUserProfileimg(String userProfileimg) {
-
-        UserProfileimg = userProfileimg;
-    }
     public void setUserId(String userId) {
         UserId = userId;
     }
+
     public void setUserDes(String userDes) {
         UserDes = userDes;
     }
@@ -30,24 +27,22 @@ public class ReviewItem {
         StoreName = storeName;
     }
 
-    public void setLike(int like) {
-        Like = like;
+    public void setLike(int Like) {
+        this.Like = Like;
     }
+
     public String getUserId(){
         return UserId;
     }
+
     public String getUserDes(){
         return UserDes;
     }
-
 
     public String getUserimg(){
         return UserImage;
     }
 
-    public String getUserProfileimg() {
-        return UserProfileimg;
-    }
 
     public String getStoreName() {
         return StoreName;
@@ -56,6 +51,5 @@ public class ReviewItem {
     public int getLike() {
         return Like;
     }
-
 }
 

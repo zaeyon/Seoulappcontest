@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_button"
+        android:id="@+id/gotoReview"
         app:showAsAction="always"
         android:title="back_button"
         android:icon="@drawable/backbutton"
