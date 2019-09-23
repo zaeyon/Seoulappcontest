@@ -22,15 +22,29 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/likeButton"
-            android:layout_width="75dp"
-            android:layout_height="35dp"
-            android:layout_marginTop="7dp"
-            android:layout_marginRight="5dp"
-            android:layout_alignParentRight="true"
-            android:src="@drawable/production_like" />
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true">
 
+        <ImageView
+            android:id="@+id/canLike"
+            android:layout_width="55dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginRight="5dp"
+            android:src="@drawable/canheart"/>
+
+            <ImageView
+                android:id="@+id/binLike"
+                android:layout_width="55dp"
+                android:layout_height="35dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginRight="5dp"
+                android:src="@drawable/binheart" />
+
+
+        </FrameLayout>
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

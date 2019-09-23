@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="10"
+    tools:context=".QnAPage"
+    android:orientation="vertical"
+    android:background="#f3f3f3">
+
+    <LinearLayout
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="165dp"
+        android:orientation="horizontal"
+        android:weightSum="10">
+
+
+    <LinearLayout
+        android:background="#ffffff"
+        android:layout_marginTop="20dp"
+        android:layout_width="0dp"
+        android:layout_height="150dp"
+        android:layout_weight="9.0"
+        android:weightSum="10"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/qnaTitle"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Q. 상품 관련 문의 드립니다."
+            android:fontFamily="@font/nanumsquare_acr"
+            android:textColor="#000000"
+            android:textSize="20sp" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="7.5">
+
+        <TextView
+            android:id="@+id/qnaContent"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="심플 화이트 티셔츠 총기장이 몇인가요?"
+            android:fontFamily="@font/nanumsquare_acl"
+            android:textColor="#000000"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:gravity="end"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="3.5"
+            android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:text="작성자 : "
+            android:fontFamily="@font/nanumsquare_acr"
+            android:textSize="13sp"/>
+
+            <TextView
+                android:layout_marginRight="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:text="홍홍"
+                android:fontFamily="@font/nanumsquare_acr"
+                android:textSize="13sp"/>
+
+        </LinearLayout>
+    </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="horizontal"
+        android:weightSum="10"
+        android:gravity="center_horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="9"
+            android:layout_height="match_parent"
+            android:background="#ffffff"
+            android:orientation="vertical"
+            android:weightSum="5">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="75dp">
+
+            <TextView
+                android:id="@+id/qnaA"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="A. "
+                android:fontFamily="@font/nanumsquare_acr"
+                android:textColor="#000000"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/qnaAnswer"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="76cm 입니다. "
+                android:fontFamily="@font/nanumsquare_acr"
+                android:textColor="#000000"
+                android:textSize="20sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:gravity="end">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:text="작성자 : "
+                    android:fontFamily="@font/nanumsquare_acr"
+                    android:textSize="13sp"/>
+
+                <TextView
+                    android:layout_marginRight="5dp"
+                    android:id="@+id/QnAshopName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:text="가게"
+                    android:fontFamily="@font/nanumsquare_acr"
+                    android:textSize="13sp"/>
+
+
+                <TextView
+                    android:layout_marginRight="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:text="사장님"
+                    android:fontFamily="@font/nanumsquare_acr"
+                    android:textSize="13sp"/>
+
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:gravity="end">
+
+
+        <TextView
+            android:layout_marginRight="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="목록보기"
+            android:textSize="16sp"
+            android:fontFamily="@font/nanumsquare_acr"
+            android:layout_gravity="start"/>
+    </LinearLayout>
+
+
+
+
+
+
+</LinearLayout>

@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".QuestionRegister"
+    android:background="#f3f3f3"
+    >
+
+
+    <LinearLayout
+        android:layout_marginTop="35dp"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#f3f3f3"
+        android:weightSum="10"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+    <LinearLayout
+        android:background="#f3f3f3"
+        android:layout_width="0dp"
+        android:layout_weight="8.2"
+        android:layout_height="450dp"
+        android:weightSum="10"
+        android:orientation="vertical"
+        android:gravity="center"
+       >
+
+        <LinearLayout
+            android:background="#ffffff"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="9.5"
+            android:orientation="horizontal"
+            android:weightSum="10"
+            android:gravity="center">
+
+            <LinearLayout
+
+                android:background="#ffffff"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="9"
+                android:orientation="vertical"
+                android:layout_marginTop="10dp"
+                android:gravity="">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="문의하기"
+                android:textSize="20sp"
+                android:fontFamily="@font/nanumsquare_acr"
+                android:textColor="#000000"/>
+
+
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="제목"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/nanumsquare_acr"/>
+
+                <com.example.seoulapp.ClearEditText
+                    android:id="@+id/qnaRegTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textSize="15sp"
+                    android:fontFamily="@font/nanumsquare_acr"/>
+
+                <LinearLayout
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="10">
+             <LinearLayout
+                 android:layout_width="0dp"
+                 android:layout_weight="5"
+                 android:layout_height="wrap_content"
+                 android:orientation="vertical">
+            <TextView
+                android:layout_marginTop="10dp"
+                android:id="@+id/ShopName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="매장 이름"
+                android:textSize="15sp"
+                android:fontFamily="@font/nanumsquare_acr"/>
+
+            <com.example.seoulapp.ClearEditText
+                android:id="@+id/qnaRegShopName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textSize="15sp"
+                android:fontFamily="@font/nanumsquare_acr"/>
+
+             </LinearLayout>
+
+                 <LinearLayout
+                     android:layout_width="0dp"
+                     android:layout_weight="5"
+                     android:layout_height="wrap_content"
+                     android:orientation="vertical">
+                     <TextView
+                         android:layout_marginTop="10dp"
+                         android:id="@+id/qnaType"
+                         android:layout_width="match_parent"
+                         android:layout_height="wrap_content"
+                         android:text="문의 분류"
+                         android:textSize="15sp"
+                         android:fontFamily="@font/nanumsquare_acr"/>
+
+                     <Spinner
+                         android:id="@+id/qnaRegType"
+                         android:layout_width="match_parent"
+                         android:layout_height="35dp"
+                         android:text=""
+                         android:textSize="15sp"
+                         android:fontFamily="@font/nanumsquare_acr"/>
+
+
+                 </LinearLayout>
+
+                </LinearLayout>
+
+
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/nanumsquare_acr"
+                    android:text="상품이름"/>
+
+                <com.example.seoulapp.ClearEditText
+                    android:id="@+id/qnaRegProduction"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textSize="15sp"
+                    android:fontFamily="@font/nanumsquare_acr"/>
+
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:text="문의내용"
+                    android:fontFamily="@font/nanumsquare_acr"/>
+
+                <EditText
+                    android:id="@+id/qnaRegContent"
+                    android:inputType="textMultiLine"
+                    android:lines="8"
+                    android:minLines="3"
+                    android:textSize="15sp"
+                    android:layout_height="wrap_content"
+                    android:layout_width="fill_parent"
+                    android:scrollbars="vertical"
+                    android:fontFamily="@font/nanumsquare_acr"/>
+
+                <Button
+                    android:id="@+id/qnaRegBtn"
+                    android:layout_marginTop="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:text="문의 등록"
+                    android:fontFamily="@font/nanumsquare_acr"/>
+
+            </LinearLayout>
+
+
+
+
+
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>
+
+</ScrollView>

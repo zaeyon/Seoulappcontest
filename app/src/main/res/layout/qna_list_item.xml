@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="90dp"
+    android:orientation="vertical"
+    android:weightSum="10"
+    android:background="#f3f3f3"
+    android:gravity="center">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="10"
+        android:gravity="center"
+        >
+
+     <LinearLayout
+        android:background="#ffffff"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:layout_weight="7.0"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/qnaQ"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Q. "
+                android:fontFamily="@font/nanumsquare_acr"
+                android:textSize="17sp"
+                android:textColor="#000000"/>
+
+            <TextView
+                android:id="@+id/qnaTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="사이즈 관련 문의 드립니다."
+                android:fontFamily="@font/nanumsquare_acr"
+                android:textSize="17sp"
+                android:textColor="#000000"/>
+
+
+        </LinearLayout>
+
+            <LinearLayout
+                android:layout_gravity="start"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="17dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_weight="4.0">
+
+
+                <TextView
+                    android:id="@+id/qnaProduction1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="상품 : "
+                    android:textSize="12sp"
+                    android:fontFamily="@font/nanumsquare_acr"/>
+
+
+                <TextView
+            android:id="@+id/qnaProduction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+                android:textSize="12sp"
+                android:fontFamily="@font/nanumsquare_acr"/>
+
+
+                <TextView
+                    android:id="@+id/qnaQuestion2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="작성자 : "
+                    android:textSize="12sp"
+                    android:fontFamily="@font/nanumsquare_acr"/>
+
+
+
+                <TextView
+
+                    android:id="@+id/qnaOwner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="룰루랄라"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/nanumsquare_acr"/>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.7"
+            android:background="#ffffff">
+
+        <FrameLayout
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="0dp"
+            android:layout_marginLeft="7dp"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="6.0">
+
+            <ImageView
+                android:id="@+id/answerYes"
+                android:layout_width="47dp"
+                android:layout_height="23dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/answeryes"/>
+
+
+            <ImageView
+                android:id="@+id/answerNo"
+                android:layout_width="47dp"
+                android:layout_height="23dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/answerno"/>
+        </FrameLayout>
+        </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>

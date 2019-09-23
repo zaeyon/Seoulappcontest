@@ -85,7 +85,6 @@ public class CustomListFragment extends ListFragment {
 
         startActivity(intent);
     }
-
     public void addItem(String profileimage, String name, String building, String floor, String rocation,String category, String style, String intro, String req1, String req2, String req3) {
         adapter.addItem(profileimage, name, building, floor, rocation, category, style, intro, req1, req2, req3);
     }
