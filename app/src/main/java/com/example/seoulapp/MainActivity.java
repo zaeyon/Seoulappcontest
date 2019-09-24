@@ -301,6 +301,7 @@ public class MainActivity extends AppCompatActivity {
                     autoLogin.commit();
                 }
 
+                Log.d("MainActivity", userEmail.getText().toString());
                 Intent navigationIntent = new Intent(MainActivity.this ,BottomNavigation.class);
                 startActivity(navigationIntent);
             }

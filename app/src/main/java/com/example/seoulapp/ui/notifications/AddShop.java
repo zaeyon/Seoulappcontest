@@ -220,6 +220,7 @@ public class AddShop extends AppCompatActivity {
             }
         });
 
+        // 매장 관리 페이지로 이동하게 수정
         signUpNext.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 new JSONTask1().execute("http://172.30.1.28:3000/newShopData1");
