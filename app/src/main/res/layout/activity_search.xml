@@ -14,15 +14,25 @@
         android:gravity="center">
 
       <FrameLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content">
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:gravity="center">
 
           <ImageView
-              android:layout_width="match_parent"
-              android:layout_height="45dp"
-              android:src="@drawable/inputlong"/>
+              android:layout_width="355dp"
+              android:layout_height="55dp"
+              android:src="@drawable/inputlong"
+              />
 
 
+          <LinearLayout
+              android:layout_marginLeft="4dp"
+              android:layout_marginTop="4dp"
+              android:gravity="center"
+              android:layout_gravity="center"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              >
         <EditText
             android:layout_gravity="center"
             android:id="@+id/search_shopName"
@@ -32,11 +42,12 @@
             android:textSize="15sp"/>
 
         <ImageView
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="5dp"
             android:id="@+id/search_button1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_search_magnifier_interface_symbol"/>
+            android:layout_width="35dp"
+            android:layout_height="45dp"
+            android:src="@drawable/searchicon"/>
+          </LinearLayout>
 
       </FrameLayout>
     </LinearLayout>

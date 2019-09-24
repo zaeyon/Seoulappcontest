@@ -47,9 +47,12 @@ public class SearchListViewAdapter extends BaseAdapter {
         // Data Set(searchListViewItemList)에서 position에 위치한 데이터 참조 획득
         SearchListViewItem searchListViewItem = SearchListViewItemList.get(position);
 
+       // SearchListViewItemList.clear();
+
         // 아이템 내 각 위젯에 데이터 반영
         Glide.with(context).load(searchListViewItem.getSearchProfile()).into(searchProfileView);
         searchNameView.setText(searchListViewItem.getSearchName());
+
 
         return convertView;
     }

@@ -792,8 +792,6 @@ UserImage = results[0].User_Image;
       }
       else
       {
-
-        console.log("allImage : " + allUserProfileImage);
         UserImage = UserImage+"|"+results[j].User_Image;
         UserId = UserId+"|"+results[j].User_Id;
         UserContent = UserContent+"|"+results[j].User_Content;

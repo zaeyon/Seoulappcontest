@@ -21,6 +21,7 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 
 import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
@@ -28,12 +29,15 @@ import static android.view.View.VISIBLE;
 public class SearchActivity extends AppCompatActivity {
 
     ListView searchListView;
-    SearchListViewAdapter adapter;
+    // SearchListViewAdapter adapter;
     EditText searchEditText;
     String[] searchShopInfo;
     ImageView searchBtn;
     LinearLayout noResultPage;
     LinearLayout ResultPage;
+
+    private ArrayList<SearchListViewItem> items = null;
+    private SearchListViewAdapter adapter = null;
 
 
     @Override
@@ -46,7 +50,7 @@ public class SearchActivity extends AppCompatActivity {
         noResultPage.setVisibility(INVISIBLE);
 
         // Adapter 생성
-        adapter = new SearchListViewAdapter();
+        //adapter = new SearchListViewAdapter();
 
         // 리스트뷰 참조 및 Adapter달기
         searchListView = findViewById(R.id.searchListView);
@@ -57,6 +61,12 @@ public class SearchActivity extends AppCompatActivity {
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
+                items = new ArrayList<SearchListViewItem>();
+                adapter = new SearchListViewAdapter();
+                searchListView.setAdapter(adapter);
+
                 // 와이파이 새로 접속할 때마다 변경
                 if(searchEditText.getText().toString().equals(""))
                 {
@@ -65,10 +75,7 @@ public class SearchActivity extends AppCompatActivity {
                 }
                 else {
 
-
                     new JSONTaskReq3().execute("http://172.30.1.10:3000/aa");
-
-
                 }
             }
         });
@@ -150,7 +157,10 @@ public class SearchActivity extends AppCompatActivity {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
 
+
+
             searchListView.setAdapter(adapter);
+
 
             if (result.equals("noResult")) {
 
@@ -170,7 +180,9 @@ public class SearchActivity extends AppCompatActivity {
                 for(int i = 0; i < searchShopInfo.length/2; i++) {
                     String ImageUrl = "https://s3.ap-northeast-2.amazonaws.com/com.example.seoulapp/" + searchShopInfo[2*i+1];
                     adapter.addItem(ImageUrl, searchShopInfo[2*i]);
+
                 }
+
             }
         }
 
