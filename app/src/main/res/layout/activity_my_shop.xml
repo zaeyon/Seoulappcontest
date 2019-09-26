@@ -32,7 +32,7 @@
                 android:layout_height="120dp"
                 android:scaleType="fitXY"
                 android:layout_marginTop="30dp"
-                android:src="@drawable/blank_profile" />
+                app:srcCompat="@drawable/blank_profile" />
 
             <LinearLayout
                 android:layout_width="match_parent"

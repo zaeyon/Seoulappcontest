@@ -7,12 +7,13 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import org.json.JSONObject;
 
@@ -27,7 +28,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class Signup extends Activity {
+public class Signup extends AppCompatActivity {
 
     EditText nicknameData;
     EditText emailData;
@@ -251,7 +252,7 @@ public class Signup extends Activity {
                 if (!hasFocus) {
                     // 와이파이 새로 접속할 때마다 변경
 
-                    new JSONTask().execute("http://172.30.1.28:3000/nickname");
+                    new JSONTask().execute("http://172.30.1.10:3000/nickname");
                 }
             }
         });
@@ -262,7 +263,7 @@ public class Signup extends Activity {
                 if (!hasFocus) {
                     // 와이파이 새로 접속할 때마다 변경
 
-                    new JSONTask().execute("http://172.30.1.28:3000/email");
+                    new JSONTask().execute("http://172.30.1.10:3000/email");
                 }
             }
         });
@@ -332,7 +333,7 @@ public class Signup extends Activity {
                 autoLogin.commit();
 
                 // 와이파이 새로 접속할 때마다 변경
-                new JSONTask().execute("http://172.30.1.28:3000/post");
+                new JSONTask().execute("http://172.30.1.10:3000/post");
 
                 Intent navigationIntent = new Intent(Signup.this ,BottomNavigation.class);
                 startActivity(navigationIntent);

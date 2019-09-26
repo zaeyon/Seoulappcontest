@@ -5,9 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.notifications.MyShopActivity"
-    android:orientation="horizontal"
+    android:orientation="horizontal">
 
-    >
     <LinearLayout
         android:layout_gravity="center"
         android:gravity="center"
@@ -16,9 +15,7 @@
         android:weightSum="10"
         android:orientation="horizontal">
 
-
         <LinearLayout
-
             android:layout_gravity="center"
             android:layout_width="0dp"
             android:layout_weight="9.5"
@@ -33,6 +30,11 @@
                 android:text="매장 프로필 사진"
                 android:fontFamily="@font/nanumsquare_acr"/>
 
+            <FrameLayout
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
             <ImageView
                 android:id="@+id/newShopProfileImage"
                 android:layout_gravity="center"
@@ -40,7 +42,15 @@
                 android:layout_height="120dp"
                 android:scaleType="fitXY"
                 android:layout_marginTop="5dp"
-                android:src="@drawable/blank_profile" />
+                app:srcCompat="@drawable/blank_profile" />
+
+                <ImageView
+                    android:id="@+id/newShopProfildPlus"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/plus"
+                    android:layout_gravity="right|bottom"/>
+            </FrameLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -60,7 +70,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="" />
-
             </LinearLayout>
 
             <LinearLayout
@@ -91,7 +100,6 @@
                             android:id="@+id/newShopSalesItem"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />
-
                     </LinearLayout>
 
                     <LinearLayout
@@ -110,7 +118,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="" />
-
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -137,27 +144,26 @@
                         android:id="@+id/newShopBuilding"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_weight="0.6" />
+                        android:layout_weight="0.4" />
 
-                    <com.example.seoulapp.ClearEditText
+                    <EditText
                         android:id="@+id/newShopFloor"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.1"
+                        android:layout_height="36dp"
+                        android:layout_weight="0.2"
                         android:text="" />
 
                     <TextView
                         android:id="@+id/tvFloor"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="0.3"
+                        android:layout_weight="0.25"
                         android:text="층"
                         android:fontFamily="@font/nanumsquare_acr"
                         android:textSize="15sp"
-                        android:gravity="center"
-                        />
+                        android:gravity="center" />
 
-                    <com.example.seoulapp.ClearEditText
+                    <EditText
                         android:id="@+id/newShopLocation"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -172,9 +178,7 @@
                         android:fontFamily="@font/nanumsquare_acr"
                         android:text="구역"
                         android:textSize="15sp"
-                        android:gravity="center"
-                        />
-
+                        android:gravity="center" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -194,9 +198,7 @@
                 <com.example.seoulapp.ClearEditText
                     android:id="@+id/newShopIntro"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    />
-
+                    android:layout_height="wrap_content" />
             </LinearLayout>
 
             <TextView
@@ -205,16 +207,18 @@
                 android:layout_height="wrap_content"
                 android:text="         매장리스트에서 보여지는\n 대표 상품 사진을 3개 등록해주세요. "
                 android:textSize="15sp"
-                android:fontFamily="@font/nanumsquare_acr"
-                />
+                android:fontFamily="@font/nanumsquare_acr" />
 
             <LinearLayout
                 android:gravity="center"
                 android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                >
+                android:layout_height="wrap_content">
 
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
 
                 <ImageView
                     android:id="@+id/newShopRep1"
@@ -222,27 +226,63 @@
                     android:layout_width="110dp"
                     android:layout_height="110dp"
                     android:layout_marginRight="5dp"
-                    android:src="@drawable/blank_production"
+                    app:srcCompat="@drawable/blank_production"
                     android:scaleType="fitXY"/>
 
-                <ImageView
-                    android:id="@+id/newShopRep2"
-                    android:gravity="center"
-                    android:layout_width="110dp"
-                    android:layout_height="110dp"
-                    android:src="@drawable/blank_production"
-                    android:scaleType="fitXY"/>
+                    <ImageView
+                        android:id="@+id/newShopRepPlus1"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        app:srcCompat="@drawable/plus"
+                        android:layout_gravity="right|bottom"/>
+                </FrameLayout>
 
-                <ImageView
-                    android:id="@+id/newShopRep3"
-                    android:gravity="center"
-                    android:layout_width="110dp"
-                    android:layout_height="110dp"
-                    android:layout_marginLeft="5dp"
-                    android:src="@drawable/blank_production"
-                    android:scaleType="fitXY"/>
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:id="@+id/newShopRep2"
+                        android:gravity="center"
+                        android:layout_width="110dp"
+                        android:layout_height="110dp"
+                        android:layout_marginRight="5dp"
+                        app:srcCompat="@drawable/blank_production"
+                        android:scaleType="fitXY"/>
+
+                    <ImageView
+                        android:id="@+id/newShopRepPlus2"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        app:srcCompat="@drawable/plus"
+                        android:layout_gravity="right|bottom"/>
+                </FrameLayout>
+
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:id="@+id/newShopRep3"
+                        android:gravity="center"
+                        android:layout_width="110dp"
+                        android:layout_height="110dp"
+                        android:layout_marginRight="5dp"
+                        app:srcCompat="@drawable/blank_production"
+                        android:scaleType="fitXY"/>
+
+                    <ImageView
+                        android:id="@+id/newShopRepPlus3"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        app:srcCompat="@drawable/plus"
+                        android:layout_gravity="right|bottom"/>
+                </FrameLayout>
             </LinearLayout>
-
 
             <Button
                 android:id="@+id/signUpNextButton"

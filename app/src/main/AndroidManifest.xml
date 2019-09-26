@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.seoulapp">
 
     <application
@@ -11,12 +12,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.notifications.MyItem"></activity>
-        <activity android:name=".QuestionRegister"
-                  android:windowSoftInputMode="adjustResize"></activity>
+        <activity android:name=".ui.notifications.RegisterProduction"></activity>
+        <activity android:name=".ui.notifications.MyShopManage" />
+        <activity android:name=".ui.dashboard.Comment" />
+        <activity
+            android:name=".QuestionRegister"
+            android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".ui.notifications.MyItem" />
         <activity android:name=".QnAPage" />
         <activity android:name=".QApage" />
-        <activity android:name=".SettingShop" />
+        <activity android:name=".ui.notifications.SettingShop" />
         <activity android:name=".ui.notifications.AddShop" />
         <activity android:name=".SearchActivity" />
         <activity
@@ -48,10 +53,11 @@
             android:name="com.amazonaws.mobileconnectors.s3.transferutility.TransferService"
             android:enabled="true" />
     </application>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

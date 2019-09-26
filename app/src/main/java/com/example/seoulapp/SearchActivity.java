@@ -1,13 +1,24 @@
 package com.example.seoulapp;
 
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import org.json.JSONObject;
 
@@ -21,19 +32,33 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 
 import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
 
+
 public class SearchActivity extends AppCompatActivity {
 
+    FirebaseStorage storage = FirebaseStorage.getInstance();
+    StorageReference storageReference = storage.getReferenceFromUrl("gs://dong-dong-c7d7e.appspot.com");
+
+
+    int index;
     ListView searchListView;
-    SearchListViewAdapter adapter;
+    // SearchListViewAdapter adapter;
     EditText searchEditText;
     String[] searchShopInfo;
     ImageView searchBtn;
     LinearLayout noResultPage;
     LinearLayout ResultPage;
+    String[] shopProfileImage;
+    // public String imageUri;
+    String[] searchShopProfile;
+    String[] searchShopDetail;
+    String fileUrl;
+    private ArrayList<SearchListViewItem> items = null;
+    private SearchListViewAdapter adapter = null;
 
 
     @Override
@@ -45,8 +70,9 @@ public class SearchActivity extends AppCompatActivity {
 
         noResultPage.setVisibility(INVISIBLE);
 
+        fileUrl = "ss";
         // Adapter 생성
-        adapter = new SearchListViewAdapter();
+        //adapter = new SearchListViewAdapter();
 
         // 리스트뷰 참조 및 Adapter달기
         searchListView = findViewById(R.id.searchListView);
@@ -57,6 +83,12 @@ public class SearchActivity extends AppCompatActivity {
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
+                items = new ArrayList<SearchListViewItem>();
+                adapter = new SearchListViewAdapter();
+                searchListView.setAdapter(adapter);
+
                 // 와이파이 새로 접속할 때마다 변경
                 if(searchEditText.getText().toString().equals(""))
                 {
@@ -64,12 +96,12 @@ public class SearchActivity extends AppCompatActivity {
                     noResultPage.setVisibility(VISIBLE);
                 }
                 else {
-
-                    new JSONTaskReq3().execute("http://172.30.1.28:3000/aa");
+                    new JSONTaskReq3().execute("http://172.30.1.10:3000/aa");
 
                 }
             }
         });
+
     }
 
     public class JSONTaskReq3 extends AsyncTask<String, String, String> {
@@ -148,7 +180,10 @@ public class SearchActivity extends AppCompatActivity {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
 
+
+
             searchListView.setAdapter(adapter);
+
 
             if (result.equals("noResult")) {
 
@@ -163,12 +198,37 @@ public class SearchActivity extends AppCompatActivity {
                 noResultPage.setVisibility(INVISIBLE);
                 ResultPage.setVisibility(VISIBLE);
 
-                searchShopInfo = result.split("\\|");
+                searchShopInfo = result.split("&&");
+                searchShopProfile = searchShopInfo[0].split("\\$");
+                searchShopDetail = searchShopInfo[1].split("\\|");
 
-                for(int i = 0; i < searchShopInfo.length/2; i++) {
-                    String ImageUrl = "https://s3.ap-northeast-2.amazonaws.com/com.example.seoulapp/" + searchShopInfo[2*i+1];
-                    adapter.addItem(ImageUrl, searchShopInfo[2*i]);
+                for(int i = 0; i < searchShopProfile.length; i++)
+                {
+                    Log.d("searchShopProfile : ", searchShopProfile[i]);
                 }
+
+                for(int i = 0; i < searchShopDetail.length; i++)
+                {
+                    Log.d("searchShopDetail : ", searchShopDetail[i]);
+                }
+
+
+                StorageReference[] pathReference = new StorageReference[searchShopProfile.length];
+
+                 for(index = 0; index < searchShopProfile.length; index++) {
+
+                     pathReference[index] = storageReference.child("images/ShopProfileImage/" + searchShopProfile[index]);
+                     pathReference[index].getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                         @Override
+                         public void onSuccess(Uri uri) {
+                             Toast.makeText(getApplicationContext(), "다운로드 성공 : "+ uri, Toast.LENGTH_SHORT).show();
+                              Uri downloadUrl = uri;
+                              fileUrl = downloadUrl.toString();
+
+                              }
+                     });
+                     Log.d("fileUrl", fileUrl);
+                    }
             }
         }
 

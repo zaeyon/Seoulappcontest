@@ -11,14 +11,16 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import org.json.JSONObject;
 
@@ -48,8 +50,8 @@ public class SettingShop extends AppCompatActivity {
     ImageView ivShopRep3;
     ClearEditText cetShopName; // 못 바꾸게!
     ClearEditText cetShopStyle;
-    ClearEditText cetShopFloor;
-    ClearEditText cetShopLocation;
+    EditText cetShopFloor;
+    EditText cetShopLocation;
     ClearEditText cetShopIntro;
     Spinner sSalesItem;
     Spinner sBuilding;

@@ -1,6 +1,5 @@
 package com.example.seoulapp;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,6 +9,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 
@@ -29,7 +30,7 @@ import java.net.URL;
 import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
 
-public class ImageActivity extends Activity {
+public class ImageActivity extends AppCompatActivity {
     String[] productionImage;
     String[] productionInfo = new String[4];
     String productionURL;
@@ -96,7 +97,7 @@ public class ImageActivity extends Activity {
         Glide.with(getApplicationContext()).load(productionURL).into(imageView);
 
         // 와이파이 접속할때마다 변경
-        new JSONTaskProductionInfo().execute("http://172.30.1.28:3000/getProductionInfo");
+        new JSONTaskProductionInfo().execute("http://172.30.1.10:3000/getProductionInfo");
     }
 
     public class JSONTaskProductionInfo extends AsyncTask<String, String, String> {

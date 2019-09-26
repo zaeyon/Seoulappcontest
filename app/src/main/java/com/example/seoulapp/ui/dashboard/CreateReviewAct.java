@@ -8,19 +8,19 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.amazonaws.auth.CognitoCachingCredentialsProvider;
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferObserver;
@@ -177,6 +177,7 @@ public class CreateReviewAct extends AppCompatActivity {
                 // new JSONTaskDepositReview().execute("http://172.30.1.28/getReviewCount");
                 new JSONTaskReviewReturnagain().execute("http://172.30.1.28/UpdateImage");
                 new JSONTaskStoryStoreSave().execute("http://172.30.1.28./StoreReviewInfo");
+
                 return true;
             default:
                 return false;

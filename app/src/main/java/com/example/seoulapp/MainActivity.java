@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -14,6 +13,8 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import org.json.JSONObject;
 
@@ -32,6 +33,8 @@ import static android.view.View.VISIBLE;
 
 
 public class MainActivity extends AppCompatActivity {
+
+    private BackPressCloseHandler backKeyClickHandler;
 
     Button loginBtn;
     EditText userEmail;
@@ -132,6 +135,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        backKeyClickHandler = new BackPressCloseHandler(this);
+
 
         userEmail = findViewById(R.id.emailLogin);
         userPassword = findViewById(R.id.passwordLogin);
@@ -162,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
                 if(!hasFocus) {
                     // 와이파이 새로 접속할 때마다 변경
 
-                    new JSONTask().execute("http://172.30.1.28:3000/emailCheck");
+                    new JSONTask().execute("http://172.30.1.10:3000/emailCheck");
 
                 }
             }
@@ -171,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // 와이파이 새로 접속할 때마다 변경
-                new JSONTask().execute("http://172.30.1.28:3000/login");
+                new JSONTask().execute("http://172.30.1.10:3000/login");
             }
         });
 
@@ -179,6 +184,18 @@ public class MainActivity extends AppCompatActivity {
         userPassword.addTextChangedListener(passwordTextWatcher);
 
     }
+
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        backKeyClickHandler.onBackPressed();
+
+    }
+
+
+
+
 
     public void onClickSignup(View view)
     {

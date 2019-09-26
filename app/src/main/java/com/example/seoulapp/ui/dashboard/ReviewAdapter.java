@@ -2,6 +2,7 @@ package com.example.seoulapp.ui.dashboard;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.os.AsyncTask;
@@ -17,6 +18,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.example.seoulapp.R;
@@ -38,7 +41,7 @@ import java.util.ArrayList;
 
 public class ReviewAdapter extends BaseAdapter {
 
-    static Activity activity;
+    static AppCompatActivity activity;
     public Object setAdapter;
     String[] User_profile_img;
     String[] User_id;
@@ -57,11 +60,11 @@ public class ReviewAdapter extends BaseAdapter {
 
     }
 
-    public void ReviewsetAct(Activity act) {
+    public void ReviewsetAct(AppCompatActivity act) {
         this.activity = act;
     }
 
-    public Activity ReviewgetAct() {
+    public AppCompatActivity ReviewgetAct() {
         return activity;
     }
 
@@ -143,16 +146,18 @@ public class ReviewAdapter extends BaseAdapter {
             }
         });
 
-        /*watch_comment.setOnClickListener(new View.OnClickListener()
+        watch_comment.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) { //db에 좋아요(like) 컬럼 추가
-                Context context = parent.getContext();
-                Intent intent = new Intent(context, CommentFrag.class);
-                ((Activity)context).startActivity(intent);
-                //Like.setText("좋아요 "+like+"회");
-            }
-        });*/
+            public void onClick(View v){ //db에 좋아요(like) 컬럼 추가
+            Context context = parent.getContext();
+            Intent intent = new Intent(context, Comment.class);
 
+
+            ((Activity) context).startActivity(intent);
+            //Like.setText("좋아요 "+like+"회");
+            }
+        });
 
         heart_filled.setVisibility(View.INVISIBLE); //하트 출몰
         ReviewImg.setOnClickListener(new View.OnClickListener() { //하트 애니메이션
@@ -293,9 +298,6 @@ public class ReviewAdapter extends BaseAdapter {
         protected void onPostExecute(String result) { //result 값은 2임.
             super.onPostExecute(result); //undefined라고 떠
 
-
         }
-
-
     }
 }

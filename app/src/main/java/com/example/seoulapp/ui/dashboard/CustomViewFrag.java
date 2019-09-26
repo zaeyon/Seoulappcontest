@@ -2,11 +2,9 @@ package com.example.seoulapp.ui.dashboard;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.ListFragment;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,7 +65,7 @@ public class CustomViewFrag extends ListFragment {
         Commentmore = getItemId.findViewById(R.id.watching_comment);
 
 
-        new JSONTaskUserProfile().execute("http://172.30.1.28:3000/getUserProfile");
+        new JSONTaskUserProfile().execute("http://172.30.1.10:3000/getUserProfile");
        /* dashboardViewModel =
                 ViewModelProviders.of(this).get(DashboardViewModel.class);*/
 

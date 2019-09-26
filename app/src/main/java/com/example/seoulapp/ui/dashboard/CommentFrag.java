@@ -2,8 +2,8 @@ package com.example.seoulapp.ui.dashboard;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ListFragment;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +40,7 @@ public class CommentFrag extends ListFragment {
         //comment를 adapter 거치지 않고 그대로 여기로 오기 때문에 item에 저장을 해봤자 null겠ㅈ?
         //String comment_Id = intent.getExtras().getString("comment_Id");
 
-        new JSONTaskCommentInfo().execute("http://172.30.1.28:3000/getCommentInfo");
+        new JSONTaskCommentInfo().execute("http://172.30.1.10:3000/getCommentInfo");
         CommentAdapter adapter = new CommentAdapter();
         setListAdapter(adapter); //adapter에는 지금 comment들이 달려있음요
 

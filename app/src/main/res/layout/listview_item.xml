@@ -37,7 +37,9 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_gravity="bottom|center_horizontal"
-                android:src="@drawable/profileimage_1"/>
+                android:scaleType="fitXY"
+                app:srcCompat="@drawable/profileimage_1"
+                />
 
             <TextView
                 android:layout_marginTop="4dp"
@@ -102,19 +104,19 @@
                 android:layout_width="91dp"
                 android:layout_height="90dp"
                 android:scaleType="fitXY"
-            android:src="@drawable/representation_1_1"/>
+            app:srcCompat="@drawable/representation_1_1"/>
             <ImageView
                 android:id="@+id/shop_representation2"
                 android:layout_width="91dp"
                 android:layout_height="90dp"
                 android:scaleType="fitXY"
-                android:src="@drawable/representation_1_2"/>
+                app:srcCompat="@drawable/representation_1_2"/>
             <ImageView
                 android:id="@+id/shop_representation3"
                 android:layout_width="91dp"
                 android:layout_height="90dp"
                 android:scaleType="fitXY"
-                android:src="@drawable/representation_1_3"/>
+                app:srcCompat="@drawable/representation_1_3"/>
 
         </LinearLayout>
 

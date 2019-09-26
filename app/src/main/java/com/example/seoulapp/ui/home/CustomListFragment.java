@@ -4,8 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.ListFragment;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.ListFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,7 +58,7 @@ public class CustomListFragment extends ListFragment {
 
         // 와이파이 새로 접속할때마다 변경
 
-        new JSONTask2().execute("http://172.30.1.28:3000/shopNumber");
+        new JSONTask2().execute("http://172.30.1.10:3000/shopNumber");
 
         return super.onCreateView(inflater, container, savedInstanceState);
     }
@@ -166,17 +166,17 @@ public class CustomListFragment extends ListFragment {
             shopNumber = Integer.parseInt(result);
 
             // 와이파이 새로 접속할때마다 변경
-            new JSONTaskName().execute("http://172.30.1.28:3000/getShopName");
-            new JSONTaskProfile().execute("http://172.30.1.28:3000/getShopProfile");
-            new JSONTaskRocation().execute("http://172.30.1.28:3000/getShopRocation");
-            new JSONTaskFloor().execute("http://172.30.1.28:3000/getShopFloor");
-            new JSONTaskBuilding().execute("http://172.30.1.28:3000/getShopBuilding");
-            new JSONTaskCategory().execute("http://172.30.1.28:3000/getShopCategory");
-            new JSONTaskStyle().execute("http://172.30.1.28:3000/getShopStyle");
-            new JSONTaskIntro().execute("http://172.30.1.28:3000/getShopIntro");
-            new JSONTaskReq1().execute("http://172.30.1.28:3000/getShopReq1");
-            new JSONTaskReq2().execute("http://172.30.1.28:3000/getShopReq2");
-            new JSONTaskReq3().execute("http://172.30.1.28:3000/getShopReq3");
+            new JSONTaskName().execute("http://172.30.1.10:3000/getShopName");
+            new JSONTaskProfile().execute("http://172.30.1.10:3000/getShopProfile");
+            new JSONTaskRocation().execute("http://172.30.1.10:3000/getShopRocation");
+            new JSONTaskFloor().execute("http://172.30.1.10:3000/getShopFloor");
+            new JSONTaskBuilding().execute("http://172.30.1.10:3000/getShopBuilding");
+            new JSONTaskCategory().execute("http://172.30.1.10:3000/getShopCategory");
+            new JSONTaskStyle().execute("http://172.30.1.10:3000/getShopStyle");
+            new JSONTaskIntro().execute("http://172.30.1.10:3000/getShopIntro");
+            new JSONTaskReq1().execute("http://172.30.1.10:3000/getShopReq1");
+            new JSONTaskReq2().execute("http://172.30.1.10:3000/getShopReq2");
+            new JSONTaskReq3().execute("http://172.30.1.10:3000/getShopReq3");
         }
     }
     public class JSONTaskIntro extends AsyncTask<String, String, String> {
@@ -743,7 +743,7 @@ public class CustomListFragment extends ListFragment {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
 
-            shopProfile = result.split("/");
+            shopProfile = result.split("!!!");
 
 
 
@@ -827,7 +827,7 @@ public class CustomListFragment extends ListFragment {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
 
-            shopReq1 = result.split("/");
+            shopReq1 = result.split("!!!");
         }
 
     }
@@ -988,7 +988,7 @@ public class CustomListFragment extends ListFragment {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
 
-            shopReq2 = result.split("/");
+            shopReq2 = result.split("!!!");
         }
     }
 
@@ -1068,21 +1068,20 @@ public class CustomListFragment extends ListFragment {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
 
-            shopReq3 = result.split("/");
+            shopReq3 = result.split("!!!");
 
             // Adapter 생성 및 Adapter 지정
             adapter = new ListViewAdapter();
             setListAdapter(adapter);
 
-
             Log.i("shopNumber : ", String.valueOf(shopNumber));
 
             for(int i = 0; i < shopNumber; i++)
             {
-                String profileImageUrl = "https://s3.ap-northeast-2.amazonaws.com/com.example.seoulapp/" + shopProfile[i];
-                String req1Url = "https://s3.ap-northeast-2.amazonaws.com/com.example.seoulapp/" + shopReq1[i];
-                String req2Url = "https://s3.ap-northeast-2.amazonaws.com/com.example.seoulapp/" + shopReq2[i];
-                String req3Url = "https://s3.ap-northeast-2.amazonaws.com/com.example.seoulapp/" + shopReq3[i];
+                String profileImageUrl =  shopProfile[i];
+                String req1Url = shopReq1[i];
+                String req2Url = shopReq2[i];
+                String req3Url = shopReq3[i];
                 adapter.addItem(profileImageUrl, shopName[i],shopBuilding[i],shopFloor[i], shopRocation[i], shopCategory[i], shopStyle[i], shopIntro[i], req1Url, req2Url, req3Url);
             }
         }

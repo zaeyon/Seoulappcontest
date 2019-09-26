@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "417843070738",
+    "firebase_url": "https://dong-dong-c7d7e.firebaseio.com",
+    "project_id": "dong-dong-c7d7e",
+    "storage_bucket": "dong-dong-c7d7e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:417843070738:android:17146233468b841af095cb",
+        "android_client_info": {
+          "package_name": "com.example.seoulapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "417843070738-58liiiaiplf60cvc4chu8uj884f3rlkk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBTR_gncz9xhbZUdr_i7VwgurDKBlrMDrw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "417843070738-58liiiaiplf60cvc4chu8uj884f3rlkk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

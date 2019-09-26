@@ -1,21 +1,16 @@
 package com.example.seoulapp;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.Toast;
-
-import com.example.seoulapp.ui.home.HomeFragment;
 
 import org.json.JSONObject;
 
@@ -30,9 +25,6 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-
-import static android.view.View.INVISIBLE;
-import static android.view.View.VISIBLE;
 
 public class QuestionRegister extends AppCompatActivity {
 
@@ -280,8 +272,8 @@ public class QuestionRegister extends AppCompatActivity {
                     QnAInfo = QnA[i].split("\\|");
                     adapter.addItem(QnAInfo[5], QnAInfo[6], QnAInfo[7], QnAInfo[4], QnAInfo[3], QnAInfo[1]);
                 }
-
             }
+
             onBackPressed();
         }
     }
