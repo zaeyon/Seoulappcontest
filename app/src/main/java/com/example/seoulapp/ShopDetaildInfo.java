@@ -74,9 +74,9 @@ public class ShopDetaildInfo extends AppCompatActivity implements OnClickListene
         setContentView(R.layout.activity_shop_detaild_info);
 
         // 와이파이 새로 접속할때마다 변경
-        new JSONTask2().execute("http://172.30.1.28:3000/shopNumber");
-        new JSONTaskProduction().execute("http://172.30.1.28:3000/getShopProduction");
-        new JSONTaskQnA().execute("http://172.30.1.28:3000/getQnAInfo");
+        new JSONTask2().execute("http://172.30.1.10:3000/shopNumber");
+        new JSONTaskProduction().execute("http://172.30.1.10:3000/getShopProduction");
+        new JSONTaskQnA().execute("http://172.30.1.10:3000/getQnAInfo");
 
 
 
@@ -149,7 +149,7 @@ public class ShopDetaildInfo extends AppCompatActivity implements OnClickListene
                 binStar.setVisibility(INVISIBLE);
                 canStar.setVisibility(VISIBLE);
 
-                new JSONTaskFavoriteShop().execute("http://172.30.1.28:3000/insertFavoriteShop");
+                new JSONTaskFavoriteShop().execute("http://172.30.1.10:3000/insertFavoriteShop");
             }
         });
 
@@ -159,7 +159,7 @@ public class ShopDetaildInfo extends AppCompatActivity implements OnClickListene
                 binStar.setVisibility(VISIBLE);
                 canStar.setVisibility(INVISIBLE);
 
-                new JSONTaskFavoriteShop().execute("http://172.30.1.28:3000/deleteFavoriteShop");
+                new JSONTaskFavoriteShop().execute("http://172.30.1.10:3000/deleteFavoriteShop");
             }
         });
 
