@@ -1,7 +1,5 @@
 package com.example.seoulapp.ui.notifications;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -12,6 +10,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.seoulapp.ClearEditText;
 import com.example.seoulapp.R;
@@ -79,7 +79,7 @@ public class RegisterProduction extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                new JSONTaskInsertProduction().execute("http://172.30.1.10:3000/InsertProductionInfo");
+                new JSONTaskInsertProduction().execute("http://172.30.1.28:3000/InsertProductionInfo");
             }
         });
     }

@@ -1,6 +1,5 @@
 package com.example.seoulapp.ui.notifications;
 
-import androidx.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,8 +8,6 @@ import android.graphics.drawable.shapes.OvalShape;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,10 +18,13 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
+
 import com.bumptech.glide.Glide;
 import com.example.seoulapp.MainActivity;
 import com.example.seoulapp.R;
-import com.example.seoulapp.SettingShop;
 import com.example.seoulapp.ShopDetaildInfo;
 
 import org.json.JSONObject;

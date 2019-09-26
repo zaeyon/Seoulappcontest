@@ -5,12 +5,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.seoulapp.MainActivity;
 import com.example.seoulapp.R;
@@ -27,17 +28,6 @@ public class SettingsActivity extends AppCompatActivity {
 
     tvEditProfile = (TextView)findViewById(R.id.tvEditProfile);
     tvEditProfile.setOnClickListener(new goEditProfile());
-    ivRegProduction = (ImageView)findViewById(R.id.regProduction);
-    ivRegProduction.setOnClickListener(new goRegProduction());
-  }
-
-  class goRegProduction implements View.OnClickListener {
-    @Override
-    public void onClick(View v) {
-      Intent intentRegProduction = new Intent(SettingsActivity.this, RegisterProduction.class);
-      startActivity(intentRegProduction);
-    }
-
   }
 
   class goEditProfile implements View.OnClickListener {
