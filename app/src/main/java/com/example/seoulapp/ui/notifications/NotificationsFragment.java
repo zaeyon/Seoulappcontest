@@ -244,18 +244,13 @@ public class NotificationsFragment extends Fragment {
         }
     }
 
-    class manageShop implements View.OnClickListener {
-        @Override
-        public void onClick(View v) {
-            Intent intentManageShop = new Intent(getActivity(), MyShopManage.class);
-            startActivity(intentManageShop);
-        }
-    }
-
     class goSettingShop implements View.OnClickListener {
         @Override
         public void onClick(View v) {
             Intent intentSettingShop = new Intent(getActivity(), SettingShop.class);
+
+            intentSettingShop.putExtra("hostEmail", strEmail);
+
             startActivity(intentSettingShop);
         }
     }

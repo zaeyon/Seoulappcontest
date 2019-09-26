@@ -847,6 +847,7 @@ app.post('/emailCheck', (req, res) => {
   
     var Comment="";
     var CommentUser_Id=""
+    var Distinguish=0;
     var allView="";
   
     console.log("댓글");
@@ -864,13 +865,15 @@ app.post('/emailCheck', (req, res) => {
   
           Comment=results[0].Comment;
           CommentUser_Id = results[0].CommentUser_Id;
-          allView = Comment+"/"+CommentUser_Id;
+          Distinguish = results[0].Distinguish_number;
+          allView = Comment+"/"+CommentUser_Id+"/"+Distinguish;
         }
         else
         {
           Comment=Comment + "|" + results[j].Comment;
           CommentUser_Id = CommentUser_Id + "|" + results[j].CommentUser_Id;
-          allView = Comment+"/"+CommentUser_Id;
+          Distinguish = Distinguish+"|"+results[j].Distinguish_number;
+          allView = Comment+"/"+CommentUser_Id+"/"+Distinguish;
           }
         };
       };
@@ -1135,7 +1138,7 @@ app.post('/emailCheck', (req, res) => {
   
   app.post('/getUserProfile', (req,res) => {
   
-    var Like ="";
+    var Like = 0;
     var UserContent="";
     var UserId ="";
     var UserImage="";
@@ -1173,9 +1176,7 @@ app.post('/emailCheck', (req, res) => {
           UserContent = UserContent+"|"+results[j].User_Content;
           ReviewStoreName = ReviewStoreName+"|"+results[j].Review_StoreName;
           Like = Like+"|"+results[j].Like;
-          Comment=Comment + "|" + results[j].Comment;
-  
-          CommentUser_Id = CommentUser_Id + "|" + results[j].Comment_User_Id;
+      
   
           console.log("CommentUser_id : " + CommentUser_Id + results[0].Comment_User_Id);
   
@@ -1382,12 +1383,14 @@ app.post('/emailCheck', (req, res) => {
   
     req.on('data', (data)=>{
       position = JSON.parse(data);
-      params =[position.like, position.Position]
+      params ={
+        "Like":position.like
+      }
       console.log("param : ", params);
     })
   
     req.on('end',()=>{
-      connection.query("UPDATE review SET Like = ? WHERE Review_Number = ?", params, (err, result)=>{
+      connection.query("UPDATE review SET Like = ?", params, (err, result)=>{
         res.write("하하하하하");
         res.end();
       }) 
@@ -1417,25 +1420,6 @@ app.post('/emailCheck', (req, res) => {
     });
   });
 
-  app.post('/StoreComment', (req,res)=>{ //일단 id 제외한 것을 추가해볼 겁니당.
-
-    var inputCmt;
-    var params;
-  
-    req.on('data', (data)=>{
-      inputCmt = JSON.parse(data); //inputCmt.Comment
-      params =[inputCmt.Comment , inputCmt.nickname, inputCmt.position]
-      console.log("I will insert comment into commenttable!");
-    })
-    req.on('end', ()=>{
-      connection.query("INSERT INTO commenttable(Comment,CommentUser_Id,Distinguish_number) VALUES(?,?,?)",params, (err,result)=>{
-          console.log("성공. check DB");
-          res.write("plz");
-          res.end();
-  
-      });
-    });
-  });
 
   app.post('/setReviewFile', (req,res)=>{ //err 코드는 꼭 쓰자
     var inputinfo;
