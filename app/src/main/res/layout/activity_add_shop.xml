@@ -5,9 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.notifications.MyShopActivity"
-    android:orientation="horizontal"
+    android:orientation="horizontal">
 
-    >
     <LinearLayout
         android:layout_gravity="center"
         android:gravity="center"
@@ -16,9 +15,7 @@
         android:weightSum="10"
         android:orientation="horizontal">
 
-
         <LinearLayout
-
             android:layout_gravity="center"
             android:layout_width="0dp"
             android:layout_weight="9.5"
@@ -34,7 +31,9 @@
                 android:fontFamily="@font/nanumsquare_acr"/>
 
             <FrameLayout
- android:layout_gravity="center"               android:layout_width="wrap_content" android:layout_height="wrap_content">
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/newShopProfileImage"
@@ -51,7 +50,6 @@
                     android:layout_height="45dp"
                     app:srcCompat="@drawable/plus"
                     android:layout_gravity="right|bottom"/>
-
             </FrameLayout>
 
             <LinearLayout
@@ -72,7 +70,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="" />
-
             </LinearLayout>
 
             <LinearLayout
@@ -103,7 +100,6 @@
                             android:id="@+id/newShopSalesItem"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />
-
                     </LinearLayout>
 
                     <LinearLayout
@@ -122,10 +118,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="" />
-
                     </LinearLayout>
-
-
                 </LinearLayout>
             </LinearLayout>
 
@@ -168,8 +161,7 @@
                         android:text="층"
                         android:fontFamily="@font/nanumsquare_acr"
                         android:textSize="15sp"
-                        android:gravity="center"
-                        />
+                        android:gravity="center" />
 
                     <EditText
                         android:id="@+id/newShopLocation"
@@ -186,9 +178,7 @@
                         android:fontFamily="@font/nanumsquare_acr"
                         android:text="구역"
                         android:textSize="15sp"
-                        android:gravity="center"
-                        />
-
+                        android:gravity="center" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -208,9 +198,7 @@
                 <com.example.seoulapp.ClearEditText
                     android:id="@+id/newShopIntro"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    />
-
+                    android:layout_height="wrap_content" />
             </LinearLayout>
 
             <TextView
@@ -219,15 +207,13 @@
                 android:layout_height="wrap_content"
                 android:text="         매장리스트에서 보여지는\n 대표 상품 사진을 3개 등록해주세요. "
                 android:textSize="15sp"
-                android:fontFamily="@font/nanumsquare_acr"
-                />
+                android:fontFamily="@font/nanumsquare_acr" />
 
             <LinearLayout
                 android:gravity="center"
                 android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                >
+                android:layout_height="wrap_content">
 
                 <FrameLayout
                     android:layout_width="wrap_content"
@@ -249,7 +235,6 @@
                         android:layout_height="45dp"
                         app:srcCompat="@drawable/plus"
                         android:layout_gravity="right|bottom"/>
-
                 </FrameLayout>
 
 
@@ -273,7 +258,6 @@
                         android:layout_height="45dp"
                         app:srcCompat="@drawable/plus"
                         android:layout_gravity="right|bottom"/>
-
                 </FrameLayout>
 
 
@@ -297,10 +281,8 @@
                         android:layout_height="45dp"
                         app:srcCompat="@drawable/plus"
                         android:layout_gravity="right|bottom"/>
-
                 </FrameLayout>
             </LinearLayout>
-
 
             <Button
                 android:id="@+id/signUpNextButton"

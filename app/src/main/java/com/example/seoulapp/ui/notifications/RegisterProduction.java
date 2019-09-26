@@ -21,6 +21,8 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.seoulapp.ClearEditText;
 import com.example.seoulapp.R;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -102,6 +104,7 @@ public class RegisterProduction extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
+
                 new JSONTaskInsertProduction().execute("http://172.30.1.10:3000/InsertProductionInfo");
 
             }
@@ -116,6 +119,7 @@ public class RegisterProduction extends AppCompatActivity {
                 intent.setType("image/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
                 startActivityForResult(Intent.createChooser(intent, "이미지를 선택하세요"), 0);
+
             }
         });
     }

@@ -65,6 +65,7 @@ public class ShopDetaildInfo extends AppCompatActivity implements OnClickListene
     ImageView QuestionHagi;
     ImageView canStar;
     ImageView binStar;
+    ImageView shop_profile;
     private int img;
 
     @Override
@@ -73,7 +74,6 @@ public class ShopDetaildInfo extends AppCompatActivity implements OnClickListene
         setContentView(R.layout.activity_shop_detaild_info);
 
         // 와이파이 새로 접속할때마다 변경
-
         new JSONTask2().execute("http://172.30.1.10:3000/shopNumber");
         new JSONTaskProduction().execute("http://172.30.1.10:3000/getShopProduction");
         new JSONTaskQnA().execute("http://172.30.1.10:3000/getQnAInfo");
@@ -87,7 +87,7 @@ public class ShopDetaildInfo extends AppCompatActivity implements OnClickListene
         // 버튼 클릭 이벤트 처리
         Intent intent = getIntent();
 
-        ImageView shop_profile = findViewById(R.id.shop_profile);
+        shop_profile = findViewById(R.id.shop_profile);
         // ImageView shop_rep1 = findViewById(R.id.product_image1);
         // ImageView shop_rep2 = findViewById(R.id.product_image2);
         // ImageView shop_rep3 = findViewById(R.id.product_image3);

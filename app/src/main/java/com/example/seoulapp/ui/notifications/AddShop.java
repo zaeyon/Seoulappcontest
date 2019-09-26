@@ -8,15 +8,11 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
-import android.media.Image;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
@@ -28,13 +24,12 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.amazonaws.auth.CognitoCachingCredentialsProvider;
-import com.amazonaws.mobileconnectors.s3.transferutility.TransferObserver;
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility;
-import com.amazonaws.regions.Region;
-import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3Client;
 import com.example.seoulapp.ClearEditText;
 import com.example.seoulapp.MainActivity;
 import com.example.seoulapp.R;
@@ -241,6 +236,7 @@ public class AddShop extends AppCompatActivity {
 
 
 
+        // 매장 관리 페이지로 이동하게 수정
         signUpNext.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 new JSONTask1().execute("http://172.30.1.10:3000/newShopData1");

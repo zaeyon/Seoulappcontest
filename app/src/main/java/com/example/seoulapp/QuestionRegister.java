@@ -84,7 +84,9 @@ public class QuestionRegister extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
+
                 new JSONTaskInsertQnA().execute("http://172.30.1.10:3000/InsertQnAInfo");
+
             }
         });
     }

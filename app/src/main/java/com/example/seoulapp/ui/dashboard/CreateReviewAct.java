@@ -8,9 +8,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,6 +17,10 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.amazonaws.auth.CognitoCachingCredentialsProvider;
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferObserver;
@@ -172,10 +173,11 @@ public class CreateReviewAct extends AppCompatActivity {
                             ReviewImgStore
                     );
                 }
-                new JSONTaskReviewupload().execute("http://172.30.1.10:3000/setUploadImg");
-                // new JSONTaskDepositReview().execute("http://172.30.1.10:3000/getReviewCount");
-                new JSONTaskReviewReturnagain().execute("http://172.30.1.10:3000/UpdateImage");
-                new JSONTaskStoryStoreSave().execute("http://172.30.1.10:3000./StoreReviewInfo");
+                new JSONTaskReviewupload().execute("http://172.30.1.10/setUploadImg");
+                // new JSONTaskDepositReview().execute("http://172.30.1.10/getReviewCount");
+                new JSONTaskReviewReturnagain().execute("http://172.30.1.10/UpdateImage");
+                new JSONTaskStoryStoreSave().execute("http://172.30.1.10./StoreReviewInfo");
+
                 return true;
             default:
                 return false;

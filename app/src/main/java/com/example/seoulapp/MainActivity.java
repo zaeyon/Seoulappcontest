@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -14,6 +13,8 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import org.json.JSONObject;
 
@@ -317,6 +318,7 @@ public class MainActivity extends AppCompatActivity {
                     autoLogin.commit();
                 }
 
+                Log.d("MainActivity", userEmail.getText().toString());
                 Intent navigationIntent = new Intent(MainActivity.this ,BottomNavigation.class);
                 startActivity(navigationIntent);
             }
