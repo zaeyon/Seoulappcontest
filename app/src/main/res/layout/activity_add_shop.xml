@@ -70,6 +70,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="" />
+
+                <TextView
+                    android:id="@+id/tvExShopName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="-45dp"
+                    android:textSize="30dp" />
             </LinearLayout>
 
             <LinearLayout
@@ -288,7 +295,7 @@
                 android:id="@+id/signUpNextButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="매장 등록"
+                android:text="완료"
                 android:layout_marginTop="15dp"/>
         </LinearLayout>
     </LinearLayout>
