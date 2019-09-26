@@ -21,7 +21,7 @@
         <activity android:name=".ui.notifications.MyItem" />
         <activity android:name=".QnAPage" />
         <activity android:name=".QApage" />
-        <activity android:name=".ui.notifications.SettingShop" />
+        <activity android:name=".ui.notifications.EditShop" />
         <activity android:name=".ui.notifications.AddShop" />
         <activity android:name=".SearchActivity" />
         <activity

@@ -633,7 +633,7 @@ public class NotificationsFragment extends Fragment {
     class goSettingShop implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-            Intent intentSettingShop = new Intent(getActivity(), SettingShop.class);
+            Intent intentSettingShop = new Intent(getActivity(), EditShop.class);
             startActivity(intentSettingShop);
         }
     }

@@ -41,7 +41,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class SettingShop extends AppCompatActivity {
+public class EditShop extends AppCompatActivity {
 
     static String strEmail;
 
