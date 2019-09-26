@@ -62,19 +62,11 @@
                         >
 
                         <ImageView
-                            android:id="@+id/canStar"
+                            android:id="@+id/ivEditShop"
                             android:gravity="end"
                             android:layout_width="45dp"
                             android:layout_height="45dp"
-                            app:srcCompat="@drawable/canstar"/>
-
-                        <ImageView
-                            android:id="@+id/binStar"
-                            android:gravity="end"
-                            android:layout_width="45dp"
-                            android:layout_height="45dp"
-                            app:srcCompat="@drawable/binstar"/>
-
+                            app:srcCompat="@drawable/shop_edit"/>
                     </FrameLayout>
                 </LinearLayout>
 

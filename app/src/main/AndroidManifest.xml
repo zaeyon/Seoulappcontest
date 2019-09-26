@@ -31,6 +31,7 @@
         <activity android:name=".ShopDetaildInfo" />
         <activity android:name=".Signup" />
         <activity android:name=".ui.notifications.NewsActivity" />
+        <activity android:name=".ui.notifications.SettingShop" />
         <activity android:name=".ui.notifications.SettingsActivity" />
         <activity android:name=".ui.notifications.EditProfileActivity" />
         <activity android:name=".ImageActivity" />

@@ -1182,7 +1182,7 @@ app.post('/getUserInfo', (req, res) => {
      req.on('end', () => {
         connection.query("SELECT * FROM user where email = ?", inputData.email, function(error, result) {
              if (error) {
-                 console.log("에러" + error);
+                 console.log("getUserInfo " + error);
              } else if(result[0]){
                console.log("닉네임 : " + result[0].nickname + ", 이미지 : " + result[0].profile_image + ", 매장 여부 : " + result[0].shop_being);
                userProfile = result[0].nickname + "|" + result[0].profile_image + "|" + result[0].shop_being;

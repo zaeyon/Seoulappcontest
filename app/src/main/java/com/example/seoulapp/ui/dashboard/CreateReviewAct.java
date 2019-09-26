@@ -173,10 +173,10 @@ public class CreateReviewAct extends AppCompatActivity {
                             ReviewImgStore
                     );
                 }
-                new JSONTaskReviewupload().execute("http://172.30.1.10/setUploadImg");
-                // new JSONTaskDepositReview().execute("http://172.30.1.10/getReviewCount");
-                new JSONTaskReviewReturnagain().execute("http://172.30.1.10/UpdateImage");
-                new JSONTaskStoryStoreSave().execute("http://172.30.1.10./StoreReviewInfo");
+                new JSONTaskReviewupload().execute("http://172.30.1.28/setUploadImg");
+                // new JSONTaskDepositReview().execute("http://172.30.1.28/getReviewCount");
+                new JSONTaskReviewReturnagain().execute("http://172.30.1.28/UpdateImage");
+                new JSONTaskStoryStoreSave().execute("http://172.30.1.28./StoreReviewInfo");
 
                 return true;
             default:
