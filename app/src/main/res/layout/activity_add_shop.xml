@@ -33,6 +33,9 @@
                 android:text="매장 프로필 사진"
                 android:fontFamily="@font/nanumsquare_acr"/>
 
+            <FrameLayout
+ android:layout_gravity="center"               android:layout_width="wrap_content" android:layout_height="wrap_content">
+
             <ImageView
                 android:id="@+id/newShopProfileImage"
                 android:layout_gravity="center"
@@ -40,7 +43,16 @@
                 android:layout_height="120dp"
                 android:scaleType="fitXY"
                 android:layout_marginTop="5dp"
-                android:src="@drawable/blank_profile" />
+                app:srcCompat="@drawable/blank_profile" />
+
+                <ImageView
+                    android:id="@+id/newShopProfildPlus"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/plus"
+                    android:layout_gravity="right|bottom"/>
+
+            </FrameLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -139,27 +151,27 @@
                         android:id="@+id/newShopBuilding"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_weight="0.6" />
+                        android:layout_weight="0.4" />
 
-                    <com.example.seoulapp.ClearEditText
+                    <EditText
                         android:id="@+id/newShopFloor"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.1"
+                        android:layout_height="36dp"
+                        android:layout_weight="0.2"
                         android:text="" />
 
                     <TextView
                         android:id="@+id/tvFloor"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="0.3"
+                        android:layout_weight="0.25"
                         android:text="층"
                         android:fontFamily="@font/nanumsquare_acr"
                         android:textSize="15sp"
                         android:gravity="center"
                         />
 
-                    <com.example.seoulapp.ClearEditText
+                    <EditText
                         android:id="@+id/newShopLocation"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -217,6 +229,10 @@
                 android:layout_height="wrap_content"
                 >
 
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
 
                 <ImageView
                     android:id="@+id/newShopRep1"
@@ -224,25 +240,65 @@
                     android:layout_width="110dp"
                     android:layout_height="110dp"
                     android:layout_marginRight="5dp"
-                    android:src="@drawable/blank_production"
+                    app:srcCompat="@drawable/blank_production"
                     android:scaleType="fitXY"/>
 
-                <ImageView
-                    android:id="@+id/newShopRep2"
-                    android:gravity="center"
-                    android:layout_width="110dp"
-                    android:layout_height="110dp"
-                    android:src="@drawable/blank_production"
-                    android:scaleType="fitXY"/>
+                    <ImageView
+                        android:id="@+id/newShopRepPlus1"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        app:srcCompat="@drawable/plus"
+                        android:layout_gravity="right|bottom"/>
 
-                <ImageView
-                    android:id="@+id/newShopRep3"
-                    android:gravity="center"
-                    android:layout_width="110dp"
-                    android:layout_height="110dp"
-                    android:layout_marginLeft="5dp"
-                    android:src="@drawable/blank_production"
-                    android:scaleType="fitXY"/>
+                </FrameLayout>
+
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:id="@+id/newShopRep2"
+                        android:gravity="center"
+                        android:layout_width="110dp"
+                        android:layout_height="110dp"
+                        android:layout_marginRight="5dp"
+                        app:srcCompat="@drawable/blank_production"
+                        android:scaleType="fitXY"/>
+
+                    <ImageView
+                        android:id="@+id/newShopRepPlus2"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        app:srcCompat="@drawable/plus"
+                        android:layout_gravity="right|bottom"/>
+
+                </FrameLayout>
+
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:id="@+id/newShopRep3"
+                        android:gravity="center"
+                        android:layout_width="110dp"
+                        android:layout_height="110dp"
+                        android:layout_marginRight="5dp"
+                        app:srcCompat="@drawable/blank_production"
+                        android:scaleType="fitXY"/>
+
+                    <ImageView
+                        android:id="@+id/newShopRepPlus3"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        app:srcCompat="@drawable/plus"
+                        android:layout_gravity="right|bottom"/>
+
+                </FrameLayout>
             </LinearLayout>
 
 

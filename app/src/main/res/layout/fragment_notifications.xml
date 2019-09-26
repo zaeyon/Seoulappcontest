@@ -45,7 +45,7 @@
                     android:scaleType="fitXY"
                     android:textAlignment="center"
                     android:textSize="20sp"
-                    android:src="@drawable/blank_profile"/>
+                    app:srcCompat="@drawable/blank_profile"/>
 
                 <LinearLayout
                     android:layout_marginTop="5dp"
@@ -98,13 +98,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
                         android:padding="0dp"
-                        android:src="@drawable/heart"
-                        android:id="@+id/ivLike" />
+                        app:srcCompat="@drawable/heart"
+                        android:id="@+id/ivMyItem" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="좋아요"
+                        android:text="내 상품"
                         android:textAlignment="center"
                         android:paddingTop="3dp"
                         android:textSize="12dp"/>
@@ -120,7 +120,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
                         android:padding="0dp"
-                        android:src="@drawable/list"
+                        app:srcCompat="@drawable/list"
                         android:id="@+id/ivNews"/>
 
                     <TextView
@@ -148,7 +148,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="30dp"
                             android:padding="0dp"
-                            android:src="@drawable/shopsetting"
+                            app:srcCompat="@drawable/shopsetting"
                             android:id="@+id/ivShopSetting" />
 
                         <TextView
@@ -173,7 +173,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
                         android:padding="0dp"
-                        android:src="@drawable/addshop"
+                        app:srcCompat="@drawable/addshop"
                         android:id="@+id/ivAddShop" />
 
                         <TextView
@@ -200,7 +200,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
                         android:padding="0dp"
-                        android:src="@drawable/settings"
+                        app:srcCompat="@drawable/settings"
                         android:id="@+id/ivSettings"/>
 
                     <TextView
@@ -223,7 +223,7 @@
             <ListView
                 android:id="@+id/listView"
                 android:layout_width="match_parent"
-                android:layout_height="472dp">
+                android:layout_height="440dp">
 
             </ListView>
         </LinearLayout>

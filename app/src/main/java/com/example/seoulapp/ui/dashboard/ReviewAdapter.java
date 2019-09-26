@@ -19,6 +19,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.bumptech.glide.Glide;
 import com.example.seoulapp.R;
 
@@ -39,7 +41,7 @@ import java.util.ArrayList;
 
 public class ReviewAdapter extends BaseAdapter {
 
-    static Activity activity;
+    static AppCompatActivity activity;
     public Object setAdapter;
     String[] User_profile_img;
     String[] User_id;
@@ -58,11 +60,11 @@ public class ReviewAdapter extends BaseAdapter {
 
     }
 
-    public void ReviewsetAct(Activity act) {
+    public void ReviewsetAct(AppCompatActivity act) {
         this.activity = act;
     }
 
-    public Activity ReviewgetAct() {
+    public AppCompatActivity ReviewgetAct() {
         return activity;
     }
 

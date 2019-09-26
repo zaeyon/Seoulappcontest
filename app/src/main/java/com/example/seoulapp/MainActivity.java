@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -32,6 +32,8 @@ import static android.view.View.VISIBLE;
 
 
 public class MainActivity extends AppCompatActivity {
+
+    private BackPressCloseHandler backKeyClickHandler;
 
     Button loginBtn;
     EditText userEmail;
@@ -132,6 +134,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        backKeyClickHandler = new BackPressCloseHandler(this);
+
 
         userEmail = findViewById(R.id.emailLogin);
         userPassword = findViewById(R.id.passwordLogin);
@@ -171,11 +175,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // 와이파이 새로 접속할 때마다 변경
-
-
-
                 new JSONTask().execute("http://172.30.1.10:3000/login");
-
             }
         });
 
@@ -183,6 +183,18 @@ public class MainActivity extends AppCompatActivity {
         userPassword.addTextChangedListener(passwordTextWatcher);
 
     }
+
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        backKeyClickHandler.onBackPressed();
+
+    }
+
+
+
+
 
     public void onClickSignup(View view)
     {

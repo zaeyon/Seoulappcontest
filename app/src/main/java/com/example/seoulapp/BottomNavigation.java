@@ -1,21 +1,27 @@
 package com.example.seoulapp;
 
 import android.os.Bundle;
-import android.support.design.widget.BottomNavigationView;
-import android.support.v7.app.AppCompatActivity;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import androidx.appcompat.app.AppCompatActivity;
 
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+
 public class BottomNavigation extends AppCompatActivity {
+
+  private BackPressCloseHandler backKeyClickHandler;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_bottom_navigation);
     BottomNavigationView navView = findViewById(R.id.nav_view);
+
+    backKeyClickHandler = new BackPressCloseHandler(this);
+
 
     // Passing each menu ID as a set of Ids because each
     // menu should be considered as top level destinations.
@@ -26,5 +32,12 @@ public class BottomNavigation extends AppCompatActivity {
     //NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
     NavigationUI.setupWithNavController(navView, navController);
   }
+
+  @Override
+  public void onBackPressed() {
+    //super.onBackPressed();
+    backKeyClickHandler.onBackPressed();
+  }
+
 
 }

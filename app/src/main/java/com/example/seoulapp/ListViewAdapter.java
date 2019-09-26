@@ -15,8 +15,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 import java.util.ArrayList;
+
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
+import jp.wasabeef.glide.transformations.CropTransformation;
+
+import static com.bumptech.glide.request.RequestOptions.bitmapTransform;
+
 
 public class ListViewAdapter extends BaseAdapter implements Filterable {
 
@@ -102,10 +109,7 @@ public class ListViewAdapter extends BaseAdapter implements Filterable {
         }
 
         ImageView shopProfileImageView = convertView.findViewById(R.id.shop_profileImage);
-        shopProfileImageView.setBackground(new ShapeDrawable(new OvalShape()));
-        if (Build.VERSION.SDK_INT >= 21) {
-            shopProfileImageView.setClipToOutline(true);
-        }
+
         ImageView shopRepImageView1 = convertView.findViewById(R.id.shop_representation1);
         ImageView shopRepImageView2 = convertView.findViewById(R.id.shop_representation2);
         ImageView shopRepImageView3 = convertView.findViewById(R.id.shop_representation3);
@@ -124,7 +128,10 @@ public class ListViewAdapter extends BaseAdapter implements Filterable {
         shopNameView.setText(listViewItem.getShopName());
         shopRocationView.setText(listViewItem.getShopRocation());
 
-        Glide.with(context).load(listViewItem.getProfileImage()).into(shopProfileImageView);
+        Glide.with(context).load(listViewItem.getProfileImage())
+                .apply(RequestOptions.circleCropTransform())
+                .into(shopProfileImageView);
+
         Glide.with(context).load(listViewItem.getShopRepresentation1()).into(shopRepImageView1);
         Glide.with(context).load(listViewItem.getShopRepresentation2()).into(shopRepImageView2);
         Glide.with(context).load(listViewItem.getShopRepresentation3()).into(shopRepImageView3);

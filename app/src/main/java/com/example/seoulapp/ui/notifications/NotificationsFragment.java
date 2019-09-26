@@ -1,6 +1,6 @@
 package com.example.seoulapp.ui.notifications;
 
-import android.arch.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,8 +9,8 @@ import android.graphics.drawable.shapes.OvalShape;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +23,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.seoulapp.MainActivity;
 import com.example.seoulapp.R;
-import com.example.seoulapp.SettingShop;
 
 import org.json.JSONObject;
 
@@ -49,10 +48,11 @@ public class NotificationsFragment extends Fragment {
     TextView tvNickname;
 
     ImageView ivProfile;
-    ImageView ivSettings;
+    ImageView ivMyItem;
     ImageView ivNews;
     ImageView ivShopAdd;
     ImageView ivShopSetting;
+    ImageView ivSettings;
 
     LinearLayout NoShopPage, YesShopPage;
 
@@ -77,6 +77,8 @@ public class NotificationsFragment extends Fragment {
         SharedPreferences auto = this.getActivity().getSharedPreferences(MainActivity.name, Context.MODE_PRIVATE);
         strEmail = auto.getString("inputId", "null");
 
+        Log.d("strEmail : ", strEmail);
+
 
         NoShopPage = v.findViewById(R.id.noShopPage);
         YesShopPage = v.findViewById(R.id.yesShopPage);
@@ -98,7 +100,8 @@ public class NotificationsFragment extends Fragment {
         // String(strNickname, strEmail)에 저장
 
 
-
+        ivMyItem = (ImageView) v.findViewById(R.id.ivMyItem);
+        ivMyItem.setOnClickListener(new goMyItem());
         ivNews = (ImageView) v.findViewById(R.id.ivNews);
         ivNews.setOnClickListener(new goNews());
         ivSettings = (ImageView) v.findViewById(R.id.ivSettings);
@@ -123,7 +126,6 @@ public class NotificationsFragment extends Fragment {
 
         // 와이파이 새로 접속할 때마다 변경
         new JSONTask().execute("http://172.30.1.10:3000/getUserInfo");
-
 
         // listview 클릭 시 각 매장 페이지로 이동(매장 id를 ShopDetaildInfo에 전달)
 
@@ -215,7 +217,23 @@ public class NotificationsFragment extends Fragment {
                 YesShopPage.setVisibility(VISIBLE);
                 NoShopPage.setVisibility(INVISIBLE);
             }
-            }
+        }
+    }
+
+    class goMyItem implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            Intent intentMyItem = new Intent(getActivity(), MyItem.class);
+            startActivity(intentMyItem);
+         }
+    }
+
+    class goNews implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            Intent intentNews = new Intent(getActivity(), NewsActivity.class);
+            startActivity(intentNews);
+        }
     }
 
     class goAddShop implements View.OnClickListener {
@@ -223,7 +241,14 @@ public class NotificationsFragment extends Fragment {
         public void onClick(View v) {
             Intent intentAddShop = new Intent(getActivity(), AddShop.class);
             startActivity(intentAddShop);
+        }
+    }
 
+    class manageShop implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            Intent intentManageShop = new Intent(getActivity(), MyShopManage.class);
+            startActivity(intentManageShop);
         }
     }
 
@@ -232,14 +257,6 @@ public class NotificationsFragment extends Fragment {
         public void onClick(View v) {
             Intent intentSettingShop = new Intent(getActivity(), SettingShop.class);
             startActivity(intentSettingShop);
-        }
-    }
-
-    class goNews implements View.OnClickListener {
-        @Override
-        public void onClick(View v) {
-            Intent intentNews = new Intent(getActivity(), NewsActivity.class);
-            startActivity(intentNews);
         }
     }
 

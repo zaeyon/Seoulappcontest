@@ -1,13 +1,14 @@
 package com.example.seoulapp.ui.dashboard;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.seoulapp.R;
 
-public class CommentMoreAct extends Activity {
+public class CommentMoreAct extends AppCompatActivity {
 
     TextView Commentmore;
 

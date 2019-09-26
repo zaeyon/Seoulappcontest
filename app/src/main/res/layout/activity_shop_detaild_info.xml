@@ -37,7 +37,7 @@
                     android:layout_height="90dp"
                     android:layout_centerInParent="true"
                     android:layout_marginTop="8dp"
-                    android:src="@drawable/profileimage_1" />
+                    app:srcCompat="@drawable/profileimage_1" />
 
             </LinearLayout>
 
@@ -66,14 +66,14 @@
                         android:gravity="end"
                         android:layout_width="45dp"
                         android:layout_height="45dp"
-                        android:src="@drawable/canstar"/>
+                        app:srcCompat="@drawable/canstar"/>
 
                     <ImageView
                         android:id="@+id/binStar"
                         android:gravity="end"
                         android:layout_width="45dp"
                         android:layout_height="45dp"
-                        android:src="@drawable/binstar"/>
+                        app:srcCompat="@drawable/binstar"/>
 
                     </FrameLayout>
                 </LinearLayout>
@@ -202,7 +202,7 @@
                         android:id="@+id/production_btn"
                         android:layout_width="82dp"
                         android:layout_height="28dp"
-                        android:src="@drawable/onqna_btn"
+                        app:srcCompat="@drawable/onqna_btn"
                         android:layout_alignParentBottom="true"
                         android:layout_alignParentRight="true"
                         android:layout_marginRight="7dp"
@@ -220,7 +220,7 @@
                 android:id="@+id/QA_btn"
                 android:layout_width="82dp"
                 android:layout_height="28dp"
-                android:src="@drawable/onproduction_btn"
+                app:srcCompat="@drawable/onproduction_btn"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="7dp"
@@ -232,7 +232,7 @@
                     android:id="@+id/QA_hagi_btn"
                     android:layout_width="82dp"
                     android:layout_height="28dp"
-                    android:src="@drawable/questionhagi"
+                    app:srcCompat="@drawable/questionhagi"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="90dp"

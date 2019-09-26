@@ -1,6 +1,5 @@
 package com.example.seoulapp;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -19,7 +18,10 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 import org.json.JSONObject;
 
@@ -38,7 +40,7 @@ import java.util.ArrayList;
 import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
 
-public class ShopDetaildInfo extends Activity implements OnClickListener {
+public class ShopDetaildInfo extends AppCompatActivity implements OnClickListener {
 
     //레이아웃을 선언하기 위한 레이아웃 변수 선언
     LinearLayout feedPage, QAPage, QnADetailPage;
@@ -121,7 +123,10 @@ public class ShopDetaildInfo extends Activity implements OnClickListener {
 
         //img=Integer.parseInt(intent.getStringExtra("profileImage"));
         //shop_profile.setImageResource(img);
-        Glide.with(getApplicationContext()).load(intent.getStringExtra("profileImage")).into(shop_profile);
+        Glide.with(getApplicationContext())
+                .load(intent.getStringExtra("profileImage"))
+                .apply(RequestOptions.circleCropTransform())
+                .into(shop_profile);
         //Glide.with(getApplicationContext()).load(intent.getStringExtra("representation1")).into(shop_rep1);
         //Glide.with(getApplicationContext()).load(intent.getStringExtra("representation2")).into(shop_rep2);
         //Glide.with(getApplicationContext()).load(intent.getStringExtra("representation3")).into(shop_rep3);

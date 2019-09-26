@@ -1,7 +1,7 @@
 package com.example.seoulapp.ui.notifications;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.widget.ListView;
 
 import com.example.seoulapp.R;

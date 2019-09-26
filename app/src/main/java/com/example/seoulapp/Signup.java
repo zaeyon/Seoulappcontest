@@ -2,16 +2,18 @@ package com.example.seoulapp;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import org.json.JSONObject;
 
@@ -26,7 +28,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class Signup extends Activity {
+public class Signup extends AppCompatActivity {
 
     EditText nicknameData;
     EditText emailData;
@@ -250,9 +252,7 @@ public class Signup extends Activity {
                 if (!hasFocus) {
                     // 와이파이 새로 접속할 때마다 변경
 
-
                     new JSONTask().execute("http://172.30.1.10:3000/nickname");
-
                 }
             }
         });
@@ -264,7 +264,6 @@ public class Signup extends Activity {
                     // 와이파이 새로 접속할 때마다 변경
 
                     new JSONTask().execute("http://172.30.1.10:3000/email");
-
                 }
             }
         });
@@ -328,6 +327,11 @@ public class Signup extends Activity {
         signupBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
+                SharedPreferences.Editor autoLogin = auto.edit();
+                autoLogin.putString("inputId", emailData.getText().toString());
+                autoLogin.commit();
+
                 // 와이파이 새로 접속할 때마다 변경
                 new JSONTask().execute("http://172.30.1.10:3000/post");
 

@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.auth.api.signin.internal.Storage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
@@ -43,14 +45,19 @@ public class SearchListViewAdapter extends BaseAdapter {
         // 화면에 표시될 View(Layout이 inflate된)으로부터 위젯에 대한 참조 획득
         ImageView searchProfileView = (ImageView)convertView.findViewById(R.id.searchedShopProfile);
         TextView searchNameView = (TextView)convertView.findViewById(R.id.searchedShopName);
+        TextView searchBuildingView = (TextView)convertView.findViewById(R.id.searchedShopBuilding);
+        TextView searchTypeView = (TextView)convertView.findViewById(R.id.searchedType);
 
         // Data Set(searchListViewItemList)에서 position에 위치한 데이터 참조 획득
         SearchListViewItem searchListViewItem = SearchListViewItemList.get(position);
 
        // SearchListViewItemList.clear();
 
+
         // 아이템 내 각 위젯에 데이터 반영
         Glide.with(context).load(searchListViewItem.getSearchProfile()).into(searchProfileView);
+        searchBuildingView.setText(searchListViewItem.getSearchBuilding());
+        searchTypeView.setText(searchListViewItem.getSearchType());
         searchNameView.setText(searchListViewItem.getSearchName());
 
 
@@ -70,11 +77,13 @@ public class SearchListViewAdapter extends BaseAdapter {
     }
 
     // 아이템 데이터 추가를 위한 함수
-    public void addItem(String profile, String name) {
+    public void addItem(String profile, String name, String building, String type) {
         SearchListViewItem item = new SearchListViewItem();
 
         item.setSearchProfile(profile);
         item.setSearchName(name);
+        item.setSearchBuilding(building);
+        item.setSearchType(type);
 
         SearchListViewItemList.add(item);
     }
