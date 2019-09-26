@@ -63,6 +63,7 @@ public class ShopDetaildInfo extends Activity implements OnClickListener {
     ImageView QuestionHagi;
     ImageView canStar;
     ImageView binStar;
+    ImageView shop_profile;
     private int img;
 
     @Override
@@ -74,7 +75,7 @@ public class ShopDetaildInfo extends Activity implements OnClickListener {
 
         new JSONTask2().execute("http://172.30.1.28:3000/shopNumber");
         new JSONTaskProduction().execute("http://172.30.1.28:3000/getShopProduction");
-        new JSONTaskQnA().execute("http://172.30.1.10:3000/getQnAInfo");
+        new JSONTaskQnA().execute("http://172.30.1.28:3000/getQnAInfo");
 
 
 
@@ -85,7 +86,7 @@ public class ShopDetaildInfo extends Activity implements OnClickListener {
         // 버튼 클릭 이벤트 처리
         Intent intent = getIntent();
 
-        ImageView shop_profile = findViewById(R.id.shop_profile);
+        shop_profile = findViewById(R.id.shop_profile);
         // ImageView shop_rep1 = findViewById(R.id.product_image1);
         // ImageView shop_rep2 = findViewById(R.id.product_image2);
         // ImageView shop_rep3 = findViewById(R.id.product_image3);
@@ -144,7 +145,7 @@ public class ShopDetaildInfo extends Activity implements OnClickListener {
                 binStar.setVisibility(INVISIBLE);
                 canStar.setVisibility(VISIBLE);
 
-                new JSONTaskFavoriteShop().execute("http://172.30.1.10:3000/insertFavoriteShop");
+                new JSONTaskFavoriteShop().execute("http://172.30.1.28:3000/insertFavoriteShop");
             }
         });
 
@@ -154,7 +155,7 @@ public class ShopDetaildInfo extends Activity implements OnClickListener {
                 binStar.setVisibility(VISIBLE);
                 canStar.setVisibility(INVISIBLE);
 
-                new JSONTaskFavoriteShop().execute("http://172.30.1.10:3000/deleteFavoriteShop");
+                new JSONTaskFavoriteShop().execute("http://172.30.1.28:3000/deleteFavoriteShop");
             }
         });
 

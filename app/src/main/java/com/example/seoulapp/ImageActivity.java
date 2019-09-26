@@ -69,7 +69,7 @@ public class ImageActivity extends Activity {
                 binLike.setVisibility(INVISIBLE);
                 canLike.setVisibility(VISIBLE);
 
-                new JSONTaskFavoriteProduction().execute("http://172.30.1.10:3000/insertFavoriteProduction");
+                new JSONTaskFavoriteProduction().execute("http://172.30.1.28:3000/insertFavoriteProduction");
             }
         });
 
@@ -80,7 +80,7 @@ public class ImageActivity extends Activity {
                 binLike.setVisibility(VISIBLE);
                 canLike.setVisibility(INVISIBLE);
 
-                new JSONTaskFavoriteProduction().execute("http://172.30.1.10:3000/deleteFavoriteProduction");
+                new JSONTaskFavoriteProduction().execute("http://172.30.1.28:3000/deleteFavoriteProduction");
             }
         });
     }

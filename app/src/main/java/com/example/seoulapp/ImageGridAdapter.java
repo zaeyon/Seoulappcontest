@@ -62,5 +62,3 @@ public class ImageGridAdapter extends BaseAdapter {
         return imageView;
         }
  }
-
-
