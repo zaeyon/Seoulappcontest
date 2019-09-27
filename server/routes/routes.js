@@ -633,90 +633,90 @@ app.post('/emailCheck', (req, res) => {
   });
   
   app.post('/getProductionInfo', (req, res) => {
-    var inputData;
-    var productionInfo = "";
-  
-    req.on('data', (data) => {
-      inputData = JSON.parse(data);
-    });
-  
-    req.on('end', () => {
-  
-      connection.query("select productionName from production where productionURL = ?", inputData.productionURL, function(error, results) {
-        
-        if(error)
-        {
-          console.log("error 발생");
-          console.log(error);
-          res.end();
-        }
-        else if(results[0].productionName == null)
-        {
-          console.log("등록된 상품없음");
-          res.end();
-        }
-        else
-        {
-          productionInfo = results[0] .productionName + "|";
-        }
+      var inputData;
+      var productionInfo = "";
+
+      req.on('data', (data) => {
+        inputData = JSON.parse(data);
       });
-  
-        connection.query("select productionSize from production where productionURL = ?",inputData.productionURL, function(error, results) {
+
+      req.on('end', () => {
+
+        connection.query("select productionName from production where productionURL = ?", inputData.productionURL, function(error, results) {
+
           if(error)
           {
             console.log("error 발생");
             console.log(error);
             res.end();
           }
-          else if(results[0].productionSize == null)
+          else if(results[0].productionName == null)
           {
             console.log("등록된 상품없음");
             res.end();
           }
-          else{
-            productionInfo =productionInfo + results[0].productionSize + "|";
+          else
+          {
+            productionInfo = results[0] .productionName + "|";
           }
         });
-  
+
+          connection.query("select productionSize from production where productionURL = ?",inputData.productionURL, function(error, results) {
+            if(error)
+            {
+              console.log("error 발생");
+              console.log(error);
+              res.end();
+            }
+            else if(results[0].productionSize == null)
+            {
+              console.log("등록된 상품없음");
+              res.end();
+            }
+            else{
+              productionInfo =productionInfo + results[0].productionSize + "|";
+            }
+        });
+
         connection.query("select productionPrice from production where productionURL = ?",inputData.productionURL, function(error, results) {
-          if(error)
-          {
-            console.log("error 발생");
-            console.log(error);
-            res.end();
-          }
-          else if(results[0].productionPrice == null)
-          {
-            console.log("등록된 상품없음");
-            res.end();
-          }
-          else{
-            productionInfo = productionInfo + results[0].productionPrice + "|";
-          }
+            if(error)
+            {
+              console.log("error 발생");
+              console.log(error);
+              res.end();
+            }
+            else if(results[0].productionPrice == null)
+            {
+              console.log("등록된 상품없음");
+              res.end();
+            }
+            else{
+              productionInfo = productionInfo + results[0].productionPrice + "|";
+            }
         });
-  
+
         connection.query("select productionIntro from production where productionURL = ?", inputData.productionURL, function(error, results) {
-          if(error)
-          {
-            console.log("error 발생");
-            console.log(error);
+            if(error)
+            {
+              console.log("error 발생");
+              console.log(error);
+              res.end();
+            }
+            else if(results[0].productionIntro == null)
+            {
+              console.log("등록된 상품없음");
+              res.end();
+            }
+            else
+            {
+              productionInfo = productionInfo + results[0].productionIntro;
+            }
+
+            console.log(productionInfo);
+            res.write(String(productionInfo));
             res.end();
-          }
-          else if(results[0].productionIntro == null)
-          {
-            console.log("등록된 상품없음");
-            res.end();
-          }
-          else 
-          {
-            productionInfo = productionInfo + results[0].productionIntro;
-          }
-  
-          console.log(productionInfo);
-          res.write(String(productionInfo));
-          res.end();
-      });
-  });
+        });
+    });
   });
   
   app.post('/aa', (req,res) => {
@@ -942,7 +942,7 @@ app.post('/getBMName', (req, res) => {
 
             res.write(String(allData));
             res.end();
-            }else if(results.length == 0)
+            }else if(result.length == 0)
             {
               res.write("noFavoriteShop");
               res.end();
@@ -1098,11 +1098,11 @@ app.post('/newShopData1', (req, res) => {
 
     req.on('data', (data) => {
         inputData = JSON.parse(data);
-        params = [inputData.email, inputData.name, inputData.building, inputData.floor, inputData.location, inputData.style, inputData.category, inputData.introduction, inputData.profileImg, inputData.repImg1, inputData.repImg2, inputData.repImg3];
+        params = [inputData.email, inputData.name, inputData.building, inputData.floor, inputData.location, inputData.style, inputData.category, inputData.introduction, inputData.profileImg, inputData.repImg1, inputData.repImg2, inputData.repImg3, inputData.profileImageUrl, inputData.repImageUrl1, inputData.repImg2, inputData.repImg3];
     });
 
     req.on('end', () => {
-        connection.query("INSERT INTO shop (userEmail, shopName, shopBuilding, shopFloor, shopRocation, shopStyle, shopCategory, shopIntro, shopProfileImage, shopRepresentation1, shopRepresentation2, shopRepresentation3) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", params, function(error, result) {
+        connection.query("INSERT INTO shop (userEmail, shopName, shopBuilding, shopFloor, shopRocation, shopStyle, shopCategory, shopIntro, shopProfileImage, shopRepresentation1, shopRepresentation2, shopRepresentation3, shopProfileImageUrl, shopRep1ImageUrl, shopRep2ImageUrl, shopRep3ImageUrl) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", params, function(error, result) {
             if (error) {
                 console.log("newShopData1 " + error);
             } else {
@@ -1131,11 +1131,11 @@ app.post('/getExistingData', (req, res) => {
     });
 
     req.on('end', () => {
-        connection.query("SELECT shopName, shopProfileImage, shopBuilding, shopFloor, shopRocation, shopStyle, shopCategory, shopIntro, shopRepresentation1, shopRepresentation2, shopRepresentation3 FROM shop WHERE userEmail = ?", inputData.email, function(error, result) {
+        connection.query("SELECT * FROM shop WHERE userEmail = ?", inputData.email, function(error, result) {
             if (error) {
                 console.log("getExistingData " + error);
             } else {
-                existingData = result[0].shopName + "|" + result[0].shopProfileImage + "|" + result[0].shopBuilding + "|" + result[0].shopFloor + "|" + result[0].shopRocation + "|" + result[0].shopStyle + "|" + result[0].shopCategory + "|" + result[0].shopIntro + "|" + result[0].shopRepresentation1 + "|" + result[0].shpRepresentation2 + "|" + result[0].shpRepresentation3;
+                existingData = result[0].shopName + "|" + result[0].shopProfileImageUrl + "|" + result[0].shopBuilding + "|" + result[0].shopFloor + "|" + result[0].shopRocation + "|" + result[0].shopStyle + "|" + result[0].shopCategory + "|" + result[0].shopIntro + "|" + result[0].shopRep1ImageUrl + "|" + result[0].shopRep2ImageUrl + "|" + result[0].shopRep3ImageUrl;
                 console.log("기존 매장 정보 불러오기 성공");
             }
 
@@ -1152,16 +1152,17 @@ app.post('/editShop', (req, res) => {
 
     req.on('data', (data) => {
         inputData = JSON.parse(data);
-        params = [inputData.name, inputData.building, inputData.floor, inputData.location, inputData.style, inputData.category, inputData.introduction, inputData.profileImg, inputData.repImg1, inputData.repImg2, inputData.repImg3, inputData.email];
+        params = [inputData.name, inputData.building, inputData.floor, inputData.location, inputData.style, inputData.category, inputData.introduction, inputData.profileImg, inputData.repImg1, inputData.repImg2, inputData.repImg3, inputData.email, inputData.profileURL, inputData.repURL1, inputData.repURL2, inputData.repURL3];
     });
 
     req.on('end', () => {
-        connection.query("UPDATE shop SET shopName = ?, shopBuilding = ?, shopFloor = ?, shopRocation = ?, shopStyle = ?, shopCategory = ?, shopIntro = ?, shopProfileImage = ?, shopRepresentation1 = ?, shopRepresentation2 = ?, shopRepresentation3 = ? WHERE userEmail = ?", params, function(error, result) {
+        connection.query("UPDATE shop SET shopName = ?, shopBuilding = ?, shopFloor = ?, shopRocation = ?, shopStyle = ?, shopCategory = ?, shopIntro = ?, shopProfileImage = ?, shopRepresentation1 = ?, shopRepresentation2 = ?, shopRepresentation3 = ?, shopProfileImageUrl = ?, shopRep1ImageUrl = ?, shopRep2ImageUrl = ?, shopRep3ImageUrl = ? WHERE userEmail = ?", params, function(error, result) {
             if (error) {
                 console.log("editShop " + error);
             } else {
                 console.log("매장 정보\n이메일 : " + inputData.email + "\n매장 이름 : " + inputData.name + "\n" + inputData.building + " " + inputData.floor + "층 " + inputData.location + "\n" + inputData.style + " " + inputData.category + "\n" + inputData.introduction);
                 console.log("매장 프로필 이미지 : " + inputData.profileImg + ", 이미지1 : " + inputData.repImg1 + ", 이미지2 : " + inputData.repImg2 + ", 이미지3 : " + inputData.repImg3);
+                console.log("프로필 이미지 URL :" + inputData.profileURL);
             }
         })
 
@@ -1185,7 +1186,7 @@ app.post('/getUserInfo', (req, res) => {
                  console.log("getUserInfo " + error);
              } else if(result[0]){
                console.log("닉네임 : " + result[0].nickname + ", 이미지 : " + result[0].profile_image + ", 매장 여부 : " + result[0].shop_being);
-               userProfile = result[0].nickname + "|" + result[0].profile_image + "|" + result[0].shop_being;
+               userProfile = result[0].nickname + "|" + result[0].profile_image + "|" + result[0].shop_being + "|" + result[0].profile_image_url;
              }
 
              console.log("userProfile : " + userProfile);
@@ -1212,7 +1213,7 @@ app.post('/myProfile', (req, res) => {
                 console.log("현재 닉네임 불러오기 에러" + error);
             } else if (result[0]) {
                 console.log("기존 프로필\n닉네임 : " + result[0].nickname + ", 이미지 : " + result[0].profile_image);
-                userData = result[0].ID + "|" + result[0].nickname + "|" + result[0].profile_image;
+                userData = result[0].ID + "|" + result[0].nickname + "|" + result[0].profile_image + "|" + result[0].profile_image_url;
             }
             console.log("userData : " + userData);
             res.write(String(userData));
@@ -1229,13 +1230,13 @@ app.post('/setMyProfile', (req, res) => {
 
     req.on('data', (data) => {
         inputData = JSON.parse(data);
-        params1 = [inputData.fileName, inputData.email];
+        params1 = [inputData.fileUrl, inputData.email];
         params2 = [inputData.newNickname, inputData.email];
         console.log("request from myProfile");
     });
 
     req.on('end', () => {
-        connection.query("UPDATE user SET profile_image = ? WHERE email = ?", params1, function(error, result) {
+        connection.query("UPDATE user SET profile_image_url = ? WHERE email = ?", params1, function(error, result) {
             if (error) {
                 console.log("파일 이름 저장 에러");
             } else {

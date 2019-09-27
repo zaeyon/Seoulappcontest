@@ -49,8 +49,8 @@ public class MyItem extends AppCompatActivity {
         SharedPreferences auto = getApplicationContext().getSharedPreferences(MainActivity.name, Context.MODE_PRIVATE);
         strEmail = auto.getString("inputId", "null");
 
-        new TaskGetMyItemNum().execute("http://172.30.1.28:3000/getMyItemNum");
-        new TaskGetMyItem().execute("http://172.30.1.28:3000/getMyItem");
+        new TaskGetMyItemNum().execute("http://192.168.43.102:3000/getMyItemNum");
+        new TaskGetMyItem().execute("http://192.168.43.102:3000/getMyItem");
         layoutMyItem = findViewById(R.id.layoutMyItem);
     }
 

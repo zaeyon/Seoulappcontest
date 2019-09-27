@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -71,6 +72,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
   private Uri filePath;
   String fileName;
+  String profileUrl;
   String[] userInfo;
   File f;
 
@@ -88,7 +90,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
 
     // 와이파이 새로 접속할 때마다 변경
-    new JSONTask1().execute("http://172.30.1.28:3000/myProfile");
+    new JSONTask1().execute("http://192.168.43.102:3000/myProfile");
 
     ivMyProfile = (ImageView)findViewById(R.id.ivMyProfile);
     bMyProfileComplete = (Button)findViewById(R.id.bMyProfileComplete);
@@ -135,9 +137,10 @@ public class EditProfileActivity extends AppCompatActivity {
 
     bMyProfileComplete.setOnClickListener(new View.OnClickListener() {
       public void onClick(View v) {
+        uploadFile();
 
         // 와이파이 새로 접속할 때마다 변경
-        new JSONTask2().execute("http://172.30.1.28:3000/setMyProfile");
+        new JSONTask2().execute("http://192.168.43.102:3000/setMyProfile");
         Log.d("EditProfileActivity", "JSONTask2 실행");
 
         Intent iSettings = new Intent(EditProfileActivity.this, SettingsActivity.class);
@@ -161,13 +164,9 @@ public class EditProfileActivity extends AppCompatActivity {
       }
     });
 
-    bMyProfileComplete.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View view){
-        // 업로드
-        uploadFile();
-      }
-    });
+    DisplayMetrics displaymetrics;
+    displaymetrics = new DisplayMetrics();
+    getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
   }
 
   @Override
@@ -203,7 +202,7 @@ public class EditProfileActivity extends AppCompatActivity {
       Date now = new Date();
       String filename = formatter.format(now) + ".png";
       //storage 주소와 폴더 파일명을 지정해 준다.
-      StorageReference storageRef = storage.getReferenceFromUrl("gs://dong-dong-c7d7e.appspot.com").child("images/" + filename);
+      final StorageReference storageRef = storage.getReferenceFromUrl("gs://dong-dong-c7d7e.appspot.com").child("images/" + filename);
       //올라가거라...
       storageRef.putFile(filePath)
               //성공시
@@ -213,7 +212,14 @@ public class EditProfileActivity extends AppCompatActivity {
                   progressDialog.dismiss(); //업로드 진행 Dialog 상자 닫기
                   Toast.makeText(getApplicationContext(), "업로드 완료!", Toast.LENGTH_SHORT).show();
 
-                  onBackPressed();
+                  storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                      Uri downloadUrl = uri;
+                      profileUrl = downloadUrl.toString();
+                      Log.d("repfileUrl1 : ", profileUrl);
+                    }
+                  });
                 }
               })
               //실패시
@@ -260,14 +266,14 @@ public class EditProfileActivity extends AppCompatActivity {
         bMyProfileComplete.setEnabled(false);
       }
 
-      new JSONTask3().execute("http://172.30.1.28:3000/nickname");
+      new JSONTask3().execute("http://192.168.43.102:3000/nickname");
     }
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
     }
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-      new JSONTask3().execute("http://172.30.1.28:3000/nickname");
+      new JSONTask3().execute("http://192.168.43.102:3000/nickname");
     }
   };
 
@@ -344,8 +350,7 @@ public class EditProfileActivity extends AppCompatActivity {
       fileName = userInfo[2];
 
       cetNickname.setText(userInfo[1]);
-      String userProfileURL = "https://s3.ap-northeast-2.amazonaws.com/com.example.seoulapp/userProfileImage/" + fileName;
-      Glide.with(EditProfileActivity.this).load(userProfileURL).into(ivMyProfile);
+      Glide.with(EditProfileActivity.this).load(userInfo[3]).into(ivMyProfile);
     }
   }
 
@@ -356,7 +361,7 @@ public class EditProfileActivity extends AppCompatActivity {
       try {
         JSONObject jsonObject = new JSONObject();
         jsonObject.accumulate("email", strEmail);
-        jsonObject.accumulate("fileName", fileName);
+        jsonObject.accumulate("fileUrl", profileUrl);
         jsonObject.accumulate("newNickname", cetNickname.getText());
 
         HttpURLConnection con = null;

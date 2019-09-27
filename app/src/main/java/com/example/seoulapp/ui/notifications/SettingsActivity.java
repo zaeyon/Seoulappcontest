@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,7 +18,7 @@ import com.example.seoulapp.R;
 public class SettingsActivity extends AppCompatActivity {
 
   TextView tvEditProfile;
-  ImageView ivRegProduction;
+  TextView tvMyReview;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +27,8 @@ public class SettingsActivity extends AppCompatActivity {
 
     tvEditProfile = (TextView)findViewById(R.id.tvEditProfile);
     tvEditProfile.setOnClickListener(new goEditProfile());
+    tvMyReview = findViewById(R.id.tvMyReview);
+    tvMyReview.setOnClickListener(new goMyReview());
   }
 
   class goEditProfile implements View.OnClickListener {
@@ -35,6 +36,14 @@ public class SettingsActivity extends AppCompatActivity {
     public void onClick(View v) {
       Intent intentEditProfile = new Intent(SettingsActivity.this, EditProfileActivity.class);
       startActivity(intentEditProfile);
+    }
+  }
+
+  class goMyReview implements View.OnClickListener {
+    @Override
+    public void onClick(View v) {
+      Intent intentMyReview = new Intent(SettingsActivity.this, MyReviewActivity.class);
+      startActivity(intentMyReview);
     }
   }
 
