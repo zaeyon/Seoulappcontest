@@ -1,15 +1,250 @@
 package com.example.seoulapp.ui.dashboard;
 
+import android.content.Intent;
+import android.os.AsyncTask;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.seoulapp.R;
 
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+
 public class Comment extends AppCompatActivity {
+
+    String[] array_commentInfo;
+    String[] comment_arr;
+    String[] commentUser_Id;
+    String[] PageNumber;
+
+    TextView input_comment;
+    TextView comment_get;
+    TextView commentId_get;
+    TextView story;
+    ListView commentlayout;
+
+    int positionget;
+    LinearLayout commentLinearLay;
+    ArrayList<CommentItem> cmt_list = new ArrayList<CommentItem>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_comment);
+        setContentView(R.layout.activity_comment); //
+
+        story = findViewById(R.id.Comment_ReviewStory);
+        comment_get = findViewById(R.id.comment_content);
+        commentId_get = findViewById(R.id.comment_id);
+        commentlayout = findViewById(R.id.comment_layout);
+        commentLinearLay = findViewById(R.id.UserCommentAndId);
+
+        new JSONTaskCommentInfo().execute("http://192.168.43.72:3000/getCommentInfo");
+
+        Intent intent = getIntent();
+        story.setText(intent.getStringExtra("ReviewStory"));
+
+
+
+        // positionget = (int) new CommentAdapter().getItemId();
+        /*delete_cmt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new JSONTaskDeleteCmt().execute("http://192.168.43.72:3000/DeleteCmt");
+            }
+        });*/
+
+        //CommentAdapter adapter = new CommentAdapter();
+        //여기서 어떻게 서버에 get(position)을 넣을 수 있는 지를 생각해보자;;
+        //setAdapter(adapter); //댓글 펼치기
+
+    }
+
+    class JSONTaskCommentInfo extends AsyncTask<String, String, String> {
+        //저장하는 거
+        @Override
+        protected String doInBackground(String... urls) { //끌어오는 거
+            try {
+                //JSONObject를 만들고 key value 형식으로 값을 저장해준다.
+                JSONObject jsonObject = new JSONObject();
+                HttpURLConnection con = null;
+                BufferedReader reader = null;
+
+                try {
+                    //URL url = new URL("http://192.168.25.16:3000/users%22);
+                    URL url = new URL(urls[0]);
+                    //연결을 함
+                    con = (HttpURLConnection) url.openConnection();
+
+                    con.setRequestMethod("POST");//POST방식으로 보냄
+                    con.setRequestProperty("Cache-Control", "no-cache");//캐시 설정
+                    con.setRequestProperty("Content-Type", "application/json");//application JSON 형식으로 전송
+
+
+                    con.setRequestProperty("Accept", "text/html");//서버에 response 데이터를 html로 받음
+                    con.setDoOutput(true);//Outstream으로 post 데이터를 넘겨주겠다는 의미
+                    con.setDoInput(true);//Inputstream으로 서버로부터 응답을 받겠다는 의미
+                    con.connect();
+//서버로 보내기위해서 스트림 만듬
+                    OutputStream outStream = con.getOutputStream();
+                    //버퍼를 생성하고 넣음
+                    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outStream));
+                    writer.write(jsonObject.toString());
+                    writer.flush();
+                    writer.close();//버퍼를 받아줌
+
+                    //서버로 부터 데이터를 받음
+                    InputStream stream = con.getInputStream();
+
+                    reader = new BufferedReader(new InputStreamReader(stream));
+
+                    StringBuffer buffer = new StringBuffer();
+
+                    String line = "";
+                    while ((line = reader.readLine()) != null) {
+                        buffer.append(line);
+                    }
+
+                    return buffer.toString();//서버로 부터 받은 값을 리턴해줌 아마 OK!!가 들어올것임
+
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+                    if (con != null) {
+                        con.disconnect();
+                    }
+                    try {
+                        if (reader != null) {
+                            reader.close();//버퍼를 닫아줌
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+
+        @Override
+        protected void onPostExecute(String result) { //데이터 불러오기
+            super.onPostExecute(result); //undefined라고 떠
+            CommentAdapter adapter = new CommentAdapter();
+
+            array_commentInfo = result.split("\\/");
+
+            Log.e("숫자 알아보기 ", String.valueOf(array_commentInfo.length));
+            comment_arr = array_commentInfo[0].split("\\|");
+            commentUser_Id = array_commentInfo[1].split("\\|");
+            PageNumber = array_commentInfo[2].split("\\|"); //getposition의 값이 남아 있음.
+
+
+            for (int i = 0; i <comment_arr.length; i++) { //처음엔 2니까..
+                String _comment = comment_arr[i];
+                String commentId = commentUser_Id[i];
+                String pageNum = PageNumber[i];
+
+                int Page_num = Integer.parseInt(pageNum);
+                adapter.addItem(_comment, commentId, Page_num);
+                commentlayout.setAdapter(adapter); //
+            }
+        }
     }
 }
+
+    /*class JSONTaskDeleteCmt extends AsyncTask<String, String, String> {
+        @Override
+        protected String doInBackground(String... urls) {
+            try {
+                //JSONObject를 만들고 key value 형식으로 값을 저장해준다.
+                JSONObject jsonObject = new JSONObject();
+                HttpURLConnection con = null;
+                BufferedReader reader = null;
+
+                try {
+                    //URL url = new URL("http://192.168.25.16:3000/users%22);
+                    URL url = new URL(urls[0]);
+                    //연결을 함
+                    con = (HttpURLConnection) url.openConnection();
+
+                    con.setRequestMethod("POST");//POST방식으로 보냄
+                    con.setRequestProperty("Cache-Control", "no-cache");//캐시 설정
+                    con.setRequestProperty("Content-Type", "application/json");//application JSON 형식으로 전송
+
+
+                    con.setRequestProperty("Accept", "text/html");//서버에 response 데이터를 html로 받음
+                    con.setDoOutput(true);//Outstream으로 post 데이터를 넘겨주겠다는 의미
+                    con.setDoInput(true);//Inputstream으로 서버로부터 응답을 받겠다는 의미
+                    con.connect();
+//서버로 보내기위해서 스트림 만듬
+                    OutputStream outStream = con.getOutputStream();
+                    //버퍼를 생성하고 넣음
+                    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outStream));
+                    writer.write(jsonObject.toString());
+                    writer.flush();
+                    writer.close();//버퍼를 받아줌
+
+                    //서버로 부터 데이터를 받음
+                    InputStream stream = con.getInputStream();
+
+                    reader = new BufferedReader(new InputStreamReader(stream));
+
+                    StringBuffer buffer = new StringBuffer();
+
+                    String line = "";
+                    while ((line = reader.readLine()) != null) {
+                        buffer.append(line);
+                    }
+
+                    return buffer.toString();//서버로 부터 받은 값을 리턴해줌 아마 OK!!가 들어올것임
+
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+                    if (con != null) {
+                        con.disconnect();
+                    }
+                    try {
+                        if (reader != null) {
+                            reader.close();//버퍼를 닫아줌
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String result) { //데이터 불러오기
+            super.onPostExecute(result); //undefined라고 떠
+        }
+    }*/
+
+

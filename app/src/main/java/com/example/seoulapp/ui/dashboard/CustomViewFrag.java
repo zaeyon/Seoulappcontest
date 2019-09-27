@@ -2,15 +2,16 @@ package com.example.seoulapp.ui.dashboard;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.ListFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.ListFragment;
 
 import com.example.seoulapp.R;
 
@@ -26,7 +27,6 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
 
 public class CustomViewFrag extends ListFragment {
 
@@ -36,21 +36,18 @@ public class CustomViewFrag extends ListFragment {
     ImageView onclick_heart;
     ImageView profile_img;
     TextView Commentmore;
-    static int count; //즐찾도 할까?
 
     ReviewAdapter adapter;
 
-    String[] _Number;
     String[] User_Image;
     String[] User_Id;
     String[] User_Content;
     String[] Review_StoreName;
-    String[] like;
-    String[] Comment;
-    String[] CommentUser_id;
+    String[] Review_Number;
+    String[] Like;
     String[] allView;
 
-    Fragment CommentFrag;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -64,8 +61,10 @@ public class CustomViewFrag extends ListFragment {
         profile_img = getItemId.findViewById(R.id.User_profilePicture);
         Commentmore = getItemId.findViewById(R.id.watching_comment);
 
+        ReviewAdapter adapter = new ReviewAdapter();
+        setListAdapter(adapter);
 
-        new JSONTaskUserProfile().execute("http://172.30.1.28:3000/getUserProfile");
+        new JSONTaskUserProfile().execute("http://192.168.43.72:3000/getUserProfile");
        /* dashboardViewModel =
                 ViewModelProviders.of(this).get(DashboardViewModel.class);*/
 
@@ -77,11 +76,7 @@ public class CustomViewFrag extends ListFragment {
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
-
-    public void addItem(String Img, String Id, String Content, String ShopName, int Like) {
-        adapter.addItem(Img, Id, Content, ShopName, Like);
-    }
-
+    //리뷰 불러오기
     public class JSONTaskUserProfile extends AsyncTask<String, String, String> {
 
         @Override
@@ -156,41 +151,41 @@ public class CustomViewFrag extends ListFragment {
         protected void onPostExecute(String result) { //result 값은 2임.
             super.onPostExecute(result); //undefined라고 떠
 
-            allView = result.split("\\/"); //result = allView
-
-            /*for(int i = 0; i < allView.length; i++)
-            {
-                Log.d("allView", allView[i]);
-            }*/
-
-            like = allView[0].split("\\|"); //유효 |
-            User_Image = allView[1].split("\\|");
-            User_Id = allView[2].split("\\|");
-            User_Content = allView[3].split("\\|");
-            Review_StoreName = allView[4].split("\\|");
-            Comment= allView[5].split("\\|");
-            CommentUser_id = allView[6].split("\\|");
-
-
+            Log.d("CustomView", "UserProfile 성공");
             ReviewAdapter adapter = new ReviewAdapter();
-            ArrayList<ReviewItem> list = new ArrayList<>();
             setListAdapter(adapter);
 
-            for (int i = 0; i <2; i++) { //개수를 어케 세죠?
+            allView = result.split("\\/"); //result = allView
 
-                String Like = like[i];
-                String UserImg = "https://s3.ap-northeast-2.amazonaws.com/com.example.seoulapp/" + User_Image[i];
-                String UserId = User_Id[i];
-                String UserContent = User_Content[i];
-                String StoreName = Review_StoreName[i];
-                String _Comment = Comment[i];
-                String CommentUserId = CommentUser_id[i];
+            // Review_Number = allView[0].split("\\|");
+            User_Image = allView[0].split("\\|"); //유효 |
+            User_Id = allView[1].split("\\|");
+            User_Content = allView[2].split("\\|");
+            Review_StoreName= allView[3].split("\\|");
+            Like = allView[4].split("\\|");
 
-                int like = Integer.parseInt(Like);
+            //하나,둘 이렇게 되어있을 거거든요.
+
+            for (int i = 0; i <User_Id.length; i++) {
+
+                int a= User_Id.length-1;
+                //String _number = Review_Number[a-i];
+                String UserImg = User_Image[a-i];
+                String UserId = User_Id[a-i];
+                String UserContent = User_Content[a-i];
+                String StoreName = Review_StoreName[a-i];
+                String _Like = Like[a-i];
+
+                int like = Integer.parseInt(_Like);
                 adapter.addItem(UserImg, UserId, UserContent, StoreName, like);
             }
             //comment_Id랑 comment를 commentAct로 넘겨야합니당..
         }
 
+    }
+    public void onResult(int requestCode){
+        if(requestCode == 1 ) {
+            new JSONTaskUserProfile().execute("http://192.168.43.72:3000/getUserProfile");
+        }
     }
 }
