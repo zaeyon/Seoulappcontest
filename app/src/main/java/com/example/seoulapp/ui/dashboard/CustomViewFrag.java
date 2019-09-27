@@ -176,6 +176,8 @@ public class CustomViewFrag extends ListFragment {
                 String StoreName = Review_StoreName[a-i];
                 String _Like = Like[a-i];
 
+                Log.d("CustomViewFrag", "_Like = " + _Like);
+
                 int like = Integer.parseInt(_Like);
                 adapter.addItem(UserImg, UserId, UserContent, StoreName, like);
             }

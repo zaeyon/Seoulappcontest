@@ -788,16 +788,16 @@ app.post('/emailCheck', (req, res) => {
   */
   
   app.post('/getUserProfile', (req,res) => {
-  
-    var Like ="";
+
+
     var UserContent="";
     var UserId ="";
     var UserImage="";
     var ReviewStoreName="";
-    var Comment="";
-    var CommentUser_Id=""
+    var Email="";
+    var Like="";
     var allView="";
-  
+
     console.log("프로필 사진 얻기");
     connection.query("SELECT * FROM review", function(error, results) { //all pulled.
       if(error)
@@ -809,79 +809,37 @@ app.post('/emailCheck', (req, res) => {
       {
         if(j == 0)
         {
-  UserImage = results[0].User_Image;
+
+          UserImage = results[0].User_Image;
           UserId = results[0].User_Id;
           UserContent = results[0].User_Content;
           ReviewStoreName = results[0].Review_StoreName;
+  Email = results[0].Email;
           Like = results[0].Like;
-          Comment=results[0].Comment;
-          CommentUser_Id = results[0].Comment_User_Id;
-          allView =Like + "/"+ UserImage + "/" + UserId + "/" + UserContent+ "/"+ReviewStoreName+"/"+Comment+"/"+CommentUser_Id;
+          allView =  UserImage + "/" + UserId + "/" + UserContent+ "/"+ReviewStoreName+"/"+Like;
         }
         else
         {
+
+
           UserImage = UserImage+"|"+results[j].User_Image;
           UserId = UserId+"|"+results[j].User_Id;
           UserContent = UserContent+"|"+results[j].User_Content;
           ReviewStoreName = ReviewStoreName+"|"+results[j].Review_StoreName;
-          Like = Like+"|"+results[j].Like;
-          Comment=Comment + "|" + results[j].Comment;
-  
-          CommentUser_Id = CommentUser_Id + "|" + results[j].Comment_User_Id;
-  
-          console.log("CommentUser_id : " + CommentUser_Id + results[0].Comment_User_Id);
-  
-          allView = Like + "/" + UserImage + "/" + UserId + "/" + UserContent + "/" +ReviewStoreName+ "/"+Comment+"/"+CommentUser_Id;
+          Email = Email+"|"+results[j].Email;
+          Like = Like + "|"+results[j].Like;
+
+
+
+          allView =UserImage + "/" + UserId + "/" + UserContent + "/" +ReviewStoreName+"/"+Like;
           }
         };
       };
-  
       console.log("allView : " + allView);
-  
+
       res.write(allView); //그냥 모든 걸 더해서 하나로 보낸 후에 나누면 안 됨?
       res.end();
     });
-  });
-  
-  app.post('/getCommentInfo',(req,res)=>{
-  
-    var Comment="";
-    var CommentUser_Id=""
-    var Distinguish=0;
-    var allView="";
-  
-    console.log("댓글");
-    connection.query("SELECT * FROM commenttable", function(error, results) { //all pulled.
-      console.log(results);
-      if(error)
-      {
-        console.log("에러");
-      }
-      else{
-      for(var j = 0; j < results.length; j++)
-      {
-        if(j == 0)
-        {
-  
-          Comment=results[0].Comment;
-          CommentUser_Id = results[0].CommentUser_Id;
-          Distinguish = results[0].Distinguish_number;
-          allView = Comment+"/"+CommentUser_Id+"/"+Distinguish;
-        }
-        else
-        {
-          Comment=Comment + "|" + results[j].Comment;
-          CommentUser_Id = CommentUser_Id + "|" + results[j].CommentUser_Id;
-          Distinguish = Distinguish+"|"+results[j].Distinguish_number;
-          allView = Comment+"/"+CommentUser_Id+"/"+Distinguish;
-          }
-        };
-      };
-      console.log(allView);
-      console.log("데이터 잘 담음 지금 보내려고 하는 중...");
-      res.write(allView); 
-      res.end();
-  });
   });
   
 var BMNum;
@@ -1365,16 +1323,16 @@ app.post('/setMyProfile', (req, res) => {
   });
   
   app.post('/getUserProfile', (req,res) => {
-  
-    var Like = 0;
+
+
     var UserContent="";
     var UserId ="";
     var UserImage="";
     var ReviewStoreName="";
-    var Comment="";
-    var CommentUser_Id=""
+    var Email="";
+    var Like="";
     var allView="";
-  
+
     console.log("프로필 사진 얻기");
     connection.query("SELECT * FROM review", function(error, results) { //all pulled.
       if(error)
@@ -1386,34 +1344,34 @@ app.post('/setMyProfile', (req, res) => {
       {
         if(j == 0)
         {
-          
+
           UserImage = results[0].User_Image;
           UserId = results[0].User_Id;
           UserContent = results[0].User_Content;
           ReviewStoreName = results[0].Review_StoreName;
+  Email = results[0].Email;
           Like = results[0].Like;
-          Comment=results[0].Comment;
-          CommentUser_Id = results[0].Comment_User_Id;
-          allView = UserImage + "/" + UserId + "/" + UserContent+ "/"+ReviewStoreName+"/"+Comment+"/"+CommentUser_Id;
+          allView =  UserImage + "/" + UserId + "/" + UserContent+ "/"+ReviewStoreName+"/"+Like;
         }
         else
         {
-  
+
+
           UserImage = UserImage+"|"+results[j].User_Image;
           UserId = UserId+"|"+results[j].User_Id;
           UserContent = UserContent+"|"+results[j].User_Content;
           ReviewStoreName = ReviewStoreName+"|"+results[j].Review_StoreName;
-          Like = Like+"|"+results[j].Like;
-      
-  
-          console.log("CommentUser_id : " + CommentUser_Id + results[0].Comment_User_Id);
-  
-          allView = Like + "/" + UserImage + "/" + UserId + "/" + UserContent + "/" +ReviewStoreName+ "/"+Comment+"/"+CommentUser_Id;
+          Email = Email+"|"+results[j].Email;
+          Like = Like + "|"+results[j].Like;
+
+
+
+          allView =UserImage + "/" + UserId + "/" + UserContent + "/" +ReviewStoreName+"/"+Like;
           }
         };
       };
       console.log("allView : " + allView);
-  
+
       res.write(allView); //그냥 모든 걸 더해서 하나로 보낸 후에 나누면 안 됨?
       res.end();
     });
