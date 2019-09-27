@@ -8,6 +8,7 @@ public class CommentItem {
     String commentImg;
     String comment_id;
     String comment_content;
+    int PageNumber;
 
     public void setComment_content(String comment_content) {
         this.comment_content = comment_content;
@@ -19,6 +20,14 @@ public class CommentItem {
 
     public void setCommentImg(String commentImg) {
         this.commentImg = commentImg;
+    }
+
+    public void setPageNumber(int pageNumber) {
+        PageNumber = pageNumber;
+    }
+
+    public int getPageNumber() {
+        return PageNumber;
     }
 
     public String getCommentImg() {

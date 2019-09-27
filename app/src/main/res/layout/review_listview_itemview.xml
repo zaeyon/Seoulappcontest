@@ -96,6 +96,7 @@
             android:layout_width="match_parent"
             android:layout_height="10dp"
             android:layout_weight="0.03"
+
             />
     </LinearLayout>
 
@@ -133,7 +134,7 @@
             android:hint="댓글 달기"
             android:textSize="15sp" />
         <TextView
-            android:id="@+id/Input_hint"
+            android:id="@+id/Input_comment"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:hint="입력"

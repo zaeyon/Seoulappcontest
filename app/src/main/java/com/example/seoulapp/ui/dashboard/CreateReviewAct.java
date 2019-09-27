@@ -3,12 +3,10 @@ package com.example.seoulapp.ui.dashboard;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -17,18 +15,14 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.amazonaws.auth.CognitoCachingCredentialsProvider;
-import com.amazonaws.mobileconnectors.s3.transferutility.TransferObserver;
-import com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility;
-import com.amazonaws.regions.Region;
-import com.amazonaws.regions.Regions;
-import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3Client;
 import com.example.seoulapp.MainActivity;
 import com.example.seoulapp.R;
 
@@ -47,36 +41,53 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class CreateReviewAct extends AppCompatActivity {
+
+    Context context;
     InputMethodManager Imm;
-    EditText et1;
-    EditText et2;
+    EditText reviewwriting;
+    EditText storewriting;
     ImageView imgView;
     LinearLayout layout;
+    TextView id;
+    ListView listView;
 
     int GET_GALLERY_IMAGE = 200;
-
-    File ReviewImgStore;
+    int REQUEST_ACT = 1;
+    //File ReviewImgStore;
     private File tempFile;
     String fileName;
-    String strEmail;
+    String strEmail; //판별용 아이디
+    TextView nickname;
+    String[] User_Image;
+    String[] User_Id;
+    String[] User_Content;
+    String[] Review_StoreName;
+    String[] like;
+    String[] allView;
 
-    CognitoCachingCredentialsProvider credentialsProvider;
+
+ /*   CognitoCachingCredentialsProvider credentialsProvider;
     AmazonS3 s3;
-    TransferUtility transferUtility;
+    TransferUtility transferUtility;*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_view);
+        // LayoutInflater inflater = (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
+        View view = getLayoutInflater().inflate(R.layout.activity_edit_profile, null); //무슨 역할일까
 
-        SharedPreferences SP = getApplicationContext().getSharedPreferences(MainActivity.name, Context.MODE_PRIVATE);
-        strEmail = SP.getString("inputId","null"); //현재 이메일 갖고오기
-
-        //공백 클릭하면 키보드 ㅃ
+        //공백 누르면 키보드 ㅂㅂ
         Imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-        et1 = findViewById(R.id.ReviewWriting); //
-        et2 = findViewById(R.id.StoreWriting); //
+
+        SharedPreferences auto = getApplicationContext().getSharedPreferences(MainActivity.name, Context.MODE_PRIVATE);
+        strEmail = auto.getString("inputId", "null");
+        id = findViewById(R.id.User_id);
+        reviewwriting = findViewById(R.id.ReviewWriting); //
+        storewriting = findViewById(R.id.StoreWriting); //
         layout = findViewById(R.id.ReviewLayout);
+        imgView = findViewById(R.id.Insert_img); //사용자가 올릴 이미지
+        nickname = (TextView) view.findViewById(R.id.cetNickname); //되었음!!!!
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.ReviewToolbar);
         setSupportActionBar(toolbar);
@@ -84,27 +95,13 @@ public class CreateReviewAct extends AppCompatActivity {
 
         actionBar.setDisplayShowCustomEnabled(true);
         actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setDisplayHomeAsUpEnabled(true);
         //mToolbar = (Toolbar)findViewById(R.id.toolbar);
         //setSupportActionBar(mToolbar);*/
 
-    /*  ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayShowCustomEnabled(true); //커스터마이징 하기 위해 필요
-        actionBar.setDisplayShowTitleEnabled(false);
-        actionBar.setDisplayHomeAsUpEnabled(true); //
-        actionBar.setHomeAsUpIndicator(R.drawable.backbutton);
-
         getSupportActionBar().setTitle("Writing");
         //mToolbar.setTitleTextColor(Color.rgb(30,135,188));*/
-
-        s3 = new AmazonS3Client(credentialsProvider);
-
-        CognitoCachingCredentialsProvider credentialsProvider = new CognitoCachingCredentialsProvider(
-                getApplicationContext(),
-                "ap-northeast-2:0a39045d-9522-4600-a2d2-21adf8805297", // 자격 증명 풀 ID
-                Regions.AP_NORTHEAST_2 // 리전
-        );
-        s3.setRegion(Region.getRegion(Regions.AP_NORTHEAST_2));
-        s3.setEndpoint("s3.ap-northeast-2.amazonaws.com");
+        //  s3 = new AmazonS3Client(credentialsProvider);
 
         imgView = findViewById(R.id.Insert_img);
         imgView.setOnClickListener(new View.OnClickListener() {
@@ -116,41 +113,30 @@ public class CreateReviewAct extends AppCompatActivity {
             }
         });
 
+        storewriting.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                storewriting.setHint("상가가 여러 개라면 ,로 구별해주세요!");
+            }
+        });
     }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == GET_GALLERY_IMAGE && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            Uri selectedImageUri = data.getData();
-            imgView.setImageURI(selectedImageUri);
-
-            Cursor cursor = null;
-
-            try {
-                String[] proj = {MediaStore.Images.Media.DATA};
-
-                assert selectedImageUri != null;
-                cursor = getContentResolver().query(selectedImageUri, proj, null, null, null);
-
-                assert cursor != null;
-                int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-
-                cursor.moveToFirst();
-
-                ReviewImgStore = new File(cursor.getString(column_index)); //이미지 저장 공간
-            } finally {
-                if (cursor != null) {
-                    cursor.close();
-                }
-            }
-        }
-
+            Uri mImageUri = data.getData();
+            //new ReviewImgUpload().setmImageUrl(mImageUri.toString());
+            imgView.setImageURI(mImageUri);
+        } //이걸 어디서 저장하죠>
     }
 
-    public void linearOnClick(View v) {
-        Imm.hideSoftInputFromWindow(et1.getWindowToken(), 0);
-        Imm.hideSoftInputFromWindow(et2.getWindowToken(), 0);
+
+    public void linearOnClick(View v) { //공백 누름 시 키보드 닫기는 효과 줌
+        Imm.hideSoftInputFromWindow(reviewwriting.getWindowToken(), 0);
+        Imm.hideSoftInputFromWindow(storewriting.getWindowToken(), 0);
     } //공백을 넣어줘야겠당...
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -160,132 +146,34 @@ public class CreateReviewAct extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-
-        fileName = "1";
-        transferUtility = new TransferUtility(s3, getApplicationContext());
+    public boolean onOptionsItemSelected(MenuItem item) {
+       /* fileName = "1";
+        transferUtility = new TransferUtility(s3, getApplicationContext());*/
         switch (item.getItemId()) {
-            case R.id.gotoReview :
-                if (ReviewImgStore != null) {
-                    TransferObserver observer = transferUtility.upload( //값은 들어감..
-                            "com.example.seoulapp/ReviewImage",
-                            fileName,
-                            ReviewImgStore
-                    );
+            case R.id.gotoReview: // 선택하면 firebase에 저장된다!
+                String write_Story = reviewwriting.getText().toString();
+                String write_Store = storewriting.getText().toString();
+                if (write_Store.equals("") || write_Story.equals("")) {
+                    Toast.makeText(this, "입력이 덜 되었습니다!", Toast.LENGTH_LONG).show();
+                } else {
+                    new JSONTaskReviewUpload().execute("http://192.168.43.72:3000/setReviewFile"); //
+                    onBackPressed();
                 }
-                new JSONTaskReviewupload().execute("http://192.168.43.102/setUploadImg");
-                // new JSONTaskDepositReview().execute("http://192.168.43.102/getReviewCount");
-                new JSONTaskReviewReturnagain().execute("http://192.168.43.102/UpdateImage");
-                new JSONTaskStoryStoreSave().execute("http://192.168.43.102./StoreReviewInfo");
-
-                return true;
-            default:
-                return false;
         }
+        return false;
     }
 
-    public class JSONTaskReviewupload extends AsyncTask<String, String, String> {
+    public class JSONTaskReviewUpload extends AsyncTask<String, String, String> {
 
         @Override
         protected String doInBackground(String... urls) {
             try {
                 JSONObject jsonObject = new JSONObject();
-                jsonObject.accumulate("email", strEmail); //Id
-                jsonObject.accumulate("UserImg", ReviewImgStore.getName());//User
-                jsonObject.accumulate("UserContent",et1.getText()); //story
-                jsonObject.accumulate("StoreName",et2.getText()); //store
-
-                HttpURLConnection con = null;
-                BufferedReader reader = null;
-
-                try {
-                    URL url = new URL(urls[0]);
-                    con = (HttpURLConnection) url.openConnection();
-                    con.setRequestMethod("POST");//POST방식으로 보냄
-                    con.setRequestProperty("Cache-Control", "no-cache");//캐시 설정
-                    con.setRequestProperty("Content-Type", "application/json");//application JSON 형식으로 전송
-                    con.setRequestProperty("Accept", "text/html");//서버에 response 데이터를 html로 받음
-                    con.setDoOutput(true);//Outstream으로 post 데이터를 넘겨주겠다는 의미
-                    con.setDoInput(true);//Inputstream으로 서버로부터 응답을 받겠다는 의미
-                    con.connect();
-
-                    //서버로 보내기위해서 스트림 만듬
-                    OutputStream outStream = con.getOutputStream();
-                    //버퍼를 생성하고 넣음
-                    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outStream));
-                    writer.write(jsonObject.toString());
-                    writer.flush();
-                    writer.close();//버퍼를 받아줌
-
-                    InputStream stream = con.getInputStream();
-
-                    reader = new BufferedReader(new InputStreamReader(stream));
-
-                    StringBuffer buffer = new StringBuffer();
-
-                    String line = "";
-                    while ((line = reader.readLine()) != null) {
-                        buffer.append(line);
-                    }
-
-                    return buffer.toString();
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } finally {
-                    if (con != null) {
-                        con.disconnect();
-                    }
-                    try {
-                        if (reader != null) {
-                            reader.close();
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-
-            class JSONTaskDepositReview extends AsyncTask<String,String,String>{
-
-                @Override
-                protected String doInBackground(String... urls) {
-                    return null;
-                }
-
-                @Override
-                protected void onPostExecute(String result) {
-                    int count =0;
-                    Log.d("1111111111", String.valueOf(count));
-
-                    fileName = count + "_" + ReviewImgStore.getName(); //UserImg의 이름
-                    count++;
-                    Log.d("file",fileName);
-                    super.onPostExecute(result);
-                }
-            }
-        }
-    }
-
-
-    public class JSONTaskReviewReturnagain extends AsyncTask <String, String, String>{
-
-        @Override
-        protected String doInBackground(String... urls) { //update 한단 말이여
-            try {
-                JSONObject jsonObject = new JSONObject();
-                jsonObject.accumulate("UserImg", ReviewImgStore.getName());//User
-
+                jsonObject.accumulate("Email", strEmail); //Id
+                jsonObject.accumulate("UserImg", "a");
+                jsonObject.accumulate("UserContent", reviewwriting.getText().toString()); //story
+                jsonObject.accumulate("StoreName", storewriting.getText().toString()); //store
+                jsonObject.accumulate("UserNickName", nickname.getText().toString()); //nickname
                 HttpURLConnection con = null;
                 BufferedReader reader = null;
 
@@ -346,100 +234,7 @@ public class CreateReviewAct extends AppCompatActivity {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
 
-        }
-    }
-    public class JSONTaskStoryStoreSave extends AsyncTask<String, String, String> {
-
-        @Override
-        protected String doInBackground(String... urls) {
-            try {
-                JSONObject jsonObject = new JSONObject();
-                jsonObject.accumulate("email", strEmail); //Id
-                jsonObject.accumulate("UserImg", ReviewImgStore.getName());//User
-                jsonObject.accumulate("UserContent", et1.getText()); //story
-                jsonObject.accumulate("StoreName", et2.getText()); //store
-
-                HttpURLConnection con = null;
-                BufferedReader reader = null;
-
-                try {
-                    URL url = new URL(urls[0]);
-                    con = (HttpURLConnection) url.openConnection();
-                    con.setRequestMethod("POST");//POST방식으로 보냄
-                    con.setRequestProperty("Cache-Control", "no-cache");//캐시 설정
-                    con.setRequestProperty("Content-Type", "application/json");//application JSON 형식으로 전송
-                    con.setRequestProperty("Accept", "text/html");//서버에 response 데이터를 html로 받음
-                    con.setDoOutput(true);//Outstream으로 post 데이터를 넘겨주겠다는 의미
-                    con.setDoInput(true);//Inputstream으로 서버로부터 응답을 받겠다는 의미
-                    con.connect();
-
-                    //서버로 보내기위해서 스트림 만듬
-                    OutputStream outStream = con.getOutputStream();
-                    //버퍼를 생성하고 넣음
-                    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outStream));
-                    writer.write(jsonObject.toString());
-                    writer.flush();
-                    writer.close();//버퍼를 받아줌
-
-                    InputStream stream = con.getInputStream();
-
-                    reader = new BufferedReader(new InputStreamReader(stream));
-
-                    StringBuffer buffer = new StringBuffer();
-
-                    String line = "";
-                    while ((line = reader.readLine()) != null) {
-                        buffer.append(line);
-                    }
-
-                    return buffer.toString();
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } finally {
-                    if (con != null) {
-                        con.disconnect();
-                    }
-                    try {
-                        if (reader != null) {
-                            reader.close();
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-
-            class JSONTaskDepositReview extends AsyncTask<String, String, String> {
-
-                @Override
-                protected String doInBackground(String... urls) {
-                    return null;
-                }
-
-                @Override
-                protected void onPostExecute(String result) {
-                    int count = 0;
-                    Log.d("1111111111", String.valueOf(count));
-
-                    fileName = count + "_" + ReviewImgStore.getName(); //UserImg의 이름
-                    count++;
-                    Log.d("file", fileName);
-                    super.onPostExecute(result);
-                }
-            }
         }
     }
 
 }
-
