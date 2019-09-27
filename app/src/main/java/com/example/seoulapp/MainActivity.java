@@ -167,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
                 if(!hasFocus) {
                     // 와이파이 새로 접속할 때마다 변경
 
-                    new JSONTask().execute("http://172.30.1.10:3000/emailCheck");
+                    new JSONTask().execute("http://192.168.43.72:3000/emailCheck");
 
                 }
             }
@@ -176,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // 와이파이 새로 접속할 때마다 변경
-                new JSONTask().execute("http://172.30.1.10:3000/login");
+                new JSONTask().execute("http://192.168.43.72:3000/login");
             }
         });
 

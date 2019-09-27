@@ -70,7 +70,7 @@ public class ImageActivity extends AppCompatActivity {
                 binLike.setVisibility(INVISIBLE);
                 canLike.setVisibility(VISIBLE);
 
-                new JSONTaskFavoriteProduction().execute("http://172.30.1.10:3000/insertFavoriteProduction");
+                new JSONTaskFavoriteProduction().execute("http://192.168.43.72:3000/insertFavoriteProduction");
             }
         });
 
@@ -81,7 +81,7 @@ public class ImageActivity extends AppCompatActivity {
                 binLike.setVisibility(VISIBLE);
                 canLike.setVisibility(INVISIBLE);
 
-                new JSONTaskFavoriteProduction().execute("http://172.30.1.10:3000/deleteFavoriteProduction");
+                new JSONTaskFavoriteProduction().execute("http://192.168.43.72:3000/deleteFavoriteProduction");
             }
         });
     }
@@ -97,7 +97,7 @@ public class ImageActivity extends AppCompatActivity {
         Glide.with(getApplicationContext()).load(productionURL).into(imageView);
 
         // 와이파이 접속할때마다 변경
-        new JSONTaskProductionInfo().execute("http://172.30.1.10:3000/getProductionInfo");
+        new JSONTaskProductionInfo().execute("http://192.168.43.72:3000/getProductionInfo");
     }
 
     public class JSONTaskProductionInfo extends AsyncTask<String, String, String> {

@@ -95,7 +95,7 @@ public class EditShop extends AppCompatActivity {
         strEmail = user.getString("inputId", "null");
         Log.d("AddShop", "사용자 : " + strEmail);
 
-        new GetExistingData().execute("http://172.30.1.10:3000/getExistingData");
+        new GetExistingData().execute("http://192.168.43.72:3000/getExistingData");
 
         ivShopProfileImage.setBackground(new ShapeDrawable(new OvalShape()));
         if (Build.VERSION.SDK_INT >= 21) {
@@ -185,7 +185,7 @@ public class EditShop extends AppCompatActivity {
 
         bComplete.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                new JSONTask1().execute("http://172.30.1.10:3000/editShop");
+                new JSONTask1().execute("http://192.168.43.72:3000/editShop");
 
                 if (f != null && f1 != null && f2 != null && f3 != null) {
                     // f 저장

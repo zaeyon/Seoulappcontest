@@ -40,7 +40,7 @@ public class CommentFrag extends ListFragment {
         //comment를 adapter 거치지 않고 그대로 여기로 오기 때문에 item에 저장을 해봤자 null겠ㅈ?
         //String comment_Id = intent.getExtras().getString("comment_Id");
 
-        new JSONTaskCommentInfo().execute("http://172.30.1.10:3000/getCommentInfo");
+        new JSONTaskCommentInfo().execute("http://192.168.43.72:3000/getCommentInfo");
         CommentAdapter adapter = new CommentAdapter();
         setListAdapter(adapter); //adapter에는 지금 comment들이 달려있음요
 

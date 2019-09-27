@@ -65,7 +65,7 @@ public class CustomViewFrag extends ListFragment {
         Commentmore = getItemId.findViewById(R.id.watching_comment);
 
 
-        new JSONTaskUserProfile().execute("http://172.30.1.10:3000/getUserProfile");
+        new JSONTaskUserProfile().execute("http://192.168.43.72:3000/getUserProfile");
        /* dashboardViewModel =
                 ViewModelProviders.of(this).get(DashboardViewModel.class);*/
 

@@ -107,7 +107,6 @@ public class ListViewAdapter extends BaseAdapter implements Filterable {
             convertView = inflater.inflate(R.layout.listview_item, parent, false);
 
         }
-
         ImageView shopProfileImageView = convertView.findViewById(R.id.shop_profileImage);
 
         ImageView shopRepImageView1 = convertView.findViewById(R.id.shop_representation1);
