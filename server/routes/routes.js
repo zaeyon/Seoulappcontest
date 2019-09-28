@@ -1674,20 +1674,20 @@ app.post('/emailCheck', (req, res) => {
 
   app.post('/CommentDelete',(req,res)=>{
 
-    var input;
-    var positionOfView;
-    var positionOfComment
-
+    var input="";
+  
     req.on('data', (data)=>{
-        input = JSON.parse(data);
-        positionOfComment = [input.dis_number];
+      input = JSON.parse(data);
+      console.log("input : ", input.dis_number);
     })
 
-    connection.query("ALTER table commenttable drop comment WHERE dinstinguish_number =?", positionOfComment, (err, results2)=>{
-    console.log("삭제 성공");
-      res.write("삭제");
-      res.end();
+    req.on('end', ()=>{
+      connection.query("DELETE FROM commenttable WHERE distinguish_number =?", input.dis_number, (err, results2)=>{
 
+        console.log("삭제 성공");
+        res.write("삭제");
+        res.end();
+      })
     })
   });
 
@@ -1696,25 +1696,23 @@ app.post('/emailCheck', (req, res) => {
     var Comment="";
     var CommentUser_Id="";
     var Distinguish_number="";
-    var Distinguish_num="";
     var allView="";
-    var input = "";
-  
+    var input="";
+
     req.on('data',(data)=>{
-        input = JSON.parse(data)
-        Distinguish_num = [input.PositionOfCmt]
-        console.log("받은 데이터 :" + input.PositionOfCmt);
+      input = JSON.parse(data);
+      console.log("댓글 가져오기");
+      console.log("dsitinguish_number : ", input.PositionOfCmt);
     })
 
-    console.log("댓글 가져오기"); 
-    req.on('end', ()=>{
-      connection.query("SELECT * FROM commenttable WHERE Distinguish_number = ?", Distinguish_num, function(error, results){ //all pulled.
-        console.log("results : ", results);
+    req.on('end', ()=> {
+      connection.query("SELECT * FROM commenttable WHERE Distinguish_number = ?", input.PositionOfCmt, function(error, results) { //all pulled.
+        console.log(results);
         if(error)
         {
-          console.log("에러 : " + error);
+          console.log("에러 + "+ error);
         }
-        else{
+        else {
           for(var j = 0; j < results.length; j++)
           {
             if(j == 0)
@@ -1732,8 +1730,6 @@ app.post('/emailCheck', (req, res) => {
               allView = Comment+"/"+CommentUser_Id+"/"+Distinguish_number;
             }
           };
-
-          console.log("반환 데이터 : ", allView);
         };
         console.log("if문 빠져나옴...");
         console.log(allView);

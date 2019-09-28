@@ -2,7 +2,6 @@
 
   <!-- Base application theme. -->
   <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-    <item name="windowActionBarOverlay">true</item>
 
     <!-- Customize your theme here. -->
     <item name="colorPrimary">#5da2ff</item>
@@ -14,9 +13,7 @@
   </style>
 
   <style name="CustomActionBar" parent="@style/ThemeOverlay.AppCompat.Light">
-    <item name="windowActionBarOverlay">true</item>
     <!-- Support library compatibility -->
     <item name="windowActionBarOverlay">true</item>
   </style>
-
-    </resources>
+</resources>
