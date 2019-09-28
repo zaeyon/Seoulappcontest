@@ -1214,7 +1214,60 @@ app.post('/setMyProfile', (req, res) => {
             res.end();
         })
     });
-});
+  });
+
+  app.post('/getCurrentUserReview', (req, res) => {
+
+    var inputData;
+    var UserContent="";
+    var UserId ="";
+    var UserImage="";
+    var ReviewStoreName="";
+    var Email="";
+    var Like="";
+    var allView="";
+
+    req.on('data', (data) => {
+      inputData = JSON.parse(data);
+      console.log("request from CustomViewFrag");
+      console.log("사용자 이메일 : ", inputData.email);
+    });
+
+    req.on('end', () => {
+      console.log("프로필 사진 얻기");
+      connection.query("SELECT * FROM review WHERE Email = ?", inputData.email, function(error, results) { //all pulled.
+          if(error) {
+              console.log("에러");
+          }
+          else {
+              for(var j = 0; j < results.length; j++) {
+                  if(j == 0) {
+                      UserImage = results[0].User_Image;
+                      UserId = results[0].User_Id;
+                      UserContent = results[0].User_Content;
+                      ReviewStoreName = results[0].Review_StoreName;
+                      Email = results[0].Email;
+                      Like = results[0].Like;
+                      allView =  UserImage + "/" + UserId + "/" + UserContent+ "/"+ReviewStoreName+"/"+Like;
+                  } else {
+                      UserImage = UserImage+"|"+results[j].User_Image;
+                      UserId = UserId+"|"+results[j].User_Id;
+                      UserContent = UserContent+"|"+results[j].User_Content;
+                      ReviewStoreName = ReviewStoreName+"|"+results[j].Review_StoreName;
+                      Email = Email+"|"+results[j].Email;
+                      Like = Like + "|"+results[j].Like;
+
+                      allView =UserImage + "/" + UserId + "/" + UserContent + "/" +ReviewStoreName+"/"+Like;
+                  }
+              };
+          };
+          console.log("allView : " + allView);
+
+          res.write(allView); //그냥 모든 걸 더해서 하나로 보낸 후에 나누면 안 됨?
+          res.end();
+      });
+    });
+  });
   
   app.post('/setUploadImg',(req,res)=>{ //review Img 업로드
     console.log("post /setUploadImg");
@@ -1324,7 +1377,7 @@ app.post('/setMyProfile', (req, res) => {
   
   app.post('/getUserProfile', (req,res) => {
 
-
+    var inputData;
     var UserContent="";
     var UserId ="";
     var UserImage="";
@@ -1333,6 +1386,11 @@ app.post('/setMyProfile', (req, res) => {
     var Like="";
     var allView="";
 
+    req.on('data', (data) => {
+        inputData = JSON.parse(data);
+    });
+
+    req.on('end', () => {
     console.log("프로필 사진 얻기");
     connection.query("SELECT * FROM review", function(error, results) { //all pulled.
       if(error)
@@ -1349,7 +1407,7 @@ app.post('/setMyProfile', (req, res) => {
           UserId = results[0].User_Id;
           UserContent = results[0].User_Content;
           ReviewStoreName = results[0].Review_StoreName;
-  Email = results[0].Email;
+          Email = results[0].Email;
           Like = results[0].Like;
           allView =  UserImage + "/" + UserId + "/" + UserContent+ "/"+ReviewStoreName+"/"+Like;
         }
@@ -1376,6 +1434,7 @@ app.post('/setMyProfile', (req, res) => {
       res.end();
     });
   });
+});
   
   app.post('/InsertQnAInfo', (req,res) => {
   
@@ -1541,25 +1600,30 @@ app.post('/setMyProfile', (req, res) => {
     });
   });
   
-  app.post('/StoreComment', (req,res)=>{ //일단 id 제외한 것을 추가해볼 겁니당.
+  app.post('/StoreComment', (req,res)=>{
 
     var inputCmt;
     var params;
-  
+
     req.on('data', (data)=>{
       inputCmt = JSON.parse(data); //inputCmt.Comment
-      params =[inputCmt.Comment , inputCmt.nickname, inputCmt.position]
+      params ={
+        "Comment" : inputCmt.Comment,
+        "CommentUser_Id" : inputCmt.CommentUser_Id,
+        "Distinguish_number" : inputCmt.position
+      };
+      console.log(params);
       console.log("I will insert comment into commenttable!");
     })
-    req.on('end', ()=>{
-      connection.query("INSERT INTO commenttable SET ?",params, (err,result)=>{
+    req.on('end', ()=>{ //왜 안 되는 가
+      connection.query("INSERT INTO commenttable SET ?", params, (err,result)=>{
           console.log("성공. check DB");
           res.write("plz");
           res.end();
-  
-      });
-    });
-  });
+
+      })
+    })
+  })
 
   
   app.post('/addLike', (req,res)=>{
@@ -1633,48 +1697,101 @@ app.post('/setMyProfile', (req, res) => {
     });
   });
 
-  app.post('/InsertProductionInfo', (req, res) => {
-    var inputData;
+    app.post('/InsertProductionInfo', (req, res) => {
+        var inputData;
 
-    req.on('data', (data) => {
-      inputData = JSON.parse(data);
+        req.on('data', (data) => {
+          inputData = JSON.parse(data);
+        });
+
+        req.on('end', () => {
+
+            var params = {
+                "shopName":inputData.RegProShopName,
+                "productionURL":inputData.RegProImageUrl,
+                "productionName":inputData.RegProTitle,
+                "productionSize":inputData.RegProSize,
+                "productionPrice":inputData.RegProPrice,
+                "productionIntro":inputData.RegProIntro
+            };
+
+            connection.query('INSERT INTO production SET ?', params, function(error, result) {
+
+                if(error)
+                {
+                    console.log("error 발생 : " + error);
+                    res.write("production register faild");
+                    res.end();
+                }
+                else
+                {
+                    console.log("상품 등록 성공 : " + params);
+                    res.write("production register success");
+                    res.end();
+                }
+            });
+        });
+    })
+
+    app.post('/CommentDelete',(req,res)=>{
+
+      var input;
+      var positionOfView;
+      var positionOfComment
+
+      req.on('data', (data)=>{
+          input = JSON.parse(data);
+          positionOfComment = [input.dis_number];
+      })
+
+      connection.query("ALTER table commenttable drop comment WHERE dinstinguish_number =?", positionOfComment, (err, results2)=>{
+      console.log("삭제 성공");
+        res.write("삭제");
+        res.end();
+
+      })
     });
 
-    req.on('end', () => {
+    app.post('/getCommentInfo',(req,res)=>{
 
-      var params = {
-        "shopName":inputData.RegProShopName,
-        "productionURL":inputData.RegProImageUrl,
-        "productionName":inputData.RegProTitle,
-        "productionSize":inputData.RegProSize,
-        "productionPrice":inputData.RegProPrice,
-        "productionIntro":inputData.RegProIntro
-      };
-
-      connection.query('INSERT INTO production SET ?', params, function(error, result) {
-
-        if(error)
-        {
-          console.log("error 발생 : " + error);
-          res.write("production register faild");
-          res.end();
-        }
-        else
-        {
-          console.log("상품 등록 성공 : " + params);
-          res.write("production register success");
-          res.end();
-        }
-    });
-});
-
-
-
-
-  })
-
-
-
+      var Comment="";
+      var CommentUser_Id="";
+      var Distinguish_number="";
+      var allView="";
   
+      console.log("댓글 가져오기"); 
+        connection.query("SELECT * FROM commenttable", function(error, results) { //all pulled.
+          console.log(results);
+          if(error)
+          {
+            console.log("에러");
+          }
+          else{
+             for(var j = 0; j < results.length; j++)
+              {
+                if(j == 0)
+                { 
+  
+                  Comment=results[0].Comment;
+                  CommentUser_Id = results[0].CommentUser_Id;
+                  Distinguish_number = results[0].Distinguish_number;
+                  allView = Comment+"/"+CommentUser_Id+"/"+Distinguish_number; //
+                }
+                else
+                  {
+  
+                  Comment=Comment + "|" + results[j].Comment;
+                  CommentUser_Id = CommentUser_Id + "|" + results[j].CommentUser_Id;
+                  Distinguish_number = Distinguish_number + "|" + results[j].Distinguish_number;
+                  allView = Comment+"/"+CommentUser_Id+"/"+Distinguish_number;
+              }
+          };
+      };
+      console.log("if문 빠져나옴...");
+      console.log(allView);
+      res.write(allView); 
+      res.end();
+      });
+  });
 
-};
+}
