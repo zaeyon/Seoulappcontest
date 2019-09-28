@@ -1,18 +1,13 @@
 package com.example.seoulapp.ui.dashboard;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.AsyncTask;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import androidx.appcompat.app.AlertDialog;
 
 import com.example.seoulapp.R;
 
@@ -33,12 +28,9 @@ public class CommentAdapter extends BaseAdapter {
 
     ArrayList<CommentItem> cmt_list = new ArrayList<>();
 
-    TextView CommentMore;
     TextView comment;
     TextView comment_Id;
     LinearLayout forDeleteClick;
-
-    Context context;
 
     int commentNumber;
     @Override
@@ -59,7 +51,7 @@ public class CommentAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        final Context context = parent.getContext(); //Context는 app에 대한 구분을 짓는 정보들..
+        Context context = parent.getContext(); //Context는 app에 대한 구분을 짓는 정보들..
         LayoutInflater li = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         if (convertView == null) {
@@ -69,37 +61,19 @@ public class CommentAdapter extends BaseAdapter {
         comment = convertView.findViewById(R.id.comment_content);
         comment_Id = convertView.findViewById(R.id.comment_id);
         forDeleteClick = convertView.findViewById(R.id.CommentforClick);
-        commentNumber = (int) getItemId(position)+1; //댓글 위치
+        commentNumber = (int) getItemId(position)+1;
 
-        //댓글, 댓글 아이디, 게시글 위치, 댓글 위치
-
-        forDeleteClick.setOnLongClickListener(new View.OnLongClickListener(){
+        forDeleteClick.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setMessage("삭제하시겠습니까?");
-                builder.setPositiveButton("예",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Toast.makeText(context, "삭제되었습니다.", Toast.LENGTH_LONG).show();
-                                new JSONTaskCommentDelete().execute("http://192.168.43.72:3000/CommentDelete");
-                            }
-                        });
-                builder.setNegativeButton("아니오",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                //
-                            }
-                        });
-                builder.show();
+                new JSONTaskCommentDelete().execute("http://192.168.43.102:3000/CommentDelete");
+
                 return false;
             }
         });
 
-        CommentItem CA = cmt_list.get(position);
 
+        CommentItem CA = cmt_list.get(position); //
         //positionget = (int) getItem(position)+1; //댓글 간의 구분용임 게시물의 구분용이 아님
 
         comment.setText(CA.getComment_content());
@@ -152,9 +126,7 @@ public class CommentAdapter extends BaseAdapter {
                     writer.write(jsonObject.toString());
                     writer.flush();
                     writer.close();//버퍼를 받아줌
-
-                    //서버로 부터 데이터를 받음
-
+//서버로 부터 데이터를 받음
                     InputStream stream = con.getInputStream();
 
                     reader = new BufferedReader(new InputStreamReader(stream));
