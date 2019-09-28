@@ -1,6 +1,7 @@
 package com.example.seoulapp.ui.dashboard;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
 
 import com.example.seoulapp.R;
 
@@ -32,6 +36,10 @@ public class CommentAdapter extends BaseAdapter {
     TextView comment_Id;
     LinearLayout forDeleteClick;
 
+    int clickNumber;
+    Context context;
+
+
     int commentNumber;
     @Override
     public int getCount() {
@@ -49,9 +57,9 @@ public class CommentAdapter extends BaseAdapter {
     } //댓글에 대한 위치를 조정!
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
 
-        Context context = parent.getContext(); //Context는 app에 대한 구분을 짓는 정보들..
+        final Context context = parent.getContext(); //Context는 app에 대한 구분을 짓는 정보들..
         LayoutInflater li = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         if (convertView == null) {
@@ -63,24 +71,43 @@ public class CommentAdapter extends BaseAdapter {
         forDeleteClick = convertView.findViewById(R.id.CommentforClick);
         commentNumber = (int) getItemId(position)+1;
 
+
         forDeleteClick.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                new JSONTaskCommentDelete().execute("http://192.168.43.102:3000/CommentDelete");
+                CommentItem Ca= new CommentItem(); //ca는 아이템이잖소
+                Ca = cmt_list.get(position); //ca는 아이템에 대한 정보를 얻습니당,
+                clickNumber = Ca.getPageNumber(); //여기서의 정보를 얻어야 함.
 
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setMessage("삭제하시겠습니까?");
+                builder.setPositiveButton("예",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                new JSONTaskCommentDelete().execute("http://192.168.43.102:3000/CommentDelete");
+                                forDeleteClick.setVisibility(View.INVISIBLE);
+                                Toast.makeText(context, "삭제되었습니다.", Toast.LENGTH_LONG).show();
+                            }
+                        });
+                builder.setNegativeButton("아니오",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                //
+                            }
+                        });
+                builder.show();
                 return false;
             }
         });
 
-
-        CommentItem CA = cmt_list.get(position); //
-        //positionget = (int) getItem(position)+1; //댓글 간의 구분용임 게시물의 구분용이 아님
-
-        comment.setText(CA.getComment_content());
-        comment_Id.setText(CA.getComment_id());
+            CommentItem CA = cmt_list.get(position);
+            //positionget = (int) getItem(position)+1; //댓글 간의 구분용임 게시물의 구분용이 아님
+            comment.setText(CA.getComment_content());
+            comment_Id.setText(CA.getComment_id());
 
         // nickname = (TextView) View.inflate(context,R.layout.activity_edit_profile, null).findViewById(R.id.cetNickname);
-
         return convertView;
     }
     public void addItem(String strcmt, String strcmtId, int Num) {
@@ -100,10 +127,10 @@ public class CommentAdapter extends BaseAdapter {
             try {
                 //JSONObject를 만들고 key value 형식으로 값을 저장해준다.
                 JSONObject jsonObject = new JSONObject();
-                jsonObject.accumulate("dis_number", String.valueOf(commentNumber));
+                jsonObject.accumulate("dis_number", String.valueOf(clickNumber));
                 HttpURLConnection con = null;
                 BufferedReader reader = null;
-
+ // 리스트 아이템을 생성하고, 리스트의 아이템 포지션을 들고온 다음,
                 try {
                     //URL url = new URL("http://192.168.25.16:3000/users%22);
                     URL url = new URL(urls[0]);
@@ -126,7 +153,7 @@ public class CommentAdapter extends BaseAdapter {
                     writer.write(jsonObject.toString());
                     writer.flush();
                     writer.close();//버퍼를 받아줌
-//서버로 부터 데이터를 받음
+
                     InputStream stream = con.getInputStream();
 
                     reader = new BufferedReader(new InputStreamReader(stream));
@@ -164,7 +191,7 @@ public class CommentAdapter extends BaseAdapter {
 
         @Override
         protected void onPostExecute(String result) { //데이터 불러오기
-
+            super.onPostExecute(result);
         }
     }
 }

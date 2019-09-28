@@ -48,8 +48,8 @@ public class NotificationsFragment extends Fragment {
 
     Intent intentSettingShop;
 
-    private NotificationsViewModel notificationsViewModel;
 
+    private NotificationsViewModel notificationsViewModel;
     String clickShopName;
     TextView tvNickname;
 
@@ -642,12 +642,10 @@ public class NotificationsFragment extends Fragment {
     class goSettingShop implements View.OnClickListener {
         @Override
         public void onClick(View v) {
+
             intentSettingShop = new Intent(getActivity(), ShopDetaildInfo.class);
 
-
             new JSONTaskGetMyShop().execute("http://192.168.43.102:3000/getMyShop");
-
-            // startActivity(intentSettingShop);
         }
     }
 

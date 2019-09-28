@@ -48,7 +48,7 @@ public class ReviewAdapter extends BaseAdapter {
 
     int innumber;
     int getposition;
-    int number;
+    int heartNum;
     ImageView empty_love;
     ImageView full_heart;
     ImageView profilePicture;
@@ -57,6 +57,8 @@ public class ReviewAdapter extends BaseAdapter {
     String strNickname;
     String strCmt;
     String strEmail;
+
+    Context context;
 
     ArrayList<ReviewItem> list = new ArrayList<>(); //아이템들 추가되어있음.
 
@@ -146,9 +148,12 @@ public class ReviewAdapter extends BaseAdapter {
                             Toast.makeText(context, "댓글을 써 주세요!", Toast.LENGTH_LONG).show();
                         } else {
                             //db랑 연결하는 코드를 작성합시다^^...
-                            Log.e("111111111", "들어왔엉1");
-                            new JSONTaskStoreComment().execute("http://192.168.43.102:3000/StoreComment");
 
+                            Context context = parent.getContext();
+                            Toast.makeText(context, "댓글을 저장했습니다!", Toast.LENGTH_LONG).show();
+                            Log.e("댓글 저장", "들어왔어용");
+                            new JSONTaskStoreComment().execute("http://192.168.43.102:3000/StoreComment");
+                            Cmt.setText("");
                         }
                     }
                 });
@@ -158,17 +163,22 @@ public class ReviewAdapter extends BaseAdapter {
         watch_comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) { //db에 좋아요(like) 컬럼 추가
-                ReviewItem Cm = new ReviewItem();
-                Cm = list.get(position); //4 3 2 1
-                int a = Cm.getNumber();
-                Context context = parent.getContext();
-                Intent intent = new Intent(context, Comment.class);
-                intent.putExtra("ReviewStory", User_description.getText().toString());
-                intent.putExtra("Position", a);
-                ((Activity) context).startActivity(intent);
-                //Like.setText("좋아요 "+like+"회");
-            }
-        });
+                //만약 댓글이 없을 경우 띄우는 화면도 설정
+                    ReviewItem Cm = new ReviewItem();
+
+                    Cm = list.get(position); //리뷰 아이템이므로 ㅇㅇ ㄱㅊ
+                    int a = Cm.getNumber();
+                    Log.e("11111112222", String.valueOf(a));
+                    Context context = parent.getContext();
+
+                    Intent intent = new Intent(context, Comment.class);
+                    intent.putExtra("ReviewStory", User_description.getText().toString());
+                    intent.putExtra("Position", a);
+                    ((Activity) context).startActivity(intent);
+                    //Like.setText("좋아요 "+like+"회");
+
+                }
+            });
 
 
         heart_filled.setVisibility(View.INVISIBLE);
@@ -177,6 +187,7 @@ public class ReviewAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) { //db에 좋아요(like) 컬럼 추가
                 ReviewItem list_number = list.get(position); //아이디랑 상관 없는데..
+                heartNum = list_number.getNumber();
                 increace_heart = list_number.getLike();
                 increace_heart++;
                 Like.setText("좋아요 " + increace_heart + "회");
@@ -245,6 +256,7 @@ public class ReviewAdapter extends BaseAdapter {
                 //JSONObject를 만들고 key value 형식으로 값을 저장해준다. //코멘트르 집어
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.accumulate("like", String.valueOf(increace_heart));//String형으로 해야 함
+                jsonObject.accumulate("numbering", String.valueOf(heartNum));
                 //jsonObject.accumulate("comment_Id", comment_Id);
                 Log.d("increace_heart : ", String.valueOf(increace_heart));
 

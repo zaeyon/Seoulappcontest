@@ -3,6 +3,8 @@ package com.example.seoulapp.ui.dashboard;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
+import android.content.Intent;
+
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -33,6 +35,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
+
 
 public class CustomViewFrag extends ListFragment {
 
@@ -75,7 +78,7 @@ public class CustomViewFrag extends ListFragment {
         setListAdapter(adapter);
 
         ActivityManager manager = (ActivityManager)getContext().getSystemService(Activity.ACTIVITY_SERVICE);
-        List<ActivityManager.RunningTaskInfo>list = manager.getRunningTasks(1);
+        List<ActivityManager.RunningTaskInfo> list = manager.getRunningTasks(1);
         ActivityManager.RunningTaskInfo info = list.get(0);
         Log.d("CustomViewFrag", "최상위 액티비티 : " + info.topActivity.getClassName());
         if (info.topActivity.getClassName().equals("com.example.seoulapp.ui.notifications.MyReviewActivity")) {
@@ -206,11 +209,6 @@ public class CustomViewFrag extends ListFragment {
             //comment_Id랑 comment를 commentAct로 넘겨야합니당..
         }
 
-    }
-    public void onResult(int requestCode){
-        if(requestCode == 1 ) {
-            new JSONTaskUserProfile().execute("http://192.168.43.102:3000/getUserProfile");
-        }
     }
 
     public class JSONTaskCurrentUser extends AsyncTask<String, String, String> {

@@ -761,32 +761,6 @@ app.post('/emailCheck', (req, res) => {
      });
     });
   });
-  
-  
-  /*
-     connection.query("select shopName from shop where shopName like concat ('%', ?, '%')",
-     inputData.searchShopName, function(error, results) {
-       if(error){
-         console.log("error 발생 : " + error);
-       }
-       else if(results[0])
-       {
-         searchInfo = searchInfo + results[0].shopName;
-         console.log("searchInfo : " + searchInfo);
-         res.write(String(searchInfo));
-        }
-       else if(!results[0])
-       {
-        console.log("검색된 매장이름 존재X");
-        res.write("noResult");
-      }
-       res.end();
-     });
-    });
-  });
-  */
-  
-  var BMNum;
 
   app.post('/getBookmark', (req, res) => {
     console.log("post /getBookmark");
@@ -1050,6 +1024,7 @@ app.post('/emailCheck', (req, res) => {
     var params;
 
     req.on('data', (data) => {
+
       inputData = JSON.parse(data);
       params = [inputData.building, inputData.floor, inputData.location, inputData.style, inputData.category, inputData.introduction, inputData.profileImg, inputData.repImg1, inputData.repImg2, inputData.repImg3, inputData.profileURL, inputData.repURL1, inputData.repURL2, inputData.repURL3, inputData.email];
     });
@@ -1087,7 +1062,6 @@ app.post('/emailCheck', (req, res) => {
           console.log("닉네임 : " + result[0].nickname + ", 이미지 : " + result[0].profile_image + ", 매장 여부 : " + result[0].shop_being);
           userProfile = result[0].nickname + "|" + result[0].profile_image + "|" + result[0].shop_being + "|" + result[0].profile_image_url;
         }
-
         console.log("userProfile : " + userProfile);
         res.write(String(userProfile));
         res.end();
@@ -1320,7 +1294,7 @@ app.post('/emailCheck', (req, res) => {
   });
   
   app.post('/getUserProfile', (req,res) => {
- 
+
     var UserContent="";
     var UserId ="";
     var UserImage="";
@@ -1329,7 +1303,12 @@ app.post('/emailCheck', (req, res) => {
     var Like="";
     var Review_Number = "";
     var allView="";
-  
+
+    req.on('data', (data) => {
+        inputData = JSON.parse(data);
+    });
+
+    req.on('end', () => {
     console.log("프로필 사진 얻기");
     connection.query("SELECT * FROM review", function(error, results) { //all pulled.
       if(error)
@@ -1341,7 +1320,6 @@ app.post('/emailCheck', (req, res) => {
       {
         if(j == 0)
         {
-  
           UserImage = results[0].User_Image;
           UserId = results[0].User_Id;
           UserContent = results[0].User_Content;
@@ -1354,7 +1332,7 @@ app.post('/emailCheck', (req, res) => {
         else
         {
   
-  
+
           UserImage = UserImage+"|"+results[j].User_Image;
           UserId = UserId+"|"+results[j].User_Id;
           UserContent = UserContent+"|"+results[j].User_Content;
@@ -1368,11 +1346,12 @@ app.post('/emailCheck', (req, res) => {
         };
       };
       console.log("allView : " + allView);
-  
+
       res.write(allView); //그냥 모든 걸 더해서 하나로 보낸 후에 나누면 안 됨?
       res.end();
     });
   });
+});
   
   app.post('/InsertQnAInfo', (req,res) => {
   
@@ -1580,8 +1559,8 @@ app.post('/emailCheck', (req, res) => {
         });
     });
   });
-  
-  app.post('/StoreComment', (req,res)=>{ 
+
+  app.post('/StoreComment', (req,res)=>{
 
     var inputCmt;
     var params;
@@ -2017,3 +1996,4 @@ app.post('/getFavoriteProCheck', (req, res) => {
 }
                 
     
+
