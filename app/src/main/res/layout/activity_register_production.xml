@@ -62,6 +62,7 @@
                         android:layout_height="wrap_content">
 
                     <ImageView
+                        android:scaleType="fitXY"
                         android:id="@+id/proRegImage"
                         android:layout_gravity="center"
                         android:layout_marginTop="10dp"
@@ -104,12 +105,12 @@
                         android:textSize="15sp"
                         android:fontFamily="@font/nanumsquare_acr"/>
 
-                    <com.example.seoulapp.ClearEditText
+                    <EditText
                         android:id="@+id/proRegTitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text=""
-                        android:textSize="18sp"
+                        android:textSize="15sp"
                         android:fontFamily="@font/nanumsquare_acr"/>
 
                         </LinearLayout>

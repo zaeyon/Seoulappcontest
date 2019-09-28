@@ -152,13 +152,14 @@ public class CreateReviewAct extends AppCompatActivity {
        /* fileName = "1";
         transferUtility = new TransferUtility(s3, getApplicationContext());*/
         switch (item.getItemId()) {
+
             case R.id.gotoReview: // 선택하면 firebase에 저장된다!
                 String write_Story = reviewwriting.getText().toString();
                 String write_Store = storewriting.getText().toString();
                 if (write_Store.equals("") || write_Story.equals("")) {
                     Toast.makeText(this, "입력이 덜 되었습니다!", Toast.LENGTH_LONG).show();
                 } else {
-                    new JSONTaskReviewUpload().execute("http://192.168.43.102:3000/setReviewFile"); //
+                    new JSONTaskReviewUpload().execute("http://192.168.43.72:3000/setReviewFile"); //
                 }
 
         }

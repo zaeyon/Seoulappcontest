@@ -185,8 +185,7 @@ public class AddShop extends AppCompatActivity {
         userEmail = user.getString("inputId", "null");
         Log.d("AddShop", "사용자 : " + userEmail);
 
-        new JSONTask0().execute("http://192.168.43.102:3000/newShopData0");
-
+        new JSONTask0().execute("http://192.168.43.72:3000/newShopData0");
 
         salesItemList = new ArrayList<>();
         salesItemList.add("여성 의류");
@@ -240,7 +239,7 @@ public class AddShop extends AppCompatActivity {
         // 매장 관리 페이지로 이동하게 수정
         signUpNext.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                new JSONTask1().execute("http://192.168.43.102:3000/newShopData1");
+                new JSONTask1().execute("http://192.168.43.72:3000/newShopData1");
 
                 Log.d("profileFile : " ,profileImageFile);
                 Log.d("repFile : ", repImageFile1);

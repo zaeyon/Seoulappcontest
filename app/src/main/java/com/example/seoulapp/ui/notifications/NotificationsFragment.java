@@ -46,6 +46,8 @@ import static android.view.View.VISIBLE;
 
 public class NotificationsFragment extends Fragment {
 
+    Intent intentSettingShop;
+
     private NotificationsViewModel notificationsViewModel;
 
     String clickShopName;
@@ -93,8 +95,7 @@ public class NotificationsFragment extends Fragment {
         SharedPreferences auto = this.getActivity().getSharedPreferences(MainActivity.name, Context.MODE_PRIVATE);
         strEmail = auto.getString("inputId", "null");
 
-        new TaskGetBookmark().execute("http://192.168.43.102:3000/getBookmark");
-
+        new TaskGetBookmark().execute("http://192.168.43.72:3000/getBookmark");
         NoShopPage = v.findViewById(R.id.noShopPage);
         YesShopPage = v.findViewById(R.id.yesShopPage);
 
@@ -127,7 +128,7 @@ public class NotificationsFragment extends Fragment {
         ivShopSetting.setOnClickListener(new goSettingShop());
 
         // 와이파이 새로 접속할 때마다 변경
-        new JSONTask().execute("http://192.168.43.102:3000/getUserInfo");
+        new JSONTask().execute("http://192.168.43.72:3000/getUserInfo");
 
         // 즐겨찾기 리스트
 //        String[] strBookmark =  {"들락날락", "다래락", "라일락", "라운지오", "워커하우스"};
@@ -161,8 +162,7 @@ public class NotificationsFragment extends Fragment {
                 ItemData item = (ItemData)parent.getItemAtPosition(position);
                 clickShopName = item.getStrShopName();
 
-
-                new TaskGetShopInfo().execute("http://192.168.43.102:3000/getShopInfo");
+                new TaskGetShopInfo().execute("http://192.168.43.72:3000/getShopInfo");
             }
         });
 
@@ -331,9 +331,9 @@ public class NotificationsFragment extends Fragment {
             super.onPostExecute(result);
 
             bookmarkNum = Integer.parseInt(result);
+            new TaskGetName().execute("http://192.168.43.72:3000/getBMName");
+            new TaskGetProfile().execute("http://192.168.43.72:3000/getBMProfile");
 
-            new TaskGetName().execute("http://192.168.43.102:3000/getBMName");
-            new TaskGetProfile().execute("http://192.168.43.102:3000/getBMProfile");
         }
     }
 
@@ -634,11 +634,12 @@ public class NotificationsFragment extends Fragment {
     class goSettingShop implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-            Intent intentSettingShop = new Intent(getActivity(), ShopDetaildInfo.class);
+            intentSettingShop = new Intent(getActivity(), ShopDetaildInfo.class);
 
-            intentSettingShop.putExtra("hostEmail", strEmail);
 
-            startActivity(intentSettingShop);
+            new JSONTaskGetMyShop().execute("http://192.168.43.72:3000/getMyShop");
+
+            // startActivity(intentSettingShop);
         }
     }
 
@@ -647,6 +648,97 @@ public class NotificationsFragment extends Fragment {
         public void onClick(View v) {
             Intent intentSettings = new Intent(getActivity(), SettingsActivity.class);
             startActivity(intentSettings);
+        }
+    }
+
+
+    public class JSONTaskGetMyShop extends AsyncTask<String, String, String> {
+
+        @Override
+        protected String doInBackground(String... urls) {
+            try {
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.accumulate("email", strEmail);
+
+
+                HttpURLConnection con = null;
+                BufferedReader reader = null;
+
+                try {
+                    URL url = new URL(urls[0]);
+                    con = (HttpURLConnection) url.openConnection();
+                    con.setRequestMethod("POST");//POST방식으로 보냄
+                    con.setRequestProperty("Cache-Control", "no-cache");//캐시 설정
+                    con.setRequestProperty("Content-Type", "application/json");//application JSON 형식으로 전송
+                    con.setRequestProperty("Accept", "text/html");//서버에 response 데이터를 html로 받음
+                    con.setDoOutput(true);//Outstream으로 post 데이터를 넘겨주겠다는 의미
+                    con.setDoInput(true);//Inputstream으로 서버로부터 응답을 받겠다는 의미
+                    con.connect();
+
+                    //서버로 보내기위해서 스트림 만듬
+                    OutputStream outStream = con.getOutputStream();
+                    //버퍼를 생성하고 넣음
+                    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outStream));
+                    writer.write(jsonObject.toString());
+                    writer.flush();
+                    writer.close();//버퍼를 받아줌
+
+                    InputStream stream = con.getInputStream();
+
+                    reader = new BufferedReader(new InputStreamReader(stream));
+
+                    StringBuffer buffer = new StringBuffer();
+
+                    String line = "";
+                    while ((line = reader.readLine()) != null) {
+                        buffer.append(line);
+                    }
+
+                    return buffer.toString();
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+                    if (con != null) {
+                        con.disconnect();
+                    }
+                    try {
+                        if (reader != null) {
+                            reader.close();
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+
+            String[] myShopInfo;
+
+            myShopInfo = result.split("\\|");
+
+            for(int i = 0; i < myShopInfo.length; i++)
+            {
+                Log.d("myShopInfo[i] : ", myShopInfo[i]);
+            }
+
+            intentSettingShop.putExtra("name", myShopInfo[5]);
+            intentSettingShop.putExtra("building", myShopInfo[6]);
+            intentSettingShop.putExtra("floor", myShopInfo[7]);
+            intentSettingShop.putExtra("rocation", myShopInfo[8]);
+            intentSettingShop.putExtra("category", myShopInfo[10]);
+            intentSettingShop.putExtra("style", myShopInfo[9]);
+            intentSettingShop.putExtra("intro", myShopInfo[11]);
+
+            startActivity(intentSettingShop);
         }
     }
 }

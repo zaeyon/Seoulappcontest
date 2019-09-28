@@ -79,9 +79,9 @@ public class CustomViewFrag extends ListFragment {
         ActivityManager.RunningTaskInfo info = list.get(0);
         Log.d("CustomViewFrag", "최상위 액티비티 : " + info.topActivity.getClassName());
         if (info.topActivity.getClassName().equals("com.example.seoulapp.ui.notifications.MyReviewActivity")) {
-            new JSONTaskCurrentUser().execute("http://192.168.43.102:3000/getCurrentUserReview");
+            new JSONTaskCurrentUser().execute("http://192.168.43.72:3000/getCurrentUserReview");
         } else {
-            new JSONTaskUserProfile().execute("http://192.168.43.102:3000/getUserProfile");
+            new JSONTaskUserProfile().execute("http://192.168.43.72:3000/getUserProfile");
         }
 
        /* dashboardViewModel =

@@ -607,30 +607,28 @@ app.post('/emailCheck', (req, res) => {
       console.log("매장이름 : " + 
       inputData.shopName);
   
-      connection.query("select shopProduction from shop where shopName = ?", inputData.shopName, function(error, results) {
-        
+      connection.query("select shopProductionURL from shop where shopName = ?", inputData.shopName, function(error, results) {    
         if(error)
         {
           console.log("error 발생");
           console.log(error);
           res.end();
         }
-        else if(results[0].shopProduction == null)
+        else if(results[0].shopProductionURL == null)
         {
           console.log("등록된 상품없음");
           res.end();
         }
         else
         {
-          shopProduction = results[0].shopProduction;
+          shopProduction = results[0].shopProductionURL;
           console.log("등록된 상품 목록 : " + shopProduction);
           res.write(String(shopProduction));
           res.end();
         }
-      });
-    
+    });
   });
-  });
+});
   
   app.post('/getProductionInfo', (req, res) => {
       var inputData;
@@ -879,7 +877,7 @@ app.post('/emailCheck', (req, res) => {
           console.log("BookmarkImage : " + bookmarkImage);
         }
 
-        res.write(bookmarkImage);
+        res.write(String(bookmarkImage));
         res.end();
       })
     })
@@ -1538,8 +1536,51 @@ app.post('/emailCheck', (req, res) => {
       });
     });
   });
+
+  app.post('/deleteFavoriteProduction', (req,res)=> {
+    var inputData;
+    var params;
+    var productionShop;
   
-  app.post('/StoreComment', (req,res)=>{
+
+    req.on('data', (data) => {
+      inputData = JSON.parse(data);
+  
+      console.log("inputData.productionName : " + inputData.productionName);
+    });
+  
+      req.on('end', () => {
+        connection.query("SELECT shopName from production where productionPrice = ? AND productionIntro = ?", [inputData.productionPrice, inputData.productionIntro], function(error, results){
+          if(error)
+          {
+            console.log("error 발생 : " + error);
+          }
+          else{
+            console.log("상품이 등록된 매장이름 : "+ results[0].shopName);
+            productionName = results[0].shopName;
+
+            connection.query("DELETE from favorite_production where shopName = ? AND userEmail = ?", [productionName, inputData.userEmail], function(error, results) {
+              if(error)
+              {
+                console.log("error 발생 : " + error);
+                res.write("error");
+                res.end();
+                
+              }
+              else{
+                console.log("내상품에서 삭제 완료");
+                console.log("productionName : " + productionName);
+                console.log("userEmail : " + inputData.userEmail);
+                res.write("favorite production delete success");
+                res.end();
+              }
+            });
+          }
+        });
+    });
+  });
+  
+  app.post('/StoreComment', (req,res)=>{ 
 
     var inputCmt;
     var params;
@@ -1630,14 +1671,16 @@ app.post('/emailCheck', (req, res) => {
      req.on('end',()=>{
       connection.query("INSERT INTO review SET ?", params, (err,result)=>{
         if(err) console.log(err); //err는 꼭 console에 출력해봐야 한다.
-        res.write("db에 입력 완료");
+        console.log("db에 입력 완료");
+        res.write("riview register success");
         res.end();
       });
     });
   });
 
   app.post('/InsertProductionInfo', (req, res) => {
-      var inputData;
+    var inputData;
+    var URL;
 
       req.on('data', (data) => {
         inputData = JSON.parse(data);
@@ -1654,90 +1697,322 @@ app.post('/emailCheck', (req, res) => {
               "productionIntro":inputData.RegProIntro
           };
 
-          connection.query('INSERT INTO production SET ?', params, function(error, result) {
-
-              if(error)
-              {
-                  console.log("error 발생 : " + error);
-                  res.write("production register faild");
-                  res.end();
-              }
-              else
-              {
-                  console.log("상품 등록 성공 : " + params);
-                  res.write("production register success");
-                  res.end();
-              }
-          });
-      });
-  })
-
-  app.post('/CommentDelete',(req,res)=>{
-
-    var input="";
-  
-    req.on('data', (data)=>{
-      input = JSON.parse(data);
-      console.log("input : ", input.dis_number);
-    })
-
-    req.on('end', ()=>{
-      connection.query("DELETE FROM commenttable WHERE distinguish_number =?", input.dis_number, (err, results2)=>{
-
-        console.log("삭제 성공");
-        res.write("삭제");
-        res.end();
-      })
-    })
-  });
-
-  app.post('/getCommentInfo',(req,res)=>{
-
-    var Comment="";
-    var CommentUser_Id="";
-    var Distinguish_number="";
-    var allView="";
-    var input="";
-
-    req.on('data',(data)=>{
-      input = JSON.parse(data);
-      console.log("댓글 가져오기");
-      console.log("dsitinguish_number : ", input.PositionOfCmt);
-    })
-
-    req.on('end', ()=> {
-      connection.query("SELECT * FROM commenttable WHERE Distinguish_number = ?", input.PositionOfCmt, function(error, results) { //all pulled.
-        console.log(results);
+          
+      connection.query('INSERT INTO production SET ?', params, function(error, result) {
         if(error)
         {
-          console.log("에러 + "+ error);
+          console.log("error 발생1 : " + error);
+          res.write("production register faild");
+          res.end();
         }
-        else {
+        else
+        {
+          console.log("상품 등록 성공 : " + params);
+
+          connection.query("SELECT shopProductionURL from shop WHERE shopName = ?", inputData.RegProShopName, function(error, results) {
+
+            if(error)
+            {
+             console.log("error 발생2 : " + error);
+            }
+            else{
+              URL = results[0].shopProductionURL + "|" + inputData.RegProImageUrl;
+
+              connection.query("UPDATE shop SET shopProductionURL = ? WHERE shopName = ?", [URL, inputData.RegProShopName] , function(error, results) {
+                if(error)
+                {
+                  console.log("error 발생3 : " + error);
+                }
+                else
+                {
+                  console.log("shopProductionURL : " + URL);
+                }
+              });
+            }
+          });
+          res.write("production register success");
+          res.end();
+        }
+    });
+});
+});
+
+    
+app.post('/getMyShop', (req, res) => {
+  
+  var inputData;
+  var shopInfo;
+
+  req.on('data', (data) => {
+    inputData = JSON.parse(data);
+    console.log("inputData : " + inputData.email);
+  });
+
+  req.on('end', () =>{
+    connection.query("SELECT * from shop where userEmail = ?", inputData.email, function(error, results) {
+      if(error){
+        console.log("error 발생 : " + error);
+        res.write("error");
+        res.end();
+      }
+      else if(results[0]){
+        shopInfo = results[0].userEmail + "|" + results[0].shopProfileImageUrl + "|" + results[0].shopRep1ImageUrl + "|" +results[0].shopRep2ImageUrl + "|" + results[0].shopRep3ImageUrl + "|" + results[0].shopName + "|"+ results[0].shopBuilding + "|" + results[0].shopFloor + "|" + results[0].shopRocation + "|" + results[0].shopStyle + "|" + results[0].shopCategory + "|" + results[0].shopIntro;
+
+        console.log("shopInfo : " + shopInfo);
+        res.write(String(shopInfo));
+        res.end();
+      }
+      else{
+        console.log("매장이 존재하지 않습니다.");
+        res.write("noShop");
+        res.end();   
+         }
+    });
+  });
+});
+
+
+app.post('/getHostEmail', (req, res) => {
+ 
+  console.log('asdasdsada')
+  var inputData;
+
+  req.on('data', (data) => {
+    inputData = JSON.parse(data);
+    console.log("inputData.shopName : " + inputData.shopName);
+  });
+
+  req.on('end', () => {
+
+    connection.query("SELECT userEmail from shop where shopName = ?", inputData.shopName, function(error, results) {
+
+      if(error)
+      {
+        console.log("error : " + error);
+        res.write("error")
+        res.end();
+      }
+      else if(results[0].userEmail) {
+        console.log("매장호스트 이메일 : " + results[0].userEmail);
+        res.write(String(results[0].userEmail));
+        res.end();
+      }
+    });
+  });
+});
+
+app.post('/getNewMyShopInfo', (req, res) => {
+  var inputData;
+  var newMyShop = ""
+
+  req.on('data', (data) => {
+    inputData = JSON.parse(data);
+    console.log("inputData.RegProShopName : " + inputData.RegProShopName);
+  });
+
+  req.on('end', () => {
+    connection.query("SELECT * FROM shop where shopName = ?", inputData.RegProShopName, function(error, results) {
+      
+      if(error)
+      {
+        console.log("error 발생 : " + + error);
+        res.write("error");
+        res.end();
+      }
+      else
+      {
+        newMyShop = results[0].shopBuilding + "|" + results[0].shopFloor + "|" + results[0].shopRocation + "|" + results[0].shopCategory + "|" + results[0].shopStyle + "|" + results[0].shopIntro;
+        console.log("newMyShop : " + newMyShop);
+        res.write(String(newMyShop));
+        res.end();
+      }
+    });
+  });
+});
+
+app.post('/insertQnAAnswer', (req, res) => {
+
+  var inputData;
+  var hostNickname;
+
+  req.on('data', (data) => {
+    inputData = JSON.parse(data);
+    console.log("inputData.answer : " + inputData.answer);
+    console.log("inputData.nickName : " + inputData.nickName);
+    console.log("inputData.title : " + inputData.title);
+    console.log("inputData.shopName : " + inputData.shopName);
+
+    connection.query('SELECT hostNickname from shop where shopName = ?', inputData.shopName, function(err, results) {
+      if(err)
+      {
+        console.log("err 발생 : " + err);
+      }
+      else
+      {
+       hostNickname = results[0].hostNickname;
+      }
+    })
+
+  });
+
+  req.on('end', () => {
+    connection.query('UPDATE qna SET answerExis = 1, answer = ? WHERE userNickname = ? AND shopName = ? AND title = ?',[inputData.answer, inputData.nickName, inputData.shopName, inputData.title], function(error, results) {
+      if(error){
+      console.log("error: 발생" + error);
+    res.write("error");
+    res.end();  
+    }
+    else{
+      console.log("답변 등록 완료");
+      res.write("answer register success");
+      res.end();
+    }
+    });
+  });
+});
+
+app.post('/getFavoriteCheck', (req, res) => {
+
+  var inputData;
+  var favoriteShop = "";
+  
+  req.on('data', (data) => {
+    inputData = JSON.parse(data);
+  });
+
+  req.on('end', () => {
+    connection.query("SELECT shopName from favorite_shop where userEmail = ?", inputData.userEmail, function(error ,results) {
+      if(error)
+      {
+        console.log("error 발생 : " + error);
+        res.write("error");
+        res.end();
+      }
+      else {
+        for(var j = 0; j < results.length; j++)
+        {
+          if(j == 0)
+          {
+           favoriteShop = results[0].shopName + "|";
+          }
+          else {
+            favoriteShop = favoriteShop + results[0].shopName + "|";
+          }
+        }
+        console.log("favoriteShop : " + favoriteShop);
+        res.write(String(favoriteShop));
+        res.end();
+      }
+    });
+  });
+});
+
+app.post('/getCommentInfo',(req,res)=>{
+
+  var Comment="";
+  var CommentUser_Id="";
+  var Distinguish_number="";
+  var allView="";
+  var input="";
+
+  req.on('data',(data)=>{
+    input = JSON.parse(data);
+    console.log("댓글 가져오기");
+    console.log("dsitinguish_number : ", input.PositionOfCmt);
+  })
+
+  req.on('end', ()=> {
+    connection.query("SELECT * FROM commenttable WHERE Distinguish_number = ?", input.PositionOfCmt, function(error, results) { //all pulled.
+      console.log(results);
+      if(error)
+      {
+        console.log("에러 + "+ error);
+      }
+      else {
+        for(var j = 0; j < results.length; j++)
+        {
+          if(j == 0)
+          { 
+            Comment=results[0].Comment;
+            CommentUser_Id = results[0].CommentUser_Id;
+            Distinguish_number = results[0].Distinguish_number;
+            allView = Comment+"/"+CommentUser_Id+"/"+Distinguish_number; //
+          }
+          else
+          {
+            Comment=Comment + "|" + results[j].Comment;
+            CommentUser_Id = CommentUser_Id + "|" + results[j].CommentUser_Id;
+            Distinguish_number = Distinguish_number + "|" + results[j].Distinguish_number;
+            allView = Comment+"/"+CommentUser_Id+"/"+Distinguish_number;
+          }
+        };
+      };
+      console.log("if문 빠져나옴...");
+      console.log(allView);
+      res.write(allView); 
+      res.end();
+    });
+  });
+});
+  
+
+app.post('/getFavoriteProCheck', (req, res) => {
+
+  var inputData;
+  var productionShop = "";
+  var favoriteProduction;
+  
+  req.on('data', (data) => {
+    inputData = JSON.parse(data);
+    console.log("inputData.productionIntro" + inputData.productionIntro);
+    console.log("inputData.productionPrice" + inputData.productionPrice);
+  });
+
+  req.on('end', () => {
+    connection.query('SELECT shopName from production WHERE  productionIntro = ? AND productionPrice = ?', [inputData.productionIntro, inputData.productionPrice], function(error, results){
+
+      if(error)
+      {
+        console.log("error 발생 : " + error);
+        res.write("error 발생");
+        res.end();
+      }
+      else
+      {
+       console.log("해당 상품이 등록된 매장 : " + results[0].shopName);
+       productionShop = results[0].shopName;
+       
+       connection.query("SELECT productionName from favorite_production where userEmail = ? AND shopName = ?", [inputData.userEmail, productionShop], function(error, results){
+
+        if(error)
+        {
+          console.log("error 발생" + error);
+          res.write("error");
+          res.end();
+        }
+        else
+        {
           for(var j = 0; j < results.length; j++)
           {
             if(j == 0)
-            { 
-              Comment=results[0].Comment;
-              CommentUser_Id = results[0].CommentUser_Id;
-              Distinguish_number = results[0].Distinguish_number;
-              allView = Comment+"/"+CommentUser_Id+"/"+Distinguish_number; //
-            }
-            else
             {
-              Comment=Comment + "|" + results[j].Comment;
-              CommentUser_Id = CommentUser_Id + "|" + results[j].CommentUser_Id;
-              Distinguish_number = Distinguish_number + "|" + results[j].Distinguish_number;
-              allView = Comment+"/"+CommentUser_Id+"/"+Distinguish_number;
+             favoriteProduction = results[0].productionName + "|";
             }
-          };
-        };
-        console.log("if문 빠져나옴...");
-        console.log(allView);
-        res.write(allView); 
-        res.end();
-      });
+
+            else {
+              favoriteProduction = favoriteProduction + results[j].productionName + "|";
+            }
+          }
+          console.log("favoriteProduction : " + favoriteProduction);
+          res.write(String(favoriteProduction));
+          res.end();
+        }
+       });
+      }
     });
   });
-
+});
 
 }
+                
+    

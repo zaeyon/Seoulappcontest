@@ -54,7 +54,7 @@ public class Comment extends AppCompatActivity {
         commentlayout = findViewById(R.id.comment_layout);
         commentLinearLay = findViewById(R.id.UserCommentAndId);
 
-        new JSONTaskCommentInfo().execute("http://192.168.43.102:3000/getCommentInfo");
+        new JSONTaskCommentInfo().execute("http://192.168.43.72:3000/getCommentInfo");
 
         Intent intent = getIntent();
         story.setText(intent.getStringExtra("ReviewStory"));
@@ -65,7 +65,7 @@ public class Comment extends AppCompatActivity {
         /*delete_cmt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new JSONTaskDeleteCmt().execute("http://192.168.43.102:3000/DeleteCmt");
+                new JSONTaskDeleteCmt().execute("http://192.168.43.72:3000/DeleteCmt");
             }
         });*/
 
