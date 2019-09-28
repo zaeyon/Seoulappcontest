@@ -3,7 +3,6 @@ package com.example.seoulapp.ui.dashboard;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,13 +32,13 @@ public class CommentAdapter extends BaseAdapter {
 
     ArrayList<CommentItem> cmt_list = new ArrayList<>();
 
-    TextView CommentMore;
     TextView comment;
     TextView comment_Id;
     LinearLayout forDeleteClick;
 
     int clickNumber;
     Context context;
+
 
     int commentNumber;
     @Override
@@ -70,11 +69,10 @@ public class CommentAdapter extends BaseAdapter {
         comment = convertView.findViewById(R.id.comment_content);
         comment_Id = convertView.findViewById(R.id.comment_id);
         forDeleteClick = convertView.findViewById(R.id.CommentforClick);
+        commentNumber = (int) getItemId(position)+1;
 
 
-        //댓글, 댓글 아이디, 게시글 위치, 댓글 위치
-
-        forDeleteClick.setOnLongClickListener(new View.OnLongClickListener(){
+        forDeleteClick.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 CommentItem Ca= new CommentItem(); //ca는 아이템이잖소
@@ -155,8 +153,6 @@ public class CommentAdapter extends BaseAdapter {
                     writer.write(jsonObject.toString());
                     writer.flush();
                     writer.close();//버퍼를 받아줌
-
-                    //서버로 부터 데이터를 받음
 
                     InputStream stream = con.getInputStream();
 

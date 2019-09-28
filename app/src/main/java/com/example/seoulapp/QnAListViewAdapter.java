@@ -1,13 +1,18 @@
 package com.example.seoulapp;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+
+import static android.view.View.INVISIBLE;
+import static android.view.View.VISIBLE;
 
 public class QnAListViewAdapter extends BaseAdapter {
 
@@ -43,6 +48,18 @@ public class QnAListViewAdapter extends BaseAdapter {
         //TextView QnACEOView = convertView.findViewById(R.id.qnaCEO);
         // TextView QnAAnswerView = convertView.findViewById(R.id.qnaAnswer2);
         QnAListViewItem qnaListViewItem = QnAListViewItemList.get(position);
+        ImageView QnAAnswerNoView = convertView.findViewById(R.id.answerNo);
+        ImageView QnAAnswerYesView = convertView.findViewById(R.id.answerYes);
+
+        Log.d("qnaListViewItem : ", qnaListViewItem.getQnAAnswerExist());
+        if(qnaListViewItem.getQnAAnswerExist().equals("0")){
+            QnAAnswerNoView.setVisibility(VISIBLE);
+            QnAAnswerYesView.setVisibility(INVISIBLE);
+        }
+        else{
+            QnAAnswerYesView.setVisibility(VISIBLE);
+            QnAAnswerNoView.setVisibility(INVISIBLE);
+        }
 
         QnATitleView.setText(qnaListViewItem.getQnATitle());
         QnANicknameView.setText(qnaListViewItem.getQnAUserNickname());
@@ -58,7 +75,7 @@ public class QnAListViewAdapter extends BaseAdapter {
     public Object getItem(int position) { return QnAListViewItemList.get(position); }
 
     // 아이템 추가를 위한 함수
-    public void addItem(String title, String production, String nickname, String content, String answer, String shopName ) {
+    public void addItem(String title, String production, String nickname, String content, String answer, String shopName, String existance) {
 
         QnAListViewItem item = new QnAListViewItem();
 
@@ -68,6 +85,7 @@ public class QnAListViewAdapter extends BaseAdapter {
         item.setQnAContent(content);
         item.setQnAShopName(shopName);
         item.setQnAAnswer(answer);
+        item.setQnAAnswerExist(existance);
 
         QnAListViewItemList.add(item);
     }

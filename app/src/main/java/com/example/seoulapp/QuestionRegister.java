@@ -86,7 +86,8 @@ public class QuestionRegister extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                new JSONTaskInsertQnA().execute("http://192.168.43.102:3000/InsertQnAInfo");
+                new JSONTaskInsertQnA().execute("http://192.168.43.72:3000/InsertQnAInfo");
+
 
             }
         });
@@ -174,9 +175,7 @@ public class QuestionRegister extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-
-
-            new JSONTaskQnA().execute("http://192.168.43.102:3000/getQnAInfo");
+            new JSONTaskQnA().execute("http://192.168.43.72:3000/getQnAInfo");
 
         }
     }
@@ -271,10 +270,9 @@ public class QuestionRegister extends AppCompatActivity {
 
                 for (int i = 0; i < QnA.length; i++) {
                     QnAInfo = QnA[i].split("\\|");
-                    adapter.addItem(QnAInfo[5], QnAInfo[6], QnAInfo[7], QnAInfo[4], QnAInfo[3], QnAInfo[1]);
+                    adapter.addItem(QnAInfo[5], QnAInfo[6], QnAInfo[7], QnAInfo[4], QnAInfo[3], QnAInfo[1], QnAInfo[9]);
                 }
             }
-
             onBackPressed();
         }
     }

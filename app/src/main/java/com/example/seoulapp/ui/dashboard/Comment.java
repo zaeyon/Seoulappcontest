@@ -63,11 +63,12 @@ public class Comment extends AppCompatActivity {
             new JSONTaskCommentInfo().execute("http://192.168.43.102:3000/getCommentInfo");
 
 
+
         // positionget = (int) new CommentAdapter().getItemId();
         /*delete_cmt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new JSONTaskDeleteCmt().execute("http://192.168.43.102:3000/DeleteCmt");
+                new JSONTaskDeleteCmt().execute("http://192.168.43.72:3000/DeleteCmt");
             }
         });*/
 

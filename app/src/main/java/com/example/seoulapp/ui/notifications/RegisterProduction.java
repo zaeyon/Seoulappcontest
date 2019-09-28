@@ -23,6 +23,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.seoulapp.ClearEditText;
 import com.example.seoulapp.R;
+import com.example.seoulapp.ShopDetaildInfo;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
@@ -53,7 +54,7 @@ public class RegisterProduction extends AppCompatActivity {
     String proImageUrl;
     ImageView proRegImage;
     ImageView proRegPlus;
-    ClearEditText proRegTitle;
+    EditText proRegTitle;
     ClearEditText proRegShopName;
     Spinner proRegType;
     EditText proRegIntro;
@@ -82,6 +83,10 @@ public class RegisterProduction extends AppCompatActivity {
         proRegIntro = findViewById(R.id.proRegIntro);
         proRegBtn = findViewById(R.id.proRegBtn);
         proRegPlus = findViewById(R.id.selectPhoto);
+
+        proRegShopName.setText(getIntent().getStringExtra("shopName"));
+        proRegShopName.setEnabled(false);
+
         proUrl = "";
 
         productionTypeList = new ArrayList<>();
@@ -103,7 +108,7 @@ public class RegisterProduction extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                new JSONTaskInsertProduction().execute("http://192.168.43.102:3000/InsertProductionInfo");
+                new JSONTaskInsertProduction().execute("http://192.168.43.72:3000/InsertProductionInfo");
 
             }
         });
@@ -129,7 +134,7 @@ public class RegisterProduction extends AppCompatActivity {
             try {
                 //JSONObject를 만들고 key value 형식으로 값을 저장해준다.
                 JSONObject jsonObject = new JSONObject();
-                jsonObject.accumulate("RegProShopName", "ShopName");
+                jsonObject.accumulate("RegProShopName", proRegShopName.getText());
                 jsonObject.accumulate("RegProType", proRegType.getSelectedItem().toString());
                 jsonObject.accumulate("RegProTitle", proRegTitle.getText());
                 jsonObject.accumulate("RegProIntro", proRegIntro.getText());
@@ -216,7 +221,24 @@ public class RegisterProduction extends AppCompatActivity {
                 Toast toast = Toast.makeText(getApplicationContext(), "상품이 등록되었습니다.", Toast.LENGTH_LONG);
                 toast.setGravity(Gravity.CENTER, 0, 0);
                 toast.show();
-            }
+
+
+                new JSONTaskgetShopInfo().execute("http://192.168.43.72:3000/getNewMyShopInfo");
+                /*
+                Intent shopDetailIntent = new Intent(RegisterProduction.this, ShopDetaildInfo.class);
+                shopDetailIntent.putExtra("name", myShopInfo[5]);
+                shopDetailIntent.putExtra("building", myShopInfo[6]);
+                shopDetailIntent.putExtra("floor", myShopInfo[7]);
+                shopDetailIntent.putExtra("rocation", myShopInfo[8]);
+                shopDetailIntent.putExtra("category", myShopInfo[10]);
+                shopDetailIntent.putExtra("style", myShopInfo[9]);
+                shopDetailIntent.putExtra("intro", myShopInfo[11]);
+                startActivity(shopDetailIntent);
+                 */
+
+
+
+}
         }
     }
 
@@ -321,4 +343,108 @@ public class RegisterProduction extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "파일을 먼저 선택하세요.", Toast.LENGTH_SHORT).show();
         }
     }
+
+    public class JSONTaskgetShopInfo extends AsyncTask<String, String, String> {
+
+        @Override
+        protected String doInBackground(String... urls) {
+            try {
+                //JSONObject를 만들고 key value 형식으로 값을 저장해준다.
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.accumulate("RegProShopName", proRegShopName.getText());
+
+                HttpURLConnection con = null;
+                BufferedReader reader = null;
+
+                try {
+                    //URL url = new URL("http://192.168.25.16:3000/users");
+                    URL url = new URL(urls[0]);
+                    //연결을 함
+                    con = (HttpURLConnection) url.openConnection();
+
+                    con.setRequestMethod("POST");//POST방식으로 보냄
+                    con.setRequestProperty("Cache-Control", "no-cache");//캐시 설정
+                    con.setRequestProperty("Content-Type", "application/json");//application JSON 형식으로 전송
+
+
+                    con.setRequestProperty("Accept", "text/html");//서버에 response 데이터를 html로 받음
+                    con.setDoOutput(true);//Outstream으로 post 데이터를 넘겨주겠다는 의미
+                    con.setDoInput(true);//Inputstream으로 서버로부터 응답을 받겠다는 의미
+                    con.connect();
+
+                    //서버로 보내기위해서 스트림 만듬
+                    OutputStream outStream = con.getOutputStream();
+                    //버퍼를 생성하고 넣음
+                    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outStream));
+                    writer.write(jsonObject.toString());
+                    writer.flush();
+                    writer.close();//버퍼를 받아줌
+
+                    //서버로 부터 데이터를 받음
+                    InputStream stream = con.getInputStream();
+
+                    reader = new BufferedReader(new InputStreamReader(stream));
+
+                    StringBuffer buffer = new StringBuffer();
+
+                    String line = "";
+                    while ((line = reader.readLine()) != null) {
+                        buffer.append(line);
+                    }
+
+                    return buffer.toString();//서버로 부터 받은 값을 리턴해줌 아마 OK!!가 들어올것임
+
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+                    if (con != null) {
+                        con.disconnect();
+                    }
+                    try {
+                        if (reader != null) {
+                            reader.close();//버퍼를 닫아줌
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+
+            String[] newMyShopInfo;
+
+            newMyShopInfo = result.split("\\|");
+
+            Intent shopDetailIntent = new Intent(RegisterProduction.this, ShopDetaildInfo.class);
+
+                shopDetailIntent.putExtra("name", proRegShopName.getText().toString());
+                shopDetailIntent.putExtra("building", newMyShopInfo[0]);
+                shopDetailIntent.putExtra("floor", newMyShopInfo[1]);
+                shopDetailIntent.putExtra("rocation", newMyShopInfo[2]);
+                shopDetailIntent.putExtra("category", newMyShopInfo[3]);
+                shopDetailIntent.putExtra("style", newMyShopInfo[4]);
+                shopDetailIntent.putExtra("intro", newMyShopInfo[5]);
+
+                Log.d("name : " , proRegShopName.getText().toString());
+
+                for(int i = 0 ; i < newMyShopInfo.length; i++) {
+                    Log.d("newMyShopInfo[i]", newMyShopInfo[i]);
+                }
+
+                startActivity(shopDetailIntent);
+
+
+        }
+    }
+
 }

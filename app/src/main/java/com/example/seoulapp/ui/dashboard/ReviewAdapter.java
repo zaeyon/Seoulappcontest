@@ -148,11 +148,13 @@ public class ReviewAdapter extends BaseAdapter {
                             Toast.makeText(context, "댓글을 써 주세요!", Toast.LENGTH_LONG).show();
                         } else {
                             //db랑 연결하는 코드를 작성합시다^^...
+
                             Context context = parent.getContext();
                             Toast.makeText(context, "댓글을 저장했습니다!", Toast.LENGTH_LONG).show();
                             Log.e("댓글 저장", "들어왔어용");
                             new JSONTaskStoreComment().execute("http://192.168.43.102:3000/StoreComment");
                             Cmt.setText("");
+
                         }
                     }
                 });
@@ -191,7 +193,7 @@ public class ReviewAdapter extends BaseAdapter {
                 increace_heart++;
                 Like.setText("좋아요 " + increace_heart + "회");
                 list_number.setLike(increace_heart); //like 저장*/
-                new JSONTaskaddLike().execute("http://192.168.43.102:3000/addLike");
+                new JSONTaskaddLike().execute("http://192.168.43.72:3000/addLike");
 
                 Animation animation2 = new AlphaAnimation(1, 0);
                 animation2.setDuration(1000);
