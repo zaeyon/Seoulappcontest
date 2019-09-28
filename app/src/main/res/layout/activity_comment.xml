@@ -1,17 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.dashboard.Comment">
+    android:orientation="vertical">
+    <include
+        android:id="@+id/ReviewToolbar"
+        layout="@layout/toolbar" />
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="댓글창"
-        android:textSize="30sp"/>
+        android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/ReviewNickImg"
+            android:layout_marginLeft="10dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/icon_heart"
+            />
+        <TextView
+            android:id="@+id/Reviewnickname"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:text="White"
+            />
+    </LinearLayout>
+    <TextView
+        android:id="@+id/Comment_ReviewStory"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginBottom="40dp"
+        android:text="오늘은 참 좋은 날~ 정말 좋은 날이죠 하하하 한 숨도 못자고 수업을 연달아 듣는 아주 좋은날이에욯ㄹ히ㅏㅇ휠일"
+        android:gravity="center_vertical|left|start"
+        />
 
-
-
+    <ListView
+        android:id="@+id/comment_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+    </ListView>
 </LinearLayout>

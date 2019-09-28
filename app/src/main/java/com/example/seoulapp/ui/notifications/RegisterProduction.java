@@ -1,8 +1,5 @@
 package com.example.seoulapp.ui.notifications;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
@@ -21,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.seoulapp.ClearEditText;
@@ -109,7 +107,9 @@ public class RegisterProduction extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
+
                 new JSONTaskInsertProduction().execute("http://192.168.43.72:3000/InsertProductionInfo");
+
             }
         });
 

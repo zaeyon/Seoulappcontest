@@ -1,28 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <LinearLayout
-        android:id="@+id/comment_"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        >
+<LinearLayout android:layout_width="match_parent"
+    android:id="@+id/CommentforClick"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    xmlns:android="http://schemas.android.com/apk/res/android">
     <ImageView
         android:id="@+id/comment_img"
+        android:layout_width="50dp"
+        android:layout_height="45dp"
+        android:src="@drawable/profileimage_1"/>
+    <LinearLayout
+        android:id="@+id/UserCommentAndId"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <TextView
-        android:id="@+id/comment_id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
+        android:layout_height="50dp"
+        android:orientation="vertical">
         <TextView
-            android:id="@+id/comment_content"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/comment_id"
+            android:textStyle="bold"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:textSize="15dp"
+            android:text="Happy"
             />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/comment_content"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text="안녕이고 자시고 그냥 긱사가서 자고싶다 탈출하고 싶어...." />
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

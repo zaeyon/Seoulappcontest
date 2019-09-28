@@ -93,6 +93,7 @@ public class ShopDetaildInfo extends AppCompatActivity implements OnClickListene
 
 
 
+
         // 선언한 변수에 생성한 레이아웃 설정
 
         ArrayList<QnAListViewItem> QnAListViewItemList = new ArrayList<QnAListViewItem>();
@@ -210,6 +211,7 @@ public class ShopDetaildInfo extends AppCompatActivity implements OnClickListene
                 canStar.setVisibility(INVISIBLE);
 
                 new JSONTaskFavoriteShop().execute("http://192.168.43.72:3000/deleteFavoriteShop");
+
             }
         });
 

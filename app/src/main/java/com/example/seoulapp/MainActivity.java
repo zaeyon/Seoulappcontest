@@ -16,6 +16,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.seoulapp.ui.dashboard.ReviewAdapter;
+
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -63,27 +65,22 @@ public class MainActivity extends AppCompatActivity {
             emailCheck = true;
             EWrong = false;
 
-            if(!PWrong && !EWrong && s.length() > 0 && emailCheck && passwordCheck)
-            {
+            if (!PWrong && !EWrong && s.length() > 0 && emailCheck && passwordCheck) {
                 loginBtn.setEnabled(true);
-            }
-            else if(s.length() <= 0)
-            {
+            } else if (s.length() <= 0) {
                 emailCheck = false;
                 loginBtn.setEnabled(false);
-            }
-            else if(!emailCheck)
-            {
+            } else if (!emailCheck) {
                 loginBtn.setEnabled(false);
-            }
-            else if(!passwordCheck)
-            {
+            } else if (!passwordCheck) {
                 loginBtn.setEnabled(false);
             }
         }
+
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
         }
+
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
 
@@ -100,27 +97,22 @@ public class MainActivity extends AppCompatActivity {
             passwordCheck = true;
             PWrong = false;
 
-            if(!PWrong && !EWrong &&s.length() > 0 && emailCheck && passwordCheck)
-            {
+            if (!PWrong && !EWrong && s.length() > 0 && emailCheck && passwordCheck) {
                 loginBtn.setEnabled(true);
-            }
-            else if(s.length() <= 0)
-            {
+            } else if (s.length() <= 0) {
                 passwordCheck = false;
                 loginBtn.setEnabled(false);
-            }
-            else if(!emailCheck)
-            {
+            } else if (!emailCheck) {
                 loginBtn.setEnabled(false);
-            }
-            else if(!passwordCheck)
-            {
+            } else if (!passwordCheck) {
                 loginBtn.setEnabled(false);
             }
         }
+
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
         }
+
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
 
@@ -154,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
         loginId = auto.getString("inputId", null);
         loginPwd = auto.getString("inputPwd", null);
 
-        if(loginId != null && loginPwd != null){
+        if (loginId != null && loginPwd != null) {
             Intent intent = new Intent(MainActivity.this, BottomNavigation.class);
             Log.d("MainActivity", "현재 사용자:" + loginId);
             startActivity(intent);
@@ -164,10 +156,11 @@ public class MainActivity extends AppCompatActivity {
         userEmail.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean hasFocus) {
-                if(!hasFocus) {
+                if (!hasFocus) {
                     // 와이파이 새로 접속할 때마다 변경
 
                     new JSONTask().execute("http://192.168.43.72:3000/emailCheck");
+
 
 
                 }
@@ -177,6 +170,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // 와이파이 새로 접속할 때마다 변경
+
                 new JSONTask().execute("http://192.168.43.72:3000/login");
 
             }
@@ -197,10 +191,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-
-    public void onClickSignup(View view)
-    {
+    public void onClickSignup(View view) {
         Intent intent = new Intent(this, Signup.class);
         startActivity(intent);
     }
@@ -218,7 +209,7 @@ public class MainActivity extends AppCompatActivity {
                 HttpURLConnection con = null;
                 BufferedReader reader = null;
 
-                try{
+                try {
                     //URL url = new URL("http://192.168.25.16:3000/users");
                     URL url = new URL(urls[0]);
                     //연결을 함
@@ -250,22 +241,22 @@ public class MainActivity extends AppCompatActivity {
                     StringBuffer buffer = new StringBuffer();
 
                     String line = "";
-                    while((line = reader.readLine()) != null){
+                    while ((line = reader.readLine()) != null) {
                         buffer.append(line);
                     }
 
                     return buffer.toString();//서버로 부터 받은 값을 리턴해줌 아마 OK!!가 들어올것임
 
-                } catch (MalformedURLException e){
+                } catch (MalformedURLException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
                     e.printStackTrace();
                 } finally {
-                    if(con != null){
+                    if (con != null) {
                         con.disconnect();
                     }
                     try {
-                        if(reader != null){
+                        if (reader != null) {
                             reader.close();//버퍼를 닫아줌
                         }
                     } catch (IOException e) {
@@ -283,35 +274,26 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
 
-            if(result != null && result.equals("emailWrong"))
-            {
+            if (result != null && result.equals("emailWrong")) {
                 emailWrong.setVisibility(VISIBLE);
                 loginBtn.setEnabled(false);
-            }
-            else if(result != null && result.equals("emailCorrect"))
-            {
+            } else if (result != null && result.equals("emailCorrect")) {
                 emailWrong.setVisibility(View.INVISIBLE);
             }
 
-            if(result != null && result.equals("passwordNotMatch")) {
+            if (result != null && result.equals("passwordNotMatch")) {
 
                 wrongPassword.setVisibility(View.VISIBLE);
                 notExistEmail.setVisibility(View.INVISIBLE);
                 loginBtn.setEnabled(false);
                 PWrong = true;
-            }
-
-            else if(result != null && result.equals("emailNotExist"))
-            {
+            } else if (result != null && result.equals("emailNotExist")) {
                 wrongPassword.setVisibility(View.INVISIBLE);
                 notExistEmail.setVisibility(View.VISIBLE);
                 loginBtn.setEnabled(false);
                 EWrong = true;
-            }
-            else if(result != null && result.equals("loginSuccess"))
-            {
-                if(loginId == null && loginPwd == null)
-                {
+            } else if (result != null && result.equals("loginSuccess")) {
+                if (loginId == null && loginPwd == null) {
                     SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
                     SharedPreferences.Editor autoLogin = auto.edit();
                     autoLogin.putString("inputId", userEmail.getText().toString());
@@ -321,7 +303,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 Log.d("MainActivity", userEmail.getText().toString());
-                Intent navigationIntent = new Intent(MainActivity.this ,BottomNavigation.class);
+                Intent navigationIntent = new Intent(MainActivity.this, BottomNavigation.class);
                 startActivity(navigationIntent);
             }
         }

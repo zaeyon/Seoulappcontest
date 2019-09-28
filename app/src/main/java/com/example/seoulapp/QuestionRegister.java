@@ -3,7 +3,6 @@ package com.example.seoulapp;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -11,6 +10,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import org.json.JSONObject;
 
@@ -175,7 +176,6 @@ public class QuestionRegister extends AppCompatActivity {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
             new JSONTaskQnA().execute("http://192.168.43.72:3000/getQnAInfo");
-
 
         }
     }
