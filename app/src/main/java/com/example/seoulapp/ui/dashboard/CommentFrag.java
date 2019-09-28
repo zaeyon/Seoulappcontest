@@ -41,6 +41,7 @@ public class CommentFrag extends ListFragment {
         //String comment_Id = intent.getExtras().getString("comment_Id");
 
         new JSONTaskCommentInfo().execute("http://192.168.43.72:3000/getCommentInfo");
+
         CommentAdapter adapter = new CommentAdapter();
         setListAdapter(adapter); //adapter에는 지금 comment들이 달려있음요
 

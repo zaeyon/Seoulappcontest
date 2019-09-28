@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.notifications.RegisterProduction"></activity>
+        <activity android:name=".AnswerRegister"></activity>
+        <activity android:name=".ui.notifications.RegisterProduction" />
         <activity android:name=".ui.notifications.MyShopManage" />
         <activity android:name=".ui.dashboard.Comment" />
         <activity
@@ -31,8 +32,8 @@
         <activity android:name=".ShopDetaildInfo" />
         <activity android:name=".Signup" />
         <activity android:name=".ui.notifications.NewsActivity" />
+        <activity android:name=".ui.notifications.SettingShop" />
         <activity android:name=".ui.notifications.SettingsActivity" />
-        <activity android:name=".ui.notifications.SettingShop"/>
         <activity android:name=".ui.notifications.EditProfileActivity" />
         <activity android:name=".ImageActivity" />
         <activity android:name=".MainActivity">
@@ -53,11 +54,11 @@
             android:name="com.amazonaws.mobileconnectors.s3.transferutility.TransferService"
             android:enabled="true" />
     </application>
-    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
     <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
 
 </manifest>

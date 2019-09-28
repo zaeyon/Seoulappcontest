@@ -22,6 +22,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -66,6 +67,7 @@ public class AddShop extends AppCompatActivity {
     private Uri filePath;
     ImageView newShopProfileImage;
     ClearEditText newShopName;
+    TextView tvExShopName;
     Spinner newShopSalesItem;
     Spinner newShopBuilding;
     ClearEditText newShopStyle;
@@ -110,6 +112,7 @@ public class AddShop extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_shop);
 
+        tvExShopName = findViewById(R.id.tvExShopName);
         signUpNext = findViewById(R.id.signUpNextButton);
         newShopProfileImage = findViewById(R.id.newShopProfileImage);
         newShopName = findViewById(R.id.newShopName);
@@ -128,8 +131,10 @@ public class AddShop extends AppCompatActivity {
         addShopRepPlus2 = findViewById(R.id.newShopRepPlus2);
         addShopRepPlus3 = findViewById(R.id.newShopRepPlus3);
 
+        tvExShopName.setVisibility(View.INVISIBLE);
 
         //new JSONTask0().execute("http://192.168.43.72:3000/newShopData0");
+        //new JSONTask0().execute("http://172.30.1.28:3000/newShopData0");
 
         addShopProfilePlus.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -239,6 +244,7 @@ public class AddShop extends AppCompatActivity {
         // 매장 관리 페이지로 이동하게 수정
         signUpNext.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+
                 new JSONTask1().execute("http://192.168.43.72:3000/newShopData1");
 
                 Log.d("profileFile : " ,profileImageFile);

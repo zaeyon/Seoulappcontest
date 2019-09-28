@@ -267,7 +267,9 @@ public class EditProfileActivity extends AppCompatActivity {
     }
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
+
       new JSONTask3().execute("http://192.168.43.72:3000/nickname");
+
     }
   };
 

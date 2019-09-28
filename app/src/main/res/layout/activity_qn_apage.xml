@@ -10,6 +10,7 @@
     android:background="#f3f3f3">
 
     <LinearLayout
+        android:layout_marginTop="50dp"
         android:gravity="center_horizontal"
         android:layout_width="match_parent"
         android:layout_height="165dp"
@@ -138,72 +139,36 @@
                 android:textColor="#000000"
                 android:textSize="20sp" />
 
-            <TextView
-                android:id="@+id/qnaAnswer"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="76cm 입니다. "
-                android:fontFamily="@font/nanumsquare_acr"
-                android:textColor="#000000"
-                android:textSize="20sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_height="match_parent"
+            <EditText
+                android:layout_marginTop="5dp"
                 android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:gravity="end">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:text="작성자 : "
-                    android:fontFamily="@font/nanumsquare_acr"
-                    android:textSize="13sp"/>
-
-                <TextView
-                    android:layout_marginRight="5dp"
-                    android:id="@+id/QnAshopName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:text="가게"
-                    android:fontFamily="@font/nanumsquare_acr"
-                    android:textSize="13sp"/>
-
-
-                <TextView
-                    android:layout_marginRight="10dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:text="사장님"
-                    android:fontFamily="@font/nanumsquare_acr"
-                    android:textSize="13sp"/>
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nanumsquare_acr"/>
 
             </LinearLayout>
+
+
         </LinearLayout>
     </LinearLayout>
 
     </FrameLayout>
     <LinearLayout
+        android:layout_marginLeft="15dp"
         android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:gravity="end">
+  >
 
 
         <TextView
+            android:layout_gravity="start"
             android:layout_marginRight="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="목록보기"
             android:textSize="16sp"
             android:fontFamily="@font/nanumsquare_acr"
-            android:layout_gravity="start"/>
+  />
     </LinearLayout>
 
 

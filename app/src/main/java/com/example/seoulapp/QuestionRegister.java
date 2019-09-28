@@ -87,6 +87,7 @@ public class QuestionRegister extends AppCompatActivity {
 
                 new JSONTaskInsertQnA().execute("http://192.168.43.72:3000/InsertQnAInfo");
 
+
             }
         });
     }
@@ -173,9 +174,8 @@ public class QuestionRegister extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-
-
             new JSONTaskQnA().execute("http://192.168.43.72:3000/getQnAInfo");
+
 
         }
     }

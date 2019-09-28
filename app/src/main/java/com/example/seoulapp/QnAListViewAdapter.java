@@ -1,6 +1,7 @@
 package com.example.seoulapp;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,13 +51,14 @@ public class QnAListViewAdapter extends BaseAdapter {
         ImageView QnAAnswerNoView = convertView.findViewById(R.id.answerNo);
         ImageView QnAAnswerYesView = convertView.findViewById(R.id.answerYes);
 
+        Log.d("qnaListViewItem : ", qnaListViewItem.getQnAAnswerExist());
         if(qnaListViewItem.getQnAAnswerExist().equals("0")){
             QnAAnswerNoView.setVisibility(VISIBLE);
             QnAAnswerYesView.setVisibility(INVISIBLE);
         }
         else{
-            QnAAnswerYesView.setVisibility(INVISIBLE);
-            QnAAnswerNoView.setVisibility(VISIBLE);
+            QnAAnswerYesView.setVisibility(VISIBLE);
+            QnAAnswerNoView.setVisibility(INVISIBLE);
         }
 
         QnATitleView.setText(qnaListViewItem.getQnATitle());

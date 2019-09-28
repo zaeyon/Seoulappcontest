@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -52,6 +53,7 @@ public class EditShop extends AppCompatActivity {
     ImageView ivShopRep1;
     ImageView ivShopRep2;
     ImageView ivShopRep3;
+    TextView tvExShopName;
     ClearEditText cetShopName; // 못 바꾸게!
     ClearEditText cetShopStyle;
     EditText cetShopFloor;
@@ -82,6 +84,7 @@ public class EditShop extends AppCompatActivity {
         ivShopRep1 = findViewById(R.id.newShopRep1);
         ivShopRep2 = findViewById(R.id.newShopRep2);
         ivShopRep3 = findViewById(R.id.newShopRep3);
+        tvExShopName = findViewById(R.id.tvExShopName);
         cetShopName = findViewById(R.id.newShopName);
         cetShopStyle = findViewById(R.id.newShopStyle);
         cetShopFloor = findViewById(R.id.newShopFloor);
@@ -90,6 +93,8 @@ public class EditShop extends AppCompatActivity {
         sSalesItem = findViewById(R.id.newShopSalesItem);
         sBuilding = findViewById(R.id.newShopBuilding);
         bComplete = findViewById(R.id.signUpNextButton); // 수정 완료 버튼
+
+        cetShopName.setVisibility(View.INVISIBLE);
 
         SharedPreferences user = getSharedPreferences(MainActivity.name, Context.MODE_PRIVATE);
         strEmail = user.getString("inputId", "null");
@@ -186,6 +191,7 @@ public class EditShop extends AppCompatActivity {
         bComplete.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 new JSONTask1().execute("http://192.168.43.72:3000/editShop");
+
 
                 if (f != null && f1 != null && f2 != null && f3 != null) {
                     // f 저장
@@ -348,7 +354,7 @@ public class EditShop extends AppCompatActivity {
             existingData = result.split("\\|");
             // 0shopName, 1shopProfileImage, 2shopBuilding, 3shopFloor, 4shopRocation, 5shopStyle, 6shopCategory, 7shopIntro, 8shopRepresentation1, 9shpRepresentation2, 10shopRepresentation3
 
-            cetShopName.setText(existingData[0]);
+            tvExShopName.setText(existingData[0]);
             String shopProfileImage = existingData[1];
             if (existingData[2].equals("동대문 종합시장")) sBuilding.setSelection(0);
             else if (existingData[2].equals("청평화 시장")) sBuilding.setSelection(1);
@@ -379,7 +385,7 @@ public class EditShop extends AppCompatActivity {
             try {
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.accumulate("email", strEmail);
-                jsonObject.accumulate("name", cetShopName.getText());
+                jsonObject.accumulate("name", tvExShopName.getText());
                 jsonObject.accumulate("building", sBuilding.getSelectedItem());
                 jsonObject.accumulate("floor", cetShopFloor.getText());
                 jsonObject.accumulate("location", cetShopLocation.getText());

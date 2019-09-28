@@ -109,9 +109,7 @@ public class RegisterProduction extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-
                 new JSONTaskInsertProduction().execute("http://192.168.43.72:3000/InsertProductionInfo");
-
             }
         });
 

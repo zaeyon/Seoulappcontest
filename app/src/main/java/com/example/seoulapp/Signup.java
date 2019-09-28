@@ -251,8 +251,8 @@ public class Signup extends AppCompatActivity {
             public void onFocusChange(View view, boolean hasFocus) {
                 if (!hasFocus) {
                     // 와이파이 새로 접속할 때마다 변경
-
                     new JSONTask().execute("http://192.168.43.72:3000/nickname");
+
                 }
             }
         });
@@ -263,8 +263,8 @@ public class Signup extends AppCompatActivity {
                 if (!hasFocus) {
                     // 와이파이 새로 접속할 때마다 변경
 
-                    new JSONTask().execute("http://192.168.43.72:3000/email");
-                }
+                   new JSONTask().execute("http://192.168.43.72:3000/email");
+               }
             }
         });
 
