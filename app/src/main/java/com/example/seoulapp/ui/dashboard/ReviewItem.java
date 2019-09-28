@@ -12,7 +12,7 @@ public class ReviewItem {
     private String[] splitStore;
     private int number;
     private int Like;
-    private String StorePack;
+
 
     public void setUserImage(String userImage) {
         UserImage = userImage;

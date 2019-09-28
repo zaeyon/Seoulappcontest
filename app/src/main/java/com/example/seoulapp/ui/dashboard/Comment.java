@@ -32,7 +32,7 @@ public class Comment extends AppCompatActivity {
     String[] commentUser_Id;
     String[] PageNumber;
 
-    TextView input_comment;
+    int input_commentNumber;
     TextView comment_get;
     TextView commentId_get;
     TextView story;
@@ -54,18 +54,18 @@ public class Comment extends AppCompatActivity {
         commentlayout = findViewById(R.id.comment_layout);
         commentLinearLay = findViewById(R.id.UserCommentAndId);
 
-        new JSONTaskCommentInfo().execute("http://192.168.43.72:3000/getCommentInfo");
+        new JSONTaskCommentInfo().execute("http://192.168.43.102:3000/getCommentInfo");
 
         Intent intent = getIntent();
         story.setText(intent.getStringExtra("ReviewStory"));
-
+        input_commentNumber = intent.getIntExtra("Position",0); //위치를 받아옴
 
 
         // positionget = (int) new CommentAdapter().getItemId();
         /*delete_cmt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new JSONTaskDeleteCmt().execute("http://192.168.43.72:3000/DeleteCmt");
+                new JSONTaskDeleteCmt().execute("http://192.168.43.102:3000/DeleteCmt");
             }
         });*/
 
@@ -76,12 +76,14 @@ public class Comment extends AppCompatActivity {
     }
 
     class JSONTaskCommentInfo extends AsyncTask<String, String, String> {
-        //저장하는 거
+        // 댓글 불러오기
         @Override
         protected String doInBackground(String... urls) { //끌어오는 거
             try {
                 //JSONObject를 만들고 key value 형식으로 값을 저장해준다.
                 JSONObject jsonObject = new JSONObject();
+                jsonObject.accumulate("PositionOfCmt", input_commentNumber);
+
                 HttpURLConnection con = null;
                 BufferedReader reader = null;
 
@@ -246,5 +248,7 @@ public class Comment extends AppCompatActivity {
             super.onPostExecute(result); //undefined라고 떠
         }
     }*/
+
+//코멘트 추가
 
 

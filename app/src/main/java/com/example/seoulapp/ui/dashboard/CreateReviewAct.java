@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -22,6 +23,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.seoulapp.MainActivity;
 import com.example.seoulapp.R;
@@ -64,17 +68,14 @@ public class CreateReviewAct extends AppCompatActivity {
     String[] Review_StoreName;
     String[] like;
     String[] allView;
+    Fragment list;
 
-
- /*   CognitoCachingCredentialsProvider credentialsProvider;
-    AmazonS3 s3;
-    TransferUtility transferUtility;*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_view);
-        // LayoutInflater inflater = (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
+
         View view = getLayoutInflater().inflate(R.layout.activity_edit_profile, null); //무슨 역할일까
 
         //공백 누르면 키보드 ㅂㅂ
@@ -88,6 +89,7 @@ public class CreateReviewAct extends AppCompatActivity {
         layout = findViewById(R.id.ReviewLayout);
         imgView = findViewById(R.id.Insert_img); //사용자가 올릴 이미지
         nickname = (TextView) view.findViewById(R.id.cetNickname); //되었음!!!!
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.ReviewToolbar);
         setSupportActionBar(toolbar);
@@ -113,7 +115,7 @@ public class CreateReviewAct extends AppCompatActivity {
             }
         });
 
-        storewriting.setOnClickListener(new View.OnClickListener(){
+        storewriting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 storewriting.setHint("상가가 여러 개라면 ,로 구별해주세요!");
@@ -156,9 +158,9 @@ public class CreateReviewAct extends AppCompatActivity {
                 if (write_Store.equals("") || write_Story.equals("")) {
                     Toast.makeText(this, "입력이 덜 되었습니다!", Toast.LENGTH_LONG).show();
                 } else {
-                    new JSONTaskReviewUpload().execute("http://192.168.43.72:3000/setReviewFile"); //
-                    onBackPressed();
+                    new JSONTaskReviewUpload().execute("http://192.168.43.102:3000/setReviewFile"); //
                 }
+
         }
         return false;
     }
@@ -233,8 +235,11 @@ public class CreateReviewAct extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-
+            if(result !=null){
+                ReviewAdapter adapter = new ReviewAdapter();
+                adapter.refresh();
+            }
+            onBackPressed();
         }
     }
-
 }

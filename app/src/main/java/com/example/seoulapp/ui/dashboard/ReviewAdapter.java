@@ -3,6 +3,7 @@ package com.example.seoulapp.ui.dashboard;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
@@ -22,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.seoulapp.MainActivity;
 import com.example.seoulapp.R;
 
 import org.json.JSONObject;
@@ -44,7 +46,9 @@ public class ReviewAdapter extends BaseAdapter {
     static int increace_heart;
     EditText Cmt;
 
+    int innumber;
     int getposition;
+    int number;
     ImageView empty_love;
     ImageView full_heart;
     ImageView profilePicture;
@@ -52,6 +56,7 @@ public class ReviewAdapter extends BaseAdapter {
     TextView nickname;
     String strNickname;
     String strCmt;
+    String strEmail;
 
     ArrayList<ReviewItem> list = new ArrayList<>(); //아이템들 추가되어있음.
 
@@ -102,34 +107,39 @@ public class ReviewAdapter extends BaseAdapter {
         final TextView input_cmt = convertView.findViewById(R.id.Input_comment);
         input_cmt.setVisibility(View.INVISIBLE);
 
-        //getUserProfile
+        SharedPreferences auto = c.getSharedPreferences(MainActivity.name, Context.MODE_PRIVATE);
+        strEmail = auto.getString("inputId", "null");
 
         Review_profilePicture.setBackground(new ShapeDrawable(new OvalShape()));
         Review_profilePicture.setClipToOutline(true); //프사 동그랗게 만들기
 
         ReviewItem Ri = list.get(position); //위젯에 대한 참조 기능 획득
+        ReviewAdapter adapter = new ReviewAdapter();
 
         Review_profilePicture.setImageDrawable(profilePicture.getDrawable());
 
-        Glide.with(c).load(Ri.getUserimg()).into(ReviewImg); //0번째 사진이 덮여씀
+        Glide.with(c).load(Ri.getUserimg()).into(ReviewImg); // 사진이 덮여씀
         ReviewId.setText(Ri.getUserId());
         User_description.setText(Ri.getUserDes());
         User_store.setText(Ri.getStoreName());
-        getposition = Ri.getNumber();
-
         strNickname = nickname.getText().toString(); //Nickname 가져와씁ㄴ디ㅏㅇ
 
-
-        //이미 list에는 int로 저장이 되어있다..
+        Log.e("scollView", String.valueOf(list.get(position)));
 
         //  Cmt_Id.setText(Ri.getCmt_Id());
         Cmt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 input_cmt.setVisibility(View.VISIBLE);
                 input_cmt.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) { //cmt에 담길 시간이 필요한가
+                        ReviewItem item_ = new ReviewItem();
+                        item_ = list.get(position);
+                        innumber = item_.getNumber(); //위치가 확실한 값(댓글)
+
+                        Log.e("입력을 눌렀습니다.", String.valueOf(list.get(position)));
                         strCmt = Cmt.getText().toString();
                         if (strCmt.equals("")) { //
                             Context context = parent.getContext();
@@ -137,23 +147,25 @@ public class ReviewAdapter extends BaseAdapter {
                         } else {
                             //db랑 연결하는 코드를 작성합시다^^...
                             Log.e("111111111", "들어왔어용");
-                            new JSONTaskStoreComment().execute("http://192.168.43.72:3000/StoreComment");
+                            new JSONTaskStoreComment().execute("http://192.168.43.102:3000/StoreComment");
+                            Cmt.setText("");
                         }
                     }
                 });
             }
         });
 
-
         watch_comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) { //db에 좋아요(like) 컬럼 추가
+                ReviewItem Cm = new ReviewItem();
+                Cm = list.get(position); //4 3 2 1
+                int a = Cm.getNumber();
                 Context context = parent.getContext();
                 Intent intent = new Intent(context, Comment.class);
                 intent.putExtra("ReviewStory", User_description.getText().toString());
-                intent.putExtra("Position",getposition);
+                intent.putExtra("Position", a);
                 ((Activity) context).startActivity(intent);
-
                 //Like.setText("좋아요 "+like+"회");
             }
         });
@@ -169,7 +181,7 @@ public class ReviewAdapter extends BaseAdapter {
                 increace_heart++;
                 Like.setText("좋아요 " + increace_heart + "회");
                 list_number.setLike(increace_heart); //like 저장*/
-                new JSONTaskaddLike().execute("http://192.168.43.72:3000/addLike");
+                new JSONTaskaddLike().execute("http://192.168.43.102:3000/addLike");
 
                 Animation animation2 = new AlphaAnimation(1, 0);
                 animation2.setDuration(1000);
@@ -178,8 +190,6 @@ public class ReviewAdapter extends BaseAdapter {
                 heart_filled.animate().setDuration(100).start();//count를 linear layout마다 따로.
                 //like의 개수가 나오겠죠?
 
-                empty_love.setVisibility(View.INVISIBLE);
-                full_heart.setVisibility(View.VISIBLE);
                 /*empty_love.setImageResource(R.drawable.canheart);
                 empty_love.invalidate(); //화면 뿌려주는 역할*/
 
@@ -189,10 +199,8 @@ public class ReviewAdapter extends BaseAdapter {
         return convertView;
     }
 
-
-
     //item 추가
-    public void addItem(String img2, String str3, String str4, String str5, int like) {
+    public void addItem(String img2, String str3, String str4, String str5, int like, int Numbering) {
         //프로필 이미지, 메인이미지 ,id, 스토리, 상점, 좋아요, 댓글 아이디, 댓글
         ReviewItem ri = new ReviewItem();
 
@@ -202,6 +210,7 @@ public class ReviewAdapter extends BaseAdapter {
         ri.setUserDes(str4);
         ri.setStoreName(str5);
         ri.setLike(like);
+        ri.setNumber(Numbering);
         list.add(ri);
     }
 
@@ -225,91 +234,6 @@ public class ReviewAdapter extends BaseAdapter {
         params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
         listView.setLayoutParams(params);
         listView.requestLayout();
-    }
-
-    //코멘트 추가
-    public class JSONTaskStoreComment extends AsyncTask<String, String, String> {
-        //comment 출력이지
-        JSONObject jsonObject = new JSONObject();
-
-        @Override
-        protected String doInBackground(String... urls) { //값을 저장해줍니다.
-            try {
-                //JSONObject를 만들고 key value 형식으로 값을 저장해준다. //코멘트르 집어
-                jsonObject.accumulate("Comment", strCmt);
-                jsonObject.accumulate("nickname", strNickname);
-                jsonObject.accumulate("position",getposition); //setNumber
-                //jsonObject.accumulate("comment_Id", comment_Id);
-
-                HttpURLConnection con = null;
-                //HttpURLConnection class is an abstract class directly extending from URLConnection class.
-                // It includes all the functionality of its parent class with additional HTTP specific features.
-                // HttpsURLConnection is another class which is used for the more secured HTTPS protocol.
-                BufferedReader reader = null;
-
-                try {
-                    //URL url = new URL("http://192.168.25.16:3000/users%22);
-                    URL url = new URL(urls[0]);
-                    //연결을 함
-                    con = (HttpURLConnection) url.openConnection();
-
-                    con.setRequestMethod("POST");//POST방식으로 보냄
-                    con.setRequestProperty("Cache-Control", "no-cache");//캐시 설정
-                    con.setRequestProperty("Content-Type", "application/json");//application JSON 형식으로 전송
-
-
-                    con.setRequestProperty("Accept", "text/html");//서버에 response 데이터를 html로 받음
-                    con.setDoOutput(true);//Outstream으로 post 데이터를 넘겨주겠다는 의미
-                    con.setDoInput(true);//Inputstream으로 서버로부터 응답을 받겠다는 의미
-                    con.connect();
-//서버로 보내기위해서 스트림 만듬
-                    OutputStream outStream = con.getOutputStream();
-                    //버퍼를 생성하고 넣음
-                    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outStream));
-                    writer.write(jsonObject.toString());
-                    writer.flush();
-                    writer.close();//버퍼를 받아줌
-
-                    //서버로 부터 데이터를 받음
-                    InputStream stream = con.getInputStream();
-
-                    reader = new BufferedReader(new InputStreamReader(stream));
-
-                    StringBuffer buffer = new StringBuffer();
-
-                    String line = "";
-                    while ((line = reader.readLine()) != null) {
-                        buffer.append(line);
-                    }
-
-                    return buffer.toString();//서버로 부터 받은 값을 리턴해줌 아마 OK!!가 들어올것임
-
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } finally {
-                    if (con != null) {
-                        con.disconnect();
-                    }
-                    try {
-                        if (reader != null) {
-                            reader.close();//버퍼를 닫아줌
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-        }
     }
 
     //하트 추가
@@ -395,8 +319,99 @@ public class ReviewAdapter extends BaseAdapter {
 
         }
     }
-}
+    public class JSONTaskStoreComment extends AsyncTask<String, String, String> {
 
+        @Override
+        protected String doInBackground(String... urls) { //테이블을 하나 만드는 것도 생각해보자
+            try {
+                //JSONObject를 만들고 key value 형식으로 값을 저장해준다. //코멘트르 집어
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.accumulate("Comment",strCmt);
+                jsonObject.accumulate("CommentUser_Id", strNickname);
+                jsonObject.accumulate("position",innumber); //게시물 id값
+                jsonObject.accumulate("Email", strEmail);
+
+                HttpURLConnection con = null;
+                //HttpURLConnection class is an abstract class directly extending from URLConnection class.
+                // It includes all the functionality of its parent class with additional HTTP specific features.
+                // HttpsURLConnection is another class which is used for the more secured HTTPS protocol.
+                BufferedReader reader = null;
+
+                try {
+                    //URL url = new URL("http://192.168.25.16:3000/users%22);
+                    URL url = new URL(urls[0]);
+                    //연결을 함
+                    con = (HttpURLConnection) url.openConnection();
+
+                    con.setRequestMethod("POST");//POST방식으로 보냄
+                    con.setRequestProperty("Cache-Control", "no-cache");//캐시 설정
+                    con.setRequestProperty("Content-Type", "application/json");//application JSON 형식으로 전송
+
+
+                    con.setRequestProperty("Accept", "text/html");//서버에 response 데이터를 html로 받음
+                    con.setDoOutput(true);//Outstream으로 post 데이터를 넘겨주겠다는 의미
+                    con.setDoInput(true);//Inputstream으로 서버로부터 응답을 받겠다는 의미
+                    con.connect();
+//서버로 보내기위해서 스트림 만듬
+                    OutputStream outStream = con.getOutputStream();
+                    //버퍼를 생성하고 넣음
+                    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outStream));
+                    writer.write(jsonObject.toString());
+                    writer.flush();
+                    writer.close();//버퍼를 받아줌
+
+                    //서버로 부터 데이터를 받음
+                    InputStream stream = con.getInputStream();
+
+                    StringBuffer buffer = new StringBuffer();
+
+                    String line = "";
+                    while ((line = reader.readLine()) != null) {
+                        buffer.append(line);
+                    }
+
+                    return buffer.toString();//서버로 부터 받은 값을 리턴해줌 아마 OK!!가 들어올것임
+
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+                    if (con != null) {
+                        con.disconnect();
+                    }
+                    try {
+                        if (reader != null) {
+                            reader.close();//버퍼를 닫아줌
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String result) { //result 값은 2임.
+            super.onPostExecute(result);
+
+        }
+
+    }
+    public void refresh(){
+        ReviewAdapter adapter = new ReviewAdapter();
+        if (adapter.list.size() > 0) {
+            adapter.notifyDataSetChanged();
+        } else {
+            adapter.notifyDataSetInvalidated();
+        }
+    }
+
+
+}
 
 
 

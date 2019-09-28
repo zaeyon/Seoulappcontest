@@ -1,5 +1,6 @@
 package com.example.seoulapp.ui.dashboard;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,8 +12,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.fragment.app.ListFragment;
 
+import com.example.seoulapp.MainActivity;
 import com.example.seoulapp.R;
 
 import org.json.JSONObject;
@@ -27,6 +31,7 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 
 public class CustomViewFrag extends ListFragment {
 
@@ -48,7 +53,6 @@ public class CustomViewFrag extends ListFragment {
     String[] allView;
 
 
-
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -61,20 +65,26 @@ public class CustomViewFrag extends ListFragment {
         profile_img = getItemId.findViewById(R.id.User_profilePicture);
         Commentmore = getItemId.findViewById(R.id.watching_comment);
 
-        ReviewAdapter adapter = new ReviewAdapter();
+        final ReviewAdapter adapter = new ReviewAdapter();
         setListAdapter(adapter);
 
-        new JSONTaskUserProfile().execute("http://192.168.43.72:3000/getUserProfile");
-       /* dashboardViewModel =
-                ViewModelProviders.of(this).get(DashboardViewModel.class);*/
+        new JSONTaskUserProfile().execute("http://192.168.43.102:3000/getUserProfile");
 
-        // lv = inflater.inflate(R.layout.fragment_dashboard, container, false).findViewById(R.id.dashboard_layout);
+        /* Fragment frg = null;
+        frg = getFragmentManager().findFragmentByTag("CustomViewFrag");
+        final FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.detach(frg);
+        ft.attach(frg);
+        ft.commit();*/
 
-        //  adapter.addItem((ContextCompat.getDrawable(getActivity(), R.drawable.icon_heart)), ContextCompat.getDrawable(getActivity(), R.drawable.ic_dashboard_black_24dp), "sterning", "aaaaa");
-        //  adapter.addItem((ContextCompat.getDrawable(getActivity(), R.drawable.ic_notifications_black_24dp)), ContextCompat.getDrawable(getActivity(), R.drawable.icon_picture), "sonder", "bbbb");
-        //  adapter.addItem((ContextCompat.getDrawable(getActivity(), R.drawable.test_beach)), ContextCompat.getDrawable(getActivity(), R.drawable.star), "sonder", "bbbb");
         return super.onCreateView(inflater, container, savedInstanceState);
     }
+
+    public void startOutput(){
+        new JSONTaskUserProfile().execute("http://192.168.43.102:3000/getUserProfile");
+    }
+
+
 
     //리뷰 불러오기
     public class JSONTaskUserProfile extends AsyncTask<String, String, String> {
@@ -156,13 +166,13 @@ public class CustomViewFrag extends ListFragment {
             setListAdapter(adapter);
 
             allView = result.split("\\/"); //result = allView
-
-            // Review_Number = allView[0].split("\\|");
+            Log.e("1111111", String.valueOf(allView));
             User_Image = allView[0].split("\\|"); //유효 |
             User_Id = allView[1].split("\\|");
             User_Content = allView[2].split("\\|");
             Review_StoreName= allView[3].split("\\|");
             Like = allView[4].split("\\|");
+            Review_Number = allView[5].split("\\|");
 
             //하나,둘 이렇게 되어있을 거거든요.
 
@@ -175,17 +185,16 @@ public class CustomViewFrag extends ListFragment {
                 String UserContent = User_Content[a-i];
                 String StoreName = Review_StoreName[a-i];
                 String _Like = Like[a-i];
+                String Number = Review_Number[a-i];
 
                 int like = Integer.parseInt(_Like);
-                adapter.addItem(UserImg, UserId, UserContent, StoreName, like);
+                int Numbering = Integer.parseInt(Number);
+                adapter.addItem(UserImg, UserId, UserContent, StoreName, like, Numbering);
             }
             //comment_Id랑 comment를 commentAct로 넘겨야합니당..
         }
 
     }
-    public void onResult(int requestCode){
-        if(requestCode == 1 ) {
-            new JSONTaskUserProfile().execute("http://192.168.43.72:3000/getUserProfile");
-        }
-    }
+
+
 }
