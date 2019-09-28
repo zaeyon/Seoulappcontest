@@ -13,10 +13,6 @@ public class DashboardViewModel extends ViewModel {
     mText.setValue("This is dashboard fragment");
   }
 
-  public int Increace(int[] a, int i, int value){ //s
-    a[i] = value + 1;
-    return a[i];
-  }
 
   public LiveData<String> getText() {
     return mText;

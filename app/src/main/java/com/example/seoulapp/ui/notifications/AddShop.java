@@ -132,9 +132,6 @@ public class AddShop extends AppCompatActivity {
         addShopRepPlus3 = findViewById(R.id.newShopRepPlus3);
 
         tvExShopName.setVisibility(View.INVISIBLE);
-
-        //new JSONTask0().execute("http://192.168.43.102:3000/newShopData0");
-
         addShopProfilePlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){

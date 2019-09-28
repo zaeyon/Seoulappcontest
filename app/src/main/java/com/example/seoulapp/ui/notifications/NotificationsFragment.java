@@ -22,6 +22,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.bumptech.glide.Glide;
 import com.example.seoulapp.MainActivity;
 import com.example.seoulapp.R;
 import com.example.seoulapp.ShopDetaildInfo;
@@ -46,7 +47,6 @@ import static android.view.View.VISIBLE;
 public class NotificationsFragment extends Fragment {
 
     private NotificationsViewModel notificationsViewModel;
-
 
     String clickShopName;
     TextView tvNickname;
@@ -243,11 +243,11 @@ public class NotificationsFragment extends Fragment {
             String[] userInfo;
             userInfo = result.split("\\|");
 
-            Log.d("TAG", userInfo[0]);
+            Log.d(TAG, userInfo[0]);
 
             tvNickname.setText(userInfo[0]);
-//            String userProfileURL = "https://s3.ap-northeast-2.amazonaws.com/com.example.seoulapp/userProfileImage/" + userInfo[1];
-//            Glide.with(getContext()).load(userProfileURL).into(ivProfile);
+            Glide.with(getContext()).load(userInfo[3]).into(ivProfile);
+            Log.d(TAG, "userInfo[3]:" + userInfo[3]);
 
             if(userInfo[2].equals("0"))
             {
@@ -634,7 +634,7 @@ public class NotificationsFragment extends Fragment {
     class goSettingShop implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-            Intent intentSettingShop = new Intent(getActivity(), SettingShop.class);
+            Intent intentSettingShop = new Intent(getActivity(), ShopDetaildInfo.class);
 
             intentSettingShop.putExtra("hostEmail", strEmail);
 

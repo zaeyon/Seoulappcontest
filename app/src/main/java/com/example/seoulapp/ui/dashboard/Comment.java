@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -36,7 +37,8 @@ public class Comment extends AppCompatActivity {
     TextView comment_get;
     TextView commentId_get;
     TextView story;
-    ListView commentlayout;
+    ListView CmtList;
+    TextView TextId;
 
     int positionget;
     LinearLayout commentLinearLay;
@@ -51,14 +53,14 @@ public class Comment extends AppCompatActivity {
         story = findViewById(R.id.Comment_ReviewStory);
         comment_get = findViewById(R.id.comment_content);
         commentId_get = findViewById(R.id.comment_id);
-        commentlayout = findViewById(R.id.comment_layout);
+        CmtList = findViewById(R.id.commentListView);
         commentLinearLay = findViewById(R.id.UserCommentAndId);
 
-        new JSONTaskCommentInfo().execute("http://192.168.43.102:3000/getCommentInfo");
-
-        Intent intent = getIntent();
-        story.setText(intent.getStringExtra("ReviewStory"));
-        input_commentNumber = intent.getIntExtra("Position",0); //위치를 받아옴
+        Log.e("text", String.valueOf(cmt_list.size()));
+            Intent intent = getIntent();
+            story.setText(intent.getStringExtra("ReviewStory"));
+            input_commentNumber = intent.getIntExtra("Position",0); //위치를 받아옴
+            new JSONTaskCommentInfo().execute("http://192.168.43.102:3000/getCommentInfo");
 
 
         // positionget = (int) new CommentAdapter().getItemId();
@@ -82,7 +84,7 @@ public class Comment extends AppCompatActivity {
             try {
                 //JSONObject를 만들고 key value 형식으로 값을 저장해준다.
                 JSONObject jsonObject = new JSONObject();
-                jsonObject.accumulate("PositionOfCmt", input_commentNumber);
+                jsonObject.accumulate("PositionOfCmt", String.valueOf(input_commentNumber));
 
                 HttpURLConnection con = null;
                 BufferedReader reader = null;
@@ -151,24 +153,40 @@ public class Comment extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) { //데이터 불러오기
             super.onPostExecute(result); //undefined라고 떠
+            Log.e("결과" , result);
             CommentAdapter adapter = new CommentAdapter();
 
+            if(result.equals("")){
+                TextView TextId; ListView CmtList;
+                TextId = findViewById(R.id.commentTextView);
+                CmtList= findViewById(R.id.commentListView);
+                TextId.setVisibility(View.VISIBLE);
+                CmtList.setVisibility(View.INVISIBLE);
+                /*Intent intent = new Intent(Comment.this, empty_comment.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                startActivity(intent);*/
+            }
+            else{
+
+                TextId = findViewById(R.id.commentTextView);
+                TextId.setVisibility(View.INVISIBLE);
             array_commentInfo = result.split("\\/");
 
-            Log.e("숫자 알아보기 ", String.valueOf(array_commentInfo.length));
+            Log.e("숫자 알아보기 ", String.valueOf(array_commentInfo.length)); //1
             comment_arr = array_commentInfo[0].split("\\|");
             commentUser_Id = array_commentInfo[1].split("\\|");
             PageNumber = array_commentInfo[2].split("\\|"); //getposition의 값이 남아 있음.
 
 
             for (int i = 0; i <comment_arr.length; i++) { //처음엔 2니까..
-                String _comment = comment_arr[i];
-                String commentId = commentUser_Id[i];
-                String pageNum = PageNumber[i];
+                    String _comment = comment_arr[i];
+                    String commentId = commentUser_Id[i];
+                    String pageNum = PageNumber[i];
 
-                int Page_num = Integer.parseInt(pageNum);
-                adapter.addItem(_comment, commentId, Page_num);
-                commentlayout.setAdapter(adapter); //
+                    int Page_num = Integer.parseInt(pageNum);
+                    adapter.addItem(_comment, commentId, Page_num);
+                    CmtList.setAdapter(adapter); //
+                }
             }
         }
     }
