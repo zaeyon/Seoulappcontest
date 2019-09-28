@@ -1,6 +1,9 @@
 package com.example.seoulapp.ui.dashboard;
 
+import android.content.Context;
 import android.content.Intent;
+
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -44,6 +47,7 @@ public class CustomViewFrag extends ListFragment {
 
     ReviewAdapter adapter;
 
+    String strEmail;
     String[] User_Image;
     String[] User_Id;
     String[] User_Content;
@@ -58,6 +62,9 @@ public class CustomViewFrag extends ListFragment {
 
         //추상화된 view를 실제적으로
         View getItemId = inflater.inflate(R.layout.review_listview_itemview, container, false);
+
+        SharedPreferences auto = this.getActivity().getSharedPreferences(MainActivity.name, Context.MODE_PRIVATE);
+        strEmail = auto.getString("inputId", "null");
 
         tv_comment = getItemId.findViewById(R.id.comment);
         User_img = (ImageView) getItemId.findViewById(R.id.User_img);
@@ -112,7 +119,7 @@ public class CustomViewFrag extends ListFragment {
                     con.setDoOutput(true);//Outstream으로 post 데이터를 넘겨주겠다는 의미
                     con.setDoInput(true);//Inputstream으로 서버로부터 응답을 받겠다는 의미
                     con.connect();
-//서버로 보내기위해서 스트림 만듬
+                    //서버로 보내기위해서 스트림 만듬
                     OutputStream outStream = con.getOutputStream();
                     //버퍼를 생성하고 넣음
                     BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outStream));
@@ -187,6 +194,8 @@ public class CustomViewFrag extends ListFragment {
                 String _Like = Like[a-i];
                 String Number = Review_Number[a-i];
 
+                Log.d("CustomViewFrag", "_Like = " + _Like);
+
                 int like = Integer.parseInt(_Like);
                 int Numbering = Integer.parseInt(Number);
                 adapter.addItem(UserImg, UserId, UserContent, StoreName, like, Numbering);
@@ -195,6 +204,4 @@ public class CustomViewFrag extends ListFragment {
         }
 
     }
-
-
 }

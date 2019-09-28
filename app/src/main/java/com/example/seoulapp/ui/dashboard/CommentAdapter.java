@@ -29,7 +29,6 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-
 public class CommentAdapter extends BaseAdapter {
 
     ArrayList<CommentItem> cmt_list = new ArrayList<>();
@@ -38,6 +37,7 @@ public class CommentAdapter extends BaseAdapter {
     TextView comment;
     TextView comment_Id;
     LinearLayout forDeleteClick;
+
     Context context;
 
     int commentNumber;
@@ -99,6 +99,7 @@ public class CommentAdapter extends BaseAdapter {
         });
 
         CommentItem CA = cmt_list.get(position);
+
         //positionget = (int) getItem(position)+1; //댓글 간의 구분용임 게시물의 구분용이 아님
 
         comment.setText(CA.getComment_content());
@@ -108,7 +109,6 @@ public class CommentAdapter extends BaseAdapter {
 
         return convertView;
     }
-
     public void addItem(String strcmt, String strcmtId, int Num) {
         CommentItem Cmt_item = new CommentItem();
 
@@ -154,6 +154,7 @@ public class CommentAdapter extends BaseAdapter {
                     writer.close();//버퍼를 받아줌
 
                     //서버로 부터 데이터를 받음
+
                     InputStream stream = con.getInputStream();
 
                     reader = new BufferedReader(new InputStreamReader(stream));
