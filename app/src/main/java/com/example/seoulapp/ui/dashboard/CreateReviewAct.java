@@ -159,7 +159,7 @@ public class CreateReviewAct extends AppCompatActivity {
                 if (write_Store.equals("") || write_Story.equals("")) {
                     Toast.makeText(this, "입력이 덜 되었습니다!", Toast.LENGTH_LONG).show();
                 } else {
-                    new JSONTaskReviewUpload().execute("http://192.168.43.72:3000/setReviewFile"); //
+                    new JSONTaskReviewUpload().execute("http://192.168.43.102:3000/setReviewFile"); //
                 }
 
         }

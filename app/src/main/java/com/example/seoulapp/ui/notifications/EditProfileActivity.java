@@ -88,7 +88,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
 
     // 와이파이 새로 접속할 때마다 변경
-    new JSONTask1().execute("http://192.168.43.72:3000/myProfile");
+    new JSONTask1().execute("http://192.168.43.102:3000/myProfile");
 
     ivMyProfile = (ImageView)findViewById(R.id.ivMyProfile);
     bMyProfileComplete = (Button)findViewById(R.id.bMyProfileComplete);
@@ -137,17 +137,16 @@ public class EditProfileActivity extends AppCompatActivity {
       public void onClick(View v) {
 
         // 와이파이 새로 접속할 때마다 변경
-        new JSONTask2().execute("http://192.168.43.72:3000/setMyProfile");
+        new JSONTask2().execute("http://192.168.43.102:3000/setMyProfile");
         Log.d("EditProfileActivity", "JSONTask2 실행");
+
+        uploadFile();
 
         Intent iSettings = new Intent(EditProfileActivity.this, SettingsActivity.class);
         iSettings.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(iSettings);
-
       }
     });
-
-
 
     imgsel.setOnClickListener(new View.OnClickListener() {
       @Override
@@ -158,14 +157,6 @@ public class EditProfileActivity extends AppCompatActivity {
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "이미지를 선택하세요."), 0);
 
-      }
-    });
-
-    bMyProfileComplete.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View view){
-        // 업로드
-        uploadFile();
       }
     });
   }
@@ -260,7 +251,7 @@ public class EditProfileActivity extends AppCompatActivity {
         bMyProfileComplete.setEnabled(false);
       }
 
-      new JSONTask3().execute("http://192.168.43.72:3000/nickname");
+      new JSONTask3().execute("http://192.168.43.102:3000/nickname");
     }
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -268,7 +259,7 @@ public class EditProfileActivity extends AppCompatActivity {
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-      new JSONTask3().execute("http://192.168.43.72:3000/nickname");
+      new JSONTask3().execute("http://192.168.43.102:3000/nickname");
 
     }
   };

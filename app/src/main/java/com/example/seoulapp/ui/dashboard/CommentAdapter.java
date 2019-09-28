@@ -66,7 +66,7 @@ public class CommentAdapter extends BaseAdapter {
         forDeleteClick.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                new JSONTaskCommentDelete().execute("http://192.168.43.72:3000/CommentDelete");
+                new JSONTaskCommentDelete().execute("http://192.168.43.102:3000/CommentDelete");
 
                 return false;
             }

@@ -636,6 +636,7 @@ app.post('/emailCheck', (req, res) => {
 
       req.on('data', (data) => {
         inputData = JSON.parse(data);
+        console.log("productionurl : ", inputData.productionURL);
       });
 
       req.on('end', () => {
@@ -1050,15 +1051,15 @@ app.post('/emailCheck', (req, res) => {
 
     req.on('data', (data) => {
       inputData = JSON.parse(data);
-      params = [inputData.name, inputData.building, inputData.floor, inputData.location, inputData.style, inputData.category, inputData.introduction, inputData.profileImg, inputData.repImg1, inputData.repImg2, inputData.repImg3, inputData.email, inputData.profileURL, inputData.repURL1, inputData.repURL2, inputData.repURL3];
+      params = [inputData.building, inputData.floor, inputData.location, inputData.style, inputData.category, inputData.introduction, inputData.profileImg, inputData.repImg1, inputData.repImg2, inputData.repImg3, inputData.profileURL, inputData.repURL1, inputData.repURL2, inputData.repURL3, inputData.email];
     });
 
     req.on('end', () => {
-      connection.query("UPDATE shop SET shopName = ?, shopBuilding = ?, shopFloor = ?, shopRocation = ?, shopStyle = ?, shopCategory = ?, shopIntro = ?, shopProfileImage = ?, shopRepresentation1 = ?, shopRepresentation2 = ?, shopRepresentation3 = ?, shopProfileImageUrl = ?, shopRep1ImageUrl = ?, shopRep2ImageUrl = ?, shopRep3ImageUrl = ? WHERE userEmail = ?", params, function(error, result) {
+      connection.query("UPDATE shop SET shopBuilding = ?, shopFloor = ?, shopRocation = ?, shopStyle = ?, shopCategory = ?, shopIntro = ?, shopProfileImage = ?, shopRepresentation1 = ?, shopRepresentation2 = ?, shopRepresentation3 = ?, shopProfileImageUrl = ?, shopRep1ImageUrl = ?, shopRep2ImageUrl = ?, shopRep3ImageUrl = ? WHERE userEmail = ?", params, function(error, result) {
         if (error) {
           console.log("editShop " + error);
         } else {
-          console.log("매장 정보\n이메일 : " + inputData.email + "\n매장 이름 : " + inputData.name + "\n" + inputData.building + " " + inputData.floor + "층 " + inputData.location + "\n" + inputData.style + " " + inputData.category + "\n" + inputData.introduction);
+          console.log("매장 정보\n이메일 : " + inputData.email + "\n" + inputData.building + " " + inputData.floor + "층 " + inputData.location + "\n" + inputData.style + " " + inputData.category + "\n" + inputData.introduction);
           console.log("매장 프로필 이미지 : " + inputData.profileImg + ", 이미지1 : " + inputData.repImg1 + ", 이미지2 : " + inputData.repImg2 + ", 이미지3 : " + inputData.repImg3);
           console.log("프로필 이미지 URL :" + inputData.profileURL);
         }
@@ -1605,22 +1606,22 @@ app.post('/emailCheck', (req, res) => {
     })
   })
 
-  
   app.post('/addLike', (req,res)=>{
 
     var position;
-    var params;
-  
+    var params = [];
+
     req.on('data', (data)=>{
-      position = JSON.parse(data);
-      params ={
-        "Like":position.like
-      }
+      position = JSON.parse(data); // like , numbering
+      params = [parseInt(position.like), parseInt(position.numbering)];
       console.log("param : ", params);
     })
-  
+
     req.on('end',()=>{
-      connection.query("UPDATE review SET Like = ?", params, (err, result)=>{
+      connection.query("UPDATE review SET Like = ? WHERE Review_Number=?", params, function(err, result) {
+        if (err) {
+          console.log("addLike", err);
+        }
         res.write("하하하하하");
         res.end();
       }) 

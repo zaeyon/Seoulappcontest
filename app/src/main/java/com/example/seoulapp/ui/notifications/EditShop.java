@@ -31,6 +31,7 @@ import com.bumptech.glide.Glide;
 import com.example.seoulapp.ClearEditText;
 import com.example.seoulapp.MainActivity;
 import com.example.seoulapp.R;
+import com.example.seoulapp.ShopDetaildInfo;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
@@ -113,7 +114,7 @@ public class EditShop extends AppCompatActivity {
         strEmail = user.getString("inputId", "null");
         Log.d("AddShop", "사용자 : " + strEmail);
 
-        new GetExistingData().execute("http://192.168.43.72:3000/getExistingData");
+        new GetExistingData().execute("http://192.168.43.102:3000/getExistingData");
 
 
         ivShopProfileImage.setBackground(new ShapeDrawable(new OvalShape()));
@@ -205,12 +206,22 @@ public class EditShop extends AppCompatActivity {
         bComplete.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                new JSONTask1().execute("http://192.168.43.72:3000/editShop");
+                new JSONTask1().execute("http://192.168.43.102:3000/editShop");
 
-                Intent intentSettingShop = new Intent(EditShop.this, SettingShop.class);
-                intentSettingShop.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intentSettingShop.putExtra("hostEmail", strEmail);
-                startActivity(intentSettingShop);
+                Intent intent = new Intent(EditShop.this, ShopDetaildInfo.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.putExtra("profileImage", profileUrl);
+                intent.putExtra("name", tvExShopName.getText());
+                intent.putExtra("building", sBuilding.getSelectedItem().toString());
+                intent.putExtra("floor", cetShopFloor.getText());
+                intent.putExtra("rocation", cetShopLocation.getText());
+                intent.putExtra("category", sSalesItem.getSelectedItem().toString());
+                intent.putExtra("style", cetShopStyle.getText());
+                intent.putExtra("intro", cetShopIntro.getText());
+                intent.putExtra("representation1", repfileUrl1);
+                intent.putExtra("representation2", repfileUrl2);
+                intent.putExtra("representation3", repfileUrl3);
+                startActivity(intent);
             }
         });
     }

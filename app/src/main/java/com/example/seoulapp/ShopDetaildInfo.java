@@ -24,8 +24,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.seoulapp.ui.notifications.EditShop;
 import com.example.seoulapp.ui.notifications.RegisterProduction;
-import com.example.seoulapp.ui.notifications.SettingShop;
 
 import org.json.JSONObject;
 
@@ -73,6 +73,7 @@ public class ShopDetaildInfo extends AppCompatActivity implements OnClickListene
     ImageView QuestionHagi;
     ImageView canStar;
     ImageView binStar;
+    ImageView ivEditShop;
     ImageView shop_profile;
     ImageView proReg;
     ImageView yesAnswer;
@@ -84,18 +85,15 @@ public class ShopDetaildInfo extends AppCompatActivity implements OnClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shop_detaild_info);
 
+        ivEditShop = findViewById(R.id.ivEditShop);
+
         // 와이파이 새로 접속할때마다 변경
-        new JSONTaskHostEmail().execute("http://192.168.43.72:3000/getHostEmail");
-        new JSONTask2().execute("http://192.168.43.72:3000/shopNumber");
-        new JSONTaskProduction().execute("http://192.168.43.72:3000/getShopProduction");
-        new JSONTaskQnA().execute("http://192.168.43.72:3000/getQnAInfo");
-        new JSONTaskFavoriteShop().execute("http://192.168.43.72:3000/getFavoriteCheck");
-
-
-
+        new JSONTaskHostEmail().execute("http://192.168.43.102:3000/getHostEmail");
+        new JSONTask2().execute("http://192.168.43.102:3000/shopNumber");
+        new JSONTaskProduction().execute("http://192.168.43.102:3000/getShopProduction");
+        new JSONTaskQnA().execute("http://192.168.43.102:3000/getQnAInfo");
 
         // 선언한 변수에 생성한 레이아웃 설정
-
         ArrayList<QnAListViewItem> QnAListViewItemList = new ArrayList<QnAListViewItem>();
 
         // 버튼 클릭 이벤트 처리
@@ -117,10 +115,10 @@ public class ShopDetaildInfo extends AppCompatActivity implements OnClickListene
         qnaAnswerRegister = findViewById(R.id.qnaAnswerRegister);
         qnaAnswerRegister.setVisibility(INVISIBLE);
 
-
         qnaAnswerEdit = findViewById(R.id.qnaAnswerEdit);
         canStar = findViewById(R.id.canStar);
         binStar = findViewById(R.id.binStar);
+        ivEditShop = findViewById(R.id.ivEditShop);
         proReg = findViewById(R.id.pro_reg_btn);
         proReg.setVisibility(INVISIBLE);
         noAnswerPage = findViewById(R.id.noAnswerPage);
@@ -196,7 +194,7 @@ public class ShopDetaildInfo extends AppCompatActivity implements OnClickListene
                 binStar.setVisibility(INVISIBLE);
                 canStar.setVisibility(VISIBLE);
 
-                new JSONTaskFavoriteShop().execute("http://192.168.43.72:3000/insertFavoriteShop");
+                new JSONTaskFavoriteShop().execute("http://192.168.43.102:3000/insertFavoriteShop");
 
             }
         });
@@ -210,8 +208,16 @@ public class ShopDetaildInfo extends AppCompatActivity implements OnClickListene
                 binStar.setVisibility(VISIBLE);
                 canStar.setVisibility(INVISIBLE);
 
-                new JSONTaskFavoriteShop().execute("http://192.168.43.72:3000/deleteFavoriteShop");
+                new JSONTaskFavoriteShop().execute("http://192.168.43.102:3000/deleteFavoriteShop");
 
+            }
+        });
+
+        ivEditShop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent editShop = new Intent(ShopDetaildInfo.this, EditShop.class);
+                startActivity(editShop);
             }
         });
 
@@ -325,7 +331,7 @@ public class ShopDetaildInfo extends AppCompatActivity implements OnClickListene
             @Override
             public void onClick(View view) {
 
-                new JSONTaskRegAnswer().execute("http://192.168.43.72:3000/insertQnAAnswer");
+                new JSONTaskRegAnswer().execute("http://192.168.43.102:3000/insertQnAAnswer");
 
             }
         });
@@ -968,15 +974,19 @@ public class ShopDetaildInfo extends AppCompatActivity implements OnClickListene
 
             if(preUserEmail.equals(result))
             {
-             QuestionHagi.setVisibility(View.INVISIBLE);
-             proReg.setVisibility(View.VISIBLE);
+                QuestionHagi.setVisibility(View.INVISIBLE);
+                proReg.setVisibility(View.VISIBLE);
+                ivEditShop.setVisibility(View.VISIBLE);
+                canStar.setVisibility(View.INVISIBLE);
+                binStar.setVisibility(View.INVISIBLE);
             }
             else{
                 QuestionHagi.setVisibility(View.VISIBLE);
                 proReg.setVisibility(View.INVISIBLE);
-            }
+                ivEditShop.setVisibility(View.INVISIBLE);
 
+                new JSONTaskFavoriteShop().execute("http://192.168.43.102:3000/getFavoriteCheck");
+            }
         }
     }
-
 }
