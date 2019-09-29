@@ -1300,7 +1300,7 @@ app.post('/emailCheck', (req, res) => {
     var UserImage="";
     var ReviewStoreName="";
     var Email="";
-    var Like="";
+    var Heart="";
     var Review_Number = "";
     var allView="";
 
@@ -1325,9 +1325,9 @@ app.post('/emailCheck', (req, res) => {
           UserContent = results[0].User_Content;
           ReviewStoreName = results[0].Review_StoreName;
           Email = results[0].Email;
-          Like = results[0].Like;
+          Heart = results[0].Heart;
           Review_Number = results[0].Review_Number;
-          allView =  UserImage + "/" + UserId + "/" + UserContent+ "/"+ReviewStoreName+"/"+Like+"/"+Review_Number;
+          allView =  UserImage + "/" + UserId + "/" + UserContent+ "/"+ReviewStoreName+"/"+Heart+"/"+Review_Number;
         }
         else
         {
@@ -1338,10 +1338,10 @@ app.post('/emailCheck', (req, res) => {
           UserContent = UserContent+"|"+results[j].User_Content;
           ReviewStoreName = ReviewStoreName+"|"+results[j].Review_StoreName;
           Email = Email+"|"+results[j].Email;
-          Like = Like + "|"+results[j].Like;
+          Heart = Heart + "|"+results[j].Heart;
           Review_Number = Review_Number + "|" + results[j].Review_Number;
   
-          allView = UserImage + "/" + UserId + "/" + UserContent +"/"+ReviewStoreName+"/"+Like+"/"+Review_Number;
+          allView = UserImage + "/" + UserId + "/" + UserContent +"/"+ReviewStoreName+"/"+Heart+"/"+Review_Number;
           }
         };
       };
@@ -1592,12 +1592,12 @@ app.post('/emailCheck', (req, res) => {
 
     req.on('data', (data)=>{
       position = JSON.parse(data); // like , numbering
-      params = [parseInt(position.like), parseInt(position.numbering)];
-      console.log("param : ", params);
+      params = [position.like, position.numbering];
+      console.log("params : ", params);
     })
 
     req.on('end',()=>{
-      connection.query("UPDATE review SET Like = ? WHERE Review_Number=?", params, function(err, result) {
+      connection.query("UPDATE review SET Heart = ? WHERE Review_Number = ?", params, function(err, result) {
         if (err) {
           console.log("addLike", err);
         }
@@ -1936,64 +1936,121 @@ app.post('/getCommentInfo',(req,res)=>{
 });
   
 
-app.post('/getFavoriteProCheck', (req, res) => {
+  app.post('/getFavoriteProCheck', (req, res) => {
 
-  var inputData;
-  var productionShop = "";
-  var favoriteProduction;
-  
-  req.on('data', (data) => {
-    inputData = JSON.parse(data);
-    console.log("inputData.productionIntro" + inputData.productionIntro);
-    console.log("inputData.productionPrice" + inputData.productionPrice);
-  });
+    var inputData;
+    var productionShop = "";
+    var favoriteProduction;
+    
+    req.on('data', (data) => {
+      inputData = JSON.parse(data);
+      console.log("inputData.productionIntro" + inputData.productionIntro);
+      console.log("inputData.productionPrice" + inputData.productionPrice);
+    });
 
-  req.on('end', () => {
-    connection.query('SELECT shopName from production WHERE  productionIntro = ? AND productionPrice = ?', [inputData.productionIntro, inputData.productionPrice], function(error, results){
-
-      if(error)
-      {
-        console.log("error 발생 : " + error);
-        res.write("error 발생");
-        res.end();
-      }
-      else
-      {
-       console.log("해당 상품이 등록된 매장 : " + results[0].shopName);
-       productionShop = results[0].shopName;
-       
-       connection.query("SELECT productionName from favorite_production where userEmail = ? AND shopName = ?", [inputData.userEmail, productionShop], function(error, results){
+    req.on('end', () => {
+      connection.query('SELECT shopName from production WHERE  productionIntro = ? AND productionPrice = ?', [inputData.productionIntro, inputData.productionPrice], function(error, results){
 
         if(error)
         {
-          console.log("error 발생" + error);
-          res.write("error");
+          console.log("error 발생 : " + error);
+          res.write("error 발생");
           res.end();
         }
         else
         {
-          for(var j = 0; j < results.length; j++)
-          {
-            if(j == 0)
-            {
-             favoriteProduction = results[0].productionName + "|";
-            }
+        console.log("해당 상품이 등록된 매장 : " + results[0].shopName);
+        productionShop = results[0].shopName;
+        
+        connection.query("SELECT productionName from favorite_production where userEmail = ? AND shopName = ?", [inputData.userEmail, productionShop], function(error, results){
 
-            else {
-              favoriteProduction = favoriteProduction + results[j].productionName + "|";
-            }
+          if(error)
+          {
+            console.log("error 발생" + error);
+            res.write("error");
+            res.end();
           }
-          console.log("favoriteProduction : " + favoriteProduction);
-          res.write(String(favoriteProduction));
-          res.end();
+          else
+          {
+            for(var j = 0; j < results.length; j++)
+            {
+              if(j == 0)
+              {
+              favoriteProduction = results[0].productionName + "|";
+              }
+
+              else {
+                favoriteProduction = favoriteProduction + results[j].productionName + "|";
+              }
+            }
+            console.log("favoriteProduction : " + favoriteProduction);
+            res.write(String(favoriteProduction));
+            res.end();
+          }
+        });
         }
-       });
-      }
+      });
     });
   });
-});
+
+  app.post('/getProfileImg', (req,res)=>{
+
+    var input;
+    var ImgUrl;
+    var params;
+  
+      req.on('data', (data)=>{
+        input = JSON.parse(data);
+        params =[input.inputId];
+        console.log("params: ", params);
+      })
+  
+      req.on('end', ()=>{
+        connection.query("SELECT * FROM user WHERE email =?", params, function(error,result){
+          if(error)
+          {
+            console.log("에러");
+          }
+          else{
+            console.log("result : ", result[0].profile_image_url);
+            for(var j = 0; j < result.length; j++)
+            {
+              if(j == 0)
+              {
+                ImgUrl = result[0].profile_image_url;
+              }
+              else
+              {
+                ImgUrl = ImgUrl+"|"+result[j].profile_image_url;
+              }
+            };
+          };
+  
+        console.log("allView : " + ImgUrl);
+  
+        res.write(ImgUrl); //그냥 모든 걸 더해서 하나로 보낸 후에 나누면 안 됨?
+        res.end();
+      })
+    })
+  });
+
+  app.post('/CommentDelete',(req,res)=>{
+
+    var input="";
+  
+    req.on('data', (data)=>{
+      input = JSON.parse(data);
+      console.log("input : ", input.dis_number);
+    })
+
+    req.on('end', ()=>{
+      connection.query("DELETE FROM commenttable WHERE distinguish_number =?", input.dis_number, (err, results2)=>{
+
+        console.log("삭제 성공");
+        res.write("삭제");
+        res.end();
+      })
+    })
+  });
 
 }
-                
-    
-

@@ -4,10 +4,14 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.GridView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.seoulapp.MainActivity;
 import com.example.seoulapp.R;
@@ -35,6 +39,8 @@ public class MyItem extends AppCompatActivity {
 
     // 상품 별 매장 이름???
 
+    TextView toolbarTitle;
+
     LinearLayout layoutMyItem;
     GridView gridView;
 
@@ -43,6 +49,15 @@ public class MyItem extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_item);
         setTitle("내 상품");
+
+        toolbarTitle = findViewById(R.id.toolbarTitle);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.myItemToolbar);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowCustomEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(false);
+        toolbarTitle.setText("내 상품");
 
         gridView = (GridView)findViewById(R.id.gridMyItem);
 

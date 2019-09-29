@@ -10,6 +10,10 @@
     android:id="@+id/fNotifications"
     tools:context=".ui.notifications.NotificationsFragment">
 
+    <include
+        android:id="@+id/MyProfileToolbar"
+        layout="@layout/toolbar"/>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">

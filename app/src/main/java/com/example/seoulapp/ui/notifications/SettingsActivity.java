@@ -9,14 +9,17 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.seoulapp.MainActivity;
 import com.example.seoulapp.R;
 
 public class SettingsActivity extends AppCompatActivity {
 
+  TextView toolbarTitle;
   TextView tvEditProfile;
   TextView tvMyReview;
 
@@ -25,10 +28,18 @@ public class SettingsActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_settings);
 
+    toolbarTitle = findViewById(R.id.toolbarTitle);
     tvEditProfile = (TextView)findViewById(R.id.tvEditProfile);
     tvEditProfile.setOnClickListener(new goEditProfile());
     tvMyReview = findViewById(R.id.tvMyReview);
     tvMyReview.setOnClickListener(new goMyReview());
+
+    Toolbar toolbar = (Toolbar) findViewById(R.id.settingsToolbar);
+    setSupportActionBar(toolbar);
+    ActionBar actionBar = getSupportActionBar();
+    actionBar.setDisplayShowCustomEnabled(true);
+    actionBar.setDisplayShowTitleEnabled(false);
+    toolbarTitle.setText("설정");
   }
 
   class goEditProfile implements View.OnClickListener {

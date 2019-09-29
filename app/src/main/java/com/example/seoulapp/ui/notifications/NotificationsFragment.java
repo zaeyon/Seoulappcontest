@@ -19,6 +19,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -51,8 +54,9 @@ public class NotificationsFragment extends Fragment {
 
     private NotificationsViewModel notificationsViewModel;
     String clickShopName;
-    TextView tvNickname;
 
+    TextView toolbarTitle;
+    TextView tvNickname;
     ImageView ivProfile;
     ImageView ivMyItem;
     ImageView ivNews;
@@ -91,6 +95,15 @@ public class NotificationsFragment extends Fragment {
 //        });
 
         View v = inflater.inflate(R.layout.fragment_notifications, container, false);
+
+        toolbarTitle = v.findViewById(R.id.toolbarTitle);
+
+        Toolbar toolbar = (Toolbar) v.findViewById(R.id.MyProfileToolbar);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        actionBar.setDisplayShowCustomEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(false);
+        toolbarTitle.setText("동동");
 
         SharedPreferences auto = this.getActivity().getSharedPreferences(MainActivity.name, Context.MODE_PRIVATE);
         strEmail = auto.getString("inputId", "null");
