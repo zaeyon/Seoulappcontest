@@ -996,16 +996,17 @@ app.post('/emailCheck', (req, res) => {
 
     req.on('data', (data) => {
       inputData = JSON.parse(data);
-      params = [inputData.email, inputData.name, inputData.building, inputData.floor, inputData.location, inputData.style, inputData.category, inputData.introduction, inputData.profileImg, inputData.repImg1, inputData.repImg2, inputData.repImg3, inputData.profileImageUrl, inputData.repImageUrl1, inputData.repImg2, inputData.repImg3];
+      params = [inputData.email, inputData.name, inputData.building, inputData.floor, inputData.location, inputData.style, inputData.category, inputData.introduction, inputData.profileImg,  inputData.profileImageUrl, ""];
     });
 
     req.on('end', () => {
-      connection.query("INSERT INTO shop (userEmail, shopName, shopBuilding, shopFloor, shopRocation, shopStyle, shopCategory, shopIntro, shopProfileImage, shopRepresentation1, shopRepresentation2, shopRepresentation3, shopProfileImageUrl, shopRep1ImageUrl, shopRep2ImageUrl, shopRep3ImageUrl) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", params, function(error, result) {
+      console.log(params);
+      connection.query("INSERT INTO shop (userEmail, shopName, shopBuilding, shopFloor, shopRocation, shopStyle, shopCategory, shopIntro, shopProfileImage, shopProfileImageUrl, shopProductionURL) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", params, function(error, result) {
         if (error) {
           console.log("newShopData1 " + error);
         } else {
           console.log("매장 정보\n이메일 : " + inputData.email + "\n매장 이름 : " + inputData.name + "\n" + inputData.building + " " + inputData.floor + "층 " + inputData.location + "\n" + inputData.style + " " + inputData.category + "\n" + inputData.introduction);
-          console.log("매장 프로필 이미지 : " + inputData.profileImg + ", 이미지1 : " + inputData.repImg1 + ", 이미지2 : " + inputData.repImg2 + ", 이미지3 : " + inputData.repImg3);
+          console.log("매장 프로필 이미지 : " + inputData.profileImg);
         }
       })
 
@@ -1374,15 +1375,19 @@ app.post('/emailCheck', (req, res) => {
   });
   
   app.post('/InsertQnAInfo', (req,res) => {
+    console.log("post /InsertQnAInfo");
   
     var InputData;
     var hostNickname;
+    var userNickname;
+    var QnAInfo;
   
   
     req.on('data', (data) => {
       InputData = JSON.parse(data);
   
       console.log(InputData.RegQnAShopName);
+      console.log("InputData.RegQnAUserEmail : " + InputData.RegQnAUserEmail);
     });
   
   
@@ -1401,35 +1406,48 @@ app.post('/emailCheck', (req, res) => {
           hostNickname = results[0].hostNickname;
         }
         });
+
+        console.log("InputData.QnAUserEmail : " + InputData.RegQnAUserEmail);
+        connection.query("SELECT * from user where email = ?", InputData.RegQnAUserEmail, function(error, results){
+           if(error)
+           {
+             console.log("error : " + error);
+           }
+           else
+           {
+             userNickname = results[0].nickname;
+             QnAInfo = {
+              "hostNickname" : hostNickname,
+              "shopName" : InputData.RegQnAShopName,
+              "answer" : "",
+              "content" : InputData.RegQnAContent,
+              "title" : InputData.RegQnATitle,
+              "production" : InputData.RegQnAProductionName,
+              "userNickname" : userNickname,
+              "type" : InputData.RegQnAType,
+              "answerExis" : 0
+            }
+            connection.query("INSERT INTO qna SET ?", QnAInfo, function(error, results, fields) {
   
-        var QnAInfo = {
-          "hostNickname" : hostNickname,
-          "shopName" : InputData.RegQnAShopName,
-          "answer" : "",
-          "content" : InputData.RegQnAContent,
-          "title" : InputData.RegQnATitle,
-          "production" : InputData.RegQnAProductionName,
-          "userNickname" : InputData.RegQnAUserNickname,
-          "type" : InputData.RegQnAType,
-          "answerExis" : 0
-        }
-  
-        connection.query("INSERT INTO qna SET ?", QnAInfo, function(error, results, fields) {
-  
-          if(error) {
-            console.log("error : " + error);
-            res.send({
-              "code": 400,
-              "failed":"error ocurred"
+              if(error) {
+                console.log("error : " + error);
+                res.send({
+                  "code": 400,
+                  "failed":"error ocurred"
+                });
+                res.end();
+              } else {
+                console.log("문의 등록 완료");
+                res.write("success");
+                res.end();
+              }
             });
-            res.end();
-          } else {
-            console.log("문의 등록 완료");
-            res.write("success");
-            res.end();
-          }
-  
+           }
         });
+       
+  
+       
+        
   
   
   
@@ -1734,6 +1752,199 @@ app.post('/emailCheck', (req, res) => {
           res.end();
         }
     });
+});
+});
+
+app.post('/InsertRep1ProductionInfo', (req, res) => {
+  var inputData;
+  var URL;
+
+    req.on('data', (data) => {
+      inputData = JSON.parse(data);
+    });
+
+    req.on('end', () => {
+
+        var params = {
+            "shopName":inputData.RegProShopName,
+            "productionURL":inputData.RegProImageUrl,
+            "productionName":inputData.RegProTitle,
+            "productionSize":inputData.RegProSize,
+            "productionPrice":inputData.RegProPrice,
+            "productionIntro":inputData.RegProIntro
+        };
+    
+    connection.query('UPDATE shop SET shopRep1ImageUrl = ? WHERE shopName = ?', [inputData.RegProImageUrl, inputData.RegProShopName], function(error, results){
+      if(error)
+      {
+        console.log("error : " + error);
+      }
+    });    
+ 
+    connection.query('INSERT INTO production SET ?', params, function(error, result) {
+      if(error)
+      {
+        console.log("error 발생1 : " + error);
+        res.write("production register faild");
+        res.end();
+      }
+      else
+      {
+        console.log("상품 등록 성공 : " + params);
+
+        connection.query("SELECT shopProductionURL from shop WHERE shopName = ?", inputData.RegProShopName, function(error, results) {
+
+          if(error)
+          {
+           console.log("error 발생2 : " + error);
+          }
+          else{
+            URL = inputData.RegProImageUrl;
+
+            connection.query("UPDATE shop SET shopProductionURL = ? WHERE shopName = ?", [URL, inputData.RegProShopName] , function(error, results) {
+              if(error)
+              {
+                console.log("error 발생3 : " + error);
+              }
+              else
+              {
+                console.log("shopProductionURL : " + URL);
+              }
+            });
+          }
+        });
+        res.write("production register success");
+        res.end();
+      }
+  });
+});
+});
+
+app.post('/InsertRep2ProductionInfo', (req, res) => {
+  var inputData;
+  var URL;
+
+    req.on('data', (data) => {
+      inputData = JSON.parse(data);
+    });
+
+    req.on('end', () => {
+
+        var params = {
+            "shopName":inputData.RegProShopName,
+            "productionURL":inputData.RegProImageUrl,
+            "productionName":inputData.RegProTitle,
+            "productionSize":inputData.RegProSize,
+            "productionPrice":inputData.RegProPrice,
+            "productionIntro":inputData.RegProIntro
+        };
+    
+    connection.query('UPDATE shop SET shopRep2ImageUrl = ? WHERE shopName = ?', [inputData.RegProImageUrl, inputData.RegProShopName], function(error, results){
+      if(error)
+      {
+        console.log("error : " + error);
+      }
+    });    
+    connection.query('INSERT INTO production SET ?', params, function(error, result) {
+      if(error)
+      {
+        console.log("error 발생1 : " + error);
+        res.write("production register faild");
+        res.end();
+      }
+      else
+      {
+        console.log("상품 등록 성공 : " + params);
+
+        connection.query("SELECT shopProductionURL from shop WHERE shopName = ?", inputData.RegProShopName, function(error, results) {
+
+          if(error)
+          {
+           console.log("error 발생2 : " + error);
+          }
+          else{
+            URL = results[0].shopProductionURL + "|" + inputData.RegProImageUrl;
+
+            connection.query("UPDATE shop SET shopProductionURL = ? WHERE shopName = ?", [URL, inputData.RegProShopName] , function(error, results) {
+              if(error)
+              {
+                console.log("error 발생3 : " + error);
+              }
+              else
+              {
+                console.log("shopProductionURL : " + URL);
+              }
+            });
+          }
+        });
+        res.write("production register success");
+        res.end();
+      }
+  });
+});
+});
+
+app.post('/InsertRep3ProductionInfo', (req, res) => {
+  var inputData;
+  var URL;
+
+    req.on('data', (data) => {
+      inputData = JSON.parse(data);
+    });
+
+    req.on('end', () => {
+
+        var params = {
+            "shopName":inputData.RegProShopName,
+            "productionURL":inputData.RegProImageUrl,
+            "productionName":inputData.RegProTitle,
+            "productionSize":inputData.RegProSize,
+            "productionPrice":inputData.RegProPrice,
+            "productionIntro":inputData.RegProIntro
+        };
+    
+    connection.query('UPDATE shop SET shopRep3ImageUrl = ? WHERE shopName = ?', [inputData.RegProImageUrl, inputData.RegProShopName], function(error, results){
+      if(error)
+      {
+        console.log("error : " + error);
+      }
+    });    
+    connection.query('INSERT INTO production SET ?', params, function(error, result) {
+      if(error)
+      {
+        console.log("error 발생1 : " + error);
+        res.write("production register faild");
+        res.end();
+      }
+      else
+      {
+        console.log("상품 등록 성공 : " + params);
+
+        connection.query("SELECT shopProductionURL from shop WHERE shopName = ?", inputData.RegProShopName, function(error, results) {
+
+          if(error)
+          {
+           console.log("error 발생2 : " + error);
+          }
+          else{
+            URL = results[0].shopProductionURL + "|" + inputData.RegProImageUrl;
+
+            connection.query("UPDATE shop SET shopProductionURL = ? WHERE shopName = ?", [URL, inputData.RegProShopName] , function(error, results) {
+              if(error)
+              {
+                console.log("error 발생3 : " + error);
+              }
+              else
+              {
+                console.log("shopProductionURL : " + URL);
+              }
+            });
+          }
+        });
+        res.write("production register success");
+        res.end();
+      }
+  });
 });
 });
 

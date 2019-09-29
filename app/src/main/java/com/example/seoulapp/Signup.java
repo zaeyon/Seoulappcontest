@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -427,64 +428,52 @@ public class Signup extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-/*
-            if(result.equals("nicknameSuccess"))
-            {
+
+            if (result.equals("nicknameSuccess")) {
                 Log.d("dd", "nicknameSuccess");
                 nicknamePo.setVisibility(View.VISIBLE);
                 nicknameIm.setVisibility(View.INVISIBLE);
                 nicknameWrongCheck = false;
-                if (!passwordWrongCheck && !nicknameWrongCheck && !emailWrongCheck && nicknameCheck && emailCheck && passwordCheck && passwordConfirmCheck ) {
+                if (!passwordWrongCheck && !nicknameWrongCheck && !emailWrongCheck && nicknameCheck && emailCheck && passwordCheck && passwordConfirmCheck) {
                     signupBtn.setEnabled(true);
                 }
-            }
-            else if(result.equals("nicknameFail"))
-            {
+            } else if (result.equals("nicknameFail")) {
                 Log.d("dd", "nicknameFail");
                 nicknameIm.setVisibility(View.VISIBLE);
                 nicknamePo.setVisibility(View.INVISIBLE);
                 nicknameWrongCheck = true;
                 signupBtn.setEnabled(false);
 
-            }
-            else if(result.equals("nicknameNull"))
-            {
+            } else if (result.equals("nicknameNull")) {
                 nicknameIm.setVisibility(View.INVISIBLE);
                 nicknamePo.setVisibility(View.INVISIBLE);
             }
 
-            if(result.equals("emailSuccess"))
-            {
+            if (result.equals("emailSuccess")) {
                 emailPo.setVisibility(View.VISIBLE);
                 emailIm.setVisibility(View.INVISIBLE);
                 emailWr.setVisibility(View.INVISIBLE);
                 emailWrongCheck = false;
 
 
-            }
-            else if(result.equals("emailFail"))
-            {
+            } else if (result.equals("emailFail")) {
                 emailPo.setVisibility(View.INVISIBLE);
                 emailIm.setVisibility(View.VISIBLE);
                 emailWr.setVisibility(View.INVISIBLE);
                 signupBtn.setEnabled(false);
                 emailWrongCheck = true;
-            }
-            else if(result.equals("emailNull"))
-            {
+            } else if (result.equals("emailNull")) {
                 emailPo.setVisibility(View.INVISIBLE);
                 emailIm.setVisibility(View.INVISIBLE);
                 emailWr.setVisibility(View.INVISIBLE);
-            }
-            else if(result.equals("emailWrong"))
-            {
+            } else if (result.equals("emailWrong")) {
                 emailPo.setVisibility(View.INVISIBLE);
                 emailIm.setVisibility(View.INVISIBLE);
                 emailWr.setVisibility(View.VISIBLE);
                 signupBtn.setEnabled(false);
                 emailWrongCheck = true;
             }
-        }*/
         }
     }
 }
+

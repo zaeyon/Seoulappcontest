@@ -62,11 +62,11 @@ public class EditProfileActivity extends AppCompatActivity {
   private File tempFile;
 
   ImageView ivMyProfile;
-  ImageView ivCamera;
   TextView nicknameIm;
   TextView nicknamePo;
   ClearEditText cetNickname;
-  Button bMyProfileComplete, imgsel;
+  Button bMyProfileComplete;
+  ImageView imgsel;
   String path;
 
   private Uri filePath;
@@ -80,7 +80,7 @@ public class EditProfileActivity extends AppCompatActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_edit_profile);
+    setContentView(R.layout.activity_edit_profile_m);
 
 
     SharedPreferences auto = getApplicationContext().getSharedPreferences(MainActivity.name, Context.MODE_PRIVATE);
@@ -92,12 +92,8 @@ public class EditProfileActivity extends AppCompatActivity {
 
     ivMyProfile = (ImageView)findViewById(R.id.ivMyProfile);
     bMyProfileComplete = (Button)findViewById(R.id.bMyProfileComplete);
-    imgsel = (Button)findViewById(R.id.selimg);
+    imgsel = (ImageView)findViewById(R.id.selimg);
 
-    ivMyProfile.setBackground(new ShapeDrawable(new OvalShape()));
-    if (Build.VERSION.SDK_INT >= 21) {
-      ivMyProfile.setClipToOutline(true);
-    }
     /*
     ivMyProfile.setOnClickListener(new View.OnClickListener() {
       public void onClick(View v) {
@@ -116,12 +112,6 @@ public class EditProfileActivity extends AppCompatActivity {
       }
     });
      */
-
-    ivCamera = (ImageView)findViewById(R.id.ivCamera);
-    ivCamera.setBackground(new ShapeDrawable(new OvalShape()));
-    if (Build.VERSION.SDK_INT >= 21) {
-      ivCamera.setClipToOutline(true);
-    }
 
     cetNickname = (ClearEditText)findViewById(R.id.cetNickname);
 

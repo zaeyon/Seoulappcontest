@@ -5,8 +5,8 @@
     <item name="windowActionBarOverlay">true</item>
 
     <!-- Customize your theme here. -->
-    <item name="colorPrimary">#5da2ff</item>
-    <item name="colorPrimaryDark">#5da2ff</item>
+    <item name="colorPrimary">#26affd</item>
+    <item name="colorPrimaryDark">#26affd</item>
     <item name="colorAccent">@color/colorAccent</item>
     <item name="windowActionBarOverlay">true</item>
     <!-- No Title Bar -->

@@ -107,8 +107,7 @@ public class RegisterProduction extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-
-                new JSONTaskInsertProduction().execute("http://192.168.43.72:3000/InsertProductionInfo");
+    new JSONTaskInsertProduction().execute("http://192.168.43.72:3000/InsertProductionInfo");
 
             }
         });
@@ -301,7 +300,7 @@ public class RegisterProduction extends AppCompatActivity {
             Date now = new Date();
             proImageFile = formatter.format(now) + ".png";
             //storage 주소와 폴더 파일명을 지정해 준다.
-            final StorageReference storageRef = storage.getReferenceFromUrl("gs://dong-dong-c7d7e.appspot.com").child("images/ShopRepresentationImage/" + proImageFile);
+            final StorageReference storageRef = storage.getReferenceFromUrl("gs://dong-dong-c7d7e.appspot.com").child("images/ShopProductionImage/" + proImageFile);
             //올라가거라...
             storageRef.putFile(filePath)
                     //성공시

@@ -46,8 +46,8 @@ public class HomeFragment extends Fragment {
 
         View viewToolbar = getActivity().getLayoutInflater().inflate(R.layout.home_tool_bar, null);
         // ImageButton searchButton = viewToolbar.findViewById(R.id.search_btn);
-        ImageView searchButton = viewToolbar.findViewById(R.id.search_shop);
 
+        /*
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,6 +56,8 @@ public class HomeFragment extends Fragment {
                 getActivity().overridePendingTransition(R.anim.stay, R.anim.stay);
             }
         });
+
+         */
 
 
         actionBar.setCustomView(viewToolbar, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.LEFT));

@@ -31,6 +31,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.amazonaws.auth.CognitoCachingCredentialsProvider;
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility;
 import com.amazonaws.services.s3.AmazonS3;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.seoulapp.ClearEditText;
 import com.example.seoulapp.MainActivity;
 import com.example.seoulapp.R;
@@ -66,11 +68,11 @@ public class AddShop extends AppCompatActivity {
     String repImageFile3;
     private Uri filePath;
     ImageView newShopProfileImage;
-    ClearEditText newShopName;
+    EditText newShopName;
     TextView tvExShopName;
     Spinner newShopSalesItem;
     Spinner newShopBuilding;
-    ClearEditText newShopStyle;
+    EditText newShopStyle;
     EditText newShopFloor;
     EditText newShopLocation;
     ClearEditText newShopIntro;
@@ -110,10 +112,9 @@ public class AddShop extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_shop);
+        setContentView(R.layout.activity_add_shop_m);
 
-        tvExShopName = findViewById(R.id.tvExShopName);
-        signUpNext = findViewById(R.id.signUpNextButton);
+        signUpNext = findViewById(R.id.addShopBtn);
         newShopProfileImage = findViewById(R.id.newShopProfileImage);
         newShopName = findViewById(R.id.newShopName);
         newShopSalesItem = findViewById(R.id.newShopSalesItem);
@@ -122,16 +123,9 @@ public class AddShop extends AppCompatActivity {
         newShopFloor = findViewById(R.id.newShopFloor);
         newShopLocation = findViewById(R.id.newShopLocation);
         newShopIntro = findViewById(R.id.newShopIntro);
-        newShopRep1 = findViewById(R.id.newShopRep1);
-        newShopRep2 = findViewById(R.id.newShopRep2);
-        newShopRep3 = findViewById(R.id.newShopRep3);
 
         addShopProfilePlus = findViewById(R.id.newShopProfildPlus);
-        addShopRepPlus1 = findViewById(R.id.newShopRepPlus1);
-        addShopRepPlus2 = findViewById(R.id.newShopRepPlus2);
-        addShopRepPlus3 = findViewById(R.id.newShopRepPlus3);
 
-        tvExShopName.setVisibility(View.INVISIBLE);
         addShopProfilePlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
@@ -143,6 +137,7 @@ public class AddShop extends AppCompatActivity {
             }
         });
 
+        /*
         addShopRepPlus1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
@@ -176,11 +171,8 @@ public class AddShop extends AppCompatActivity {
             }
         });
 
-        newShopProfileImage.setBackground(new ShapeDrawable(new OvalShape()));
-        if (Build.VERSION.SDK_INT >= 21) {
-            newShopProfileImage.setClipToOutline(true);
-        }
-
+         */
+;
         SharedPreferences user = getSharedPreferences(MainActivity.name, Context.MODE_PRIVATE);
         userEmail = user.getString("inputId", "null");
         Log.d("AddShop", "사용자 : " + userEmail);
@@ -242,15 +234,12 @@ public class AddShop extends AppCompatActivity {
                 new JSONTask1().execute("http://192.168.43.72:3000/newShopData1");
 
                 Log.d("profileFile : " ,profileImageFile);
-                Log.d("repFile : ", repImageFile1);
-                Log.d("repFIle2 : ", repImageFile2);
-                Log.d("repFile3 : ", repImageFile3);
+               // Log.d("repFile : ", repImageFile1);
+               // Log.d("repFIle2 : ", repImageFile2);
+               //  Log.d("repFile3 : ", repImageFile3);
                 Log.d("fileUrl : ", profileUrl);
-                Log.d("repfileUrl : ", repfileUrl1);
-                Log.d("repfileUrl2 : ", repfileUrl2);
-                Log.d("repfileUrl3 : ", repfileUrl3);
 
-                finish();
+                //finish();
             }
         });
 
@@ -267,9 +256,6 @@ public class AddShop extends AppCompatActivity {
         if (requestCode != 100 && resultCode == RESULT_OK && data != null && data.getData() != null) {
 
             newShopProfileImage = (ImageView)findViewById(R.id.newShopProfileImage);
-            newShopRep1 = findViewById(R.id.newShopRep1);
-            newShopRep2 = findViewById(R.id.newShopRep2);
-            newShopRep3 = findViewById(R.id.newShopRep3);
 
             Uri uri = data.getData();
             String uriString = uri.toString();
@@ -289,6 +275,7 @@ public class AddShop extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
+            /*
             else if(requestCode == 1)
             {
                 filePath = data.getData();
@@ -323,6 +310,8 @@ public class AddShop extends AppCompatActivity {
                 }
             }
 
+             */
+
 
             Cursor cursor = null;
 
@@ -337,27 +326,6 @@ public class AddShop extends AppCompatActivity {
 
                 cursor.moveToFirst();
 
-                /*
-                switch (requestCode) {
-                    case 1:
-                        f1 = new File(cursor.getString(column_index));
-                        fileName1 = shopID + "_rep1_" + f1.getName();
-                        break;
-                    case 2:
-                        f2 = new File(cursor.getString(column_index));
-                        fileName2 = shopID + "_rep2_" + f2.getName();
-                        break;
-                    case 3:
-                        f3 = new File(cursor.getString(column_index));
-                        fileName3 = shopID + "_rep3_" + f3.getName();
-                        break;
-                    default:
-                        f = new File(cursor.getString(column_index));
-                        fileName = shopID + "_" + f.getName();
-                        Log.d("AddShop", "파일 객체 초기화");
-                }
-
-                 */
             } finally {
                 if(cursor != null) {
                     cursor.close();
@@ -455,13 +423,7 @@ public class AddShop extends AppCompatActivity {
                 jsonObject.accumulate("category", newShopSalesItem.getSelectedItem());
                 jsonObject.accumulate("introduction", newShopIntro.getText());
                 jsonObject.accumulate("profileImg", profileImageFile);
-                jsonObject.accumulate("repImg1", repImageFile1);
-                jsonObject.accumulate("repImg2", repImageFile2);
-                jsonObject.accumulate("repImg3", repImageFile3);
                 jsonObject.accumulate("profileImageUrl", profileUrl);
-                jsonObject.accumulate("repImageUrl1", repfileUrl1);
-                jsonObject.accumulate("repImageUrl2", repfileUrl2);
-                jsonObject.accumulate("repImageUrl3", repfileUrl3);
 
                 HttpURLConnection con = null;
                 BufferedReader reader = null;
@@ -522,6 +484,12 @@ public class AddShop extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
+
+            Intent registerRep1 = new Intent(AddShop.this, ShopRepPro1.class);
+
+            registerRep1.putExtra("shopName", newShopName.getText().toString());
+
+            startActivity(registerRep1);
         }
     }
 
@@ -562,188 +530,6 @@ public class AddShop extends AppCompatActivity {
 
                                 }
                             });
-                        }
-                    })
-                    //실패시
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            progressDialog.dismiss();
-                            Toast.makeText(getApplicationContext(), "업로드 실패!", Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    //진행중
-                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                            @SuppressWarnings("VisibleForTests") //이걸 넣어 줘야 아랫줄에 에러가 사라진다. 넌 누구냐?
-                                    double progress = (100 * taskSnapshot.getBytesTransferred()) /  taskSnapshot.getTotalByteCount();
-                            //dialog에 진행률을 퍼센트로 출력해 준다
-                            progressDialog.setMessage("Uploaded " + ((int) progress) + "% ...");
-                        }
-                    });
-        } else {
-            Toast.makeText(getApplicationContext(), "파일을 먼저 선택하세요.", Toast.LENGTH_SHORT).show();
-        }
-
-    }
-
-    private void repUploadFile() {
-        //업로드할 파일이 있으면 수행
-        if (filePath != null) {
-            //업로드 진행 Dialog 보이기
-            final ProgressDialog progressDialog = new ProgressDialog(this);
-            progressDialog.setTitle("업로드중...");
-            progressDialog.show();
-
-            //storage
-            FirebaseStorage storage = FirebaseStorage.getInstance();
-
-            //Unique한 파일명을 만들자.
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMHH_mmss");
-            Date now = new Date();
-            repImageFile1 = formatter.format(now) + ".png";
-            //storage 주소와 폴더 파일명을 지정해 준다.
-           final StorageReference storageRef = storage.getReferenceFromUrl("gs://dong-dong-c7d7e.appspot.com").child("images/ShopRepresentationImage/" + repImageFile1);
-            //올라가거라...
-            storageRef.putFile(filePath)
-                    //성공시
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            progressDialog.dismiss(); //업로드 진행 Dialog 상자 닫기
-                            Toast.makeText(getApplicationContext(), "업로드 완료!", Toast.LENGTH_SHORT).show();
-
-                            storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
-                                    Uri downloadUrl = uri;
-                                    repfileUrl1 = downloadUrl.toString();
-                                    Log.d("repfileUrl1 : ", repfileUrl1);
-                                }
-                            });
-                        }
-                    })
-                    //실패시
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            progressDialog.dismiss();
-                            Toast.makeText(getApplicationContext(), "업로드 실패!", Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    //진행중
-                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                            @SuppressWarnings("VisibleForTests") //이걸 넣어 줘야 아랫줄에 에러가 사라진다. 넌 누구냐?
-                                    double progress = (100 * taskSnapshot.getBytesTransferred()) /  taskSnapshot.getTotalByteCount();
-                            //dialog에 진행률을 퍼센트로 출력해 준다
-                            progressDialog.setMessage("Uploaded " + ((int) progress) + "% ...");
-                        }
-                    });
-        } else {
-            Toast.makeText(getApplicationContext(), "파일을 먼저 선택하세요.", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private void repUploadFile2() {
-        //업로드할 파일이 있으면 수행
-        if (filePath != null) {
-            //업로드 진행 Dialog 보이기
-            final ProgressDialog progressDialog = new ProgressDialog(this);
-            progressDialog.setTitle("업로드중...");
-            progressDialog.show();
-
-            //storage
-            FirebaseStorage storage = FirebaseStorage.getInstance();
-
-            //Unique한 파일명을 만들자.
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMHH_mmss");
-            Date now = new Date();
-            repImageFile2 = formatter.format(now) + ".png";
-            //storage 주소와 폴더 파일명을 지정해 준다.
-            final StorageReference storageRef = storage.getReferenceFromUrl("gs://dong-dong-c7d7e.appspot.com").child("images/ShopRepresentationImage/" + repImageFile2);
-            //올라가거라...
-            storageRef.putFile(filePath)
-                    //성공시
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            progressDialog.dismiss(); //업로드 진행 Dialog 상자 닫기
-                            Toast.makeText(getApplicationContext(), "업로드 완료!", Toast.LENGTH_SHORT).show();
-
-                            storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
-                                    Uri downloadUrl = uri;
-                                    repfileUrl2 = downloadUrl.toString();
-                                    Log.d("repfileUrl3 : ", repfileUrl2);
-                                }
-                            });
-
-
-                        }
-                    })
-                    //실패시
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            progressDialog.dismiss();
-                            Toast.makeText(getApplicationContext(), "업로드 실패!", Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    //진행중
-                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                            @SuppressWarnings("VisibleForTests") //이걸 넣어 줘야 아랫줄에 에러가 사라진다. 넌 누구냐?
-                                    double progress = (100 * taskSnapshot.getBytesTransferred()) /  taskSnapshot.getTotalByteCount();
-                            //dialog에 진행률을 퍼센트로 출력해 준다
-                            progressDialog.setMessage("Uploaded " + ((int) progress) + "% ...");
-                        }
-                    });
-        } else {
-            Toast.makeText(getApplicationContext(), "파일을 먼저 선택하세요.", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private void repUploadFile3() {
-        //업로드할 파일이 있으면 수행
-        if (filePath != null) {
-            //업로드 진행 Dialog 보이기
-            final ProgressDialog progressDialog = new ProgressDialog(this);
-            progressDialog.setTitle("업로드중...");
-            progressDialog.show();
-
-            //storage
-            FirebaseStorage storage = FirebaseStorage.getInstance();
-
-            //Unique한 파일명을 만들자.
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMHH_mmss");
-            Date now = new Date();
-            repImageFile3 = formatter.format(now) + ".png";
-            //storage 주소와 폴더 파일명을 지정해 준다.
-            final StorageReference storageRef = storage.getReferenceFromUrl("gs://dong-dong-c7d7e.appspot.com").child("images/ShopRepresentationImage/" + repImageFile3);
-            //올라가거라...
-            storageRef.putFile(filePath)
-                    //성공시
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            progressDialog.dismiss(); //업로드 진행 Dialog 상자 닫기
-                            Toast.makeText(getApplicationContext(), "업로드 완료!", Toast.LENGTH_SHORT).show();
-
-                            storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
-                                    Uri downloadUrl = uri;
-                                    repfileUrl3 = downloadUrl.toString();
-                                    Log.d("repfileUrl3 : ", repfileUrl3);
-                                }
-                            });
-
-
                         }
                     })
                     //실패시

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -106,6 +107,7 @@ public class QuestionRegister extends AppCompatActivity {
                 jsonObject.accumulate("RegQnAContent", RegQnAContent.getText());
                 jsonObject.accumulate("RegQnATitle", RegQnATitle.getText());
                 jsonObject.accumulate("RegQnAUserEmail", preUserEmail);
+                Log.d("RegQnAUserEmail : ", preUserEmail);
 
 
                 HttpURLConnection con = null;
@@ -270,7 +272,12 @@ public class QuestionRegister extends AppCompatActivity {
 
                 for (int i = 0; i < QnA.length; i++) {
                     QnAInfo = QnA[i].split("\\|");
+                    for(int j = 0; j < QnAInfo.length; j++)
+                    {
+                        Log.d("QnAInfo : ", QnAInfo[j]);
+                    }
                     adapter.addItem(QnAInfo[5], QnAInfo[6], QnAInfo[7], QnAInfo[4], QnAInfo[3], QnAInfo[1], QnAInfo[9]);
+
                 }
             }
             onBackPressed();

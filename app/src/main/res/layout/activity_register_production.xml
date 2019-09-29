@@ -72,12 +72,12 @@
                         />
 
                         <ImageView
-                            android:layout_marginTop="5dp"
                             android:id="@+id/selectPhoto"
-                            android:layout_width="70dp"
+                            android:layout_width="64dp"
                             android:layout_height="60dp"
-                            android:src="@drawable/camera"
-                            android:layout_gravity="center"/>
+                            android:layout_gravity="center"
+                            android:layout_marginTop="5dp"
+                            android:src="@drawable/camera" />
 
 
 

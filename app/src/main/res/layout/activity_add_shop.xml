@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.notifications.MyShopActivity"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:background="#f3f3f3">
 
     <LinearLayout
         android:layout_gravity="center"
@@ -29,28 +30,6 @@
                 android:layout_height="wrap_content"
                 android:text="매장 프로필 사진"
                 android:fontFamily="@font/nanumsquare_acr"/>
-
-            <FrameLayout
-                android:layout_gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-            <ImageView
-                android:id="@+id/newShopProfileImage"
-                android:layout_gravity="center"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:scaleType="fitXY"
-                android:layout_marginTop="5dp"
-                app:srcCompat="@drawable/blank_profile" />
-
-                <ImageView
-                    android:id="@+id/newShopProfildPlus"
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
-                    app:srcCompat="@drawable/plus"
-                    android:layout_gravity="right|bottom"/>
-            </FrameLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

@@ -974,9 +974,9 @@ public class ShopDetaildInfo extends AppCompatActivity implements OnClickListene
             else{
                 QuestionHagi.setVisibility(View.VISIBLE);
                 proReg.setVisibility(View.INVISIBLE);
+                QnAAnswerHagi.setVisibility(View.INVISIBLE);
             }
 
         }
     }
-
 }

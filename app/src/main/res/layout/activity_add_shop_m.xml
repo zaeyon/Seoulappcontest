@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".QuestionRegister"
+    android:background="#f3f3f3"
+    >
+
+
+    <LinearLayout
+        android:layout_marginTop="0dp"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#f3f3f3"
+        android:weightSum="10"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <LinearLayout
+            android:background="#f3f3f3"
+            android:layout_width="0dp"
+            android:layout_weight="9.3"
+            android:layout_height="590dp"
+            android:weightSum="10"
+            android:orientation="vertical"
+            android:gravity="center"
+            >
+
+            <LinearLayout
+                android:background="#ffffff"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="9.9"
+                android:orientation="horizontal"
+                android:weightSum="10"
+                android:gravity="center">
+
+                <LinearLayout
+
+                    android:background="#ffffff"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="9"
+                    android:orientation="vertical"
+                    android:layout_marginTop="10dp"
+                    android:gravity="">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="매장 개설하기"
+                        android:textSize="20sp"
+                        android:fontFamily="@font/nanumsquare_acr"
+                        android:textColor="#000000"/>
+
+                    <TextView
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/profile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="매장 프로필"
+                        android:layout_gravity="center"
+                        android:textSize="15sp"
+                        android:fontFamily="@font/nanumsquare_acr"/>
+                    <FrameLayout
+                        android:layout_marginTop="0dp"
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/newShopProfileImage"
+                            android:layout_gravity="center"
+                            android:layout_width="150dp"
+                            android:layout_height="150dp"
+                            android:scaleType="centerCrop"
+                            android:layout_marginTop="5dp"
+                            app:srcCompat="@drawable/blank_production2" />
+
+                        <ImageView
+                            android:id="@+id/newShopProfildPlus"
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            app:srcCompat="@drawable/camera"
+                            android:layout_gravity="center"/>
+                    </FrameLayout>
+
+
+                    <TextView
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="매장 이름"
+                        android:textSize="15sp"
+                        android:fontFamily="@font/nanumsquare_acr"/>
+
+                    <EditText
+                        android:id="@+id/newShopName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textSize="15sp"
+                        android:fontFamily="@font/nanumsquare_acr"/>
+
+                    <LinearLayout
+                        android:layout_marginTop="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="0.5"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="판매 품목"
+                                android:fontFamily="@font/nanumsquare_acr"/>
+
+                            <Spinner
+                                android:id="@+id/newShopSalesItem"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="0.5"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                            <TextView
+                                android:fontFamily="@font/nanumsquare_acr"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="스타일" />
+
+                            <EditText
+                                android:id="@+id/newShopStyle"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_marginTop="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/textView8"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="위치"
+                            android:fontFamily="@font/nanumsquare_acr"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <Spinner
+                                android:id="@+id/newShopBuilding"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_weight="0.4" />
+
+                            <EditText
+                                android:id="@+id/newShopFloor"
+                                android:layout_width="wrap_content"
+                                android:layout_height="36dp"
+                                android:layout_weight="0.2"
+                                android:text="" />
+
+                            <TextView
+                                android:id="@+id/tvFloor"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="0.25"
+                                android:text="층"
+                                android:fontFamily="@font/nanumsquare_acr"
+                                android:textSize="15sp"
+                                android:gravity="center" />
+
+                            <EditText
+                                android:id="@+id/newShopLocation"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="0.4"
+                                android:text="" />
+
+                            <TextView
+                                android:id="@+id/tvLocation"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="0.3"
+                                android:fontFamily="@font/nanumsquare_acr"
+                                android:text="구역"
+                                android:textSize="15sp"
+                                android:gravity="center" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_marginTop="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvIntro"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/nanumsquare_acr"
+                            android:text="매장 소개" />
+
+                        <com.example.seoulapp.ClearEditText
+                            android:inputType="textMultiLine"
+                            android:lines="8"
+                            android:minLines="2"
+                            android:id="@+id/newShopIntro"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/addShopBtn"
+                        android:layout_marginTop="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:text="다음"
+                        android:fontFamily="@font/nanumsquare_acr"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

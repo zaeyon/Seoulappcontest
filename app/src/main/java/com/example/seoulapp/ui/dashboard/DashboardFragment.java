@@ -35,6 +35,7 @@ public class DashboardFragment extends Fragment {
         Toolbar toolbar = (Toolbar) root.findViewById(R.id.ReviewToolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+
         actionBar.setDisplayShowCustomEnabled(true);
         actionBar.setDisplayShowTitleEnabled(false);
 
