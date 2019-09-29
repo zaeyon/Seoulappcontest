@@ -170,7 +170,7 @@ public class MyReviewAdapter extends BaseAdapter {
                 increace_heart++;
                 Like.setText("좋아요 " + increace_heart + "회");
                 list_number.setLike(increace_heart); //like 저장*/
-                new MyReviewAdapter.JSONTaskaddLike().execute("http://192.168.43.72:3000/addLike");
+                new MyReviewAdapter.JSONTaskaddLike().execute("http://192.168.43.102:3000/addLike");
 
                 Animation animation2 = new AlphaAnimation(1, 0);
                 animation2.setDuration(1000);

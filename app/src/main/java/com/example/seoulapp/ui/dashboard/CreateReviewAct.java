@@ -13,6 +13,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -62,14 +63,6 @@ public class CreateReviewAct extends AppCompatActivity {
     String fileName;
     String strEmail; //판별용 아이디
     TextView nickname;
-    String[] User_Image;
-    String[] User_Id;
-    String[] User_Content;
-    String[] Review_StoreName;
-    String[] like;
-    String[] allView;
-    Fragment list;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -159,7 +152,7 @@ public class CreateReviewAct extends AppCompatActivity {
                 if (write_Store.equals("") || write_Story.equals("")) {
                     Toast.makeText(this, "입력이 덜 되었습니다!", Toast.LENGTH_LONG).show();
                 } else {
-                    new JSONTaskReviewUpload().execute("http://192.168.43.72:3000/setReviewFile"); //
+                    new JSONTaskReviewUpload().execute("http://192.168.43.102:3000/setReviewFile"); //
                 }
 
         }
@@ -236,11 +229,14 @@ public class CreateReviewAct extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-            if(result !=null){
-                ReviewAdapter adapter = new ReviewAdapter();
-                adapter.refresh();
-            }
+            ReviewAdapter adapter = new ReviewAdapter();
+            adapter.notifyDataSetChanged();
             onBackPressed();
         }
+    }
+
+    public void onBackPressed(){
+        Toast.makeText(this,"저장되었습니다!", Toast.LENGTH_LONG).show();
+        super.onBackPressed();
     }
 }

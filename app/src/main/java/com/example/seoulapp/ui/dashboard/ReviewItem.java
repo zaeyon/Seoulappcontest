@@ -12,6 +12,7 @@ public class ReviewItem {
     private String[] splitStore;
     private int number;
     private int Like;
+    private String UserProfilePicture;
 
 
     public void setUserImage(String userImage) {
@@ -37,6 +38,10 @@ public class ReviewItem {
         } else {
             StoreName = "#" + storeName +" ";
         }
+    }
+
+    public void setUserProfilePicture(String userProfilePicture) {
+        UserProfilePicture = userProfilePicture;
     }
 
     public void setNumber(int number) {
@@ -76,6 +81,10 @@ public class ReviewItem {
 
     public int getNumber() {
         return number;
+    }
+
+    public String getUserProfilePicture() {
+        return UserProfilePicture;
     }
 }
 

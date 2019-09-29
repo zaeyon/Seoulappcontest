@@ -50,7 +50,7 @@
                 <action android:name="android.intent.action.ReviewToolbar" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.dashboard.empty_comment"/>
+
         <service
             android:name="com.amazonaws.mobileconnectors.s3.transferutility.TransferService"
             android:enabled="true" />

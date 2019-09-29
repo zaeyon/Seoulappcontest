@@ -95,7 +95,7 @@ public class NotificationsFragment extends Fragment {
         SharedPreferences auto = this.getActivity().getSharedPreferences(MainActivity.name, Context.MODE_PRIVATE);
         strEmail = auto.getString("inputId", "null");
 
-        new TaskGetBookmark().execute("http://192.168.43.72:3000/getBookmark");
+        new TaskGetBookmark().execute("http://192.168.43.102:3000/getBookmark");
         NoShopPage = v.findViewById(R.id.noShopPage);
         YesShopPage = v.findViewById(R.id.yesShopPage);
 
@@ -128,7 +128,7 @@ public class NotificationsFragment extends Fragment {
         ivShopSetting.setOnClickListener(new goSettingShop());
 
         // 와이파이 새로 접속할 때마다 변경
-        new JSONTask().execute("http://192.168.43.72:3000/getUserInfo");
+        new JSONTask().execute("http://192.168.43.102:3000/getUserInfo");
 
         // 즐겨찾기 리스트
 //        String[] strBookmark =  {"들락날락", "다래락", "라일락", "라운지오", "워커하우스"};
@@ -162,7 +162,7 @@ public class NotificationsFragment extends Fragment {
                 ItemData item = (ItemData)parent.getItemAtPosition(position);
                 clickShopName = item.getStrShopName();
 
-                new TaskGetShopInfo().execute("http://192.168.43.72:3000/getShopInfo");
+                new TaskGetShopInfo().execute("http://192.168.43.102:3000/getShopInfo");
             }
         });
 
@@ -331,8 +331,8 @@ public class NotificationsFragment extends Fragment {
             super.onPostExecute(result);
 
             bookmarkNum = Integer.parseInt(result);
-            new TaskGetName().execute("http://192.168.43.72:3000/getBMName");
-            new TaskGetProfile().execute("http://192.168.43.72:3000/getBMProfile");
+            new TaskGetName().execute("http://192.168.43.102:3000/getBMName");
+            new TaskGetProfile().execute("http://192.168.43.102:3000/getBMProfile");
 
         }
     }
@@ -639,7 +639,7 @@ public class NotificationsFragment extends Fragment {
 
 
 
-            new JSONTaskGetMyShop().execute("http://192.168.43.72:3000/getMyShop");
+            new JSONTaskGetMyShop().execute("http://192.168.43.102:3000/getMyShop");
 
             // startActivity(intentSettingShop);
         }

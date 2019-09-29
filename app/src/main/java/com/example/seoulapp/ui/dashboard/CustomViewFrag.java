@@ -12,12 +12,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.ListFragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.seoulapp.MainActivity;
 import com.example.seoulapp.R;
@@ -34,6 +37,7 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -56,17 +60,18 @@ public class CustomViewFrag extends ListFragment {
     String[] Review_Number;
     String[] Like;
     String[] allView;
-
-
+    String[] EmailBucket;
+    String[] emails;
+    String[] ReviewProfile;
+    ScrollView Sv;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         //추상화된 view를 실제적으로
         View getItemId = inflater.inflate(R.layout.review_listview_itemview, container, false);
-
         SharedPreferences auto = this.getActivity().getSharedPreferences(MainActivity.name, Context.MODE_PRIVATE);
-        strEmail = auto.getString("inputId", "null");
+        strEmail = auto.getString("inputId", "null"); //이메일
 
         tv_comment = getItemId.findViewById(R.id.comment);
         User_img = (ImageView) getItemId.findViewById(R.id.User_img);
@@ -74,17 +79,15 @@ public class CustomViewFrag extends ListFragment {
         profile_img = getItemId.findViewById(R.id.User_profilePicture);
         Commentmore = getItemId.findViewById(R.id.watching_comment);
 
-        ReviewAdapter adapter = new ReviewAdapter();
-        setListAdapter(adapter);
 
         ActivityManager manager = (ActivityManager)getContext().getSystemService(Activity.ACTIVITY_SERVICE);
         List<ActivityManager.RunningTaskInfo> list = manager.getRunningTasks(1);
         ActivityManager.RunningTaskInfo info = list.get(0);
         Log.d("CustomViewFrag", "최상위 액티비티 : " + info.topActivity.getClassName());
         if (info.topActivity.getClassName().equals("com.example.seoulapp.ui.notifications.MyReviewActivity")) {
-            new JSONTaskCurrentUser().execute("http://192.168.43.72:3000/getCurrentUserReview");
+            new JSONTaskCurrentUser().execute("http://192.168.43.102:3000/getCurrentUserReview");
         } else {
-            new JSONTaskUserProfile().execute("http://192.168.43.72:3000/getUserProfile");
+            new JSONTaskUserReview().execute("http://192.168.43.102:3000/getReview");
         }
 
        /* dashboardViewModel =
@@ -99,7 +102,7 @@ public class CustomViewFrag extends ListFragment {
     }
 
     //리뷰 불러오기
-    public class JSONTaskUserProfile extends AsyncTask<String, String, String> {
+    public class JSONTaskUserReview extends AsyncTask<String, String, String> {
 
         @Override
         protected String doInBackground(String... urls) {
@@ -186,6 +189,7 @@ public class CustomViewFrag extends ListFragment {
             Review_StoreName= allView[3].split("\\|");
             Like = allView[4].split("\\|");
             Review_Number = allView[5].split("\\|");
+            ReviewProfile = allView[6].split("\\|");
 
             //하나,둘 이렇게 되어있을 거거든요.
 
@@ -193,24 +197,24 @@ public class CustomViewFrag extends ListFragment {
 
                 int a= User_Id.length-1;
                 //String _number = Review_Number[a-i];
-                String UserImg = User_Image[a-i];
+                String UserImg = "" +User_Image[a-i];
                 String UserId = User_Id[a-i];
                 String UserContent = User_Content[a-i];
                 String StoreName = Review_StoreName[a-i];
                 String _Like = Like[a-i];
                 String Number = Review_Number[a-i];
+                String Review_profile = ReviewProfile[a-i];
 
                 Log.d("CustomViewFrag", "_Like = " + _Like);
 
                 int like = Integer.parseInt(_Like);
                 int Numbering = Integer.parseInt(Number);
-                adapter.addItem(UserImg, UserId, UserContent, StoreName, like, Numbering);
+                adapter.addItem(UserImg, UserId, UserContent, StoreName, like, Numbering, Review_profile);
             }
             //comment_Id랑 comment를 commentAct로 넘겨야합니당..
         }
 
     }
-
 
     public class JSONTaskCurrentUser extends AsyncTask<String, String, String> {
 
@@ -287,7 +291,7 @@ public class CustomViewFrag extends ListFragment {
 
         @Override
         protected void onPostExecute(String result) { //result 값은 2임.
-            super.onPostExecute(result); //undefined라고 떠
+            super.onPostExecute(result); //undefined라
 
             Log.d("CustomView", "UserProfile 성공");
             ReviewAdapter adapter = new ReviewAdapter();
@@ -302,6 +306,7 @@ public class CustomViewFrag extends ListFragment {
             Review_StoreName= allView[3].split("\\|");
             Like = allView[4].split("\\|");
             Review_Number = allView[5].split("\\|");
+            ReviewProfile = allView[6].split("\\|");
 
             //하나,둘 이렇게 되어있을 거거든요.
 
@@ -315,12 +320,13 @@ public class CustomViewFrag extends ListFragment {
                 String StoreName = Review_StoreName[a-i];
                 String _Like = Like[a-i];
                 String Number = Review_Number[a-i];
+                String Review_profile = ReviewProfile[a-i];
 
                 Log.d("CustomViewFrag", "_Like = " + _Like);
 
                 int like = Integer.parseInt(_Like);
                 int Numbering = Integer.parseInt(Number);
-                adapter.addItem(UserImg, UserId, UserContent, StoreName, like, Numbering);
+                adapter.addItem(UserImg, UserId, UserContent, StoreName, like, Numbering, Review_profile);
             }
             //comment_Id랑 comment를 commentAct로 넘겨야합니당..
         }

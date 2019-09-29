@@ -39,8 +39,6 @@ public class DashboardFragment extends Fragment {
         actionBar.setDisplayShowTitleEnabled(false);
 
 
-
-
        /* dashboardViewModel =
                 ViewModelProviders.of(this).get(DashboardViewModel.class);*/
 

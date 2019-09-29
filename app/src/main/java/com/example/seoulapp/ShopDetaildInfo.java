@@ -85,11 +85,11 @@ public class ShopDetaildInfo extends AppCompatActivity implements OnClickListene
         setContentView(R.layout.activity_shop_detaild_info);
 
         // 와이파이 새로 접속할때마다 변경
-        new JSONTaskHostEmail().execute("http://192.168.43.72:3000/getHostEmail");
-        new JSONTask2().execute("http://192.168.43.72:3000/shopNumber");
-        new JSONTaskProduction().execute("http://192.168.43.72:3000/getShopProduction");
-        new JSONTaskQnA().execute("http://192.168.43.72:3000/getQnAInfo");
-        new JSONTaskFavoriteShop().execute("http://192.168.43.72:3000/getFavoriteCheck");
+        new JSONTaskHostEmail().execute("http://192.168.43.102:3000/getHostEmail");
+        new JSONTask2().execute("http://192.168.43.102:3000/shopNumber");
+        new JSONTaskProduction().execute("http://192.168.43.102:3000/getShopProduction");
+        new JSONTaskQnA().execute("http://192.168.43.102:3000/getQnAInfo");
+        new JSONTaskFavoriteShop().execute("http://192.168.43.102:3000/getFavoriteCheck");
 
 
 
@@ -196,7 +196,7 @@ public class ShopDetaildInfo extends AppCompatActivity implements OnClickListene
                 binStar.setVisibility(INVISIBLE);
                 canStar.setVisibility(VISIBLE);
 
-                new JSONTaskFavoriteShop().execute("http://192.168.43.72:3000/insertFavoriteShop");
+                new JSONTaskFavoriteShop().execute("http://192.168.43.102:3000/insertFavoriteShop");
 
             }
         });
@@ -210,7 +210,7 @@ public class ShopDetaildInfo extends AppCompatActivity implements OnClickListene
                 binStar.setVisibility(VISIBLE);
                 canStar.setVisibility(INVISIBLE);
 
-                new JSONTaskFavoriteShop().execute("http://192.168.43.72:3000/deleteFavoriteShop");
+                new JSONTaskFavoriteShop().execute("http://192.168.43.102:3000/deleteFavoriteShop");
 
             }
         });
@@ -325,7 +325,7 @@ public class ShopDetaildInfo extends AppCompatActivity implements OnClickListene
             @Override
             public void onClick(View view) {
 
-                new JSONTaskRegAnswer().execute("http://192.168.43.72:3000/insertQnAAnswer");
+                new JSONTaskRegAnswer().execute("http://192.168.43.102:3000/insertQnAAnswer");
 
             }
         });
