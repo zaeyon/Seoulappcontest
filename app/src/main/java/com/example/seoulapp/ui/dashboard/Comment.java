@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -15,6 +14,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.seoulapp.MainActivity;
+
+import androidx.appcompat.app.AppCompatActivity;
 import com.example.seoulapp.R;
 
 import org.json.JSONObject;
@@ -77,7 +78,6 @@ public class Comment extends AppCompatActivity {
 
         SharedPreferences auto = this.getSharedPreferences(MainActivity.name, Context.MODE_PRIVATE);
         strEmail = auto.getString("inputId", "null");
-
 
         // positionget = (int) new CommentAdapter().getItemId();
         /*delete_cmt.setOnClickListener(new View.OnClickListener() {

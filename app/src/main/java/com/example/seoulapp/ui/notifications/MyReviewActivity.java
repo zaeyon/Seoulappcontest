@@ -5,17 +5,31 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.seoulapp.R;
 
 public class MyReviewActivity extends AppCompatActivity {
 
+    TextView toolbarTitle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_dashboard);
+
+        toolbarTitle = findViewById(R.id.toolbarTitle);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.myReviewToolbar);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+//        actionBar.setDisplayShowCustomEnabled(true);
+//        actionBar.setDisplayShowTitleEnabled(false);
+        toolbarTitle.setText("내 리뷰");
     }
 
     public static void setListViewHeightBasedOnChildren(ListView listView) {

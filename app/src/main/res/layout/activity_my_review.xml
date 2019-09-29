@@ -6,4 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".ui.notifications.MyReviewActivity">
 
+    <include
+        android:id="@+id/myReviewToolbar"
+        layout="@layout/toolbar"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

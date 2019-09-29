@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
@@ -14,7 +15,6 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -67,7 +67,7 @@ public class EditProfileActivity extends AppCompatActivity {
   TextView nicknameIm;
   TextView nicknamePo;
   ClearEditText cetNickname;
-  Button bMyProfileComplete, imgsel;
+  Button bMyProfileComplete;
   String path;
 
   private Uri filePath;
@@ -94,30 +94,32 @@ public class EditProfileActivity extends AppCompatActivity {
 
     ivMyProfile = (ImageView)findViewById(R.id.ivMyProfile);
     bMyProfileComplete = (Button)findViewById(R.id.bMyProfileComplete);
-    imgsel = (Button)findViewById(R.id.selimg);
 
     ivMyProfile.setBackground(new ShapeDrawable(new OvalShape()));
     if (Build.VERSION.SDK_INT >= 21) {
       ivMyProfile.setClipToOutline(true);
     }
-    /*
+
     ivMyProfile.setOnClickListener(new View.OnClickListener() {
       public void onClick(View v) {
 
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "이미지를 선택하세요."), 0);
 
-        Intent intent = new Intent(Intent.ACTION_PICK);
-        intent.setDataAndType(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
-        startActivityForResult(intent, GET_GALLERY_IMAGE);
-
-        Intent fintent = new Intent(Intent.ACTION_GET_CONTENT);
-        fintent.setType("image/jpeg");
-        try {
-          startActivityForResult(fintent, 100);
-        } catch (ActivityNotFoundException e) {
-        }
+//        Intent intent = new Intent(Intent.ACTION_PICK);
+//        intent.setDataAndType(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+//        startActivityForResult(intent, GET_GALLERY_IMAGE);
+//
+//        Intent fintent = new Intent(Intent.ACTION_GET_CONTENT);
+//        fintent.setType("image/jpeg");
+//        try {
+//          startActivityForResult(fintent, 100);
+//        } catch (ActivityNotFoundException e) {
+//        }
       }
     });
-     */
 
     ivCamera = (ImageView)findViewById(R.id.ivCamera);
     ivCamera.setBackground(new ShapeDrawable(new OvalShape()));
@@ -137,50 +139,71 @@ public class EditProfileActivity extends AppCompatActivity {
 
     bMyProfileComplete.setOnClickListener(new View.OnClickListener() {
       public void onClick(View v) {
-        uploadFile();
-
+        // uploadFile();
         // 와이파이 새로 접속할 때마다 변경
         new JSONTask2().execute("http://192.168.43.102:3000/setMyProfile");
         Log.d("EditProfileActivity", "JSONTask2 실행");
 
-        Intent iSettings = new Intent(EditProfileActivity.this, SettingsActivity.class);
-        iSettings.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(iSettings);
-
+//        Intent iSettings = new Intent(EditProfileActivity.this, SettingsActivity.class);
+//        iSettings.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//        startActivity(iSettings);
       }
     });
-
-
-
-    imgsel.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "이미지를 선택하세요."), 0);
-
-      }
-    });
-
-    DisplayMetrics displaymetrics;
-    displaymetrics = new DisplayMetrics();
-    getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
   }
 
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-    super.onActivityResult(requestCode, resultCode, data);
-    //request코드가 0이고 OK를 선택했고 data에 뭔가가 들어 있다면
-    if(requestCode == 0 && resultCode == RESULT_OK){
-      filePath = data.getData();
+//    super.onActivityResult(requestCode, resultCode, data);
+//    //request코드가 0이고 OK를 선택했고 data에 뭔가가 들어 있다면
+//    if(requestCode == 0 && resultCode == RESULT_OK){
+//      filePath = data.getData();
+//      try {
+//        //Uri 파일을 Bitmap으로 만들어서 ImageView에 집어 넣는다.
+//        Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+//        ivMyProfile.setImageBitmap(bitmap);
+//      } catch (IOException e) {
+//        e.printStackTrace();
+//      }
+//    }
+
+    if (requestCode != 100 && resultCode == RESULT_OK && data != null && data.getData() != null) {
+
+      ivMyProfile = (ImageView)findViewById(R.id.ivMyProfile);
+
+      Uri uri = data.getData();
+      String uriString = uri.toString();
+      File myFile = new File(uriString);
+      String path = myFile.getAbsolutePath();
+      String displayName = null;
+
+      if(requestCode == 0 && resultCode == RESULT_OK){
+        filePath = data.getData();
+        try {
+          //Uri 파일을 Bitmap으로 만들어서 ImageView에 집어 넣는다.
+          Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+          ivMyProfile.setImageBitmap(bitmap);
+          uploadFile();
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+      }
+
+      Cursor cursor = null;
+
       try {
-        //Uri 파일을 Bitmap으로 만들어서 ImageView에 집어 넣는다.
-        Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
-        ivMyProfile.setImageBitmap(bitmap);
-      } catch (IOException e) {
-        e.printStackTrace();
+        String[] proj = {MediaStore.Images.Media.DATA};
+
+        assert uri != null;
+        cursor = getContentResolver().query(uri, proj, null, null, null);
+
+        assert cursor != null;
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+
+        cursor.moveToFirst();
+      } finally {
+        if(cursor != null) {
+          cursor.close();
+        }
       }
     }
   }
@@ -217,7 +240,7 @@ public class EditProfileActivity extends AppCompatActivity {
                     public void onSuccess(Uri uri) {
                       Uri downloadUrl = uri;
                       profileUrl = downloadUrl.toString();
-                      Log.d("repfileUrl1 : ", profileUrl);
+                      Log.d("profileUrl : ", profileUrl);
                     }
                   });
                 }
@@ -425,6 +448,10 @@ public class EditProfileActivity extends AppCompatActivity {
     @Override
     protected void onPostExecute(String result) {
       super.onPostExecute(result);
+
+      Intent iSettings = new Intent(EditProfileActivity.this, SettingsActivity.class);
+      iSettings.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+      startActivity(iSettings);
 
       Toast.makeText(EditProfileActivity.this, "수정이 완료되었습니다.", Toast.LENGTH_SHORT).show();
     }

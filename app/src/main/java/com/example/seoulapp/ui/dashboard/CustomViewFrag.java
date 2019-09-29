@@ -88,6 +88,7 @@ public class CustomViewFrag extends ListFragment {
             new JSONTaskCurrentUser().execute("http://192.168.43.102:3000/getCurrentUserReview");
         } else {
             new JSONTaskUserReview().execute("http://192.168.43.102:3000/getReview");
+
         }
 
        /* dashboardViewModel =

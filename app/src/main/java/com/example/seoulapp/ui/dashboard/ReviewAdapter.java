@@ -164,7 +164,6 @@ public class ReviewAdapter extends BaseAdapter {
                             Log.e("댓글 저장", "들어왔어용");
                             new JSONTaskStoreComment().execute("http://192.168.43.102:3000/StoreComment");
                             Cmt.setText("");
-
                         }
                     }
                 });

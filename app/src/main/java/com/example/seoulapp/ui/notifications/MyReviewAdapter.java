@@ -136,9 +136,7 @@ public class MyReviewAdapter extends BaseAdapter {
                         } else {
                             //db랑 연결하는 코드를 작성합시다^^...
                             Log.e("111111111", "들어왔엉1");
-
                             new MyReviewAdapter.JSONTaskStoreComment().execute("http://192.168.43.102:3000/StoreComment");
-
                         }
                     }
                 });

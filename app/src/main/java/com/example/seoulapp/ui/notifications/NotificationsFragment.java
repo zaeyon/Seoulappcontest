@@ -19,6 +19,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -51,8 +54,9 @@ public class NotificationsFragment extends Fragment {
 
     private NotificationsViewModel notificationsViewModel;
     String clickShopName;
-    TextView tvNickname;
 
+    TextView toolbarTitle;
+    TextView tvNickname;
     ImageView ivProfile;
     ImageView ivMyItem;
     ImageView ivNews;
@@ -92,6 +96,15 @@ public class NotificationsFragment extends Fragment {
 
         View v = inflater.inflate(R.layout.fragment_notifications, container, false);
 
+        toolbarTitle = v.findViewById(R.id.toolbarTitle);
+
+        Toolbar toolbar = (Toolbar) v.findViewById(R.id.MyProfileToolbar);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        actionBar.setDisplayShowCustomEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(false);
+        toolbarTitle.setText("동동");
+
         SharedPreferences auto = this.getActivity().getSharedPreferences(MainActivity.name, Context.MODE_PRIVATE);
         strEmail = auto.getString("inputId", "null");
 
@@ -119,7 +132,7 @@ public class NotificationsFragment extends Fragment {
         ivMyItem = (ImageView) v.findViewById(R.id.ivMyItem);
         ivMyItem.setOnClickListener(new goMyItem());
         ivNews = (ImageView) v.findViewById(R.id.ivNews);
-        ivNews.setOnClickListener(new goNews());
+        ivNews.setOnClickListener(new goMyReview());
         ivSettings = (ImageView) v.findViewById(R.id.ivSettings);
         ivSettings.setOnClickListener(new goSettings());
         ivShopAdd = (ImageView)v.findViewById(R.id.ivAddShop);
@@ -623,6 +636,14 @@ public class NotificationsFragment extends Fragment {
         }
     }
 
+    class goMyReview implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            Intent intentReview = new Intent(getActivity(), MyReviewActivity.class);
+            startActivity(intentReview);
+        }
+    }
+
     class goAddShop implements View.OnClickListener {
         @Override
         public void onClick(View v) {
@@ -637,11 +658,8 @@ public class NotificationsFragment extends Fragment {
 
             intentSettingShop = new Intent(getActivity(), ShopDetaildInfo.class);
 
-
-
             new JSONTaskGetMyShop().execute("http://192.168.43.102:3000/getMyShop");
 
-            // startActivity(intentSettingShop);
         }
     }
 
