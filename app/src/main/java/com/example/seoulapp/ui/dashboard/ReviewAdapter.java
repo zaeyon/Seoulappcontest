@@ -48,15 +48,21 @@ public class ReviewAdapter extends BaseAdapter {
 
     int innumber;
     int getposition;
-    int number;
+    int heartNum;
+    ImageView ReviewImg; //리뷰 이미지
     ImageView empty_love;
     ImageView full_heart;
-    ImageView profilePicture;
-    ImageView Review_profilePicture;
+    ImageView Review_profilePicture; //프로필 이미지 아이디
+    ImageView mCommentPicture;
     TextView nickname;
+
     String strNickname;
     String strCmt;
     String strEmail;
+    String UserEmail;
+
+    Context context;
+    Context c;
 
     ArrayList<ReviewItem> list = new ArrayList<>(); //아이템들 추가되어있음.
 
@@ -80,6 +86,10 @@ public class ReviewAdapter extends BaseAdapter {
     public View getView(final int position, View convertView, final ViewGroup parent) {//index, 우리가 보낸 view, view 그룹
 
         final Context c = parent.getContext(); //Context는 app에 대한 구분을 짓는 정보들..
+        SharedPreferences auto = c.getSharedPreferences(MainActivity.name, Context.MODE_PRIVATE);
+        strEmail = auto.getString("inputId", "null");
+        //이메일을 가져왔잖아? 그걸 보내서 꺼내오라는 의미 아닌가요
+
 
         if (convertView == null) {
             LayoutInflater li = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -88,7 +98,7 @@ public class ReviewAdapter extends BaseAdapter {
 
         //아이템들 getItem
         TextView ReviewId = convertView.findViewById(R.id.User_id);
-        ImageView ReviewImg = convertView.findViewById(R.id.User_img);
+        ReviewImg = convertView.findViewById(R.id.User_img);
 
         ImageView Review_profilePicture = convertView.findViewById(R.id.User_profilePicture); //프로필 사진
         final ImageView heart_filled = convertView.findViewById(R.id.love_filed);
@@ -97,32 +107,34 @@ public class ReviewAdapter extends BaseAdapter {
         TextView User_store = convertView.findViewById(R.id.User_Store);
         final TextView Like = convertView.findViewById(R.id.like);
         final EditText Cmt = convertView.findViewById(R.id.comment); //editText
-
+        mCommentPicture = convertView.findViewById(R.id.mCommentImg);
         empty_love = convertView.findViewById(R.id.love_emtpy);
         full_heart = convertView.findViewById(R.id.love_filed);
 
         nickname = (TextView) View.inflate(c, R.layout.activity_edit_profile, null).findViewById(R.id.cetNickname);
-        profilePicture = (ImageView) View.inflate(c, R.layout.activity_edit_profile, null).findViewById(R.id.ivMyProfile);
+
         //set profile 파일에서 설정된 프로필 사진
         final TextView input_cmt = convertView.findViewById(R.id.Input_comment);
         input_cmt.setVisibility(View.INVISIBLE);
 
-        SharedPreferences auto = c.getSharedPreferences(MainActivity.name, Context.MODE_PRIVATE);
-        strEmail = auto.getString("inputId", "null");
-
         Review_profilePicture.setBackground(new ShapeDrawable(new OvalShape()));
         Review_profilePicture.setClipToOutline(true); //프사 동그랗게 만들기
 
-        ReviewItem Ri = list.get(position); //위젯에 대한 참조 기능 획득
+        final ReviewItem Ri = list.get(position); //위젯에 대한 참조 기능 획득
         ReviewAdapter adapter = new ReviewAdapter();
+        increace_heart = Ri.getLike(); //like를 불러옴
+        Like.setText("좋아요 " + increace_heart + "회");
 
-        Review_profilePicture.setImageDrawable(profilePicture.getDrawable());
 
-        Glide.with(c).load(Ri.getUserimg()).into(ReviewImg); // 사진이 덮여씀
+        //user 테이블에서 가져온 이미지를 써야함
+
+        ; // 사진이 덮여씀
+        //Glide.with(c).load(Ri).into()
         ReviewId.setText(Ri.getUserId());
         User_description.setText(Ri.getUserDes());
         User_store.setText(Ri.getStoreName());
         strNickname = nickname.getText().toString(); //Nickname 가져와씁ㄴ디ㅏㅇ
+        Glide.with(c).load(Ri.getUserProfilePicture()).into(Review_profilePicture); //완성
 
         Log.e("scollView", String.valueOf(list.get(position)));
 
@@ -146,9 +158,12 @@ public class ReviewAdapter extends BaseAdapter {
                             Toast.makeText(context, "댓글을 써 주세요!", Toast.LENGTH_LONG).show();
                         } else {
                             //db랑 연결하는 코드를 작성합시다^^...
-                            Log.e("111111111", "들어왔엉1");
-                            new JSONTaskStoreComment().execute("http://192.168.43.72:3000/StoreComment");
 
+                            Context context = parent.getContext();
+                            Toast.makeText(context, "댓글을 저장했습니다!", Toast.LENGTH_LONG).show();
+                            Log.e("댓글 저장", "들어왔어용");
+                            new JSONTaskStoreComment().execute("http://192.168.43.102:3000/StoreComment");
+                            Cmt.setText("");
                         }
                     }
                 });
@@ -158,30 +173,38 @@ public class ReviewAdapter extends BaseAdapter {
         watch_comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) { //db에 좋아요(like) 컬럼 추가
+                //만약 댓글이 없을 경우 띄우는 화면도 설정
                 ReviewItem Cm = new ReviewItem();
-                Cm = list.get(position); //4 3 2 1
+
+                Cm = list.get(position); //리뷰 아이템이므로 ㅇㅇ ㄱㅊ
                 int a = Cm.getNumber();
+                Log.e("11111112222", String.valueOf(a));
                 Context context = parent.getContext();
+
                 Intent intent = new Intent(context, Comment.class);
                 intent.putExtra("ReviewStory", User_description.getText().toString());
                 intent.putExtra("Position", a);
                 ((Activity) context).startActivity(intent);
                 //Like.setText("좋아요 "+like+"회");
+
             }
         });
 
-
+        //
+        // new JSONTaskgetImg().execute("http://192.168.43.102:3000/getCommentProfileImg");
         heart_filled.setVisibility(View.INVISIBLE);
         full_heart.setVisibility(View.INVISIBLE);
+        final ReviewItem list_number = list.get(position);
         ReviewImg.setOnClickListener(new View.OnClickListener() { //하트 애니메이션
             @Override
             public void onClick(View v) { //db에 좋아요(like) 컬럼 추가
-                ReviewItem list_number = list.get(position); //아이디랑 상관 없는데..
+                //아이디랑 상관 없는데..
+                heartNum = list_number.getNumber(); //좋아요 얻는 거
                 increace_heart = list_number.getLike();
                 increace_heart++;
-                Like.setText("좋아요 " + increace_heart + "회");
+                Like.setText("좋아요 " + increace_heart + "회"); //고정을 어케함
                 list_number.setLike(increace_heart); //like 저장*/
-                new JSONTaskaddLike().execute("http://192.168.43.72:3000/addLike");
+                new JSONTaskaddLike().execute("http://192.168.43.102:3000/addLike");
 
                 Animation animation2 = new AlphaAnimation(1, 0);
                 animation2.setDuration(1000);
@@ -200,18 +223,20 @@ public class ReviewAdapter extends BaseAdapter {
     }
 
     //item 추가
-    public void addItem(String img2, String str3, String str4, String str5, int like, int Numbering) {
+    public void addItem(String img2, String str3, String str4, String str5, int like, int Numbering, String profileImg) {
         //프로필 이미지, 메인이미지 ,id, 스토리, 상점, 좋아요, 댓글 아이디, 댓글
         ReviewItem ri = new ReviewItem();
 
-        //    ri.setUserProfileimg(img1); //db에서 불러온 값들을 저장해준다.
+
         ri.setUserImage(img2);
         ri.setUserId(str3);
         ri.setUserDes(str4);
         ri.setStoreName(str5);
         ri.setLike(like);
         ri.setNumber(Numbering);
+        ri.setUserProfilePicture(profileImg);
         list.add(ri);
+
     }
 
     public static void setListViewHeightBasedOnChildren(ListView listView) {
@@ -245,6 +270,7 @@ public class ReviewAdapter extends BaseAdapter {
                 //JSONObject를 만들고 key value 형식으로 값을 저장해준다. //코멘트르 집어
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.accumulate("like", String.valueOf(increace_heart));//String형으로 해야 함
+                jsonObject.accumulate("numbering", String.valueOf(heartNum));
                 //jsonObject.accumulate("comment_Id", comment_Id);
                 Log.d("increace_heart : ", String.valueOf(increace_heart));
 
@@ -319,6 +345,7 @@ public class ReviewAdapter extends BaseAdapter {
 
         }
     }
+
     public class JSONTaskStoreComment extends AsyncTask<String, String, String> {
 
         @Override
@@ -326,9 +353,9 @@ public class ReviewAdapter extends BaseAdapter {
             try {
                 //JSONObject를 만들고 key value 형식으로 값을 저장해준다. //코멘트르 집어
                 JSONObject jsonObject = new JSONObject();
-                jsonObject.accumulate("Comment",strCmt);
+                jsonObject.accumulate("Comment", strCmt);
                 jsonObject.accumulate("CommentUser_Id", strNickname);
-                jsonObject.accumulate("position",innumber); //게시물 id값
+                jsonObject.accumulate("position", innumber); //게시물 id값
                 jsonObject.accumulate("Email", strEmail);
 
                 HttpURLConnection con = null;
@@ -401,15 +428,85 @@ public class ReviewAdapter extends BaseAdapter {
         }
 
     }
-    public void refresh(){
-        ReviewAdapter adapter = new ReviewAdapter();
-        if (adapter.list.size() > 0) {
-            adapter.notifyDataSetChanged();
-        } else {
-            adapter.notifyDataSetInvalidated();
-        }
-    }
 
+/*    class JSONTaskgetImg extends AsyncTask<String, String, String> {
+        @Override
+        protected String doInBackground(String... urls) {
+            try {
+                //JSONObject를 만들고 key value 형식으로 값을 저장해준다.
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.accumulate("inputId", strEmail); //현재의 값은 코멘트
+
+                HttpURLConnection con = null;
+                BufferedReader reader = null;
+
+                try {
+                    //URL url = new URL("http://192.168.25.16:3000/users%22);
+                    URL url = new URL(urls[0]);
+                    //연결을 함
+                    con = (HttpURLConnection) url.openConnection();
+
+                    con.setRequestMethod("POST");//POST방식으로 보냄
+                    con.setRequestProperty("Cache-Control", "no-cache");//캐시 설정
+                    con.setRequestProperty("Content-Type", "application/json");//application JSON 형식으로 전송
+
+
+                    con.setRequestProperty("Accept", "text/html");//서버에 response 데이터를 html로 받음
+                    con.setDoOutput(true);//Outstream으로 post 데이터를 넘겨주겠다는 의미
+                    con.setDoInput(true);//Inputstream으로 서버로부터 응답을 받겠다는 의미
+                    con.connect();
+                    //서버로 보내기위해서 스트림 만듬
+                    OutputStream outStream = con.getOutputStream();
+                    //버퍼를 생성하고 넣음
+                    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outStream));
+                    writer.write(jsonObject.toString());
+                    writer.flush();
+                    writer.close();//버퍼를 받아줌
+
+                    //서버로 부터 데이터를 받음
+                    InputStream stream = con.getInputStream();
+
+                    reader = new BufferedReader(new InputStreamReader(stream));
+
+                    StringBuffer buffer = new StringBuffer();
+
+                    String line = "";
+                    while ((line = reader.readLine()) != null) {
+                        buffer.append(line);
+                    }
+
+                    return buffer.toString();//서버로 부터 받은 값을 리턴해줌 아마 OK!!가 들어올것임
+
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+                    if (con != null) {
+                        con.disconnect();
+                    }
+                    try {
+                        if (reader != null) {
+                            reader.close();//버퍼를 닫아줌
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+        @Override
+        protected void onPostExecute(String s) { //가져오는 거죠
+            super.onPostExecute(s); //s로 image를 받음
+            if (!s.equals("")) { //내 프로필
+                Glide.with(context).load(s).into(mCommentPicture); //프로필에
+            }
+        }
+    }*/
 
 }
 

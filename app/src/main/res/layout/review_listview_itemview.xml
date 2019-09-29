@@ -119,8 +119,9 @@
         android:orientation="horizontal">
 
         <ImageView
+            android:id="@+id/mCommentImg"
             android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_height="40dp"
             android:layout_marginLeft="3dp"
             app:srcCompat="@drawable/profileimage_1" />
 
