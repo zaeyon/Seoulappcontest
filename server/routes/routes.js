@@ -1158,21 +1158,21 @@ app.post('/emailCheck', (req, res) => {
         else {
           for(var j = 0; j < results.length; j++) {
             if(j == 0) {
-              UserImage = results[0].User_Image;
+              UserImage = results[0].Review_Image;
               UserId = results[0].User_Id;
               UserContent = results[0].User_Content;
               ReviewStoreName = results[0].Review_StoreName;
               Email = results[0].Email;
-              Like = results[0].Like;
+              Like = results[0].Heart;
               Review_Number = results[0].Review_Number;
               allView =  UserImage + "/" + UserId + "/" + UserContent+ "/"+ReviewStoreName+"/"+Like+"/"+Review_Number;
             } else {
-              UserImage = UserImage+"|"+results[j].User_Image;
+              UserImage = UserImage+"|"+results[j].Review_Image;
               UserId = UserId+"|"+results[j].User_Id;
               UserContent = UserContent+"|"+results[j].User_Content;
               ReviewStoreName = ReviewStoreName+"|"+results[j].Review_StoreName;
               Email = Email+"|"+results[j].Email;
-              Like = Like + "|"+results[j].Like;
+              Like = Like + "|"+results[j].Heart;
               Review_Number = Review_Number + "|" + results[j].Review_Number;
 
               allView =UserImage + "/" + UserId + "/" + UserContent + "/" +ReviewStoreName+"/"+Like+"/"+Review_Number;
@@ -1199,7 +1199,7 @@ app.post('/emailCheck', (req, res) => {
     });
   
     req.on('end', () => {
-        connection.query("INSERT INTO review SET User_Img = ?, User_Id=? ,User_Content =?, Review_StoreName =? WHERE email = ?", params, function(error, result) {
+        connection.query("INSERT INTO review SET Review_Image = ?, User_Id=? ,User_Content =?, Review_StoreName =? WHERE email = ?", params, function(error, result) {
             if (error) {
                 console.log("리뷰 파일 이름 저장 에러");
             } else {
@@ -1293,7 +1293,7 @@ app.post('/emailCheck', (req, res) => {
   
   });
   
-  app.post('/getUserProfile', (req,res) => {
+  app.post('/getReview', (req,res) => {
 
     var UserContent="";
     var UserId ="";
@@ -1301,15 +1301,11 @@ app.post('/emailCheck', (req, res) => {
     var ReviewStoreName="";
     var Email="";
     var Heart="";
-    var Review_Number = "";
+    var ProfilePicture="";
     var allView="";
+    var Review_Number="";
 
-    req.on('data', (data) => {
-        inputData = JSON.parse(data);
-    });
-
-    req.on('end', () => {
-    console.log("프로필 사진 얻기");
+    console.log("리뷰 사진 얻기");
     connection.query("SELECT * FROM review", function(error, results) { //all pulled.
       if(error)
       {
@@ -1320,18 +1316,19 @@ app.post('/emailCheck', (req, res) => {
       {
         if(j == 0)
         {
+
           UserImage = results[0].User_Image;
           UserId = results[0].User_Id;
           UserContent = results[0].User_Content;
           ReviewStoreName = results[0].Review_StoreName;
           Email = results[0].Email;
           Heart = results[0].Heart;
+          ProfilePicture = results[0].Review_profile;
           Review_Number = results[0].Review_Number;
-          allView =  UserImage + "/" + UserId + "/" + UserContent+ "/"+ReviewStoreName+"/"+Heart+"/"+Review_Number;
+          allView =  UserImage + "/" + UserId + "/" + UserContent+ "/"+ReviewStoreName+"/"+Heart+"/"+Review_Number+"/"+ProfilePicture;
         }
         else
         {
-  
 
           UserImage = UserImage+"|"+results[j].User_Image;
           UserId = UserId+"|"+results[j].User_Id;
@@ -1340,8 +1337,8 @@ app.post('/emailCheck', (req, res) => {
           Email = Email+"|"+results[j].Email;
           Heart = Heart + "|"+results[j].Heart;
           Review_Number = Review_Number + "|" + results[j].Review_Number;
-  
-          allView = UserImage + "/" + UserId + "/" + UserContent +"/"+ReviewStoreName+"/"+Heart+"/"+Review_Number;
+          ProfilePicture = ProfilePicture + "|" + results[j].Review_profile;
+          allView =UserImage + "/" + UserId + "/" + UserContent + "/" +ReviewStoreName+"/"+Heart+"/"+Review_Number+"/"+ProfilePicture;
           }
         };
       };
@@ -1351,7 +1348,6 @@ app.post('/emailCheck', (req, res) => {
       res.end();
     });
   });
-});
   
   app.post('/InsertQnAInfo', (req,res) => {
   
@@ -2052,5 +2048,28 @@ app.post('/getCommentInfo',(req,res)=>{
       })
     })
   });
+
+  app.post('/getCommentProfileImg', (req,res)=>{
+
+    var getEmail;
+    var input;
+
+    req.on('data', (data)=>{
+      input = JSON.parse(data);
+    })
+  req.on('end',()=>{
+    connection.query('SELECT profile_img_url FROM user WHERE email =?',input.inputId,(err,results)=>{
+      if(error)
+            {
+              console.log("에러");
+            }
+            else{
+              getemail = results[0].profile_img_url;
+            }
+          })
+        })
+    res.write(getEmail);
+    res.end();
+});
 
 }
