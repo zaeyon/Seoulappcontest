@@ -3,6 +3,7 @@ package com.example.seoulapp;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,13 +41,15 @@ public class ImageGridAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         Log.d("shopProduction : " ,shopProduction[0]);
+        DisplayMetrics metrics = context.getResources().getDisplayMetrics();
+        int screenWidth = metrics.widthPixels;
 
         ImageView imageView;
 
         if(convertView == null) {
-          imageView = new ImageView(context);
-          imageView.setLayoutParams(new GridView.LayoutParams(474, 474));
-          imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+            imageView = new ImageView(context);
+          imageView.setLayoutParams(new GridView.LayoutParams(screenWidth/3, screenWidth/3));
+          imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
           imageView.setPadding(1, 0, 0, 0);
         }
         else {

@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.GridView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.example.seoulapp.MainActivity;
 import com.example.seoulapp.R;
@@ -28,6 +29,8 @@ import java.net.URL;
 public class MyItem extends AppCompatActivity {
     // ShopDetaildInfo
 
+    Context mContext;
+
     int myItemNum;
     String strEmail;
     String[] myItem;
@@ -44,14 +47,16 @@ public class MyItem extends AppCompatActivity {
         setContentView(R.layout.activity_my_item);
         setTitle("내 상품");
 
+        mContext = getApplicationContext();
+
         gridView = (GridView)findViewById(R.id.gridMyItem);
 
         SharedPreferences auto = getApplicationContext().getSharedPreferences(MainActivity.name, Context.MODE_PRIVATE);
         strEmail = auto.getString("inputId", "null");
 
 
-        new TaskGetMyItemNum().execute("http://192.168.43.72:3000/getMyItemNum");
-        new TaskGetMyItem().execute("http://192.168.43.72:3000/getMyItem");
+        new TaskGetMyItemNum().execute("http://dongdong.com.ngrok.io/getMyItemNum");
+        new TaskGetMyItem().execute("http://dongdong.com.ngrok.io/getMyItem");
 
         layoutMyItem = findViewById(R.id.layoutMyItem);
     }
@@ -214,9 +219,8 @@ public class MyItem extends AppCompatActivity {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
 
-            if (result.equals("")) {
-
-            } else {
+            if (result.equals("")) Toast.makeText(mContext, "관심 상품이 없습니다", Toast.LENGTH_LONG).show();
+            else {
                 myItem = result.split("\\|");
                 myItemUrl = new String[myItem.length];
 

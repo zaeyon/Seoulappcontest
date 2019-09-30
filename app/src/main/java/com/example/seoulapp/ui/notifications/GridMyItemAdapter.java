@@ -1,6 +1,7 @@
 package com.example.seoulapp.ui.notifications;
 
 import android.content.Context;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,9 +41,13 @@ public class GridMyItemAdapter extends BaseAdapter {
 
         ImageView imageView;
 
+        DisplayMetrics metrics = context.getResources().getDisplayMetrics();
+        int screenWidth = metrics.widthPixels;
+
+
         if(convertView == null) {
             imageView = new ImageView(context);
-            imageView.setLayoutParams(new GridView.LayoutParams(474, 474));
+            imageView.setLayoutParams(new GridView.LayoutParams(screenWidth/3, screenWidth/3));
             imageView.setScaleType(ImageView.ScaleType.FIT_XY);
             imageView.setPadding(1, 0, 0, 0);
         }

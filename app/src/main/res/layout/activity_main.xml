@@ -78,7 +78,7 @@
             android:onClick="onClickSignup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="떙땡땡이 처음이세요?"
+            android:text="동동이 처음이세요?"
             android:layout_gravity="center"
             />
 

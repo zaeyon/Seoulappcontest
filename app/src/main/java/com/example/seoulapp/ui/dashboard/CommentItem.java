@@ -8,6 +8,7 @@ public class CommentItem {
     String commentImg;
     String comment_id;
     String comment_content;
+    String url;
     int PageNumber;
 
     public void setComment_content(String comment_content) {
@@ -26,13 +27,17 @@ public class CommentItem {
         PageNumber = pageNumber;
     }
 
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
     public int getPageNumber() {
         return PageNumber;
     }
 
     public String getCommentImg() {
         return commentImg;
-    }
+    } //url 자리임
 
     public String getComment_content() {
         return comment_content;
@@ -40,5 +45,9 @@ public class CommentItem {
 
     public String getComment_id() {
         return comment_id;
+    }
+
+    public String getUrl() {
+        return url;
     }
 }

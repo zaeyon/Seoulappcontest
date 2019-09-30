@@ -3,22 +3,29 @@ package com.example.seoulapp.ui.notifications;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -45,6 +52,8 @@ import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
 
 public class NotificationsFragment extends Fragment {
+
+    Context mContext = getContext();
 
     Intent intentSettingShop;
 
@@ -90,12 +99,14 @@ public class NotificationsFragment extends Fragment {
 //            }
 //        });
 
+        mContext = getContext();
+
         View v = inflater.inflate(R.layout.fragment_notifications, container, false);
 
         SharedPreferences auto = this.getActivity().getSharedPreferences(MainActivity.name, Context.MODE_PRIVATE);
         strEmail = auto.getString("inputId", "null");
 
-        new TaskGetBookmark().execute("http://192.168.43.72:3000/getBookmark");
+        new TaskGetBookmark().execute("http://dongdong.com.ngrok.io/getBookmark");
         NoShopPage = v.findViewById(R.id.noShopPage);
         YesShopPage = v.findViewById(R.id.yesShopPage);
 
@@ -128,7 +139,7 @@ public class NotificationsFragment extends Fragment {
         ivShopSetting.setOnClickListener(new goSettingShop());
 
         // 와이파이 새로 접속할 때마다 변경
-        new JSONTask().execute("http://192.168.43.72:3000/getUserInfo");
+        new JSONTask().execute("http://dongdong.com.ngrok.io/getUserInfo");
 
         // 즐겨찾기 리스트
 //        String[] strBookmark =  {"들락날락", "다래락", "라일락", "라운지오", "워커하우스"};
@@ -162,11 +173,31 @@ public class NotificationsFragment extends Fragment {
                 ItemData item = (ItemData)parent.getItemAtPosition(position);
                 clickShopName = item.getStrShopName();
 
-                new TaskGetShopInfo().execute("http://192.168.43.72:3000/getShopInfo");
+                new TaskGetShopInfo().execute("http://dongdong.com.ngrok.io/getShopInfo");
             }
         });
 
         // listview 클릭 시 각 매장 페이지로 이동(매장 id를 ShopDetaildInfo에 전달)
+
+
+
+        Toolbar toolbar = (Toolbar) v.findViewById(R.id.toolbar);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+
+        // 커스텀디자인 활성화
+        actionBar.setDisplayShowCustomEnabled(true);
+        // 툴바에 타이틀 비활성화
+        actionBar.setDisplayShowTitleEnabled(false);
+        // 툴바에 필터 버튼 활성화
+        // actionBar.setDisplayHomeAsUpEnabled(true);
+        // actionBar.setHomeAsUpIndicator(R.drawable.ic_filter);
+
+        View viewToolbar = getActivity().getLayoutInflater().inflate(R.layout.home_tool_bar, null);
+        // ImageButton searchButton = viewToolbar.findViewById(R.id.search_btn);
+        toolbar.setBackgroundColor(Color.rgb(38,175,253));
+        actionBar.setCustomView(viewToolbar, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.LEFT));
+
 
         // return root;
         return v;
@@ -246,9 +277,15 @@ public class NotificationsFragment extends Fragment {
             Log.d(TAG, userInfo[0]);
 
             tvNickname.setText(userInfo[0]);
-            Glide.with(getContext()).load(userInfo[3]).into(ivProfile);
-            Log.d(TAG, "userInfo[3]:" + userInfo[3]);
 
+            if(userInfo[1].equals(""))
+            {
+                Glide.with(getContext()).load("https://firebasestorage.googleapis.com/v0/b/dong-dong-c7d7e.appspot.com/o/images%2FUserProfileImage%2Fblank_profile.png?alt=media&token=90154892-ab2f-4cf4-b21a-f39799468a33").into(ivProfile);
+            }
+            else {
+                Glide.with(getContext()).load(userInfo[1]).into(ivProfile);
+                Log.d(TAG, "userInfo[3]:" + userInfo[1]);
+            }
             if(userInfo[2].equals("0"))
             {
                 YesShopPage.setVisibility(INVISIBLE);
@@ -331,8 +368,8 @@ public class NotificationsFragment extends Fragment {
             super.onPostExecute(result);
 
             bookmarkNum = Integer.parseInt(result);
-            new TaskGetName().execute("http://192.168.43.72:3000/getBMName");
-            new TaskGetProfile().execute("http://192.168.43.72:3000/getBMProfile");
+            new TaskGetName().execute("http://dongdong.com.ngrok.io/getBMName");
+            new TaskGetProfile().execute("http://dongdong.com.ngrok.io/getBMProfile");
 
         }
     }
@@ -610,16 +647,14 @@ public class NotificationsFragment extends Fragment {
     class goMyItem implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-            Intent intentMyItem = new Intent(getActivity(), MyItem.class);
-            startActivity(intentMyItem);
+            new TaskGetMyItem().execute("http://dongdong.com.ngrok.io/getMyItem");
         }
     }
 
     class goNews implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-            Intent intentNews = new Intent(getActivity(), NewsActivity.class);
-            startActivity(intentNews);
+            new JSONTaskCurrentUser().execute("http://dongdong.com.ngrok.io/getCurrentUserReview");
         }
     }
 
@@ -637,7 +672,7 @@ public class NotificationsFragment extends Fragment {
             intentSettingShop = new Intent(getActivity(), ShopDetaildInfo.class);
 
 
-            new JSONTaskGetMyShop().execute("http://192.168.43.72:3000/getMyShop");
+            new JSONTaskGetMyShop().execute("http://dongdong.com.ngrok.io/getMyShop");
 
             // startActivity(intentSettingShop);
         }
@@ -739,6 +774,179 @@ public class NotificationsFragment extends Fragment {
             intentSettingShop.putExtra("intro", myShopInfo[11]);
 
             startActivity(intentSettingShop);
+        }
+    }
+
+    public class JSONTaskCurrentUser extends AsyncTask<String, String, String> {
+
+        @Override
+        protected String doInBackground(String... urls) {
+            try {
+
+                //JSONObject를 만들고 key value 형식으로 값을 저장해준다.
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.accumulate("email", strEmail);
+
+                HttpURLConnection con = null;
+                BufferedReader reader = null;
+
+                try {
+                    //URL url = new URL("http://192.168.25.16:3000/users%22);
+                    URL url = new URL(urls[0]);
+                    //연결을 함
+                    con = (HttpURLConnection) url.openConnection();
+
+                    con.setRequestMethod("POST");//POST방식으로 보냄
+                    con.setRequestProperty("Cache-Control", "no-cache");//캐시 설정
+                    con.setRequestProperty("Content-Type", "application/json");//application JSON 형식으로 전송
+
+
+                    con.setRequestProperty("Accept", "text/html");//서버에 response 데이터를 html로 받음
+                    con.setDoOutput(true);//Outstream으로 post 데이터를 넘겨주겠다는 의미
+                    con.setDoInput(true);//Inputstream으로 서버로부터 응답을 받겠다는 의미
+                    con.connect();
+                    //서버로 보내기위해서 스트림 만듬
+                    OutputStream outStream = con.getOutputStream();
+                    //버퍼를 생성하고 넣음
+                    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outStream));
+                    writer.write(jsonObject.toString());
+                    writer.flush();
+                    writer.close();//버퍼를 받아줌
+
+                    //서버로 부터 데이터를 받음
+                    InputStream stream = con.getInputStream();
+
+                    reader = new BufferedReader(new InputStreamReader(stream));
+
+                    StringBuffer buffer = new StringBuffer();
+
+                    String line = "";
+                    while ((line = reader.readLine()) != null) {
+                        buffer.append(line);
+                    }
+
+                    return buffer.toString();//서버로 부터 받은 값을 리턴해줌 아마 OK!!가 들어올것임
+
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+                    if (con != null) {
+                        con.disconnect();
+                    }
+                    try {
+                        if (reader != null) {
+                            reader.close();//버퍼를 닫아줌
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result); //undefined라
+
+            Log.d("MyReviewButton : ", result);
+
+            if (result.equals("")) {
+                Toast.makeText(mContext, "리뷰가 없습니다", Toast.LENGTH_LONG).show();
+            } else {
+                Intent intentMyReview = new Intent(getActivity(), MyReviewActivity.class);
+                startActivity(intentMyReview);
+            }
+        }
+    }
+
+    public class TaskGetMyItem extends AsyncTask<String, String, String> {
+
+        @Override
+        protected String doInBackground(String... urls) {
+            try {
+                //JSONObject를 만들고 key value 형식으로 값을 저장해준다.
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.accumulate("email", strEmail);
+
+                HttpURLConnection con = null;
+                BufferedReader reader = null;
+
+                try{
+                    //URL url = new URL("http://192.168.25.16:3000/users");
+                    URL url = new URL(urls[0]);
+                    //연결을 함
+                    con = (HttpURLConnection) url.openConnection();
+
+                    con.setRequestMethod("POST");//POST방식으로 보냄
+                    con.setRequestProperty("Cache-Control", "no-cache");//캐시 설정
+                    con.setRequestProperty("Content-Type", "application/json");//application JSON 형식으로 전송
+
+
+                    con.setRequestProperty("Accept", "text/html");//서버에 response 데이터를 html로 받음
+                    con.setDoOutput(true);//Outstream으로 post 데이터를 넘겨주겠다는 의미
+                    con.setDoInput(true);//Inputstream으로 서버로부터 응답을 받겠다는 의미
+                    con.connect();
+
+                    //서버로 보내기위해서 스트림 만듬
+                    OutputStream outStream = con.getOutputStream();
+                    //버퍼를 생성하고 넣음
+                    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outStream));
+                    writer.write(jsonObject.toString());
+                    writer.flush();
+                    writer.close();//버퍼를 받아줌
+
+                    //서버로 부터 데이터를 받음
+                    InputStream stream = con.getInputStream();
+
+                    reader = new BufferedReader(new InputStreamReader(stream));
+
+                    StringBuffer buffer = new StringBuffer();
+
+                    String line = "";
+                    while((line = reader.readLine()) != null){
+                        buffer.append(line);
+                    }
+
+                    return buffer.toString();//서버로 부터 받은 값을 리턴해줌 아마 OK!!가 들어올것임
+
+                } catch (MalformedURLException e){
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+                    if(con != null){
+                        con.disconnect();
+                    }
+                    try {
+                        if(reader != null){
+                            reader.close();//버퍼를 닫아줌
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+
+            if (result.equals("")) Toast.makeText(mContext, "관심 상품이 없습니다", Toast.LENGTH_LONG).show();
+            else {
+                Intent intentMyItem = new Intent(getActivity(), MyItem.class);
+                startActivity(intentMyItem);
+            }
         }
     }
 }

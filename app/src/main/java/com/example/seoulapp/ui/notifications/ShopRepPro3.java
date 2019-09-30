@@ -103,7 +103,7 @@ public class ShopRepPro3 extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                new JSONTaskInsertProduction().execute("http://192.168.43.72:3000/InsertRep3ProductionInfo");
+                new JSONTaskInsertProduction().execute("http://dongdong.com.ngrok.io/InsertRep3ProductionInfo");
 
             }
         });
@@ -217,7 +217,7 @@ public class ShopRepPro3 extends AppCompatActivity {
             }
 
 
-            new JSONTaskgetShopInfo().execute("http://192.168.43.72:3000/getNewMyShopInfo");
+            new JSONTaskgetShopInfo().execute("http://dongdong.com.ngrok.io/getNewMyShopInfo");
 
 
         }

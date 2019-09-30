@@ -48,9 +48,10 @@ public class Comment extends AppCompatActivity {
     TextView TextId;
     ImageView CmtUserImg;
     String strEmail;
+    String pictureUrl;
+    ImageView PictureAtComment;
     String[] allView;
     Context context;
-
     int positionget;
     LinearLayout commentLinearLay;
     ArrayList<CommentItem> cmt_list = new ArrayList<CommentItem>();
@@ -73,24 +74,12 @@ public class Comment extends AppCompatActivity {
         Intent intent = getIntent();
         story.setText(intent.getStringExtra("ReviewStory"));
         input_commentNumber = intent.getIntExtra("Position", 0); //위치를 받아옴
+        pictureUrl = intent.getStringExtra("PictureUrl");
 
-        new JSONTaskCommentInfo().execute("http://192.168.43.102:3000/getCommentInfo");
 
-        SharedPreferences auto = this.getSharedPreferences(MainActivity.name, Context.MODE_PRIVATE);
+        new JSONTaskCommentInfo().execute("http://dongdong.com.ngrok.io/getCommentInfo");
+                SharedPreferences auto = this.getSharedPreferences(MainActivity.name, Context.MODE_PRIVATE);
         strEmail = auto.getString("inputId", "null");
-
-        // positionget = (int) new CommentAdapter().getItemId();
-        /*delete_cmt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new JSONTaskDeleteCmt().execute("http://192.168.43.102:3000/DeleteCmt");
-            }
-        });*/
-
-        //CommentAdapter adapter = new CommentAdapter();
-        //여기서 어떻게 서버에 get(position)을 넣을 수 있는 지를 생각해보자;;
-        //setAdapter(adapter); //댓글 펼치기
-
     }
 
     class JSONTaskCommentInfo extends AsyncTask<String, String, String> {
@@ -179,15 +168,11 @@ public class Comment extends AppCompatActivity {
                 CmtList = findViewById(R.id.commentListView);
                 TextId.setVisibility(View.VISIBLE);
                 CmtList.setVisibility(View.INVISIBLE);
-                /*Intent intent = new Intent(Comment.this, empty_comment.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-                startActivity(intent);*/
-            } else {
+                  } else {
                 TextId = findViewById(R.id.commentTextView);
                 TextId.setVisibility(View.INVISIBLE);
 
-                array_commentInfo = result.split("\\/");
-
+                array_commentInfo = result.split("/");
                 Log.e("숫자 알아보기 ", String.valueOf(array_commentInfo.length)); //1
                 comment_arr = array_commentInfo[0].split("\\|");
                 commentUser_Id = array_commentInfo[1].split("\\|");
@@ -201,7 +186,7 @@ public class Comment extends AppCompatActivity {
                     String CmtImg = commentImg[i];
 
                     int Page_num = Integer.parseInt(pageNum);
-                    adapter.addItem(_comment, commentId, Page_num, CmtImg);
+                    adapter.addItem(_comment, commentId, Page_num, CmtImg, pictureUrl);
                     CmtList.setAdapter(adapter); //
                 }
             }
@@ -209,11 +194,3 @@ public class Comment extends AppCompatActivity {
     }
 
 }
-
-
-
-
-
-//코멘트 추가
-
-

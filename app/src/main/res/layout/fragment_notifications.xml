@@ -10,9 +10,27 @@
     android:id="@+id/fNotifications"
     tools:context=".ui.notifications.NotificationsFragment">
 
-    <include
-        android:id="@+id/MyProfileToolbar"
-        layout="@layout/toolbar"/>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <androidx.appcompat.widget.Toolbar
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:id="@+id/toolbar"
+            app:theme="@style/CustomActionBar"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:layout_collapseMode="pin"/>
+
+        <ImageView
+            android:layout_gravity="center"
+            android:layout_width="68dp"
+            android:layout_height="40dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/logo"/>
+
+    </FrameLayout>
+
 
     <ScrollView
         android:layout_width="match_parent"
@@ -39,17 +57,17 @@
                 android:orientation="horizontal"
                 android:padding="30dp">
 
-                <ImageView
+                <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/ivProfile"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
-                    android:scaleType="fitXY"
+                    android:scaleType="centerCrop"
                     android:textAlignment="center"
                     android:textSize="20sp"
-                    app:srcCompat="@drawable/blank_profile"/>
+                    android:src="@drawable/blank_profile"/>
 
                 <LinearLayout
                     android:layout_marginTop="5dp"

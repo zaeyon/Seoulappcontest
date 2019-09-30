@@ -42,37 +42,6 @@
           android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/tvMyReview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="내 리뷰"
-            android:layout_margin="20dp"
-            android:textSize="25dp"
-            android:textStyle="bold" />
-      </LinearLayout>
-
-      <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="70dp"
-          android:orientation="horizontal">
-
-        <Switch
-            android:id="@+id/switch1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="푸쉬 알림"
-            android:layout_margin="20dp"
-            android:textSize="25dp" />
-      </LinearLayout>
-
-      <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="70dp"
-          android:orientation="horizontal">
-
-        <TextView
             android:id="@+id/tvLogout"
             android:onClick="showDialog"
             android:layout_width="wrap_content"

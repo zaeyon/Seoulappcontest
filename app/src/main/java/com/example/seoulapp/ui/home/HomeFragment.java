@@ -2,6 +2,7 @@ package com.example.seoulapp.ui.home;
 
 import androidx.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -59,6 +60,8 @@ public class HomeFragment extends Fragment {
 
          */
 
+
+        toolbar.setBackgroundColor(Color.rgb(38,175,253));
 
         actionBar.setCustomView(viewToolbar, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.LEFT));
 

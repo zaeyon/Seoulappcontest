@@ -78,7 +78,7 @@
                             android:layout_height="150dp"
                             android:scaleType="centerCrop"
                             android:layout_marginTop="5dp"
-                            app:srcCompat="@drawable/blank_production2" />
+                            android:src="@drawable/blank_production2" />
 
                         <ImageView
                             android:id="@+id/newShopProfildPlus"
@@ -98,13 +98,26 @@
                         android:textSize="15sp"
                         android:fontFamily="@font/nanumsquare_acr"/>
 
-                    <EditText
-                        android:id="@+id/newShopName"
+                    <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text=""
-                        android:textSize="15sp"
-                        android:fontFamily="@font/nanumsquare_acr"/>
+                        android:layout_height="wrap_content">
+
+                        <EditText
+                            android:id="@+id/newShopName"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/nanumsquare_acr"
+                            android:text=""
+                            android:textSize="15sp" />
+
+                        <TextView
+                            android:id="@+id/exShopName"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/nanumsquare_acr"
+                            android:text=""
+                            android:textSize="15sp" />
+                    </FrameLayout>
 
                     <LinearLayout
                         android:layout_marginTop="10dp"
@@ -231,13 +244,25 @@
                             android:layout_height="wrap_content" />
                     </LinearLayout>
 
-                    <Button
-                        android:id="@+id/addShopBtn"
-                        android:layout_marginTop="5dp"
+                    <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:text="다음"
-                        android:fontFamily="@font/nanumsquare_acr"/>
+                        android:layout_height="wrap_content">
+                        <Button
+                            android:id="@+id/addShopBtn"
+                            android:layout_marginTop="5dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:text="다음"
+                            android:fontFamily="@font/nanumsquare_acr"/>
+
+                        <Button
+                            android:id="@+id/signUpNextButton"
+                            android:layout_marginTop="5dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:text="수정 완료"
+                            android:fontFamily="@font/nanumsquare_acr"/>
+                    </FrameLayout>
 
                 </LinearLayout>
 

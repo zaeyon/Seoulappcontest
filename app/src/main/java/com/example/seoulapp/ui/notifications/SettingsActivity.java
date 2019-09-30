@@ -27,8 +27,6 @@ public class SettingsActivity extends AppCompatActivity {
 
     tvEditProfile = (TextView)findViewById(R.id.tvEditProfile);
     tvEditProfile.setOnClickListener(new goEditProfile());
-    tvMyReview = findViewById(R.id.tvMyReview);
-    tvMyReview.setOnClickListener(new goMyReview());
   }
 
   class goEditProfile implements View.OnClickListener {

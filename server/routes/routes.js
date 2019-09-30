@@ -1027,16 +1027,17 @@ app.post('/emailCheck', (req, res) => {
     req.on('data', (data) => {
 
       inputData = JSON.parse(data);
-      params = [inputData.building, inputData.floor, inputData.location, inputData.style, inputData.category, inputData.introduction, inputData.profileImg, inputData.repImg1, inputData.repImg2, inputData.repImg3, inputData.profileURL, inputData.repURL1, inputData.repURL2, inputData.repURL3, inputData.email];
+      params = [inputData.building, inputData.floor, inputData.location, inputData.style, inputData.category, inputData.introduction, inputData.profileURL, inputData.email];
+
+      console.log(params);
     });
 
     req.on('end', () => {
-      connection.query("UPDATE shop SET shopBuilding = ?, shopFloor = ?, shopRocation = ?, shopStyle = ?, shopCategory = ?, shopIntro = ?, shopProfileImage = ?, shopRepresentation1 = ?, shopRepresentation2 = ?, shopRepresentation3 = ?, shopProfileImageUrl = ?, shopRep1ImageUrl = ?, shopRep2ImageUrl = ?, shopRep3ImageUrl = ? WHERE userEmail = ?", params, function(error, result) {
+      connection.query("UPDATE shop SET shopBuilding = ?, shopFloor = ?, shopRocation = ?, shopStyle = ?, shopCategory = ?, shopIntro = ?, shopProfileImageUrl = ? WHERE userEmail = ?", params, function(error, result) {
         if (error) {
           console.log("editShop " + error);
         } else {
           console.log("매장 정보\n이메일 : " + inputData.email + "\n" + inputData.building + " " + inputData.floor + "층 " + inputData.location + "\n" + inputData.style + " " + inputData.category + "\n" + inputData.introduction);
-          console.log("매장 프로필 이미지 : " + inputData.profileImg + ", 이미지1 : " + inputData.repImg1 + ", 이미지2 : " + inputData.repImg2 + ", 이미지3 : " + inputData.repImg3);
           console.log("프로필 이미지 URL :" + inputData.profileURL);
         }
       })
@@ -1164,7 +1165,7 @@ app.post('/emailCheck', (req, res) => {
               UserContent = results[0].User_Content;
               ReviewStoreName = results[0].Review_StoreName;
               Email = results[0].Email;
-              Like = results[0].Heart;
+              Heart = results[0].Heart;
               Review_Number = results[0].Review_Number;
               allView =  UserImage + "/" + UserId + "/" + UserContent+ "/"+ReviewStoreName+"/"+Like+"/"+Review_Number;
             } else {
@@ -1326,7 +1327,7 @@ app.post('/emailCheck', (req, res) => {
           Heart = results[0].Heart;
           ProfilePicture = results[0].Review_profile;
           Review_Number = results[0].Review_Number;
-          allView =  UserImage + "/" + UserId + "/" + UserContent+ "/"+ReviewStoreName+"/"+Heart+"/"+Review_Number+"/"+ProfilePicture;
+          allView =  UserImage + "#&#" + UserId + "#&#" + UserContent+ "#&#"+ReviewStoreName+"#&#"+Heart+"#&#"+Review_Number+"#&#"+ProfilePicture+"#&#"+Email;
         }
         else
         {
@@ -1339,7 +1340,7 @@ app.post('/emailCheck', (req, res) => {
           Heart = Heart + "|"+results[j].Heart;
           Review_Number = Review_Number + "|" + results[j].Review_Number;
           ProfilePicture = ProfilePicture + "|" + results[j].Review_profile;
-          allView =UserImage + "/" + UserId + "/" + UserContent + "/" +ReviewStoreName+"/"+Heart+"/"+Review_Number+"/"+ProfilePicture;
+          allView =UserImage + "#&#" + UserId + "#&#" + UserContent + "#&#" +ReviewStoreName+"#&#"+Heart+"#&#"+Review_Number+"#&#"+ProfilePicture+"#&#"+Email;
           }
         };
       };
@@ -1595,8 +1596,8 @@ app.post('/emailCheck', (req, res) => {
           res.write("plz");
           res.end();
 
-      })
-    })
+      });
+    });
   })
 
   app.post('/addLike', (req,res)=>{
@@ -1620,6 +1621,7 @@ app.post('/emailCheck', (req, res) => {
       }) 
     })
   });
+
 
   app.post('/getReviewStory',(req,res)=>{
 
@@ -1648,6 +1650,9 @@ app.post('/emailCheck', (req, res) => {
   app.post('/setReviewFile', (req,res)=>{ //err 코드는 꼭 쓰자
     var inputinfo;
     var params;
+    var userNickname;
+    var ReviewUrl="";
+    var allView="";
   
     req.on('data', (data)=>{
       inputinfo = JSON.parse(data);
@@ -1657,20 +1662,41 @@ app.post('/emailCheck', (req, res) => {
         "Review_StoreName":inputinfo.StoreName, 
         "Email":inputinfo.Email,
         "User_Image":inputinfo.UserImg
-      }; //키-값일 때 키의 이름은 컬럼명과 동일해야한다!
+      }; 
+      //키-값일 때 키의 이름은 컬럼명과 동일해야한다!
       console.log(params);
       console.log("데이터 삽입 완료");
     });
   
      req.on('end',()=>{
-      connection.query("INSERT INTO review SET ?", params, (err,result)=>{
-        if(err) console.log(err); //err는 꼭 console에 출력해봐야 한다.
-        console.log("db에 입력 완료");
-        res.write("riview register success");
-        res.end();
+          connection.query("SELECT nickname from user where email = ?", inputinfo.Email, function(error, results){
+         if(error)
+         {
+           console.log("error: 발생 : " + error);
+           res.write("error");
+           res.end();
+         }
+         else{
+           userNickname = results[0].nickname;
+           console.log("userNickname : " + userNickname);
+           params = {
+            "User_Id":userNickname, 
+             "User_Content":inputinfo.UserContent, 
+             "Review_StoreName":inputinfo.StoreName, 
+             "Email":inputinfo.Email,
+             "User_Image":inputinfo.UserImg
+           };
+           connection.query("INSERT INTO review SET ?", params, (err,result)=>{
+            if(err) console.log(err); //err는 꼭 console에 출력해봐야 한다.
+            allView = userNickname + "#&#"+ReviewUrl
+            console.log("db에 입력 완료");
+            res.write(allView);
+            res.end();
+          }); 
+         }
+       });
       });
     });
-  });
 
   app.post('/InsertProductionInfo', (req, res) => {
     var inputData;
@@ -2099,6 +2125,7 @@ app.post('/getCommentInfo',(req,res)=>{
   var Comment="";
   var CommentUser_Id="";
   var Distinguish_number="";
+  var Comment_Img="";
   var allView="";
   var input="";
 
@@ -2123,14 +2150,16 @@ app.post('/getCommentInfo',(req,res)=>{
             Comment=results[0].Comment;
             CommentUser_Id = results[0].CommentUser_Id;
             Distinguish_number = results[0].Distinguish_number;
-            allView = Comment+"/"+CommentUser_Id+"/"+Distinguish_number; //
+            Comment_Img = results[0].Comment_Img;
+            allView = Comment+"/"+CommentUser_Id+"/"+Distinguish_number+ +"#&#"+Comment_Img; //
           }
           else
           {
             Comment=Comment + "|" + results[j].Comment;
             CommentUser_Id = CommentUser_Id + "|" + results[j].CommentUser_Id;
             Distinguish_number = Distinguish_number + "|" + results[j].Distinguish_number;
-            allView = Comment+"/"+CommentUser_Id+"/"+Distinguish_number;
+            Comment_Img = Comment_Img +results[j].Comment_Img;
+            allView = Comment+"/"+CommentUser_Id+"/"+Distinguish_number+"#&#"+Comment_Img;
           }
         };
       };
@@ -2228,7 +2257,7 @@ app.post('/getCommentInfo',(req,res)=>{
               }
               else
               {
-                ImgUrl = ImgUrl+"|"+result[j].profile_image_url;
+                ImgUrl = ImgUrl+"#&#"+result[j].profile_image_url;
               }
             };
           };
@@ -2244,7 +2273,7 @@ app.post('/getCommentInfo',(req,res)=>{
   app.post('/CommentDelete',(req,res)=>{
 
     var input="";
-  
+
     req.on('data', (data)=>{
       input = JSON.parse(data);
       console.log("input : ", input.dis_number);
@@ -2283,4 +2312,41 @@ app.post('/getCommentInfo',(req,res)=>{
     res.end();
 });
 
+app.post('/StoreUrlComment', (req,res)=>{
+  var input;
+  var img="";
+  var Email="";
+
+  req.on('data', (data)=>{
+    input = JSON.parse(data);
+    img = [input.Urlcmt, input.Email];
+    console.log(img);
+  })
+  req.on('end', ()=>{
+    connection.query("INSERT INTO commenttable SET Comment_img =? WHERE email =?", img, (err,result)=>{
+      res.write("성공했습니다.");
+      res.end();
+    });
+  });
+});
+
+app.post('/StoreUrlReview', (req,res)=>{
+  var input;
+  var img="";
+  var email="";
+
+  req.on('data', (data)=>{
+    input = JSON.parse(data);
+    img = [input.Url, input.email];
+
+    console.log(img);
+  })
+  req.on('end', ()=>{
+    connection.query("INSERT INTO review SET Review_profile =? WHERE Email =?", img, (err,result)=>{
+      res.write("성공했습니다.");
+      res.end();
+    });
+  });
+});
 }
+

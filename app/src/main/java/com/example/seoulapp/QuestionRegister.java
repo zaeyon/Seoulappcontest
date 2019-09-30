@@ -87,7 +87,7 @@ public class QuestionRegister extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                new JSONTaskInsertQnA().execute("http://192.168.43.102:3000/InsertQnAInfo");
+                new JSONTaskInsertQnA().execute("http://dongdong.com.ngrok.io/InsertQnAInfo");
 
 
             }
@@ -177,7 +177,7 @@ public class QuestionRegister extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-            new JSONTaskQnA().execute("http://192.168.43.102:3000/getQnAInfo");
+            new JSONTaskQnA().execute("http://dongdong.com.ngrok.io/getQnAInfo");
 
         }
     }

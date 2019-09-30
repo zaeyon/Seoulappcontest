@@ -81,6 +81,7 @@ public class AddShop extends AppCompatActivity {
     private ImageView newShopRep3;
 
     Button signUpNext;
+    Button signUpNext0;
     ImageView addShopProfilePlus;
     ImageView addShopRepPlus1;
     ImageView addShopRepPlus2;
@@ -115,6 +116,7 @@ public class AddShop extends AppCompatActivity {
         setContentView(R.layout.activity_add_shop_m);
 
         signUpNext = findViewById(R.id.addShopBtn);
+
         newShopProfileImage = findViewById(R.id.newShopProfileImage);
         newShopName = findViewById(R.id.newShopName);
         newShopSalesItem = findViewById(R.id.newShopSalesItem);
@@ -123,6 +125,11 @@ public class AddShop extends AppCompatActivity {
         newShopFloor = findViewById(R.id.newShopFloor);
         newShopLocation = findViewById(R.id.newShopLocation);
         newShopIntro = findViewById(R.id.newShopIntro);
+
+        tvExShopName = findViewById(R.id.exShopName);
+        tvExShopName.setVisibility(View.INVISIBLE);
+        signUpNext0 = findViewById(R.id.signUpNextButton);
+        signUpNext0.setVisibility(View.INVISIBLE);
 
         addShopProfilePlus = findViewById(R.id.newShopProfildPlus);
 
@@ -177,7 +184,7 @@ public class AddShop extends AppCompatActivity {
         userEmail = user.getString("inputId", "null");
         Log.d("AddShop", "사용자 : " + userEmail);
 
-        new JSONTask0().execute("http://192.168.43.72:3000/newShopData0");
+        new JSONTask0().execute("http://dongdong.com.ngrok.io/newShopData0");
 
         salesItemList = new ArrayList<>();
         salesItemList.add("여성 의류");
@@ -231,7 +238,7 @@ public class AddShop extends AppCompatActivity {
         // 매장 관리 페이지로 이동하게 수정
         signUpNext.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                new JSONTask1().execute("http://192.168.43.72:3000/newShopData1");
+                new JSONTask1().execute("http://dongdong.com.ngrok.io/newShopData1");
 
                 Log.d("profileFile : " ,profileImageFile);
                // Log.d("repFile : ", repImageFile1);

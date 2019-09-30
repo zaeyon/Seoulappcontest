@@ -107,7 +107,7 @@ public class RegisterProduction extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-    new JSONTaskInsertProduction().execute("http://192.168.43.72:3000/InsertProductionInfo");
+    new JSONTaskInsertProduction().execute("http://dongdong.com.ngrok.io/InsertProductionInfo");
 
             }
         });
@@ -222,7 +222,7 @@ public class RegisterProduction extends AppCompatActivity {
                 toast.show();
 
 
-                new JSONTaskgetShopInfo().execute("http://192.168.43.72:3000/getNewMyShopInfo");
+                new JSONTaskgetShopInfo().execute("http://dongdong.com.ngrok.io/getNewMyShopInfo");
                 /*
                 Intent shopDetailIntent = new Intent(RegisterProduction.this, ShopDetaildInfo.class);
                 shopDetailIntent.putExtra("name", myShopInfo[5]);

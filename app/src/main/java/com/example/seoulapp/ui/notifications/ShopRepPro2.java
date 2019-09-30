@@ -102,7 +102,7 @@ public class ShopRepPro2 extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                new JSONTaskInsertProduction().execute("http://192.168.43.72:3000/InsertRep2ProductionInfo");
+                new JSONTaskInsertProduction().execute("http://dongdong.com.ngrok.io/InsertRep2ProductionInfo");
 
             }
         });

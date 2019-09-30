@@ -58,7 +58,7 @@ public class CustomListFragment extends ListFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         // 와이파이 새로 접속할때마다 변경
-        new JSONTask2().execute("http://192.168.43.102:3000/shopNumber");
+        new JSONTask2().execute("http://dongdong.com.ngrok.io/shopNumber");
 
 
         return super.onCreateView(inflater, container, savedInstanceState);
@@ -168,17 +168,17 @@ public class CustomListFragment extends ListFragment {
 
             // 와이파이 새로 접속할때마다 변경
 
-            new JSONTaskName().execute("http://192.168.43.102:3000/getShopName");
-            new JSONTaskProfile().execute("http://192.168.43.102:3000/getShopProfile");
-            new JSONTaskRocation().execute("http://192.168.43.102:3000/getShopRocation");
-            new JSONTaskFloor().execute("http://192.168.43.102:3000/getShopFloor");
-            new JSONTaskBuilding().execute("http://192.168.43.102:3000/getShopBuilding");
-            new JSONTaskCategory().execute("http://192.168.43.102:3000/getShopCategory");
-            new JSONTaskStyle().execute("http://192.168.43.102:3000/getShopStyle");
-            new JSONTaskIntro().execute("http://192.168.43.102:3000/getShopIntro");
-            new JSONTaskReq1().execute("http://192.168.43.102:3000/getShopReq1");
-            new JSONTaskReq2().execute("http://192.168.43.102:3000/getShopReq2");
-            new JSONTaskReq3().execute("http://192.168.43.102:3000/getShopReq3");
+            new JSONTaskName().execute("http://dongdong.com.ngrok.io/getShopName");
+            new JSONTaskProfile().execute("http://dongdong.com.ngrok.io/getShopProfile");
+            new JSONTaskRocation().execute("http://dongdong.com.ngrok.io/getShopRocation");
+            new JSONTaskFloor().execute("http://dongdong.com.ngrok.io/getShopFloor");
+            new JSONTaskBuilding().execute("http://dongdong.com.ngrok.io/getShopBuilding");
+            new JSONTaskCategory().execute("http://dongdong.com.ngrok.io/getShopCategory");
+            new JSONTaskStyle().execute("http://dongdong.com.ngrok.io/getShopStyle");
+            new JSONTaskIntro().execute("http://dongdong.com.ngrok.io/getShopIntro");
+            new JSONTaskReq1().execute("http://dongdong.com.ngrok.io/getShopReq1");
+            new JSONTaskReq2().execute("http://dongdong.com.ngrok.io/getShopReq2");
+            new JSONTaskReq3().execute("http://dongdong.com.ngrok.io/getShopReq3");
 
         }
     }

@@ -37,6 +37,7 @@
         <activity android:name=".ui.notifications.NewsActivity" />
         <activity android:name=".ui.notifications.SettingShop" />
         <activity android:name=".ui.notifications.SettingsActivity" />
+        <activity android:name=".ui.notifications.EditProfileActivity" />
         <activity android:name=".ImageActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -58,13 +59,9 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.GET_TASK" />
     <uses-permission android:name="android.permission.CAMERA" />
-<<<<<<< HEAD
-    <uses-permission android:name="android.permission.CAMERA" />
+
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
-=======
->>>>>>> 023fa96930a88b8646044bc5177d92f20f49b54d
 </manifest>

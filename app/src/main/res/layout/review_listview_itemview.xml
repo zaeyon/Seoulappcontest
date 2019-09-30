@@ -50,7 +50,7 @@
             android:layout_height="70dp"
             android:layout_gravity="center"
             android:clickable="false"
-            app:srcCompat="@drawable/icon_heart" />
+            app:srcCompat="@drawable/canheart" />
     </FrameLayout>
 
     <LinearLayout

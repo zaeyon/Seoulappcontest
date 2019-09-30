@@ -13,6 +13,7 @@ public class ReviewItem {
     private int number;
     private int Like;
     private String UserProfilePicture;
+    private String email;
 
 
     public void setUserImage(String userImage) {
@@ -33,7 +34,7 @@ public class ReviewItem {
             splitStore = storeName.split("\\,"); //split[0] split[1] 이거 두 개
 
             for(int i=0; i<splitStore.length; i++){
-                SplitStoreName = SplitStoreName + "#"+splitStore[i]+"  ";
+                SplitStoreName = SplitStoreName + "#"+splitStore[i]+" ";
             } //이제 여기선 splitStore를 반환해야 함.
         } else {
             StoreName = "#" + storeName +" ";
@@ -41,7 +42,7 @@ public class ReviewItem {
     }
 
     public void setUserProfilePicture(String userProfilePicture) {
-        UserProfilePicture = userProfilePicture;
+        UserProfilePicture = userProfilePicture; //url 자리임
     }
 
     public void setNumber(int number) {
@@ -50,6 +51,10 @@ public class ReviewItem {
 
     public void setLike(int like) {
         Like = like;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getUserId(){
@@ -86,6 +91,8 @@ public class ReviewItem {
     public String getUserProfilePicture() {
         return UserProfilePicture;
     }
+
+    public String getEmail() {
+        return email;
+    }
 }
-
-

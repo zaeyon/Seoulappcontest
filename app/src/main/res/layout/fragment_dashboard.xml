@@ -9,9 +9,26 @@
     android:orientation="vertical"
     android:weightSum="1">
 
-    <include
-        android:id="@+id/ReviewToolbar"
-        layout="@layout/toolbar"/>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <androidx.appcompat.widget.Toolbar
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:id="@+id/toolbar"
+        app:theme="@style/CustomActionBar"
+        app:layout_scrollFlags="scroll|enterAlways"
+        app:layout_collapseMode="pin"/>
+
+        <ImageView
+            android:layout_gravity="center"
+            android:layout_width="68dp"
+            android:layout_height="40dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/logo"/>
+
+    </FrameLayout>
 
     <ScrollView
         android:id="@+id/scroll"

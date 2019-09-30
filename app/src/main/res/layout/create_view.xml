@@ -1,62 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/ReviewLayout"
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:layout_weight="1"
     android:onClick="linearOnClick"
+    android:weightSum="10"
+    android:gravity="center"
+    android:background="#f3f3f3"
     >
-    <include
-        android:id="@+id/ReviewToolbar"
-        layout="@layout/create_review_toolbar"/>
-    <ImageView
-        android:id="@+id/Insert_img"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_marginTop="20dp"
-        app:srcCompat="@drawable/icon_picture" />
 
     <LinearLayout
-        android:layout_marginTop="100dp"
-        android:layout_marginLeft="3dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="내 스토리 "
+        android:layout_height="0dp"
+        android:layout_weight="9"
+        android:orientation="horizontal"
+        android:weightSum="10"
+        android:gravity="center">
+
+        <LinearLayout
+            android:background="#ffffff"
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="9"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="리뷰 쓰기"
+                android:textSize="20sp"
+                android:fontFamily="@font/nanumsquare_acr"
+                android:textColor="#000000"/>
+
+
+            <FrameLayout
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:scaleType="centerCrop"
+            android:id="@+id/proRegImage1"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_width="180dp"
+            android:layout_height="190dp"
+            android:src="@drawable/blank_production2"
             />
-        <EditText
-            android:id="@+id/ReviewWriting"
-            android:layout_width="match_parent"
-            android:layout_marginTop="3dp"
-            android:layout_height="100dp"
-            android:layout_weight="0.1"
-            android:hint="당신의 오늘을 적어주세요!"
-            />
-    </LinearLayout>
+
+        <ImageView
+            android:id="@+id/selectPhoto1"
+            android:layout_width="64dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:src="@drawable/camera" />
+    </FrameLayout>
+
+
     <LinearLayout
+        android:layout_marginTop="20dp"
         android:layout_marginLeft="3dp"
-        android:layout_marginTop="30dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         >
         <TextView
+            android:layout_marginLeft="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="내 스토리 "
+            android:textSize="17dp"
+            android:textColor="#000000"
+            android:fontFamily="@font/nanumsquare_acr"
+            />
+        <EditText
+            android:inputType="textMultiLine"
+            android:minLines="4"
+            android:id="@+id/ReviewWriting"
+            android:layout_width="match_parent"
+            android:layout_marginTop="3dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.1"
+            android:textSize="16sp"
+            android:fontFamily="@font/nanumsquare_acr"
+            android:hint="당신의 오늘을 적어주세요!"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginLeft="3dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <TextView
+            android:layout_marginLeft="7dp"
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="상가 이름"
+            android:textSize="17sp"
+            android:fontFamily="@font/nanumsquare_acr"
+            android:textColor="#000000"
             />
         <EditText
+            android:textSize="16sp"
             android:id="@+id/StoreWriting"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_marginTop="20dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/nanumsquare_acr"
             android:hint="제품을 산 상가를 적어주세요!"
             />
+    </LinearLayout>
+
+    <Button
+        android:layout_marginTop="10dp"
+        android:id="@+id/gotoReview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="리뷰 등록"
+        android:fontFamily="@font/nanumsquare_acr"
+        android:textSize="16dp"/>
+
+        </LinearLayout>
+
     </LinearLayout>
 
 </LinearLayout>

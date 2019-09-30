@@ -60,7 +60,6 @@ public class CustomViewFrag extends ListFragment {
     String[] Review_Number;
     String[] Like;
     String[] allView;
-    String[] EmailBucket;
     String[] emails;
     String[] ReviewProfile;
     ScrollView Sv;
@@ -68,7 +67,7 @@ public class CustomViewFrag extends ListFragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        //추상화된 view를 실제적으로
+//추상화된 view를 실제적으로
         View getItemId = inflater.inflate(R.layout.review_listview_itemview, container, false);
         SharedPreferences auto = this.getActivity().getSharedPreferences(MainActivity.name, Context.MODE_PRIVATE);
         strEmail = auto.getString("inputId", "null"); //이메일
@@ -80,25 +79,25 @@ public class CustomViewFrag extends ListFragment {
         Commentmore = getItemId.findViewById(R.id.watching_comment);
 
 
-        ActivityManager manager = (ActivityManager)getContext().getSystemService(Activity.ACTIVITY_SERVICE);
+        ActivityManager manager = (ActivityManager) getContext().getSystemService(Activity.ACTIVITY_SERVICE);
         List<ActivityManager.RunningTaskInfo> list = manager.getRunningTasks(1);
         ActivityManager.RunningTaskInfo info = list.get(0);
         Log.d("CustomViewFrag", "최상위 액티비티 : " + info.topActivity.getClassName());
         if (info.topActivity.getClassName().equals("com.example.seoulapp.ui.notifications.MyReviewActivity")) {
-            new JSONTaskCurrentUser().execute("http://192.168.43.102:3000/getCurrentUserReview");
+            new JSONTaskCurrentUser().execute("http://dongdong.com.ngrok.io/getCurrentUserReview");
         } else {
-            new JSONTaskUserReview().execute("http://192.168.43.102:3000/getReview");
+            new JSONTaskUserReview().execute("http://dongdong.com.ngrok.io/getReview");
 
         }
 
-       /* dashboardViewModel =
-                ViewModelProviders.of(this).get(DashboardViewModel.class);*/
+/* dashboardViewModel =
+ViewModelProviders.of(this).get(DashboardViewModel.class);*/
 
-        // lv = inflater.inflate(R.layout.fragment_dashboard, container, false).findViewById(R.id.dashboard_layout);
+// lv = inflater.inflate(R.layout.fragment_dashboard, container, false).findViewById(R.id.dashboard_layout);
 
-        //  adapter.addItem((ContextCompat.getDrawable(getActivity(), R.drawable.icon_heart)), ContextCompat.getDrawable(getActivity(), R.drawable.ic_dashboard_black_24dp), "sterning", "aaaaa");
-        //  adapter.addItem((ContextCompat.getDrawable(getActivity(), R.drawable.ic_notifications_black_24dp)), ContextCompat.getDrawable(getActivity(), R.drawable.icon_picture), "sonder", "bbbb");
-        //  adapter.addItem((ContextCompat.getDrawable(getActivity(), R.drawable.test_beach)), ContextCompat.getDrawable(getActivity(), R.drawable.star), "sonder", "bbbb");
+// adapter.addItem((ContextCompat.getDrawable(getActivity(), R.drawable.icon_heart)), ContextCompat.getDrawable(getActivity(), R.drawable.ic_dashboard_black_24dp), "sterning", "aaaaa");
+// adapter.addItem((ContextCompat.getDrawable(getActivity(), R.drawable.ic_notifications_black_24dp)), ContextCompat.getDrawable(getActivity(), R.drawable.icon_picture), "sonder", "bbbb");
+// adapter.addItem((ContextCompat.getDrawable(getActivity(), R.drawable.test_beach)), ContextCompat.getDrawable(getActivity(), R.drawable.star), "sonder", "bbbb");
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
@@ -108,15 +107,15 @@ public class CustomViewFrag extends ListFragment {
         @Override
         protected String doInBackground(String... urls) {
             try {
-                //JSONObject를 만들고 key value 형식으로 값을 저장해준다.
+//JSONObject를 만들고 key value 형식으로 값을 저장해준다.
                 JSONObject jsonObject = new JSONObject();
                 HttpURLConnection con = null;
                 BufferedReader reader = null;
 
                 try {
-                    //URL url = new URL("http://192.168.25.16:3000/users%22);
+//URL url = new URL("http://192.168.25.16:3000/users%22);
                     URL url = new URL(urls[0]);
-                    //연결을 함
+//연결을 함
                     con = (HttpURLConnection) url.openConnection();
 
                     con.setRequestMethod("POST");//POST방식으로 보냄
@@ -128,15 +127,15 @@ public class CustomViewFrag extends ListFragment {
                     con.setDoOutput(true);//Outstream으로 post 데이터를 넘겨주겠다는 의미
                     con.setDoInput(true);//Inputstream으로 서버로부터 응답을 받겠다는 의미
                     con.connect();
-                    //서버로 보내기위해서 스트림 만듬
+//서버로 보내기위해서 스트림 만듬
                     OutputStream outStream = con.getOutputStream();
-                    //버퍼를 생성하고 넣음
+//버퍼를 생성하고 넣음
                     BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outStream));
                     writer.write(jsonObject.toString());
                     writer.flush();
                     writer.close();//버퍼를 받아줌
 
-                    //서버로 부터 데이터를 받음
+//서버로 부터 데이터를 받음
                     InputStream stream = con.getInputStream();
 
                     reader = new BufferedReader(new InputStreamReader(stream));
@@ -181,38 +180,40 @@ public class CustomViewFrag extends ListFragment {
             ReviewAdapter adapter = new ReviewAdapter();
             setListAdapter(adapter);
 
-            allView = result.split("\\/"); //result = allView
+            allView = result.split("#&#"); //result = allView
 
-            // Review_Number = allView[0].split("\\|");
+// Review_Number = allView[0].split("\\|");
             User_Image = allView[0].split("\\|"); //유효 |
             User_Id = allView[1].split("\\|");
             User_Content = allView[2].split("\\|");
-            Review_StoreName= allView[3].split("\\|");
+            Review_StoreName = allView[3].split("\\|");
             Like = allView[4].split("\\|");
             Review_Number = allView[5].split("\\|");
             ReviewProfile = allView[6].split("\\|");
+            emails = allView[7].split("\\|");
 
-            //하나,둘 이렇게 되어있을 거거든요.
+//하나,둘 이렇게 되어있을 거거든요.
 
-            for (int i = 0; i <User_Id.length; i++) {
+            for (int i = 0; i < User_Id.length; i++) {
 
-                int a= User_Id.length-1;
-                //String _number = Review_Number[a-i];
-                String UserImg = "" +User_Image[a-i];
-                String UserId = User_Id[a-i];
-                String UserContent = User_Content[a-i];
-                String StoreName = Review_StoreName[a-i];
-                String _Like = Like[a-i];
-                String Number = Review_Number[a-i];
-                String Review_profile = ReviewProfile[a-i];
+                int a = User_Id.length - 1;
+//String _number = Review_Number[a-i];
+                String UserImg = "" + User_Image[a - i];
+                String UserId = User_Id[a - i];
+                String UserContent = User_Content[a - i];
+                String StoreName = Review_StoreName[a - i];
+                String _Like = Like[a - i];
+                String Number = Review_Number[a - i];
+                String Review_profile = ReviewProfile[a - i];
+                String email = emails[a - i];
 
                 Log.d("CustomViewFrag", "_Like = " + _Like);
 
                 int like = Integer.parseInt(_Like);
                 int Numbering = Integer.parseInt(Number);
-                adapter.addItem(UserImg, UserId, UserContent, StoreName, like, Numbering, Review_profile);
+                adapter.addItem(UserImg, UserId, UserContent, StoreName, like, Numbering, Review_profile, email);
             }
-            //comment_Id랑 comment를 commentAct로 넘겨야합니당..
+//comment_Id랑 comment를 commentAct로 넘겨야합니당..
         }
 
     }
@@ -223,7 +224,7 @@ public class CustomViewFrag extends ListFragment {
         protected String doInBackground(String... urls) {
             try {
 
-                //JSONObject를 만들고 key value 형식으로 값을 저장해준다.
+//JSONObject를 만들고 key value 형식으로 값을 저장해준다.
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.accumulate("email", strEmail);
 
@@ -231,9 +232,9 @@ public class CustomViewFrag extends ListFragment {
                 BufferedReader reader = null;
 
                 try {
-                    //URL url = new URL("http://192.168.25.16:3000/users%22);
+//URL url = new URL("http://192.168.25.16:3000/users%22);
                     URL url = new URL(urls[0]);
-                    //연결을 함
+//연결을 함
                     con = (HttpURLConnection) url.openConnection();
 
                     con.setRequestMethod("POST");//POST방식으로 보냄
@@ -245,15 +246,15 @@ public class CustomViewFrag extends ListFragment {
                     con.setDoOutput(true);//Outstream으로 post 데이터를 넘겨주겠다는 의미
                     con.setDoInput(true);//Inputstream으로 서버로부터 응답을 받겠다는 의미
                     con.connect();
-                    //서버로 보내기위해서 스트림 만듬
+//서버로 보내기위해서 스트림 만듬
                     OutputStream outStream = con.getOutputStream();
-                    //버퍼를 생성하고 넣음
+//버퍼를 생성하고 넣음
                     BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outStream));
                     writer.write(jsonObject.toString());
                     writer.flush();
                     writer.close();//버퍼를 받아줌
 
-                    //서버로 부터 데이터를 받음
+//서버로 부터 데이터를 받음
                     InputStream stream = con.getInputStream();
 
                     reader = new BufferedReader(new InputStreamReader(stream));
@@ -300,36 +301,38 @@ public class CustomViewFrag extends ListFragment {
 
             allView = result.split("\\/"); //result = allView
 
-            // Review_Number = allView[0].split("\\|");
+// Review_Number = allView[0].split("\\|");
             User_Image = allView[0].split("\\|"); //유효 |
             User_Id = allView[1].split("\\|");
             User_Content = allView[2].split("\\|");
-            Review_StoreName= allView[3].split("\\|");
+            Review_StoreName = allView[3].split("\\|");
             Like = allView[4].split("\\|");
             Review_Number = allView[5].split("\\|");
             ReviewProfile = allView[6].split("\\|");
+            emails = allView[7].split("\\|");
 
-            //하나,둘 이렇게 되어있을 거거든요.
+//하나,둘 이렇게 되어있을 거거든요.
 
-            for (int i = 0; i <User_Id.length; i++) {
+            for (int i = 0; i < User_Id.length; i++) {
 
-                int a= User_Id.length-1;
-                //String _number = Review_Number[a-i];
-                String UserImg = User_Image[a-i];
-                String UserId = User_Id[a-i];
-                String UserContent = User_Content[a-i];
-                String StoreName = Review_StoreName[a-i];
-                String _Like = Like[a-i];
-                String Number = Review_Number[a-i];
-                String Review_profile = ReviewProfile[a-i];
+                int a = User_Id.length - 1;
+//String _number = Review_Number[a-i];
+                String UserImg = User_Image[a - i];
+                String UserId = User_Id[a - i];
+                String UserContent = User_Content[a - i];
+                String StoreName = Review_StoreName[a - i];
+                String _Like = Like[a - i];
+                String Number = Review_Number[a - i];
+                String Review_profile = ReviewProfile[a - i];
+                String email = emails[a - i];
 
                 Log.d("CustomViewFrag", "_Like = " + _Like);
 
                 int like = Integer.parseInt(_Like);
                 int Numbering = Integer.parseInt(Number);
-                adapter.addItem(UserImg, UserId, UserContent, StoreName, like, Numbering, Review_profile);
+                adapter.addItem(UserImg, UserId, UserContent, StoreName, like, Numbering, Review_profile, email);
             }
-            //comment_Id랑 comment를 commentAct로 넘겨야합니당..
+//comment_Id랑 comment를 commentAct로 넘겨야합니당..
         }
     }
 }

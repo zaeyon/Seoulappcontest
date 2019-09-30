@@ -74,7 +74,7 @@ public class ImageActivity extends AppCompatActivity {
                 binLike.setVisibility(INVISIBLE);
                 canLike.setVisibility(VISIBLE);
 
-                new JSONTaskFavoriteProduction().execute("http://192.168.43.102:3000/insertFavoriteProduction");
+                new JSONTaskFavoriteProduction().execute("http://dongdong.com.ngrok.io/insertFavoriteProduction");
 
 
             }
@@ -89,7 +89,7 @@ public class ImageActivity extends AppCompatActivity {
                 binLike.setVisibility(VISIBLE);
                 canLike.setVisibility(INVISIBLE);
 
-                new JSONTaskFavoriteProduction().execute("http://192.168.43.102:3000/deleteFavoriteProduction");
+                new JSONTaskFavoriteProduction().execute("http://dongdong.com.ngrok.io/deleteFavoriteProduction");
 
             }
         });
@@ -107,7 +107,7 @@ public class ImageActivity extends AppCompatActivity {
 
         // 와이파이 접속할때마다 변경
 
-        new JSONTaskProductionInfo().execute("http://192.168.43.102:3000/getProductionInfo");
+        new JSONTaskProductionInfo().execute("http://dongdong.com.ngrok.io/getProductionInfo");
 
     }
 
@@ -199,7 +199,7 @@ public class ImageActivity extends AppCompatActivity {
             productionPrice.setText(productionInfo[2]);
             productionIntro.setText(productionInfo[3]);
 
-            new JSONTaskFavoriteCheck().execute("http://192.168.43.102:3000/getFavoriteProCheck");
+            new JSONTaskFavoriteCheck().execute("http://dongdong.com.ngrok.io/getFavoriteProCheck");
         }
 
     }

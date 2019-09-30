@@ -6,6 +6,6 @@
         android:id="@+id/action_button"
         app:showAsAction="always"
         android:title="review_button"
-        android:icon="@drawable/review_image"
+        android:icon="@drawable/ic_edit_document"
         />
 </menu>

@@ -88,10 +88,10 @@ public class ShopDetaildInfo extends AppCompatActivity implements OnClickListene
         ivEditShop = findViewById(R.id.ivEditShop);
 
         // 와이파이 새로 접속할때마다 변경
-        new JSONTaskHostEmail().execute("http://192.168.43.102:3000/getHostEmail");
-        new JSONTask2().execute("http://192.168.43.102:3000/shopNumber");
-        new JSONTaskProduction().execute("http://192.168.43.102:3000/getShopProduction");
-        new JSONTaskQnA().execute("http://192.168.43.102:3000/getQnAInfo");
+        new JSONTaskHostEmail().execute("http://dongdong.com.ngrok.io/getHostEmail");
+        new JSONTask2().execute("http://dongdong.com.ngrok.io/shopNumber");
+        new JSONTaskProduction().execute("http://dongdong.com.ngrok.io/getShopProduction");
+        new JSONTaskQnA().execute("http://dongdong.com.ngrok.io/getQnAInfo");
 
         // 선언한 변수에 생성한 레이아웃 설정
         ArrayList<QnAListViewItem> QnAListViewItemList = new ArrayList<QnAListViewItem>();
@@ -194,7 +194,7 @@ public class ShopDetaildInfo extends AppCompatActivity implements OnClickListene
                 binStar.setVisibility(INVISIBLE);
                 canStar.setVisibility(VISIBLE);
 
-                new JSONTaskFavoriteShop().execute("http://192.168.43.102:3000/insertFavoriteShop");
+                new JSONTaskFavoriteShop().execute("http://dongdong.com.ngrok.io/insertFavoriteShop");
 
             }
         });
@@ -208,7 +208,7 @@ public class ShopDetaildInfo extends AppCompatActivity implements OnClickListene
                 binStar.setVisibility(VISIBLE);
                 canStar.setVisibility(INVISIBLE);
 
-                new JSONTaskFavoriteShop().execute("http://192.168.43.102:3000/deleteFavoriteShop");
+                new JSONTaskFavoriteShop().execute("http://dongdong.com.ngrok.io/deleteFavoriteShop");
 
             }
         });
@@ -332,7 +332,7 @@ public class ShopDetaildInfo extends AppCompatActivity implements OnClickListene
             @Override
             public void onClick(View view) {
 
-                new JSONTaskRegAnswer().execute("http://192.168.43.102:3000/insertQnAAnswer");
+                new JSONTaskRegAnswer().execute("http://dongdong.com.ngrok.io/insertQnAAnswer");
 
             }
         });
@@ -986,7 +986,7 @@ public class ShopDetaildInfo extends AppCompatActivity implements OnClickListene
                 proReg.setVisibility(View.INVISIBLE);
                 ivEditShop.setVisibility(View.INVISIBLE);
 
-                new JSONTaskFavoriteShop().execute("http://192.168.43.102:3000/getFavoriteCheck");
+                new JSONTaskFavoriteShop().execute("http://dongdong.com.ngrok.io/getFavoriteCheck");
             }
         }
     }

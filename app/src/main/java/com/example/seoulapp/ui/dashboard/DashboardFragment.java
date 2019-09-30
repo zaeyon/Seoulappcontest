@@ -1,8 +1,10 @@
 package com.example.seoulapp.ui.dashboard;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -28,28 +30,47 @@ public class DashboardFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
 
 
-        //추상화된 view를 실제적으로
+//추상화된 view를 실제적으로
         setHasOptionsMenu(true);
         View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
 
+        /*
         Toolbar toolbar = (Toolbar) root.findViewById(R.id.ReviewToolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
 
         actionBar.setDisplayShowCustomEnabled(true);
         actionBar.setDisplayShowTitleEnabled(false);
+         */
+
+        Toolbar toolbar = (Toolbar) root.findViewById(R.id.toolbar);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+
+        // 커스텀디자인 활성화
+        actionBar.setDisplayShowCustomEnabled(true);
+        // 툴바에 타이틀 비활성화
+        actionBar.setDisplayShowTitleEnabled(false);
+        // 툴바에 필터 버튼 활성화
+        // actionBar.setDisplayHomeAsUpEnabled(true);
+        // actionBar.setHomeAsUpIndicator(R.drawable.ic_filter);
+
+        View viewToolbar = getActivity().getLayoutInflater().inflate(R.layout.home_tool_bar, null);
+        // ImageButton searchButton = viewToolbar.findViewById(R.id.search_btn);
+        toolbar.setBackgroundColor(Color.rgb(38,175,253));
+        actionBar.setCustomView(viewToolbar, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.LEFT));
 
 
-       /* dashboardViewModel =
-                ViewModelProviders.of(this).get(DashboardViewModel.class);*/
+/* dashboardViewModel =
+ViewModelProviders.of(this).get(DashboardViewModel.class);*/
 
-       /* final TextView textView = (TextView) root.findViewById(R.id.text_dashboard);
-        dashboardViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });*/
+/* final TextView textView = (TextView) root.findViewById(R.id.text_dashboard);
+dashboardViewModel.getText().observe(this, new Observer<String>() {
+@Override
+public void onChanged(@Nullable String s) {
+textView.setText(s);
+}
+});*/
 
         return root;
     }
@@ -57,7 +78,7 @@ public class DashboardFragment extends Fragment {
     public static void setListViewHeightBasedOnChildren(ListView listView) {
         ListAdapter listAdapter = listView.getAdapter();
         if (listAdapter == null) {
-            // pre-condition
+// pre-condition
             return;
         }
 
@@ -92,15 +113,3 @@ public class DashboardFragment extends Fragment {
         }
     }
 }
-    /*class cmtMore extends View.OnClickListenr {
-        @Override
-        public void onClick(View v) {
-            Intent intent = new Intent(getActivity(), CommentMoreAct.class);
-            startActivity(intent);
-        }
-    }*/
-
-
-
-
-
