@@ -19,7 +19,7 @@
 - Back-end
   - Node.js
 - Database
-  - 
+  - MySQL, HeidiSQL
 
 ## Presentation
 
